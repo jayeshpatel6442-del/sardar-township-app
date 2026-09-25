@@ -1,0 +1,12 @@
+{
+  "name": "સરદાર ટાઉનશીપ",
+  "short_name": "સરદાર ટાઉનશીપ",
+  "description": "સરદાર ટાઉનશીપ સોસાયટી મેનેજમેન્ટ એપ",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f9fd",
+  "theme_color": "#075ec8",
+  "lang": "gu",
+  "dir": "ltr",
+  "icons": []
+}

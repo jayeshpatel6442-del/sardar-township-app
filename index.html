@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="gu">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#075ec8"><title>સરદાર ટાઉનશીપ</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eef4fa;font-family:Arial,"Noto Sans Gujarati",sans-serif;color:#172033}.app{max-width:480px;margin:auto;min-height:100vh;background:#f6f9fd;padding-bottom:76px}.top{background:linear-gradient(135deg,#0b6bd3,#0649a5);color:#fff;padding:18px;border-radius:0 0 24px 24px;position:sticky;top:0;z-index:5}.top h1{margin:0;font-size:22px}.top small{opacity:.9}.wrap{padding:14px}.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:15px;margin-bottom:12px;box-shadow:0 4px 16px #17365d0d}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#edf6ff;border-radius:13px;padding:12px}.stat b{display:block;font-size:20px;margin-top:5px}.muted{font-size:12px;color:#6b7280}.title{font-weight:800;font-size:17px;margin-bottom:10px}.btn{border:0;border-radius:11px;padding:12px 14px;font-weight:800;font-size:14px;cursor:pointer}.primary{background:#0965cb;color:#fff}.light{background:#eaf3ff;color:#0753ad}.green{background:#e8f8ef;color:#08763b}.red{background:#ffecec;color:#a51e1e}.orange{background:#fff2dc;color:#9b5a00}.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}input,select{width:100%;padding:12px;border:1px solid #d5dce6;border-radius:10px;font-size:14px;background:#fff}label{display:block;color:#6b7280;font-size:12px;margin:9px 0 5px}.badge{display:inline-block;border-radius:20px;padding:5px 9px;font-size:11px;font-weight:800}.paid{background:#e8f8ef;color:#08763b}.due{background:#fff1dc;color:#9b5a00}.list{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #e7ebf0}.list:last-child{border:0}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);height:70px;background:#fff;border-top:1px solid #dfe5ec;display:flex;z-index:9}.nav button{flex:1;border:0;background:#fff;color:#6b7280;font-size:10px}.nav button.on{color:#075ec8;font-weight:800}.nav span{display:block;font-size:19px;margin-bottom:3px}.hide{display:none!important}.modal{position:fixed;inset:0;background:#0007;z-index:20;display:flex;align-items:flex-end}.sheet{background:#fff;width:min(480px,100%);padding:18px;border-radius:22px 22px 0 0;max-height:90vh;overflow:auto}.notice{padding:11px;border-left:4px solid #0b63ce;background:#f5f9ff;border-radius:9px;margin-bottom:8px}.toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%);background:#172033;color:#fff;padding:10px 16px;border-radius:22px;z-index:30;font-size:13px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:8px 4px;text-align:left;border-bottom:1px solid #e7ebf0}th{color:#6b7280}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(150deg,#eaf4ff,#fff)}.loginbox{max-width:420px;width:100%;background:#fff;border-radius:22px;padding:24px;box-shadow:0 10px 35px #164b801c;text-align:center}.logo{width:74px;height:74px;border-radius:50%;margin:auto;background:#0b63ce;color:#fff;display:flex;align-items:center;justify-content:center;font-size:35px;font-weight:900}.error{color:#b42318;font-size:12px;margin-top:8px}
+</style><link rel="manifest" href="manifest.webmanifest"><script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js")}</script></head>
+<body>
+<div id="login" class="login"><div class="loginbox">
+<div class="logo">સ</div><h1>સરદાર ટાઉનશીપ</h1><p class="muted">સોસાયટી મેનેજમેન્ટ એપ • 60 મકાન</p>
+<label>મોબાઇલ નંબર</label><input id="mobile" placeholder="10 અંકનો મોબાઇલ નંબર">
+<label>લૉગિન પ્રકાર</label><select id="role"><option value="admin">એડમિન / કમિટી</option><option value="member">સભ્ય</option></select>
+<label id="flatLabel">મકાન નંબર (સભ્ય માટે)</label><input id="loginFlat" placeholder="B-102">
+<button class="btn primary" style="width:100%;margin-top:12px" onclick="login()">લૉગિન</button>
+<div id="loginErr" class="error"></div>
+<p class="muted" style="margin-top:14px">ડેમો: કોઈપણ 10 અંકનો મોબાઇલ નંબર. સભ્ય માટે મકાન નંબર જરૂરી.</p>
+</div></div>
+
+<div id="app" class="app hide">
+<header class="top"><h1>સરદાર ટાઉનશીપ</h1><small id="who">સોસાયટી મેનેજમેન્ટ • 60 મકાન</small></header>
+<main class="wrap">
+<section id="home">
+<div class="card"><div class="title">આ ક્વાર્ટરનું સંક્ષિપ્ત રિપોર્ટ</div><div class="grid">
+<div class="stat"><span class="muted">કુલ જમા</span><b id="sPaid">₹0</b></div><div class="stat"><span class="muted">કુલ ઉધાર</span><b id="sDue">₹0</b></div>
+<div class="stat"><span class="muted">લેટ ફી</span><b id="sLate">₹0</b></div><div class="stat"><span class="muted">જમા થયેલ</span><b id="sCount">0 / 60</b></div>
+</div></div>
+<div class="card"><div class="title">મકાન નંબરથી પેમેન્ટ શોધો</div><div class="row"><input id="search" placeholder="જેમ કે B-102"><button class="btn primary" onclick="findFlat()">શોધો</button></div><div id="found" style="margin-top:12px"></div></div>
+<div class="card"><div class="title">ઝડપી વિકલ્પો</div><div class="grid">
+<button class="btn light" onclick="go('maintenance')">💰 મેન્ટેનન્સ</button><button class="btn light" onclick="go('reports')">📊 જમા-ઉધાર</button>
+<button class="btn light" onclick="go('members')">👥 સભ્યો</button><button class="btn light" onclick="go('settings')">⚙️ સેટિંગ</button>
+</div></div>
+</section>
+
+<section id="maintenance" class="hide"><div class="card"><div class="title">મેન્ટેનન્સ નિયમ</div>
+<div class="grid"><div><label>માસિક</label><input id="monthly" type="number"></div><div><label>લેટ ફી / દિવસ</label><input id="late" type="number"></div></div>
+<label>ચુકવણીની છેલ્લી તારીખ</label><input id="deadline" type="date"><p class="muted">દર 3 મહિને બિલ આપમેળે ગણાશે.</p><button class="btn primary" onclick="saveSettings()">સાચવો</button></div>
+<div class="card"><div class="title">મકાનવાર સ્થિતિ</div><div id="flatList"></div></div></section>
+
+<section id="reports" class="hide"><div class="card"><div class="title">જમા-ઉધાર રિપોર્ટ</div><div class="grid">
+<div class="stat"><span class="muted">કુલ જમા</span><b id="rPaid">₹0</b></div><div class="stat"><span class="muted">કુલ બાકી</span><b id="rDue">₹0</b></div>
+<div class="stat"><span class="muted">લેટ ફી</span><b id="rLate">₹0</b></div><div class="stat"><span class="muted">બાકી મકાન</span><b id="rPending">0</b></div></div></div>
+<div class="card"><div class="title">મકાનવાર રિપોર્ટ</div><div style="overflow:auto"><table><thead><tr><th>મકાન</th><th>સભ્ય</th><th>રકમ</th><th>સ્થિતિ</th></tr></thead><tbody id="table"></tbody></table></div></div>
+<button class="btn primary" onclick="csv()">📥 CSV ડાઉનલોડ</button></section>
+
+<section id="members" class="hide"><div class="card"><div class="title">સભ્યો / મકાન</div><div id="membersList"></div></div></section>
+
+<section id="notices" class="hide"><div class="card"><div class="title">નોટિસ બોર્ડ</div><div class="notice"><b>મેન્ટેનન્સ સૂચના</b><br><span class="muted">દર 3 મહિને ₹3,000 મેન્ટેનન્સ જમા કરાવવાનું રહેશે.</span></div><div class="notice"><b>સોસાયટી મીટિંગ</b><br><span class="muted">મીટિંગની તારીખ કમિટી દ્વારા જાહેર કરવામાં આવશે.</span></div></div></section>
+
+<section id="complaints" class="hide"><div class="card"><div class="title">ફરિયાદ</div><label>મકાન નંબર</label><input id="cf" placeholder="B-102"><label>ફરિયાદ</label><input id="ct" placeholder="પાણી, લાઇટ, સફાઈ વગેરે"><button class="btn primary" style="width:100%;margin-top:10px" onclick="complaint()">ફરિયાદ જમા કરો</button></div><div class="card"><div class="title">ફરિયાદોની યાદી</div><div id="cl"></div></div></section>
+
+<section id="visitors" class="hide"><div class="card"><div class="title">વિઝિટર એન્ટ્રી</div><label>વિઝિટરનું નામ</label><input id="vn"><label>મોબાઇલ</label><input id="vm"><label>મકાન નંબર</label><input id="vf" placeholder="B-102"><label>હેતુ</label><input id="vp" placeholder="મુલાકાત / ડિલિવરી"><button class="btn primary" style="width:100%;margin-top:10px" onclick="visitor()">એન્ટ્રી નોંધો</button></div><div class="card"><div class="title">આજની એન્ટ્રીઓ</div><div id="vl"></div></div></section>
+
+<section id="parking" class="hide"><div class="card"><div class="title">પાર્કિંગ</div><div id="pl"></div></div></section>
+
+<section id="settings" class="hide"><div class="card"><div class="title">એડમિન સેટિંગ</div><label>સોસાયટી UPI ID</label><input id="upi" placeholder="example@upi"><p class="muted">સભ્ય UPI એપ ખોલીને પેમેન્ટ કરી શકે તે માટે અહીં સાચો UPI ID દાખલ કરો.</p><button class="btn primary" onclick="saveUPI()">UPI ID સાચવો</button></div>
+<div class="card"><div class="title">મહત્વની માહિતી</div><p class="muted">વાસ્તવિક એપ માટે secure cloud database, OTP, payment gateway/webhook અને server-side access control જોડવા પડશે.</p></div></section>
+</main>
+<nav class="nav">
+<button class="on" onclick="go('home',this)">⌂<span>હોમ</span></button><button onclick="go('maintenance',this)">₹<span>મેન્ટેનન્સ</span></button><button onclick="go('reports',this)">▥<span>રિપોર્ટ</span></button><button onclick="go('notices',this)">♢<span>નોટિસ</span></button><button onclick="go('complaints',this)">⚒<span>ફરિયાદ</span></button>
+</nav></div>
+<div id="modal" class="modal hide" onclick="if(event.target.id==='modal')closeModal()"><div class="sheet"><div id="sheet"></div></div></div>
+<script>
+const KEY='ST_FULL_1';
+let d=JSON.parse(localStorage.getItem(KEY)||'null')||{settings:{monthly:1000,late:100,deadline:new Date().toISOString().slice(0,10),upi:''},flats:Array.from({length:60},(_,i)=>({no:(i<30?'A-':'B-')+(101+i%30),name:'સભ્ય '+(i+1),paid:false,payments:[]})),complaints:[],visitors:[],parking:Array.from({length:10},(_,i)=>({p:'P-'+String(i+1).padStart(2,'0'),car:'',name:''}))};
+let role='admin', currentFlat='';
+function save(){localStorage.setItem(KEY,JSON.stringify(d))}
+function money(n){return '₹'+Math.round(n).toLocaleString('en-IN')}
+function bill(){return d.settings.monthly*3}
+function late(f){if(f.paid)return 0;let x=Math.ceil((Date.now()-new Date(d.settings.deadline+'T23:59:59'))/86400000);return x>0?x*d.settings.late:0}
+function stats(){let p=d.flats.filter(x=>x.paid), paid=p.reduce((s,x)=>s+(x.payments.at(-1)?.amount||bill()),0);return{paid,due:(60-p.length)*bill(),late:d.flats.reduce((s,x)=>s+late(x),0)}}
+function login(){let m=document.getElementById('mobile').value.replace(/\D/g,''),r=document.getElementById('role').value,f=document.getElementById('loginFlat').value.trim().toUpperCase();if(m.length!==10)return err('મોબાઇલ નંબર 10 અંકનો હોવો જોઈએ');if(r==='member'&&!d.flats.some(x=>x.no===f))return err('મકાન નંબર મળ્યો નથી');role=r;currentFlat=f;document.getElementById('login').classList.add('hide');document.getElementById('app').classList.remove('hide');document.getElementById('who').textContent=r==='admin'?'એડમિન / કમિટી • 60 મકાન':f+' • સભ્ય';render();if(r==='member'){document.getElementById('search').value=f;findFlat()} }
+function err(t){document.getElementById('loginErr').textContent=t}
+function go(id,btn){document.querySelectorAll('main section').forEach(x=>x.classList.add('hide'));document.getElementById(id).classList.remove('hide');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('on'));if(btn)btn.classList.add('on');render();scrollTo(0,0)}
+function render(){let s=stats();['sPaid','rPaid'].forEach(x=>document.getElementById(x).textContent=money(s.paid));['sDue','rDue'].forEach(x=>document.getElementById(x).textContent=money(s.due));['sLate','rLate'].forEach(x=>document.getElementById(x).textContent=money(s.late));document.getElementById('sCount').textContent=s.paid.length+' / 60';document.getElementById('rPending').textContent=60-s.paid.length;
+document.getElementById('monthly').value=d.settings.monthly;document.getElementById('late').value=d.settings.late;document.getElementById('deadline').value=d.settings.deadline;document.getElementById('upi').value=d.settings.upi;
+document.getElementById('flatList').innerHTML=d.flats.map(f=>`<div class="list"><div><b>${f.no}</b><br><span class="muted">${f.name}</span></div><div><span class="badge ${f.paid?'paid':'due'}">${f.paid?'જમા':'ઉધાર'}</span><br><button class="btn ${f.paid?'green':'primary'}" style="padding:6px;margin-top:4px" onclick="payment('${f.no}')">${f.paid?'રસીદ':'પેમેન્ટ'}</button></div></div>`).join('');
+document.getElementById('table').innerHTML=d.flats.map(f=>{let l=late(f),v=f.paid?0:bill()+l;return `<tr><td>${f.no}</td><td>${f.name}</td><td>${money(v)}</td><td><span class="badge ${f.paid?'paid':'due'}">${f.paid?'જમા':'ઉધાર'}</span></td></tr>`}).join('');
+document.getElementById('membersList').innerHTML=d.flats.map(f=>`<div class="list"><div><b>${f.no}</b><br><span class="muted">${f.name}</span></div><span class="badge ${f.paid?'paid':'due'}">${f.paid?'Paid':'બાકી'}</span></div>`).join('');
+document.getElementById('cl').innerHTML=d.complaints.length?d.complaints.map(c=>`<div class="list"><div><b>${c.flat}</b> • ${c.text}<br><span class="muted">${c.date}</span></div><span class="badge due">બાકી</span></div>`).join(''):'<span class="muted">કોઈ ફરિયાદ નથી.</span>';
+document.getElementById('vl').innerHTML=d.visitors.length?d.visitors.map(v=>`<div class="list"><div><b>${v.name}</b> • ${v.flat}<br><span class="muted">${v.purpose} • ${v.date}</span></div></div>`).join(''):'<span class="muted">કોઈ એન્ટ્રી નથી.</span>';
+document.getElementById('pl').innerHTML=d.parking.map(p=>`<div class="list"><div><b>${p.p}</b><br><span class="muted">${p.car||'વાહન નથી'} ${p.name?'• '+p.name:''}</span></div></div>`).join('')}
+function findFlat(){let q=document.getElementById('search').value.trim().toUpperCase(),f=d.flats.find(x=>x.no===q);let b=document.getElementById('found');if(!f){b.innerHTML='<span class="muted">મકાન નંબર મળ્યો નથી.</span>';return}if(role==='member'&&f.no!==currentFlat){b.innerHTML='<span class="muted">સભ્ય માત્ર પોતાના મકાનનું પેમેન્ટ જોઈ શકે.</span>';return}let l=late(f),t=f.paid?0:bill()+l;b.innerHTML=`<div class="card" style="margin:0"><div class="row"><div><b>${f.no}</b><br><span class="muted">${f.name}</span></div><span class="badge ${f.paid?'paid':'due'}">${f.paid?'જમા':'બાકી'}</span></div><hr style="border:0;border-top:1px solid #eee"><div class="row"><span>મેન્ટેનન્સ</span><b>${money(bill())}</b></div><div class="row"><span>લેટ ફી</span><b>${money(l)}</b></div><div class="row"><span>કુલ</span><b>${money(t)}</b></div>${f.paid?`<button class="btn green" style="width:100%;margin-top:10px" onclick="receipt('${f.no}')">રસીદ જુઓ</button>`:`<button class="btn primary" style="width:100%;margin-top:10px" onclick="payment('${f.no}')">પેમેન્ટ જમા કરો</button>`}</div>`}
+function payment(no){let f=d.flats.find(x=>x.no===no),l=late(f),t=f.paid?0:bill()+l;let upi=d.settings.upi?`<button class="btn light" style="width:100%;margin-top:8px" onclick="upiPay('${no}',${t})">📱 UPI પેમેન્ટ ખોલો</button>`:'<p class="muted">UPI માટે એડમિન સેટિંગમાં UPI ID નાખો.</p>';document.getElementById('sheet').innerHTML=`<div class="title">${f.no} • ${f.name}</div><div class="card"><div class="row"><span>મેન્ટેનન્સ</span><b>${money(bill())}</b></div><div class="row"><span>લેટ ફી</span><b>${money(l)}</b></div><div class="row"><span>કુલ</span><b>${money(t)}</b></div></div>${f.paid?`<button class="btn green" style="width:100%" onclick="receipt('${no}')">રસીદ જુઓ</button>`:`<label>પેમેન્ટ મોડ</label><select id="pm"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option></select><button class="btn primary" style="width:100%;margin-top:10px" onclick="markPaid('${no}',${t})">પેમેન્ટ જમા કરો</button>${upi}`}<button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
+function markPaid(no,amt){let f=d.flats.find(x=>x.no===no),rec='ST-'+Date.now().toString().slice(-8);f.paid=true;f.payments.push({amount:amt,mode:document.getElementById('pm').value,date:new Date().toLocaleDateString('gu-IN'),receipt:rec});save();closeModal();render();toast('પેમેન્ટ જમા થયું • '+rec)}
+function upiPay(no,amt){let f=d.flats.find(x=>x.no===no);let url=`upi://pay?pa=${encodeURIComponent(d.settings.upi)}&pn=${encodeURIComponent('Sardar Township')}&am=${amt}&cu=INR&tn=${encodeURIComponent('Maintenance '+f.no)}`;location.href=url}
+function receipt(no){let f=d.flats.find(x=>x.no===no),p=f.payments.at(-1);document.getElementById('sheet').innerHTML=`<div class="title">ચુકવણી રસીદ</div><div class="card"><h2 style="margin-top:0">સરદાર ટાઉનશીપ</h2><p><b>રસીદ નંબર:</b> ${p.receipt}</p><p><b>મકાન:</b> ${f.no}</p><p><b>સભ્ય:</b> ${f.name}</p><p><b>રકમ:</b> ${money(p.amount)}</p><p><b>મોડ:</b> ${p.mode}</p><p><b>તારીખ:</b> ${p.date}</p><p style="color:#08763b;font-weight:800">ચુકવણી સફળતાપૂર્વક જમા</p></div><button class="btn primary" style="width:100%" onclick="window.print()">🖨️ રસીદ પ્રિન્ટ / PDF</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
+function saveSettings(){d.settings.monthly=+document.getElementById('monthly').value||1000;d.settings.late=+document.getElementById('late').value||100;d.settings.deadline=document.getElementById('deadline').value;save();render();toast('મેન્ટેનન્સ સેટિંગ સાચવાયું')}
+function saveUPI(){d.settings.upi=document.getElementById('upi').value.trim();save();toast('UPI ID સાચવાઈ')}
+function complaint(){let f=document.getElementById('cf').value.trim().toUpperCase(),t=document.getElementById('ct').value.trim();if(!f||!t)return toast('માહિતી ભરો');d.complaints.unshift({flat:f,text:t,date:new Date().toLocaleDateString('gu-IN')});save();render();toast('ફરિયાદ જમા થઈ')}
+function visitor(){let n=document.getElementById('vn').value.trim(),m=document.getElementById('vm').value.trim(),f=document.getElementById('vf').value.trim().toUpperCase(),p=document.getElementById('vp').value.trim();if(!n||!f)return toast('નામ અને મકાન નંબર ભરો');d.visitors.unshift({name:n,mobile:m,flat:f,purpose:p,date:new Date().toLocaleString('gu-IN')});save();render();toast('વિઝિટર એન્ટ્રી થઈ')}
+function csv(){let rows=[['મકાન','સભ્ય','મેન્ટેનન્સ','લેટ ફી','કુલ બાકી','સ્થિતિ']];d.flats.forEach(f=>rows.push([f.no,f.name,bill(),late(f),f.paid?0:bill()+late(f),f.paid?'જમા':'ઉધાર']));let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+rows.map(r=>r.join(',')).join('\n')],{type:'text/csv'}));a.download='Sardar_Township_Jama_Udhar.csv';a.click()}
+function closeModal(){document.getElementById('modal').classList.add('hide')}function toast(t){let x=document.createElement('div');x.className='toast';x.textContent=t;document.body.appendChild(x);setTimeout(()=>x.remove(),2500)}
+save();render();
+</script>
+</body></html>
