@@ -2,7 +2,7 @@
 <html lang="gu">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b5cab"><title>સરદાર ટાઉનશીપ</title>
+<meta name="theme-color" content="#0b5cab"><title>સરદાર સોસાયટી</title>
 <link rel="manifest" href="manifest.webmanifest">
 <style>
 :root{--blue:#0b5cab;--blue2:#083b78;--gold:#f4b942;--bg:#f4f7fb;--ink:#172033;--muted:#667085;--line:#e5eaf1;--green:#08763b;--red:#b42318;--orange:#9b5a00}
@@ -13,7 +13,7 @@
 <body>
 <div id="login" class="login"><div class="loginbox">
 <img class="login-logo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sardar_patel_(cropped).jpg" alt="સરદાર પટેલ">
-<h1 style="margin:12px 0 4px">સરદાર ટાઉનશીપ</h1><p class="muted">સોસાયટી મેનેજમેન્ટ એપ • 60 મકાન</p>
+<h1 style="margin:12px 0 4px">સરદાર સોસાયટી</h1><p class="muted">સોસાયટી મેનેજમેન્ટ એપ • 60 મકાન</p>
 <div class="pill">સભ્ય / એડમિન લૉગિન</div>
 <label>યુઝરનેમ / મોબાઇલ નંબર</label><input id="mobile" inputmode="numeric" maxlength="10" placeholder="10 અંકનો મોબાઇલ નંબર">
 <label>લૉગિન પ્રકાર</label><select id="role"><option value="admin">એડમિન / કમિટી</option><option value="member">સભ્ય</option></select>
@@ -26,7 +26,7 @@
 </div></div>
 
 <div id="app" class="app hide">
-<header class="top"><div class="brand"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sardar_patel_(cropped).jpg" alt="સરદાર પટેલ"><div><h1>સરદાર ટાઉનશીપ</h1><small id="who">સોસાયટી મેનેજમેન્ટ • 60 મકાન</small></div></div></header>
+<header class="top"><div class="brand"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sardar_patel_(cropped).jpg" alt="સરદાર પટેલ"><div><h1>સરદાર સોસાયટી</h1><small id="who">સોસાયટી મેનેજમેન્ટ • 60 મકાન</small></div></div></header>
 <main class="wrap">
 <section id="home">
 <div class="card hero"><div class="section-head"><div><div class="title" style="margin-bottom:2px">નમસ્કાર 👋</div><div id="homeMsg" class="muted">સોસાયટીની માહિતી એક જ જગ્યાએ.</div></div><span class="pill">60 મકાન</span></div></div>
@@ -51,7 +51,7 @@
 
 <section id="parking" class="hide"><div class="card"><div class="title">પાર્કિંગ</div><div id="pl"></div></div></section>
 
-<section id="settings" class="hide"><div class="card"><div class="title">એડમિન સેટિંગ</div><div id="adminSettings"></div></div><div class="card"><div class="title">મેન્ટેનન્સ ડિફૉલ્ટ</div><div class="grid"><div><label>માસિક</label><input id="monthly" type="number"></div><div><label>લેટ ફી / દિવસ</label><input id="late" type="number"></div></div><label>ચુકવણીની છેલ્લી તારીખ</label><input id="deadline" type="date"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveSettings()">સાચવો</button></div><div class="card"><div class="title">UPI / સ્કેનર</div><label>સોસાયટી UPI ID</label><input id="upi" placeholder="example@upi"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveUPI()">UPI ID સાચવો</button><label style="margin-top:12px">UPI QR / સ્કેનર ફોટો</label><input id="upiQrFile" type="file" accept="image/*" onchange="saveUPIQR(event)"><div id="upiQrPreview" style="margin-top:10px"></div><button class="btn light" style="width:100%;margin-top:8px" onclick="removeUPIQR()">QR ફોટો દૂર કરો</button><p class="muted" style="margin-top:8px">સોસાયટીનું હાલનું UPI સ્કેનર અહીં ફોટા તરીકે મૂકી શકો છો. સભ્યના પેમેન્ટ સમયે આ QR દેખાશે.</p></div><div class="card"><div class="title">દૈનિક બેકઅપ</div><p class="muted">દિવસની તમામ એન્ટ્રીઓની બેકઅપ ફાઇલ તૈયાર કરી શકાય છે. Email બટન mail appમાં draft ખોલશે; attachment સાથે આપમેળે email મોકલવા માટે cloud backend/SMTP જરૂરી છે.</p><div class="grid"><button class="btn primary" onclick="downloadBackup()">📦 બેકઅપ ફાઇલ</button><button class="btn light" onclick="emailBackup()">✉️ Email draft</button></div><div id="backupStatus" class="muted" style="margin-top:8px"></div></div><div class="card"><div class="title">સુરક્ષા નોંધ</div><p class="muted">આ આવૃત્તિ prototype/PWA છે. વાસ્તવિક multi-user security માટે cloud database, server-side authentication, OTP અને secure password hashing જરૂરી છે.</p></div></section>
+<section id="settings" class="hide"><div class="card"><div class="title">એડમિન સેટિંગ</div><div id="adminSettings"></div></div><div class="card"><div class="title">મેન્ટેનન્સ ડિફૉલ્ટ</div><div class="grid"><div><label>માસિક</label><input id="monthly" type="number"></div><div><label>મેન્યુઅલ લેટ ફી (ડિફૉલ્ટ સૂચન)</label><input id="late" type="number"></div></div><label>ચુકવણીની છેલ્લી તારીખ</label><input id="deadline" type="date"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveSettings()">સાચવો</button></div><div class="card"><div class="title">UPI / સ્કેનર</div><label>સોસાયટી UPI ID</label><input id="upi" placeholder="example@upi"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveUPI()">UPI ID સાચવો</button><label style="margin-top:12px">UPI QR / સ્કેનર ફોટો</label><input id="upiQrFile" type="file" accept="image/*" onchange="saveUPIQR(event)"><div id="upiQrPreview" style="margin-top:10px"></div><button class="btn light" style="width:100%;margin-top:8px" onclick="removeUPIQR()">QR ફોટો દૂર કરો</button><p class="muted" style="margin-top:8px">સોસાયટીનું હાલનું UPI સ્કેનર અહીં ફોટા તરીકે મૂકી શકો છો. સભ્યના પેમેન્ટ સમયે આ QR દેખાશે.</p></div><div class="card"><div class="title">દૈનિક બેકઅપ</div><p class="muted">દિવસની તમામ એન્ટ્રીઓની બેકઅપ ફાઇલ તૈયાર કરી શકાય છે. Email બટન mail appમાં draft ખોલશે; attachment સાથે આપમેળે email મોકલવા માટે cloud backend/SMTP જરૂરી છે.</p><div class="grid"><button class="btn primary" onclick="downloadBackup()">📦 બેકઅપ ફાઇલ</button><button class="btn light" onclick="emailBackup()">✉️ Email draft</button></div><div id="backupStatus" class="muted" style="margin-top:8px"></div></div><div class="card"><div class="title">સુરક્ષા નોંધ</div><p class="muted">આ આવૃત્તિ prototype/PWA છે. વાસ્તવિક multi-user security માટે cloud database, server-side authentication, OTP અને secure password hashing જરૂરી છે.</p></div></section>
 </main>
 <nav class="nav"><button class="on" onclick="go('home',this)">⌂<span>હોમ</span></button><button onclick="go('maintenance',this)">₹<span>મેન્ટેનન્સ</span></button><button onclick="go('finance',this)">₹<span>આવક/ખર્ચ</span></button><button onclick="go('reports',this)">▥<span>રિપોર્ટ</span></button><button onclick="go('notices',this)">♢<span>નોટિસ</span></button></nav>
 </div>
@@ -79,7 +79,7 @@ document.getElementById('pl').innerHTML=d.parking.map(p=>`<div class="list"><div
 document.getElementById('memberMaintenance').innerHTML=role==='member'?`<div class="member-only card"><div class="row"><div><b>ઘર ${me.no}</b><br><span class="muted">${esc(me.name||'સભ્ય')}</span></div><span class="badge ${me.paid?'paid':'due'}">${me.paid?'જમા':'બાકી'}</span></div><hr style="border:0;border-top:1px solid #eee"><div class="row"><span>ક્વાર્ટર મેન્ટેનન્સ</span><b>${money(bill(me))}</b></div><div class="row"><span>લેટ ફી</span><b>${money(late(me))}</b></div><div class="row"><span>કુલ બાકી</span><b>${money(me.paid?0:bill(me)+late(me))}</b></div></div>`:'';
 document.getElementById('adminMaintenance').innerHTML=role==='admin'?`<p class="muted">દરેક મકાન માટે ક્વાર્ટર પ્રમાણે અલગ મેન્ટેનન્સ રકમ સેટ કરી શકાય છે.</p>`:'';
 document.getElementById('memberAdminBox').innerHTML=role==='admin'?`<button class="btn primary" style="width:100%" onclick="memberForm()">➕ સભ્ય / મકાનની માહિતી ઉમેરો અથવા બદલો</button>`:`<div class="member-only"><b>સભ્ય માહિતી</b><p class="muted">સભ્યો માટે માહિતી જોવા માટે છે. ફેરફાર ફક્ત એડમિન કરી શકે છે.</p></div>`;
-document.getElementById('adminSettings').innerHTML=role==='admin'?`<label>એડમિન મોબાઇલ / Username</label><input id="adminMobile" inputmode="numeric" maxlength="10" value="${esc(d.admin.username)}"><label>એડમિન નવો પાસવર્ડ</label><input id="adminPassword" type="password" placeholder="નવો પાસવર્ડ લખો"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveAdmin()">એડમિન સેટિંગ સાચવો</button><p class="muted">ડિફૉલ્ટ પાસવર્ડ: Jayesh@09638. એડમિન પાસવર્ડ બદલી શકે છે.</p>`:'<p class="muted">એડમિન સેટિંગ સભ્યો માટે ઉપલબ્ધ નથી.</p>';
+document.getElementById('adminSettings').innerHTML=role==='admin'?`<label>એડમિન મોબાઇલ / Username</label><input id="adminMobile" inputmode="numeric" maxlength="10" value="${esc(d.admin.username)}"><label>એડમિન નવો પાસવર્ડ</label><input id="adminPassword" type="password" placeholder="નવો પાસવર્ડ લખો"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveAdmin()">એડમિન સેટિંગ સાચવો</button><p class="muted">એડમિન પાસવર્ડ અહીં બતાવવામાં આવતો નથી. એડમિન સેટિંગમાંથી પાસવર્ડ બદલી શકાય છે.</p>`:'<p class="muted">એડમિન સેટિંગ સભ્યો માટે ઉપલબ્ધ નથી.</p>';
 if(role==='admin'){const q=document.getElementById('upiQrPreview');if(q)q.innerHTML=d.settings.upiQr?`<img src="${d.settings.upiQr}" alt="UPI QR" style="max-width:220px;max-height:220px;border:1px solid #ddd;border-radius:12px">`:'<span class="muted">હજુ QR અપલોડ નથી.</span>'; }
 if(role==='member'){document.getElementById('csvBtn').classList.add('hide');document.getElementById('adminMaintenance').classList.add('hide');document.getElementById('memberAdminBox').classList.add('hide')}else{document.getElementById('csvBtn').classList.remove('hide');document.getElementById('adminMaintenance').classList.remove('hide');document.getElementById('memberAdminBox').classList.remove('hide')}
 }
@@ -87,7 +87,7 @@ function findFlat(){let q=document.getElementById('search').value,f=d.flats.find
 function memberForm(no=currentFlat||'1'){if(role!=='admin')return;let f=d.flats.find(x=>x.no===no)||d.flats[0];document.getElementById('sheet').innerHTML=`<div class="title">સભ્ય / મકાન માહિતી</div><label>ઘર નંબર</label><select id="mfno">${d.flats.map(x=>`<option value="${x.no}" ${x.no===f.no?'selected':''}>${x.no}</option>`).join('')}</select><label>સભ્યનું નામ</label><input id="mfn" value="${esc(f.name)}" placeholder="સભ્યનું નામ"><label>મોબાઇલ નંબર</label><input id="mfm" inputmode="numeric" maxlength="10" value="${esc(f.mobile)}" placeholder="10 અંકનો મોબાઇલ નંબર"><label>મકાનનો પ્રકાર</label><select id="mft"><option ${f.type==='ઘરમાલિક'?'selected':''}>ઘરમાલિક</option><option ${f.type==='ભાડુઆત'?'selected':''}>ભાડુઆત</option></select><label>ક્વાર્ટર મેન્ટેનન્સ</label><input id="mfq" type="number" value="${f.quarterly}"><p class="muted">સભ્યનો ડિફૉલ્ટ પાસવર્ડ આપમેળે <b>user@મોબાઇલના છેલ્લા 4 અંક</b> રહેશે અને સભ્ય તેને બદલી શકશે નહીં.</p><button class="btn primary" style="width:100%" onclick="saveMember()">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
 function saveMember(){let no=document.getElementById('mfno').value,n=document.getElementById('mfn').value.trim(),m=document.getElementById('mfm').value.replace(/\D/g,''),t=document.getElementById('mft').value,q=+document.getElementById('mfq').value||3000;if(!n||m.length!==10)return toast('સભ્યનું નામ અને 10 અંકનો મોબાઇલ નંબર જરૂરી છે');let f=d.flats.find(x=>x.no===no);f.name=n;f.mobile=m;f.type=t;f.quarterly=q;save();closeModal();render();toast('સભ્યની માહિતી સાચવાઈ')}
 function quarterPeriod(){const now=new Date();const q=Math.floor(now.getMonth()/3);const start=new Date(now.getFullYear(),q*3,1);const end=new Date(now.getFullYear(),q*3+3,0);const fmt=d=>d.toLocaleDateString('gu-IN',{day:'2-digit',month:'long',year:'numeric'});return{start:fmt(start),end:fmt(end),shortStart:start.toISOString().slice(0,10),shortEnd:end.toISOString().slice(0,10)}}
-function paymentMessage(f,p){const period=p.periodStart&&p.periodEnd?`${p.periodStart} થી ${p.periodEnd}`:quarterPeriod().start+' થી '+quarterPeriod().end;return `સરદાર ટાઉનશીપ\n\nઘર નંબર: ${f.no}\nસભ્ય: ${f.name||'સભ્ય'}\n\nતમારું મેન્ટેનન્સ ${period} સુધીનું જમા થયેલ છે.\nજમા રકમ: ${money(p.amount)}\nરસીદ નંબર: ${p.receipt}\nતારીખ: ${p.date}\nપેમેન્ટ મોડ: ${p.mode}\n\nઆભાર.\nસરદાર ટાઉનશીપ સોસાયટી`}
+function paymentMessage(f,p){const period=p.periodStart&&p.periodEnd?`${p.periodStart} થી ${p.periodEnd}`:quarterPeriod().start+' થી '+quarterPeriod().end;return `સરદાર સોસાયટી\n\nઘર નંબર: ${f.no}\nસભ્ય: ${f.name||'સભ્ય'}\n\nતમારું મેન્ટેનન્સ ${period} સુધીનું જમા થયેલ છે.\nજમા રકમ: ${money(p.amount)}\nરસીદ નંબર: ${p.receipt}\nતારીખ: ${p.date}\nપેમેન્ટ મોડ: ${p.mode}\n\nઆભાર.\nસરદાર સોસાયટી સોસાયટી`}
 function whatsappPayment(no){const f=d.flats.find(x=>x.no===no),p=f?.payments?.at(-1);if(!f||!p||!f.mobile){toast('સભ્યનો WhatsApp મોબાઇલ નંબર ઉપલબ્ધ નથી');return}const phone=String(f.mobile).replace(/\D/g,'');if(phone.length<10){toast('મોબાઇલ નંબર સાચો નથી');return}const msg=encodeURIComponent(paymentMessage(f,p));window.open(`https://wa.me/91${phone}?text=${msg}`,'_blank')}
 function upiQrHtml(){return d.settings.upiQr?`<div class="card" style="text-align:center;margin-top:10px"><b>UPI સ્કેનર</b><div style="margin-top:8px"><img src="${d.settings.upiQr}" alt="UPI QR" style="width:min(260px,80vw);max-height:260px;object-fit:contain;border-radius:12px;border:1px solid #ddd"></div>${d.settings.upi?`<div class="muted" style="margin-top:6px">UPI ID: ${esc(d.settings.upi)}</div>`:''}</div>`:d.settings.upi?`<div class="notice" style="margin-top:10px"><b>UPI ID:</b> ${esc(d.settings.upi)}</div>`:''}
 function saveUPIQR(e){if(role!=='admin')return;const file=e.target.files?.[0];if(!file)return;const r=new FileReader();r.onload=()=>{d.settings.upiQr=r.result;save();render();toast('UPI QR સ્કેનર સાચવાયું')};r.readAsDataURL(file)}
@@ -95,7 +95,7 @@ function removeUPIQR(){if(role!=='admin')return;d.settings.upiQr='';save();rende
 
 function payment(no){if(role!=='admin')return;let f=d.flats.find(x=>x.no===no),l=late(f),t=f.paid?0:bill(f)+l;document.getElementById('sheet').innerHTML=`<div class="title">ઘર ${f.no} • ${esc(f.name||'સભ્ય')}</div><div class="card"><div class="row"><span>મેન્ટેનન્સ</span><b>${money(bill(f))}</b></div><div class="row"><span>લેટ ફી</span><b>${money(l)}</b></div><div class="row"><span>કુલ</span><b>${money(t)}</b></div></div>${f.paid?`<button class="btn green" style="width:100%" onclick="receipt('${no}')">રસીદ જુઓ</button><button class="btn" style="width:100%;margin-top:8px" onclick="whatsappPayment('${no}')">💬 WhatsApp મોકલો</button>`:`<label>પેમેન્ટ મોડ</label><select id="pm" onchange="document.getElementById('upiPayBox').classList.toggle('hide',this.value!=='UPI')"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option></select><div id="upiPayBox" class="${d.settings.upi||d.settings.upiQr?'':'hide'}">${d.settings.upi||d.settings.upiQr?upiQrHtml():''}</div><button class="btn primary" style="width:100%;margin-top:10px" onclick="markPaid('${no}',${t})">પેમેન્ટ જમા કરો</button>`}<button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
 function markPaid(no,amt){let f=d.flats.find(x=>x.no===no),rec='ST-'+Date.now().toString().slice(-8),period=quarterPeriod();f.paid=true;f.payments.push({amount:amt,mode:document.getElementById('pm').value,date:new Date().toLocaleDateString('gu-IN'),receipt:rec,periodStart:period.start,periodEnd:period.end,periodStartISO:period.shortStart,periodEndISO:period.shortEnd});save();closeModal();render();toast('પેમેન્ટ જમા થયું • '+rec);setTimeout(()=>receipt(no),250)}
-function receipt(no){let f=d.flats.find(x=>x.no===no),p=f.payments.at(-1);if(!p)return;const period=p.periodStart&&p.periodEnd?`${p.periodStart} થી ${p.periodEnd}`:`${quarterPeriod().start} થી ${quarterPeriod().end}`;document.getElementById('sheet').innerHTML=`<div class="title">ચુકવણી રસીદ</div><div class="card"><div class="brand"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sardar_patel_(cropped).jpg" alt="સરદાર પટેલ"><div><h2 style="margin:0">સરદાર ટાઉનશીપ</h2><small>ચુકવણી રસીદ</small></div></div><p><b>રસીદ નંબર:</b> ${p.receipt}</p><p><b>ઘર:</b> ${f.no}</p><p><b>સભ્ય:</b> ${esc(f.name)}</p><p><b>મેન્ટેનન્સ સમયગાળો:</b> ${period}</p><p><b>રકમ:</b> ${money(p.amount)}</p><p><b>મોડ:</b> ${esc(p.mode)}</p><p><b>તારીખ:</b> ${esc(p.date)}</p><p class="success">ચુકવણી સફળતાપૂર્વક જમા</p></div><button class="btn primary" style="width:100%" onclick="window.print()">🖨️ રસીદ પ્રિન્ટ / PDF</button><button class="btn" style="width:100%;margin-top:8px" onclick="whatsappPayment('${no}')">💬 સભ્યના WhatsApp માં મોકલો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
+function receipt(no){let f=d.flats.find(x=>x.no===no),p=f.payments.at(-1);if(!p)return;const period=p.periodStart&&p.periodEnd?`${p.periodStart} થી ${p.periodEnd}`:`${quarterPeriod().start} થી ${quarterPeriod().end}`;document.getElementById('sheet').innerHTML=`<div class="title">ચુકવણી રસીદ</div><div class="card"><div class="brand"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sardar_patel_(cropped).jpg" alt="સરદાર પટેલ"><div><h2 style="margin:0">સરદાર સોસાયટી</h2><small>ચુકવણી રસીદ</small></div></div><p><b>રસીદ નંબર:</b> ${p.receipt}</p><p><b>ઘર:</b> ${f.no}</p><p><b>સભ્ય:</b> ${esc(f.name)}</p><p><b>મેન્ટેનન્સ સમયગાળો:</b> ${period}</p><p><b>રકમ:</b> ${money(p.amount)}</p><p><b>મોડ:</b> ${esc(p.mode)}</p><p><b>તારીખ:</b> ${esc(p.date)}</p><p class="success">ચુકવણી સફળતાપૂર્વક જમા</p></div><button class="btn primary" style="width:100%" onclick="window.print()">🖨️ રસીદ પ્રિન્ટ / PDF</button><button class="btn" style="width:100%;margin-top:8px" onclick="whatsappPayment('${no}')">💬 સભ્યના WhatsApp માં મોકલો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
 function saveSettings(){if(role!=='admin')return;d.settings.monthly=+document.getElementById('monthly').value||1000;d.settings.late=+document.getElementById('late').value||100;d.settings.deadline=document.getElementById('deadline').value;d.flats.forEach(f=>{if(!f.quarterly||f.quarterly===3000)f.quarterly=d.settings.monthly*3});save();render();toast('મેન્ટેનન્સ સેટિંગ સાચવાયું')}
 function saveUPI(){if(role!=='admin')return;d.settings.upi=document.getElementById('upi').value.trim();save();toast('UPI ID સાચવાઈ')}
 function saveAdmin(){if(role!=='admin')return;let m=document.getElementById('adminMobile').value.replace(/\D/g,''),p=document.getElementById('adminPassword').value.trim();if(m.length!==10)return toast('એડમિન મોબાઇલ 10 અંકનો હોવો જોઈએ');d.admin.username=m;if(p)d.admin.password=p;save();render();toast('એડમિન એકાઉન્ટ સાચવાયું')}
@@ -132,9 +132,153 @@ function headForm(type){if(role!=='admin')return;let name=prompt(type==='income'
 function renderFinance2(){let il=document.getElementById('incomeList'),el=document.getElementById('expenseList');if(!il)return;il.innerHTML=d.incomes.length?d.incomes.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">${esc(x.date)} • ${esc(x.detail)}</span></div><div><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div></div>`).join(''):'<span class="muted">હજુ કોઈ આવક એન્ટ્રી નથી.</span>';el.innerHTML=d.expenses.length?d.expenses.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">ક્રમ ${x.seq} • ${esc(x.date)} • ${esc(x.detail)}</span><br><span class="muted">બિલ નં: ${esc(x.billNo||'-')}</span></div><div><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div></div>`).join(''):'<span class="muted">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</span>';let html='<b>આવક</b>';d.incomeHeads.forEach(h=>{let v=d.incomes.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)+(h==='મેન્ટેનન્સ આવક'?totalMaintenance():0);html+=`<div class="list"><span>${esc(h)}</span><b>${money(v)}</b></div>`});html+='<hr><b>ખર્ચ</b>';d.expenseHeads.forEach(h=>{let v=d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0);html+=`<div class="list"><span>${esc(h)}</span><b>${money(v)}</b></div>`});html+=`<hr><div class="row"><span>બાકી સિલક</span><b>${money(totalIncome()-totalExpense())}</b></div>`;document.getElementById('headReport').innerHTML=html;document.getElementById('headsList').innerHTML='<b>આવક હેડ:</b> '+d.incomeHeads.map(esc).join(' • ')+'<br><b>ખર્ચ હેડ:</b> '+d.expenseHeads.map(esc).join(' • ')}
 function reportData(){let a=[['હેડ','પ્રકાર','રકમ']];d.incomeHeads.forEach(h=>a.push([h,'આવક',d.incomes.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)+(h==='મેન્ટેનન્સ આવક'?totalMaintenance():0)]));d.expenseHeads.forEach(h=>a.push([h,'ખર્ચ',d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)]));return a}
 function downloadHeadReport(){let rows=reportData();let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+rows.map(r=>r.join(',')).join('\n')],{type:'text/csv'}));a.download='Sardar_Township_Head_Wise_Report.csv';a.click()}
-function printHeadReport(){let rows=reportData();let w=window.open('','_blank');if(!w)return;w.document.write('<html lang="gu"><head><title>હેડ વાઈઝ રિપોર્ટ</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #999;padding:8px}</style></head><body><h2>સરદાર ટાઉનશીપ - હેડ વાઈઝ રિપોર્ટ</h2><table><tr><th>હેડ</th><th>પ્રકાર</th><th>રકમ</th></tr>'+rows.slice(1).map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+money(r[2])+'</td></tr>').join('')+'</table><scr'+'ipt>window.print()</scr'+'ipt></body></html>');w.document.close()}
-function downloadBackup(){if(role!=='admin')return;let date=new Date().toISOString().slice(0,10),payload={society:'સરદાર ટાઉનશીપ',backupDate:new Date().toISOString(),data:d};let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}));a.download='Sardar_Township_Backup_'+date+'.json';a.click();d.backupDates[date]=new Date().toISOString();save();refreshExtras();toast('દૈનિક બેકઅપ ફાઇલ તૈયાર થઈ')}
-function emailBackup(){if(role!=='admin')return;let date=new Date().toISOString().slice(0,10);window.location.href='mailto:jayeshpatel6442@gmail.com?subject='+encodeURIComponent('સરદાર ટાઉનશીપ દૈનિક બેકઅપ - '+date)+'&body='+encodeURIComponent('આજની બેકઅપ ફાઇલ Sardar_Township_Backup_'+date+'.json એપમાંથી download કરીને attachment તરીકે જોડશો.')} 
+function printHeadReport(){let rows=reportData();let w=window.open('','_blank');if(!w)return;w.document.write('<html lang="gu"><head><title>હેડ વાઈઝ રિપોર્ટ</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #999;padding:8px}</style></head><body><h2>સરદાર સોસાયટી - હેડ વાઈઝ રિપોર્ટ</h2><table><tr><th>હેડ</th><th>પ્રકાર</th><th>રકમ</th></tr>'+rows.slice(1).map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+money(r[2])+'</td></tr>').join('')+'</table><scr'+'ipt>window.print()</scr'+'ipt>
+<script>
+// v5 upgrades: society name, imported member list, manual late fee, editable maintenance installment.
+const V5_MEMBERS = [
+['1','રમેશભાઈ ચતરભાઈ ફેફર','9879463973'],
+['2','લલીતભાઈ વાલજીભાઈ લોરૈયા','9879973420'],
+['3','શ્યામભાઈ મકેશભાઈ સીણોજીયા','8140886274'],
+['4','દિલીપભાઈ દેવકરણભાઈ ભોરણીયા','9316733726'],
+['5','નવીનભાઈ ઈશ્વરભાઈ કડાવાર','9428718544'],
+['6','મહેન્દ્રભાઈ ઈશ્વરભાઈ કડાવાર','8866631544'],
+['7','જયેશભાઈ શૈવલાલ પટેલ','8200042818'],
+['8','ભાઈલાલભાઈ ગુણવતભાઈ સતાપરા','9904666409'],
+['9','રાકેશભાઈ નટવરભાઈ કાવર','6352614380'],
+['10','રાજેશભાઈ અમરશીભાઈ એરવાડીયા','9979001190'],
+['11','પાર્થભાઈ હરેશભાઈ ફણપરા','7359551599'],
+['12','મેઘુલભાઈ વાસુદેવભાઈ સતાપરા','9428917909'],
+['13','હિતેશભાઈ નારણભાઈ ગાભા','9998806566'],
+['14','પ્રકાશભાઈ લક્ષ્મણભાઈ કાલરીયા','9879399757'],
+['15','દિલીપભાઈ ભવાનભાઈ પટેલ','9714058230'],
+['16','જયભાઈ દિનેશભાઈ ભાલોડાયા','8160650653'],
+['17','સંદીપભાઈ દિનેશભાઈ કેલા','8238234335'],
+['18','ભાવેશભાઈ દિલીપભાઈ પટેલ','9724521318'],
+['19','ગૌતમભાઈ શંકરભાઈ પટેલ','9099925735'],
+['20','અશોકભાઈ ભાગવતભાઈ મોટકા','6353882522'],
+['21','રમેશભાઈ અણદાભાઈ કેલા','8469894730'],
+['22','અમાતભાઈ વસનજીભાઈ માવાણા','9427661626'],
+['23','ભરતભાઈ વસનજીભાઈ માવાણા','9825794218'],
+['24','નરસીંહભાઈ દેવજીભાઈ માવાણા','8320830392'],
+['25','મહેન્દ્રભાઈ ઠાકરશીભાઈ પટેલ','9426958555'],
+['26','કિશોરભાઈ છગનભાઈ એરવાડીયા','9825638533'],
+['27','સતીશભાઈ કાંતિલાલ સંઘાણા','9725079454'],
+['28','ધવલકુમાર અરવિંદભાઈ એરવાડીયા','8140506236'],
+['29','સંદીપભાઈ રામભાઈ પટેલ','9909962862'],
+['30','જયદીપભાઈ ધરામશીભાઈ કાવર','9574984028'],
+['31','કિરીટભાઈ મહાદેવભાઈ વરમોરા','9428193405'],
+['32','હિતેશભાઈ મનસુખભાઈ લોરિયા','9909626542'],
+['33','અરવિંદભાઈ અમરશીભાઈ દઢાણીયા','9879668840'],
+['34','રોહિતભાઈ રસિકભાઈ પટેલ','9429186254'],
+['35','હિતેશભાઈ હરજીવનભાઈ પટેલ','9825495187'],
+['36','પ્રજ્ઞેશભાઈ વિષ્ણુભાઈ પટેલ','7434040839'],
+['37','જિગ્નેશભાઈ અમૃતભાઈ પટેલ','9998666435'],
+['38','જિગરભાઈ ચીનુભાઈ પટેલ','9824585603'],
+['39','ઉમેશભાઈ જગજીવનભાઈ કાવર','7201004059'],
+['40','કેતનભાઈ વાસુદેવભાઈ પટેલ','9723199408'],
+['41','કિશોરભાઈ મનજીભાઈ સોલગામા','9429934499'],
+['42','નાતાનભાઈ જીતેન્દ્રભાઈ પટેલ','9638888016'],
+['43','બીપીનભાઈ મગનભાઈ બાવરવા','9662774700'],
+['44','સુરેશભાઈ વિઠ્ઠલભાઈ વરમોરા','9106875642'],
+['45','કલ્પેશભાઈ વલુભાઈ વરમોરા','7984971414'],
+['46','અલ્પેશભાઈ ધાતુભાઈ પનારા','9726614004'],
+['47','જલારામભાઈ જીવરાજભાઈ વામજા','9328279579'],
+['48','રોહિતભાઈ ખુશાલભાઈ પટેલ','9427668565'],
+['49','મેહુલભાઈ અમૃતભાઈ પટેલ','8320900063'],
+['50','તુષારભાઈ મોહનભાઈ સાપરિયા','9879924092'],
+['51','ધર્મેન્દ્રભાઈ લાલજીભાઈ વરમોરા','9908564616'],
+['52','પરેશભાઈ રણછોડભાઈ વરમોરા','9265429395'],
+['53','નીકુલભાઈ જગદીશભાઈ પટેલ','8401113764'],
+['54','પરેશભાઈ ભાઈલાલભાઈ પટેલ','9624346013'],
+['55','વિરાંગભાઈ લલિતભાઈ પટેલ','8140222403'],
+['56','ચુડલાલ સવજીભાઈ પનારા','7539964404'],
+['57','ધવલભાઈ મૂળજીભાઈ કેલા','8200960432'],
+['58','વાસુદેવભાઈ ગોવિંદભાઈ માલવણિયા','8160845523'],
+['59','વિમલભાઈ ઘનશ્યામભાઈ પટેલ','9727153575'],
+['60','અશોકભાઈ જોરમભાઈ ખાડાવાર','9998213068']
+];
+
+// Import only into empty fields so existing edits are never overwritten.
+if (typeof d !== 'undefined' && Array.isArray(d.flats)) {
+  V5_MEMBERS.forEach(([no,name,mobile])=>{
+    const f=d.flats.find(x=>x.no===no);
+    if(f){
+      if(!f.name) f.name=name;
+      if(!f.mobile) f.mobile=mobile;
+      if(f.lateFee==null) f.lateFee=0;
+      if(f.quarterly==null) f.quarterly=0;
+    }
+  });
+  if(!d.settings) d.settings={};
+  if(d.settings.late==null) d.settings.late=0;
+}
+
+// Manual late fee only. No date/deadline based calculation.
+late=function(f){ return Number(f?.lateFee||0); };
+bill=function(f){ return Number(f?.quarterly ?? 0); };
+
+// Member/house form: empty homes can be saved with no details; maintenance is manually entered.
+memberForm=function(no=currentFlat||'1'){
+  if(role!=='admin')return;
+  let f=d.flats.find(x=>x.no===no)||d.flats[0];
+  document.getElementById('sheet').innerHTML=`<div class="title">સભ્ય / મકાન માહિતી</div>
+  <label>ઘર નંબર</label><select id="mfno">${d.flats.map(x=>`<option value="${x.no}" ${x.no===f.no?'selected':''}>${x.no}</option>`).join('')}</select>
+  <label>સભ્યનું નામ</label><input id="mfn" value="${esc(f.name)}" placeholder="મકાન ખાલી હોય તો ખાલી રાખો">
+  <label>મોબાઇલ નંબર</label><input id="mfm" inputmode="numeric" maxlength="10" value="${esc(f.mobile)}" placeholder="મકાન ખાલી હોય તો ખાલી રાખો">
+  <label>મકાનનો પ્રકાર</label><select id="mft"><option ${f.type==='ઘરમાલિક'?'selected':''}>ઘરમાલિક</option><option ${f.type==='ભાડુઆત'?'selected':''}>ભાડુઆત</option></select>
+  <label>ક્વાર્ટર મેન્ટેનન્સ / હપ્તો (મેન્યુઅલ)</label><input id="mfq" type="number" min="0" value="${f.quarterly||''}" placeholder="જેમ કે 3000">
+  <p class="muted">મકાન ખાલી હોય તો નામ, મોબાઇલ અને અન્ય વિગતો ખાલી રાખી શકાય છે. મેન્ટેનન્સની રકમ દરેક મકાન માટે અલગથી મેન્યુઅલ નાખી શકાય છે.</p>
+  <button class="btn primary" style="width:100%" onclick="saveMemberV5()">સાચવો</button>
+  <button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+};
+saveMemberV5=function(){
+  let no=document.getElementById('mfno').value,n=document.getElementById('mfn').value.trim(),m=document.getElementById('mfm').value.replace(/\D/g,''),t=document.getElementById('mft').value,qRaw=document.getElementById('mfq').value.trim();
+  if(n && m.length!==10)return toast('સભ્યનું નામ આપ્યું હોય તો 10 અંકનો મોબાઇલ નંબર નાખો');
+  if(m && !n)return toast('મોબાઇલ નંબર સાથે સભ્યનું નામ પણ નાખો');
+  let f=d.flats.find(x=>x.no===no); if(!f)return;
+  f.name=n; f.mobile=m; f.type=t; f.quarterly=qRaw===''?0:Number(qRaw);
+  if(!n&&!m){f.paid=false;f.payments=[];f.lateFee=0;}
+  save();closeModal();render();refreshExtras();toast('મકાનની માહિતી સાચવાઈ');
+};
+
+// Manual payment entry with manual late fee.
+payment=function(no){
+  if(role!=='admin')return;
+  let f=d.flats.find(x=>x.no===no); if(!f)return;
+  let l=late(f), t=f.paid?0:bill(f)+l;
+  let history=f.payments?.length?`<div class="card"><b>પેમેન્ટ ઇતિહાસ</b>${f.payments.map(p=>`<div class="list"><div><b>${money(p.amount)}</b><br><span class="muted">${esc(p.date)} • ${esc(p.mode)} • ${esc(p.receipt)}</span><br><span class="muted">મેન્ટેનન્સ: ${esc(p.periodStart||'')} થી ${esc(p.periodEnd||'')} • લેટ ફી: ${money(p.lateFee||0)}</span></div><div><button class="btn light small-btn" onclick="editPaymentV5('${no}','${p.id}')">Edit</button><button class="btn red small-btn" onclick="deletePayment3('${no}','${p.id}')">Delete</button></div></div>`).join('')}</div>`:'';
+  document.getElementById('sheet').innerHTML=`<div class="title">ઘર ${f.no} • ${esc(f.name||'મકાન ખાલી')}</div>
+  <div class="card"><div class="row"><span>મેન્ટેનન્સ</span><b>${money(bill(f))}</b></div>
+  <label>લેટ ફી (મેન્યુઅલ)</label><input id="manualLate" type="number" min="0" value="${l||''}" placeholder="લેટ ફી હોય તો નાખો" oninput="updatePaymentTotalV5('${no}')">
+  <div class="row"><span>કુલ</span><b id="manualTotal">${money(t)}</b></div></div>
+  ${f.paid?`<button class="btn green" style="width:100%" onclick="receipt('${no}')">રસીદ જુઓ</button><button class="btn" style="width:100%;margin-top:8px" onclick="whatsappPayment('${no}')">💬 WhatsApp મોકલો</button>`:`<label>પેમેન્ટ મોડ</label><select id="pm" onchange="document.getElementById('upiPayBox').classList.toggle('hide',this.value!=='UPI')"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option></select><div id="upiPayBox" class="${d.settings.upi||d.settings.upiQr?'':'hide'}">${d.settings.upi||d.settings.upiQr?upiQrHtml():''}</div><button class="btn primary" style="width:100%;margin-top:10px" onclick="markPaidV5('${no}')">પેમેન્ટ જમા કરો</button>`}${history}<button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+};
+updatePaymentTotalV5=function(no){let f=d.flats.find(x=>x.no===no),v=(bill(f)+(Number(document.getElementById('manualLate')?.value||0)));let el=document.getElementById('manualTotal');if(el)el.textContent=money(v);};
+markPaidV5=function(no){
+  let f=d.flats.find(x=>x.no===no); if(!f)return;
+  let lateFee=Number(document.getElementById('manualLate')?.value||0), amount=bill(f)+lateFee, rec='SS-'+Date.now().toString().slice(-8), period=quarterPeriod();
+  f.lateFee=lateFee; f.paid=true; f.payments=f.payments||[];
+  f.payments.push({id:'p'+Date.now(),amount,lateFee,mode:document.getElementById('pm').value,date:new Date().toLocaleDateString('gu-IN'),receipt:rec,periodStart:period.start,periodEnd:period.end,periodStartISO:period.shortStart,periodEndISO:period.shortEnd});
+  save();closeModal();render();refreshExtras();toast('પેમેન્ટ જમા થયું • '+rec);setTimeout(()=>receipt(no),250);
+};
+editPaymentV5=function(no,id){
+  let f=d.flats.find(x=>x.no===no),p=f?.payments.find(x=>x.id===id);if(!p)return;
+  document.getElementById('sheet').innerHTML=`<div class="title">પેમેન્ટ Edit</div><label>મેન્ટેનન્સ + લેટ ફી સહિત રકમ</label><input id="peAmt" type="number" value="${p.amount}"><label>લેટ ફી (મેન્યુઅલ)</label><input id="peLate" type="number" min="0" value="${p.lateFee||0}"><label>તારીખ</label><input id="peDate" value="${esc(p.date)}"><label>પેમેન્ટ મોડ</label><select id="peMode"><option ${p.mode==='કેશ'?'selected':''}>કેશ</option><option ${p.mode==='UPI'?'selected':''}>UPI</option><option ${p.mode==='બેંક ટ્રાન્સફર'?'selected':''}>બેંક ટ્રાન્સફર</option></select><label>સમયગાળો</label><div class="row"><input id="peStart" value="${esc(p.periodStart||'')}"><input id="peEnd" value="${esc(p.periodEnd||'')}"></div><button class="btn primary" style="width:100%;margin-top:10px" onclick="savePaymentV5('${no}','${id}')">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="payment('${no}')">પાછા</button>`;
+  document.getElementById('modal').classList.remove('hide');
+};
+savePaymentV5=function(no,id){let f=d.flats.find(x=>x.no===no),p=f?.payments.find(x=>x.id===id);if(!p)return;p.amount=Number(document.getElementById('peAmt').value||0);p.lateFee=Number(document.getElementById('peLate').value||0);p.date=document.getElementById('peDate').value;p.mode=document.getElementById('peMode').value;p.periodStart=document.getElementById('peStart').value;p.periodEnd=document.getElementById('peEnd').value;f.lateFee=p.lateFee;save();closeModal();render();refreshExtras();toast('પેમેન્ટ અપડેટ થયું')};
+
+// Keep labels/reporting aligned with new society name.
+try{document.title='સરદાર સોસાયટી';}catch(e){}
+if(typeof save==='function')save();
+if(typeof render==='function')render();
+if(typeof refreshExtras==='function')refreshExtras();
+</script>
+</body></html>');w.document.close()}
+function downloadBackup(){if(role!=='admin')return;let date=new Date().toISOString().slice(0,10),payload={society:'સરદાર સોસાયટી',backupDate:new Date().toISOString(),data:d};let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}));a.download='Sardar_Township_Backup_'+date+'.json';a.click();d.backupDates[date]=new Date().toISOString();save();refreshExtras();toast('દૈનિક બેકઅપ ફાઇલ તૈયાર થઈ')}
+function emailBackup(){if(role!=='admin')return;let date=new Date().toISOString().slice(0,10);window.location.href='mailto:jayeshpatel6442@gmail.com?subject='+encodeURIComponent('સરદાર સોસાયટી દૈનિક બેકઅપ - '+date)+'&body='+encodeURIComponent('આજની બેકઅપ ફાઇલ Sardar_Township_Backup_'+date+'.json એપમાંથી download કરીને attachment તરીકે જોડશો.')} 
 // Override navigation to include finance/settings/visitors access for admin while keeping member view-only
 const _go=go;go=function(id,btn){if(role!=='admin'&&['finance','visitors','settings'].includes(id))return toast('આ વિભાગ માત્ર એડમિન માટે છે');_go(id,btn)};
 // Payment edit/delete helpers for existing payment modal
@@ -149,4 +293,148 @@ function deletePayment3(no,id){if(!confirm('આ પેમેન્ટ ડિલ�
 
 // Auto-hide admin default password text already changed in DOM; add finance nav behavior
 save();render();refreshExtras();
-</script></body></html>
+</script>
+<script>
+// v5 upgrades: society name, imported member list, manual late fee, editable maintenance installment.
+const V5_MEMBERS = [
+['1','રમેશભાઈ ચતરભાઈ ફેફર','9879463973'],
+['2','લલીતભાઈ વાલજીભાઈ લોરૈયા','9879973420'],
+['3','શ્યામભાઈ મકેશભાઈ સીણોજીયા','8140886274'],
+['4','દિલીપભાઈ દેવકરણભાઈ ભોરણીયા','9316733726'],
+['5','નવીનભાઈ ઈશ્વરભાઈ કડાવાર','9428718544'],
+['6','મહેન્દ્રભાઈ ઈશ્વરભાઈ કડાવાર','8866631544'],
+['7','જયેશભાઈ શૈવલાલ પટેલ','8200042818'],
+['8','ભાઈલાલભાઈ ગુણવતભાઈ સતાપરા','9904666409'],
+['9','રાકેશભાઈ નટવરભાઈ કાવર','6352614380'],
+['10','રાજેશભાઈ અમરશીભાઈ એરવાડીયા','9979001190'],
+['11','પાર્થભાઈ હરેશભાઈ ફણપરા','7359551599'],
+['12','મેઘુલભાઈ વાસુદેવભાઈ સતાપરા','9428917909'],
+['13','હિતેશભાઈ નારણભાઈ ગાભા','9998806566'],
+['14','પ્રકાશભાઈ લક્ષ્મણભાઈ કાલરીયા','9879399757'],
+['15','દિલીપભાઈ ભવાનભાઈ પટેલ','9714058230'],
+['16','જયભાઈ દિનેશભાઈ ભાલોડાયા','8160650653'],
+['17','સંદીપભાઈ દિનેશભાઈ કેલા','8238234335'],
+['18','ભાવેશભાઈ દિલીપભાઈ પટેલ','9724521318'],
+['19','ગૌતમભાઈ શંકરભાઈ પટેલ','9099925735'],
+['20','અશોકભાઈ ભાગવતભાઈ મોટકા','6353882522'],
+['21','રમેશભાઈ અણદાભાઈ કેલા','8469894730'],
+['22','અમાતભાઈ વસનજીભાઈ માવાણા','9427661626'],
+['23','ભરતભાઈ વસનજીભાઈ માવાણા','9825794218'],
+['24','નરસીંહભાઈ દેવજીભાઈ માવાણા','8320830392'],
+['25','મહેન્દ્રભાઈ ઠાકરશીભાઈ પટેલ','9426958555'],
+['26','કિશોરભાઈ છગનભાઈ એરવાડીયા','9825638533'],
+['27','સતીશભાઈ કાંતિલાલ સંઘાણા','9725079454'],
+['28','ધવલકુમાર અરવિંદભાઈ એરવાડીયા','8140506236'],
+['29','સંદીપભાઈ રામભાઈ પટેલ','9909962862'],
+['30','જયદીપભાઈ ધરામશીભાઈ કાવર','9574984028'],
+['31','કિરીટભાઈ મહાદેવભાઈ વરમોરા','9428193405'],
+['32','હિતેશભાઈ મનસુખભાઈ લોરિયા','9909626542'],
+['33','અરવિંદભાઈ અમરશીભાઈ દઢાણીયા','9879668840'],
+['34','રોહિતભાઈ રસિકભાઈ પટેલ','9429186254'],
+['35','હિતેશભાઈ હરજીવનભાઈ પટેલ','9825495187'],
+['36','પ્રજ્ઞેશભાઈ વિષ્ણુભાઈ પટેલ','7434040839'],
+['37','જિગ્નેશભાઈ અમૃતભાઈ પટેલ','9998666435'],
+['38','જિગરભાઈ ચીનુભાઈ પટેલ','9824585603'],
+['39','ઉમેશભાઈ જગજીવનભાઈ કાવર','7201004059'],
+['40','કેતનભાઈ વાસુદેવભાઈ પટેલ','9723199408'],
+['41','કિશોરભાઈ મનજીભાઈ સોલગામા','9429934499'],
+['42','નાતાનભાઈ જીતેન્દ્રભાઈ પટેલ','9638888016'],
+['43','બીપીનભાઈ મગનભાઈ બાવરવા','9662774700'],
+['44','સુરેશભાઈ વિઠ્ઠલભાઈ વરમોરા','9106875642'],
+['45','કલ્પેશભાઈ વલુભાઈ વરમોરા','7984971414'],
+['46','અલ્પેશભાઈ ધાતુભાઈ પનારા','9726614004'],
+['47','જલારામભાઈ જીવરાજભાઈ વામજા','9328279579'],
+['48','રોહિતભાઈ ખુશાલભાઈ પટેલ','9427668565'],
+['49','મેહુલભાઈ અમૃતભાઈ પટેલ','8320900063'],
+['50','તુષારભાઈ મોહનભાઈ સાપરિયા','9879924092'],
+['51','ધર્મેન્દ્રભાઈ લાલજીભાઈ વરમોરા','9908564616'],
+['52','પરેશભાઈ રણછોડભાઈ વરમોરા','9265429395'],
+['53','નીકુલભાઈ જગદીશભાઈ પટેલ','8401113764'],
+['54','પરેશભાઈ ભાઈલાલભાઈ પટેલ','9624346013'],
+['55','વિરાંગભાઈ લલિતભાઈ પટેલ','8140222403'],
+['56','ચુડલાલ સવજીભાઈ પનારા','7539964404'],
+['57','ધવલભાઈ મૂળજીભાઈ કેલા','8200960432'],
+['58','વાસુદેવભાઈ ગોવિંદભાઈ માલવણિયા','8160845523'],
+['59','વિમલભાઈ ઘનશ્યામભાઈ પટેલ','9727153575'],
+['60','અશોકભાઈ જોરમભાઈ ખાડાવાર','9998213068']
+];
+
+// Import only into empty fields so existing edits are never overwritten.
+if (typeof d !== 'undefined' && Array.isArray(d.flats)) {
+  V5_MEMBERS.forEach(([no,name,mobile])=>{
+    const f=d.flats.find(x=>x.no===no);
+    if(f){
+      if(!f.name) f.name=name;
+      if(!f.mobile) f.mobile=mobile;
+      if(f.lateFee==null) f.lateFee=0;
+      if(f.quarterly==null) f.quarterly=0;
+    }
+  });
+  if(!d.settings) d.settings={};
+  if(d.settings.late==null) d.settings.late=0;
+}
+
+// Manual late fee only. No date/deadline based calculation.
+late=function(f){ return Number(f?.lateFee||0); };
+bill=function(f){ return Number(f?.quarterly ?? 0); };
+
+// Member/house form: empty homes can be saved with no details; maintenance is manually entered.
+memberForm=function(no=currentFlat||'1'){
+  if(role!=='admin')return;
+  let f=d.flats.find(x=>x.no===no)||d.flats[0];
+  document.getElementById('sheet').innerHTML=`<div class="title">સભ્ય / મકાન માહિતી</div>
+  <label>ઘર નંબર</label><select id="mfno">${d.flats.map(x=>`<option value="${x.no}" ${x.no===f.no?'selected':''}>${x.no}</option>`).join('')}</select>
+  <label>સભ્યનું નામ</label><input id="mfn" value="${esc(f.name)}" placeholder="મકાન ખાલી હોય તો ખાલી રાખો">
+  <label>મોબાઇલ નંબર</label><input id="mfm" inputmode="numeric" maxlength="10" value="${esc(f.mobile)}" placeholder="મકાન ખાલી હોય તો ખાલી રાખો">
+  <label>મકાનનો પ્રકાર</label><select id="mft"><option ${f.type==='ઘરમાલિક'?'selected':''}>ઘરમાલિક</option><option ${f.type==='ભાડુઆત'?'selected':''}>ભાડુઆત</option></select>
+  <label>ક્વાર્ટર મેન્ટેનન્સ / હપ્તો (મેન્યુઅલ)</label><input id="mfq" type="number" min="0" value="${f.quarterly||''}" placeholder="જેમ કે 3000">
+  <p class="muted">મકાન ખાલી હોય તો નામ, મોબાઇલ અને અન્ય વિગતો ખાલી રાખી શકાય છે. મેન્ટેનન્સની રકમ દરેક મકાન માટે અલગથી મેન્યુઅલ નાખી શકાય છે.</p>
+  <button class="btn primary" style="width:100%" onclick="saveMemberV5()">સાચવો</button>
+  <button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+};
+saveMemberV5=function(){
+  let no=document.getElementById('mfno').value,n=document.getElementById('mfn').value.trim(),m=document.getElementById('mfm').value.replace(/\D/g,''),t=document.getElementById('mft').value,qRaw=document.getElementById('mfq').value.trim();
+  if(n && m.length!==10)return toast('સભ્યનું નામ આપ્યું હોય તો 10 અંકનો મોબાઇલ નંબર નાખો');
+  if(m && !n)return toast('મોબાઇલ નંબર સાથે સભ્યનું નામ પણ નાખો');
+  let f=d.flats.find(x=>x.no===no); if(!f)return;
+  f.name=n; f.mobile=m; f.type=t; f.quarterly=qRaw===''?0:Number(qRaw);
+  if(!n&&!m){f.paid=false;f.payments=[];f.lateFee=0;}
+  save();closeModal();render();refreshExtras();toast('મકાનની માહિતી સાચવાઈ');
+};
+
+// Manual payment entry with manual late fee.
+payment=function(no){
+  if(role!=='admin')return;
+  let f=d.flats.find(x=>x.no===no); if(!f)return;
+  let l=late(f), t=f.paid?0:bill(f)+l;
+  let history=f.payments?.length?`<div class="card"><b>પેમેન્ટ ઇતિહાસ</b>${f.payments.map(p=>`<div class="list"><div><b>${money(p.amount)}</b><br><span class="muted">${esc(p.date)} • ${esc(p.mode)} • ${esc(p.receipt)}</span><br><span class="muted">મેન્ટેનન્સ: ${esc(p.periodStart||'')} થી ${esc(p.periodEnd||'')} • લેટ ફી: ${money(p.lateFee||0)}</span></div><div><button class="btn light small-btn" onclick="editPaymentV5('${no}','${p.id}')">Edit</button><button class="btn red small-btn" onclick="deletePayment3('${no}','${p.id}')">Delete</button></div></div>`).join('')}</div>`:'';
+  document.getElementById('sheet').innerHTML=`<div class="title">ઘર ${f.no} • ${esc(f.name||'મકાન ખાલી')}</div>
+  <div class="card"><div class="row"><span>મેન્ટેનન્સ</span><b>${money(bill(f))}</b></div>
+  <label>લેટ ફી (મેન્યુઅલ)</label><input id="manualLate" type="number" min="0" value="${l||''}" placeholder="લેટ ફી હોય તો નાખો" oninput="updatePaymentTotalV5('${no}')">
+  <div class="row"><span>કુલ</span><b id="manualTotal">${money(t)}</b></div></div>
+  ${f.paid?`<button class="btn green" style="width:100%" onclick="receipt('${no}')">રસીદ જુઓ</button><button class="btn" style="width:100%;margin-top:8px" onclick="whatsappPayment('${no}')">💬 WhatsApp મોકલો</button>`:`<label>પેમેન્ટ મોડ</label><select id="pm" onchange="document.getElementById('upiPayBox').classList.toggle('hide',this.value!=='UPI')"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option></select><div id="upiPayBox" class="${d.settings.upi||d.settings.upiQr?'':'hide'}">${d.settings.upi||d.settings.upiQr?upiQrHtml():''}</div><button class="btn primary" style="width:100%;margin-top:10px" onclick="markPaidV5('${no}')">પેમેન્ટ જમા કરો</button>`}${history}<button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+};
+updatePaymentTotalV5=function(no){let f=d.flats.find(x=>x.no===no),v=(bill(f)+(Number(document.getElementById('manualLate')?.value||0)));let el=document.getElementById('manualTotal');if(el)el.textContent=money(v);};
+markPaidV5=function(no){
+  let f=d.flats.find(x=>x.no===no); if(!f)return;
+  let lateFee=Number(document.getElementById('manualLate')?.value||0), amount=bill(f)+lateFee, rec='SS-'+Date.now().toString().slice(-8), period=quarterPeriod();
+  f.lateFee=lateFee; f.paid=true; f.payments=f.payments||[];
+  f.payments.push({id:'p'+Date.now(),amount,lateFee,mode:document.getElementById('pm').value,date:new Date().toLocaleDateString('gu-IN'),receipt:rec,periodStart:period.start,periodEnd:period.end,periodStartISO:period.shortStart,periodEndISO:period.shortEnd});
+  save();closeModal();render();refreshExtras();toast('પેમેન્ટ જમા થયું • '+rec);setTimeout(()=>receipt(no),250);
+};
+editPaymentV5=function(no,id){
+  let f=d.flats.find(x=>x.no===no),p=f?.payments.find(x=>x.id===id);if(!p)return;
+  document.getElementById('sheet').innerHTML=`<div class="title">પેમેન્ટ Edit</div><label>મેન્ટેનન્સ + લેટ ફી સહિત રકમ</label><input id="peAmt" type="number" value="${p.amount}"><label>લેટ ફી (મેન્યુઅલ)</label><input id="peLate" type="number" min="0" value="${p.lateFee||0}"><label>તારીખ</label><input id="peDate" value="${esc(p.date)}"><label>પેમેન્ટ મોડ</label><select id="peMode"><option ${p.mode==='કેશ'?'selected':''}>કેશ</option><option ${p.mode==='UPI'?'selected':''}>UPI</option><option ${p.mode==='બેંક ટ્રાન્સફર'?'selected':''}>બેંક ટ્રાન્સફર</option></select><label>સમયગાળો</label><div class="row"><input id="peStart" value="${esc(p.periodStart||'')}"><input id="peEnd" value="${esc(p.periodEnd||'')}"></div><button class="btn primary" style="width:100%;margin-top:10px" onclick="savePaymentV5('${no}','${id}')">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="payment('${no}')">પાછા</button>`;
+  document.getElementById('modal').classList.remove('hide');
+};
+savePaymentV5=function(no,id){let f=d.flats.find(x=>x.no===no),p=f?.payments.find(x=>x.id===id);if(!p)return;p.amount=Number(document.getElementById('peAmt').value||0);p.lateFee=Number(document.getElementById('peLate').value||0);p.date=document.getElementById('peDate').value;p.mode=document.getElementById('peMode').value;p.periodStart=document.getElementById('peStart').value;p.periodEnd=document.getElementById('peEnd').value;f.lateFee=p.lateFee;save();closeModal();render();refreshExtras();toast('પેમેન્ટ અપડેટ થયું')};
+
+// Keep labels/reporting aligned with new society name.
+try{document.title='સરદાર સોસાયટી';}catch(e){}
+if(typeof save==='function')save();
+if(typeof render==='function')render();
+if(typeof refreshExtras==='function')refreshExtras();
+</script>
+</body></html>
