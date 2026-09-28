@@ -295,4 +295,72 @@ function saveSettingsV8(){if(role!=='admin')return;d.settings.monthly=Number(doc
 function hideTechnicalV8(){document.querySelectorAll('.code-like,[data-code],pre,code').forEach(x=>x.classList.add('code-like'))}
 const _renderV8=render;render=function(){_renderV8();hideTechnicalV8();const ab=document.getElementById('adminSettings');if(ab)ab.innerHTML=role==='admin'?'<div class=\"muted\">એડમિનનું મોબાઇલ અને પાસવર્ડ નીચેના સુરક્ષા વિભાગમાંથી બદલી શકાય છે.</div>':'<div class=\"muted\">આ વિભાગ ફક્ત એડમિન માટે છે.</div>';const mb=document.getElementById('memberAdminBox');if(mb)mb.innerHTML=role==='admin'?'<button class=\"btn primary primary-wide\" onclick=\"goV8(\'members\');document.getElementById(\'memberHouseNo\').focus()\">➕ સભ્ય / મકાનની માહિતી ઉમેરો અથવા બદલો</button>':'<div class=\"member-only\"><b>સભ્ય માહિતી</b><p class=\"muted\">સભ્યો માટે માહિતી જોવા માટે છે. ફેરફાર ફક્ત એડમિન કરી શકે છે.</p></div>';if(role==='admin'){const am=document.getElementById('adminMobile');if(am)am.value=d.admin.username||'';const ap=document.getElementById('adminPassword');if(ap)ap.value='';const ap2=document.getElementById('adminPassword2');if(ap2)ap2.value=''}};render();
 </script>
+
+<script>
+// v9 fixes: payment deletion, member-wise income, and exclusion of vacant houses from totals.
+function isOccupiedHouse(f){return !!(String(f?.name||'').trim()||String(f?.mobile||'').trim())}
+function paidMaintenanceForHouse(f){return (f?.payments||[]).reduce((a,p)=>a+Number(p.amount||0),0)}
+function totalMaintenance(){return d.flats.filter(isOccupiedHouse).reduce((s,f)=>s+paidMaintenanceForHouse(f),0)}
+function incomeEntryCounts(x){if(!x||!x.flatNo)return true;let f=d.flats.find(a=>a.no===String(x.flatNo));return !!f&&isOccupiedHouse(f)}
+function incomeEntryAmount(x){return incomeEntryCounts(x)?Number(x.amount||0):0}
+function totalOtherIncome(){return d.incomes.reduce((s,x)=>s+incomeEntryAmount(x),0)}
+function totalIncome(){return totalMaintenance()+totalOtherIncome()}
+function totalExpense(){return d.expenses.reduce((s,x)=>s+Number(x.amount||0),0)}
+function refreshExtras(){
+  let inc=document.getElementById('sIncome'),exp=document.getElementById('sExpense'),bal=document.getElementById('sBalance'),due=document.getElementById('sDue2');
+  if(inc)inc.textContent=money(totalIncome()); if(exp)exp.textContent=money(totalExpense()); if(bal)bal.textContent=money(totalIncome()-totalExpense());
+  if(due)due.textContent=money(d.flats.filter(f=>isOccupiedHouse(f)&&!f.paid).reduce((s,f)=>s+bill(f),0));
+  renderNotices2();renderFinance2();
+  let bs=document.getElementById('backupStatus');if(bs){let day=new Date().toISOString().slice(0,10);bs.textContent=d.backupDates?.[day]?'આજનો બેકઅપ તૈયાર છે.':'દિવસના અંતે આજનો બેકઅપ ડાઉનલોડ કરો.'}
+}
+// Late fee is manual only; never auto-calculate it from the date.
+function late(f){if(!f)return 0;return f.paid?Number(f.payments?.at(-1)?.lateFee||f.lateFee||0):0}
+function stats(){let occupied=d.flats.filter(isOccupiedHouse),paid=occupied.filter(x=>x.paid),col=paid.reduce((s,x)=>s+paidMaintenanceForHouse(x),0),due=occupied.filter(x=>!x.paid).reduce((s,x)=>s+bill(x),0);return{paid,col,due,late:occupied.reduce((s,x)=>s+late(x),0)}}
+function deletePayment3(no,id){
+  if(role!=='admin')return;
+  let f=d.flats.find(x=>x.no===String(no));
+  if(!f)return;
+  let p=(f.payments||[]).find(x=>x.id===id);
+  if(!p)return toast('પેમેન્ટ એન્ટ્રી મળી નથી');
+  if(!confirm('આ પેમેન્ટ એન્ટ્રી કાયમી રીતે Delete કરવી છે?'))return;
+  f.payments=(f.payments||[]).filter(x=>x.id!==id);
+  f.paid=f.payments.length>0;
+  f.lateFee=f.payments.length?Number(f.payments.at(-1).lateFee||0):0;
+  save();closeModal();render();refreshExtras();toast('પેમેન્ટ એન્ટ્રી Delete થઈ');
+}
+function incomeForm(id){
+  if(role!=='admin')return;
+  let x=d.incomes.find(a=>a.id===id)||{head:d.incomeHeads.find(h=>h!=='મેન્ટેનન્સ આવક')||d.incomeHeads[0],detail:'',date:new Date().toISOString().slice(0,10),amount:'',flatNo:''};
+  let flatOpts='<option value="">સામાન્ય આવક (સભ્ય વગર)</option>'+d.flats.map(f=>`<option value="${f.no}" ${String(x.flatNo||'')===f.no?'selected':''}>ઘર ${f.no} • ${esc(f.name||'મકાન ખાલી')}</option>`).join('');
+  document.getElementById('sheet').innerHTML=`<div class="title">${id?'આવક Edit':'આવક નોંધણી'}</div>
+  <label>આવક હેડ</label><select id="iHead">${d.incomeHeads.map(h=>`<option ${h===x.head?'selected':''}>${esc(h)}</option>`).join('')}</select>
+  <label>સભ્ય / મકાન પ્રમાણે (વૈકલ્પિક)</label><select id="iFlat">${flatOpts}</select>
+  <p class="muted">મકાન પસંદ કરશો તો આ આવક તે સભ્ય/મકાન સાથે જોડાશે. મકાન ખાલી હશે તો આ આવક નોંધાશે, પરંતુ સોસાયટીના કુલ આવક ટોટલમાં ગણાશે નહીં.</p>
+  <label>આવકની વિગત</label><input id="iDetail" value="${esc(x.detail)}">
+  <label>તારીખ</label><input id="iDate" type="date" value="${esc(x.date)}">
+  <label>રકમ</label><input id="iAmount" type="number" min="0" value="${x.amount}">
+  <button class="btn primary" style="width:100%;margin-top:10px" onclick="saveIncome2('${id||''}')">સાચવો</button>
+  <button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+}
+function saveIncome2(id){
+  let x={id:id||'i'+Date.now(),head:document.getElementById('iHead').value,flatNo:document.getElementById('iFlat').value||'',detail:document.getElementById('iDetail').value.trim(),date:document.getElementById('iDate').value,amount:+document.getElementById('iAmount').value||0};
+  if(!x.amount)return toast('રકમ જરૂરી છે');
+  if(id)Object.assign(d.incomes.find(a=>a.id===id),x);else d.incomes.unshift(x);
+  save();closeModal();refreshExtras();toast('આવક સાચવાઈ');
+}
+function incomeHeadTotal(h){return d.incomes.filter(x=>x.head===h).reduce((s,x)=>s+incomeEntryAmount(x),0)+(h==='મેન્ટેનન્સ આવક'?totalMaintenance():0)}
+function renderFinance2(){
+  let il=document.getElementById('incomeList'),el=document.getElementById('expenseList');if(!il)return;
+  il.innerHTML=d.incomes.length?d.incomes.map(x=>{let f=x.flatNo?d.flats.find(a=>a.no===String(x.flatNo)):null;return `<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">${f?`ઘર ${esc(f.no)} • ${esc(f.name||'મકાન ખાલી')} • `:''}${esc(x.date)} • ${esc(x.detail)}</span>${x.flatNo&&!isOccupiedHouse(f)?'<br><span class="muted">⚠️ ખાલી મકાન — કુલ આવકમાં ગણાશે નહીં</span>':''}</div><div><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div></div>`}).join(''):'<span class="muted">હજુ કોઈ આવક એન્ટ્રી નથી.</span>';
+  el.innerHTML=d.expenses.length?d.expenses.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">ક્રમ ${x.seq} • ${esc(x.date)} • ${esc(x.detail)}</span><br><span class="muted">બિલ નં: ${esc(x.billNo||'-')}</span></div><div><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div></div>`).join(''):'<span class="muted">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</span>';
+  let html='<b>આવક</b>';d.incomeHeads.forEach(h=>{html+=`<div class="list"><span>${esc(h)}</span><b>${money(incomeHeadTotal(h))}</b></div>`});
+  html+='<hr><b>ખર્ચ</b>';d.expenseHeads.forEach(h=>{let v=d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0);html+=`<div class="list"><span>${esc(h)}</span><b>${money(v)}</b></div>`});
+  html+=`<hr><div class="row"><span>બાકી સિલક</span><b>${money(totalIncome()-totalExpense())}</b></div>`;
+  document.getElementById('headReport').innerHTML=html;document.getElementById('headsList').innerHTML='<b>આવક હેડ:</b> '+d.incomeHeads.map(esc).join(' • ')+'<br><b>ખર્ચ હેડ:</b> '+d.expenseHeads.map(esc).join(' • ');
+}
+function reportData(){let a=[['હેડ','પ્રકાર','રકમ']];d.incomeHeads.forEach(h=>a.push([h,'આવક',incomeHeadTotal(h)]));d.expenseHeads.forEach(h=>a.push([h,'ખર્ચ',d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)]));return a}
+const _renderV9Base=render;
+render=function(){_renderV9Base();refreshExtras();};
+</script>
 </body></html>
