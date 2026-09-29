@@ -363,4 +363,109 @@ function reportData(){let a=[['હેડ','પ્રકાર','રકમ']];d.i
 const _renderV9Base=render;
 render=function(){_renderV9Base();refreshExtras();};
 </script>
+
+<script>
+/* =========================================================
+   v10 CLOUD SYNC — Sardar Society
+   Google Apps Script is the authoritative database.
+   localStorage remains only as an offline cache.
+   ========================================================= */
+const CLOUD_API = 'https://script.google.com/macros/s/AKfycbwIjSJnUVoMQRxGrTkCP0wEArJRHQuGL4gEO23CDvC2rEIe3S4taGwBZ4HpaOyczcDD/exec';
+let cloudLoaded = false;
+let cloudSaving = false;
+let cloudSaveTimer = null;
+
+function cloudStatus_(msg, ok=true){
+  let el=document.getElementById('cloudStatusV10');
+  if(!el){
+    el=document.createElement('div');
+    el.id='cloudStatusV10';
+    el.style.cssText='position:fixed;right:12px;bottom:72px;z-index:9999;padding:7px 11px;border-radius:18px;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.12);font:600 12px system-ui;color:#555;display:none';
+    document.body.appendChild(el);
+  }
+  el.textContent=msg;
+  el.style.display='block';
+  el.style.color=ok?'#16794a':'#b42318';
+  clearTimeout(el._t);
+  el._t=setTimeout(()=>el.style.display='none',2200);
+}
+
+function localSnapshot_(){
+  try{return JSON.parse(JSON.stringify(d));}catch(e){return d;}
+}
+
+async function cloudLoad_(){
+  try{
+    cloudStatus_('☁️ Cloud data લોડ થઈ રહ્યું છે…');
+    const r=await fetch(CLOUD_API+'?action=load',{method:'GET',cache:'no-store'});
+    const j=await r.json();
+    if(!j.ok) throw new Error(j.error||'Cloud load failed');
+
+    if(j.exists && j.data){
+      d=j.data;
+      // Keep compatibility with older versions / newly added fields.
+      d.settings=d.settings||{};
+      d.admin=d.admin||{username:'',password:''};
+      d.flats=Array.isArray(d.flats)?d.flats:[];
+      d.incomes=Array.isArray(d.incomes)?d.incomes:[];
+      d.expenses=Array.isArray(d.expenses)?d.expenses:[];
+      d.notices=Array.isArray(d.notices)?d.notices:[];
+      d.complaints=Array.isArray(d.complaints)?d.complaints:[];
+      d.visitors=Array.isArray(d.visitors)?d.visitors:[];
+      d.parking=Array.isArray(d.parking)?d.parking:[];
+      d.incomeHeads=Array.isArray(d.incomeHeads)?d.incomeHeads:['મેન્ટેનન્સ આવક','હોલ બુકીંગ આવક','ઉત્સવ ઉજવણી ફંડ','રીપેરીંગ ફંડ','અન્ય આવક'];
+      d.expenseHeads=Array.isArray(d.expenseHeads)?d.expenseHeads:['સિક્યુરિટી પગાર','લાઇટ બિલ','રીપેરીંગ કામ','અન્ય વહીવટી ખર્ચ','સફાઈ કામ'];
+      localStorage.setItem(KEY,JSON.stringify(d));
+      cloudLoaded=true;
+      if(typeof render==='function')render();
+      if(typeof refreshExtras==='function')refreshExtras();
+      cloudStatus_('☁️ Cloud data જોડાયું છે',true);
+      return;
+    }
+
+    // First-time migration: preserve the data already present on this device.
+    cloudLoaded=true;
+    cloudStatus_('☁️ Cloudમાં પહેલો data સાચવાઈ રહ્યો છે…');
+    await cloudSaveNow_();
+    cloudStatus_('☁️ Cloud backup તૈયાર છે',true);
+  }catch(err){
+    console.error('Cloud load error',err);
+    cloudLoaded=false;
+    cloudStatus_('⚠️ Cloud sync ઉપલબ્ધ નથી',false);
+  }
+}
+
+async function cloudSaveNow_(){
+  if(!cloudLoaded || cloudSaving) return;
+  cloudSaving=true;
+  try{
+    const payload={action:'save',data:localSnapshot_()};
+    const r=await fetch(CLOUD_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+    const j=await r.json();
+    if(!j.ok) throw new Error(j.error||'Cloud save failed');
+    localStorage.setItem(KEY,JSON.stringify(d));
+    cloudStatus_('☁️ Cloudમાં સાચવાયું',true);
+  }catch(err){
+    console.error('Cloud save error',err);
+    cloudStatus_('⚠️ Cloud save નિષ્ફળ',false);
+  }finally{
+    cloudSaving=false;
+  }
+}
+
+function scheduleCloudSave_(){
+  if(!cloudLoaded) return;
+  clearTimeout(cloudSaveTimer);
+  cloudSaveTimer=setTimeout(cloudSaveNow_,350);
+}
+
+// Replace the old local-only save with local cache + cloud persistence.
+save=function(){
+  try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}
+  scheduleCloudSave_();
+};
+
+// Start cloud synchronization only after the page's original data/render code has run.
+setTimeout(cloudLoad_,100);
+</script>
 </body></html>
