@@ -43,7 +43,7 @@
 
 <section id="reports" class="hide"><div class="card"><div class="title">જમા-ઉધાર રિપોર્ટ</div><div class="grid"><div class="stat"><span class="muted">કુલ જમા</span><b id="rPaid">₹0</b></div><div class="stat"><span class="muted">કુલ બાકી</span><b id="rDue">₹0</b></div><div class="stat"><span class="muted">લેટ ફી</span><b id="rLate">₹0</b></div><div class="stat"><span class="muted">બાકી મકાન</span><b id="rPending">0</b></div></div></div><div class="card"><div class="title">મકાનવાર રિપોર્ટ</div><div style="overflow:auto"><table><thead><tr><th>મકાન</th><th>સભ્ય</th><th>ક્વાર્ટર</th><th>બાકી</th><th>સ્થિતિ</th></tr></thead><tbody id="table"></tbody></table></div></div><button id="csvBtn" class="btn primary" onclick="csv()">📥 CSV ડાઉનલોડ</button></section>
 
-<section id="finance" class="hide"><div class="card"><div class="section-head"><div><div class="title">આવક નોંધણી</div><div class="sub">આવકના હેડ પ્રમાણે એન્ટ્રી</div></div><button class="btn primary small-btn" onclick="incomeForm()">+ આવક</button></div><div id="incomeList"></div></div><div class="card"><div class="section-head"><div><div class="title">ખર્ચ નોંધણી</div><div class="sub">ક્રમ, ખર્ચની વિગત, તારીખ, બિલની રકમ અને હેડ</div></div><button class="btn primary small-btn" onclick="expenseForm()">+ ખર્ચ</button></div><div id="expenseList"></div></div><div class="card"><div class="title">હેડ વાઈઝ રિપોર્ટ</div><div id="headReport"></div><div class="grid" style="margin-top:10px"><button class="btn primary" onclick="printHeadReport()">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="downloadHeadReport()">📥 ડાઉનલોડ</button></div></div><div class="card"><div class="title">આવક / ખર્ચના હેડ</div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div><div id="headsList" style="margin-top:10px"></div></div></section>
+<section id="finance" class="hide"><div class="card"><div class="section-head"><div><div class="title">આવક નોંધણી</div><div class="sub">આવકના હેડ પ્રમાણે એન્ટ્રી</div></div><button id="adminAddIncomeBtnV12" class="btn primary small-btn" onclick="incomeForm()">+ આવક</button></div><div id="memberIncomeBox" style="margin-top:12px"></div><div id="incomeList"></div></div><div class="card"><div class="section-head"><div><div class="title">ખર્ચ નોંધણી</div><div class="sub">ક્રમ, ખર્ચની વિગત, તારીખ, બિલની રકમ અને હેડ</div></div><button id="adminAddExpenseBtnV12" class="btn primary small-btn" onclick="expenseForm()">+ ખર્ચ</button></div><div id="expenseList"></div></div><div class="card"><div class="title">હેડ વાઈઝ રિપોર્ટ</div><div id="headReport"></div><div class="grid" style="margin-top:10px"><button class="btn primary" onclick="printHeadReport()">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="downloadHeadReport()">📥 ડાઉનલોડ</button></div></div><div class="card"><div class="title">આવક / ખર્ચના હેડ</div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div><div id="headsList" style="margin-top:10px"></div></div></section>
 
 <section id="members" class="hide"><div id="memberAdminBox" class="card"></div><div class="section-card"><div class="title">સભ્ય / મકાનની માહિતી</div><div class="sub">ઘર નંબર લખો. નીચે માત્ર તે જ મકાનની માહિતી આવશે. ફેરફાર કર્યા સિવાય બીજી માહિતી બદલાશે નહીં.</div><div class="member-search"><div><label>ઘર નંબર</label><input id="memberHouseNo" type="number" min="1" max="60" placeholder="1 થી 60" oninput="loadMemberHouseV8()"></div><button class="btn primary primary-wide" onclick="loadMemberHouseV8(true)">માહિતી જુઓ</button></div><div id="memberEditArea" class="member-preview"><span class="muted">ઘર નંબર દાખલ કરો.</span></div></div><div class="card"><div class="title">સભ્યોની યાદી</div><div id="membersList"></div></div></section>
 
@@ -51,7 +51,7 @@
 
 <section id="complaints" class="hide"><div id="complaintForm" class="card"><div class="title">ફરિયાદ નોંધાવો</div><label>મકાન નંબર</label><select id="cf"></select><label>ફરિયાદ</label><input id="ct" placeholder="પાણી, લાઇટ, સફાઈ વગેરે"><button class="btn primary" style="width:100%;margin-top:10px" onclick="complaint()">ફરિયાદ જમા કરો</button></div><div class="card"><div class="title">ફરિયાદોની યાદી</div><div id="cl"></div></div></section>
 
-<section id="visitors" class="hide"><div class="card"><div class="title">વિઝિટર એન્ટ્રી</div><label>વિઝિટરનું નામ</label><input id="vn"><label>મોબાઇલ</label><input id="vm"><label>મકાન નંબર</label><select id="vf"></select><label>હેતુ</label><input id="vp" placeholder="મુલાકાત / ડિલિવરી"><button class="btn primary" style="width:100%;margin-top:10px" onclick="visitor()">એન્ટ્રી નોંધો</button></div><div class="card"><div class="title">એન્ટ્રીઓ</div><div id="vl"></div></div></section>
+<section id="visitors" class="hide"><div id="visitorEntryCardV12" class="card"><div class="title">વિઝિટર એન્ટ્રી</div><label>વિઝિટરનું નામ</label><input id="vn"><label>મોબાઇલ</label><input id="vm"><label>મકાન નંબર</label><select id="vf"></select><label>હેતુ</label><input id="vp" placeholder="મુલાકાત / ડિલિવરી"><button class="btn primary" style="width:100%;margin-top:10px" onclick="visitor()">એન્ટ્રી નોંધો</button></div><div class="card"><div class="title">એન્ટ્રીઓ</div><div id="vl"></div></div></section>
 
 <section id="parking" class="hide"><div class="card"><div class="title">પાર્કિંગ</div><div id="pl"></div></div></section>
 
@@ -124,19 +124,108 @@ function refreshExtras(){
 }
 function renderNotices2(){let el=document.getElementById('noticeList');if(!el)return;el.innerHTML=d.notices.length?d.notices.map(n=>`<div class="notice"><div class="section-head"><b>${esc(n.title)}</b>${role==='admin'?`<span><button class="btn light small-btn" onclick="noticeForm2('${n.id}')">Edit</button> <button class="btn red small-btn" onclick="deleteNotice2('${n.id}')">Delete</button></span>`:''}</div><div class="muted" style="margin-top:6px">${esc(n.text)}</div><div class="muted">${esc(n.date||'')}</div></div>`).join(''):'<span class="muted">કોઈ નોટિસ નથી.</span>'}
 function noticeForm2(id){if(role!=='admin')return;let n=d.notices.find(x=>x.id===id)||{title:'',text:''};document.getElementById('sheet').innerHTML=`<div class="title">${id?'નોટિસ Edit':'Add Notice'}</div><label>શીર્ષક</label><input id="nTitle" value="${esc(n.title)}"><label>વિગત</label><input id="nText" value="${esc(n.text)}"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveNotice2('${id||''}')">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
-function saveNotice2(id){let title=document.getElementById('nTitle').value.trim(),text=document.getElementById('nText').value.trim();if(!title||!text)return toast('શીર્ષક અને વિગત જરૂરી છે');if(id){let n=d.notices.find(x=>x.id===id);n.title=title;n.text=text;n.date=new Date().toLocaleDateString('gu-IN')}else d.notices.unshift({id:'n'+Date.now(),title,text,date:new Date().toLocaleDateString('gu-IN')});save();closeModal();refreshExtras();toast('નોટિસ સાચવાઈ')}
-function deleteNotice2(id){if(!confirm('નોટિસ ડિલીટ કરવી છે?'))return;d.notices=d.notices.filter(x=>x.id!==id);save();refreshExtras();toast('નોટિસ ડિલીટ થઈ')}
+function saveNotice2(id){if(role!=='admin')return;let title=document.getElementById('nTitle').value.trim(),text=document.getElementById('nText').value.trim();if(!title||!text)return toast('શીર્ષક અને વિગત જરૂરી છે');if(id){let n=d.notices.find(x=>x.id===id);n.title=title;n.text=text;n.date=new Date().toLocaleDateString('gu-IN')}else d.notices.unshift({id:'n'+Date.now(),title,text,date:new Date().toLocaleDateString('gu-IN')});save();closeModal();refreshExtras();toast('નોટિસ સાચવાઈ')}
+function deleteNotice2(id){if(role!=='admin')return;if(!confirm('નોટિસ ડિલીટ કરવી છે?'))return;d.notices=d.notices.filter(x=>x.id!==id);save();refreshExtras();toast('નોટિસ ડિલીટ થઈ')}
 function incomeForm(id){if(role!=='admin')return;let x=d.incomes.find(a=>a.id===id)||{head:d.incomeHeads[0],detail:'',date:new Date().toISOString().slice(0,10),amount:''};document.getElementById('sheet').innerHTML=`<div class="title">${id?'આવક Edit':'આવક નોંધણી'}</div><label>આવક હેડ</label><select id="iHead">${d.incomeHeads.map(h=>`<option ${h===x.head?'selected':''}>${esc(h)}</option>`).join('')}</select><label>આવકની વિગત</label><input id="iDetail" value="${esc(x.detail)}"><label>તારીખ</label><input id="iDate" type="date" value="${esc(x.date)}"><label>રકમ</label><input id="iAmount" type="number" value="${x.amount}"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveIncome2('${id||''}')">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
 function saveIncome2(id){let x={id:id||'i'+Date.now(),head:document.getElementById('iHead').value,detail:document.getElementById('iDetail').value.trim(),date:document.getElementById('iDate').value,amount:+document.getElementById('iAmount').value||0};if(!x.amount)return toast('રકમ જરૂરી છે');if(id)Object.assign(d.incomes.find(a=>a.id===id),x);else d.incomes.unshift(x);save();closeModal();refreshExtras();toast('આવક સાચવાઈ')}
-function deleteIncome2(id){if(!confirm('આવક ડિલીટ કરવી છે?'))return;d.incomes=d.incomes.filter(x=>x.id!==id);save();refreshExtras();toast('આવક ડિલીટ થઈ')}
+function deleteIncome2(id){if(role!=='admin')return;if(!confirm('આવક ડિલીટ કરવી છે?'))return;d.incomes=d.incomes.filter(x=>x.id!==id);save();refreshExtras();toast('આવક ડિલીટ થઈ')}
 function expenseForm(id){if(role!=='admin')return;let x=d.expenses.find(a=>a.id===id)||{seq:d.expenses.length+1,head:d.expenseHeads[0],detail:'',date:new Date().toISOString().slice(0,10),amount:'',billNo:''};document.getElementById('sheet').innerHTML=`<div class="title">${id?'ખર્ચ Edit':'ખર્ચ નોંધણી'}</div><label>ક્રમ</label><input id="eSeq" type="number" value="${x.seq}"><label>ખર્ચ હેડ</label><select id="eHead">${d.expenseHeads.map(h=>`<option ${h===x.head?'selected':''}>${esc(h)}</option>`).join('')}</select><label>ખર્ચની વિગત</label><input id="eDetail" value="${esc(x.detail)}"><label>તારીખ</label><input id="eDate" type="date" value="${esc(x.date)}"><label>બિલની રકમ</label><input id="eAmount" type="number" value="${x.amount}"><label>બિલ નંબર / નોંધ</label><input id="eBill" value="${esc(x.billNo||'')}"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveExpense2('${id||''}')">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
-function saveExpense2(id){let x={id:id||'e'+Date.now(),seq:+document.getElementById('eSeq').value||1,head:document.getElementById('eHead').value,detail:document.getElementById('eDetail').value.trim(),date:document.getElementById('eDate').value,amount:+document.getElementById('eAmount').value||0,billNo:document.getElementById('eBill').value.trim()};if(!x.detail||!x.amount)return toast('ખર્ચની વિગત અને રકમ જરૂરી છે');if(id)Object.assign(d.expenses.find(a=>a.id===id),x);else d.expenses.unshift(x);save();closeModal();refreshExtras();toast('ખર્ચ સાચવાયો')}
-function deleteExpense2(id){if(!confirm('આ ખર્ચ ડિલીટ કરવો છે?'))return;d.expenses=d.expenses.filter(x=>x.id!==id);save();refreshExtras();toast('ખર્ચ ડિલીટ થયો')}
+function saveExpense2(id){if(role!=='admin')return;let x={id:id||'e'+Date.now(),seq:+document.getElementById('eSeq').value||1,head:document.getElementById('eHead').value,detail:document.getElementById('eDetail').value.trim(),date:document.getElementById('eDate').value,amount:+document.getElementById('eAmount').value||0,billNo:document.getElementById('eBill').value.trim()};if(!x.detail||!x.amount)return toast('ખર્ચની વિગત અને રકમ જરૂરી છે');if(id)Object.assign(d.expenses.find(a=>a.id===id),x);else d.expenses.unshift(x);save();closeModal();refreshExtras();toast('ખર્ચ સાચવાયો')}
+function deleteExpense2(id){if(role!=='admin')return;if(!confirm('આ ખર્ચ ડિલીટ કરવો છે?'))return;d.expenses=d.expenses.filter(x=>x.id!==id);save();refreshExtras();toast('ખર્ચ ડિલીટ થયો')}
 function headForm(type){if(role!=='admin')return;let name=prompt(type==='income'?'નવો આવક હેડ':'નવો ખર્ચ હેડ');if(!name?.trim())return;name=name.trim();let arr=type==='income'?d.incomeHeads:d.expenseHeads;if(!arr.includes(name))arr.push(name);save();refreshExtras();toast('હેડ ઉમેરાયો')}
-function renderFinance2(){let il=document.getElementById('incomeList'),el=document.getElementById('expenseList');if(!il)return;il.innerHTML=d.incomes.length?d.incomes.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">${esc(x.date)} • ${esc(x.detail)}</span></div><div><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div></div>`).join(''):'<span class="muted">હજુ કોઈ આવક એન્ટ્રી નથી.</span>';el.innerHTML=d.expenses.length?d.expenses.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">ક્રમ ${x.seq} • ${esc(x.date)} • ${esc(x.detail)}</span><br><span class="muted">બિલ નં: ${esc(x.billNo||'-')}</span></div><div><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div></div>`).join(''):'<span class="muted">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</span>';let html='<b>આવક</b>';d.incomeHeads.forEach(h=>{let v=d.incomes.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)+(h==='મેન્ટેનન્સ આવક'?totalMaintenance():0);html+=`<div class="list"><span>${esc(h)}</span><b>${money(v)}</b></div>`});html+='<hr><b>ખર્ચ</b>';d.expenseHeads.forEach(h=>{let v=d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0);html+=`<div class="list"><span>${esc(h)}</span><b>${money(v)}</b></div>`});html+=`<hr><div class="row"><span>બાકી સિલક</span><b>${money(totalIncome()-totalExpense())}</b></div>`;document.getElementById('headReport').innerHTML=html;document.getElementById('headsList').innerHTML='<b>આવક હેડ:</b> '+d.incomeHeads.map(esc).join(' • ')+'<br><b>ખર્ચ હેડ:</b> '+d.expenseHeads.map(esc).join(' • ')}
+function renderFinance2(){
+  let il=document.getElementById('incomeList'),el=document.getElementById('expenseList');if(!il)return;
+  renderMemberIncomeBox_();
+  const canEdit=role==='admin';
+  il.innerHTML=d.incomes.length?d.incomes.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">${esc(x.date)} • ${esc(x.detail)}</span></div>${canEdit?`<div><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div>`:''}</div>`).join(''):'<span class="muted">હજુ કોઈ આવક એન્ટ્રી નથી.</span>';
+  el.innerHTML=d.expenses.length?d.expenses.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">ક્રમ ${x.seq} • ${esc(x.date)} • ${esc(x.detail)}</span><br><span class="muted">બિલ નં: ${esc(x.billNo||'-')}</span></div>${canEdit?`<div><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div>`:''}</div>`).join(''):'<span class="muted">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</span>';
+  let html='<b>આવક</b>';d.incomeHeads.forEach(h=>{let v=d.incomes.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)+(h==='મેન્ટેનન્સ આવક'?totalMaintenance():0);html+=`<div class="list"><span>${esc(h)}</span><b>${money(v)}</b></div>`});
+  html+='<hr><b>ખર્ચ</b>';d.expenseHeads.forEach(h=>{let v=d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0);html+=`<div class="list"><span>${esc(h)}</span><b>${money(v)}</b></div>`});
+  html+=`<hr><div class="row"><span>બાકી સિલક</span><b>${money(totalIncome()-totalExpense())}</b></div>`;
+  document.getElementById('headReport').innerHTML=html;document.getElementById('headsList').innerHTML='<b>આવક હેડ:</b> '+d.incomeHeads.map(esc).join(' • ')+'<br><b>ખર્ચ હેડ:</b> '+d.expenseHeads.map(esc).join(' • ')
+}
 function reportData(){let a=[['હેડ','પ્રકાર','રકમ']];d.incomeHeads.forEach(h=>a.push([h,'આવક',d.incomes.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)+(h==='મેન્ટેનન્સ આવક'?totalMaintenance():0)]));d.expenseHeads.forEach(h=>a.push([h,'ખર્ચ',d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)]));return a}
 function downloadHeadReport(){let rows=reportData();let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+rows.map(r=>r.join(',')).join('\n')],{type:'text/csv'}));a.download='Sardar_Township_Head_Wise_Report.csv';a.click()}
 function printHeadReport(){let rows=reportData();let w=window.open('','_blank');if(!w)return;w.document.write('<html lang="gu"><head><meta charset="utf-8"><title>હેડ વાઈઝ રિપોર્ટ</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #999;padding:8px;text-align:left}</style></head><body><h2>સરદાર સોસાયટી - હેડ વાઈઝ રિપોર્ટ</h2><table><tr><th>હેડ</th><th>પ્રકાર</th><th>રકમ</th></tr>'+rows.slice(1).map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+money(r[2])+'</td></tr>').join('')+'</table></body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),200)}
+</script>
+<script>
+/* =========================================================
+   v12 MEMBER PERMISSIONS
+   Members are view-only everywhere except Complaints.
+   Existing data is never changed by this layer.
+   ========================================================= */
+function applyMemberPermissionsV12_(){
+  const member = role==='member';
+  const hide=(id,on)=>{const el=document.getElementById(id);if(el)el.classList.toggle('hide',!!on);};
+
+  hide('adminAddIncomeBtnV12',member);
+  hide('adminAddExpenseBtnV12',member);
+  hide('addNoticeBtn',member);
+  hide('visitorEntryCardV12',member);
+
+  // Admin-only settings controls. Members can see a simple read-only message.
+  const settings=document.getElementById('settings');
+  if(settings){
+    [...settings.querySelectorAll('.security-card')].forEach(x=>x.classList.toggle('hide',member));
+    const cards=[...settings.children].filter(x=>x.classList.contains('card'));
+    cards.forEach((x,i)=>{ if(i>0) x.classList.toggle('hide',member); });
+    const adminBox=document.getElementById('adminSettings');
+    if(adminBox && member) adminBox.innerHTML='<div class="member-only"><b>સેટિંગ</b><p class="muted">આ વિભાગની માહિતી ફક્ત એડમિન બદલી શકે છે. સભ્ય માટે View Only છે.</p></div>';
+  }
+
+  // Finance add/head controls are admin-only.
+  const finance=document.getElementById('finance');
+  if(finance){
+    const addButtons=finance.querySelectorAll('#adminAddIncomeBtnV12,#adminAddExpenseBtnV12');
+    addButtons.forEach(b=>b.classList.toggle('hide',member));
+    const headCard=finance.children[3];
+    if(headCard) headCard.classList.toggle('hide',member);
+  }
+}
+
+// Defence-in-depth: even if a hidden button is triggered manually, members cannot mutate finance.
+const _v12DeleteIncome=deleteIncome2;
+deleteIncome2=function(id){if(role!=='admin'){toast('સભ્ય માટે આવક માહિતી View Only છે');return;}return _v12DeleteIncome(id);};
+const _v12DeleteExpense=deleteExpense2;
+deleteExpense2=function(id){if(role!=='admin'){toast('સભ્ય માટે ખર્ચ માહિતી View Only છે');return;}return _v12DeleteExpense(id);};
+const _v12SaveIncome=saveIncome2;
+saveIncome2=function(id){if(role!=='admin'){toast('સભ્ય માટે આવક માહિતી View Only છે');return;}return _v12SaveIncome(id);};
+const _v12SaveExpense=saveExpense2;
+saveExpense2=function(id){if(role!=='admin'){toast('સભ્ય માટે ખર્ચ માહિતી View Only છે');return;}return _v12SaveExpense(id);};
+
+// Complaint edit: a member may edit only their own complaint.
+function editComplaintV12_(index){
+  const c=d.complaints[index];
+  if(!c)return;
+  if(role==='member' && String(c.flat)!==String(currentFlat))return toast('સભ્ય માત્ર પોતાના મકાનની ફરિયાદ Edit કરી શકે');
+  const text=prompt('ફરિયાદમાં ફેરફાર કરો',c.text||'');
+  if(text===null)return;
+  const t=text.trim();if(!t)return toast('ફરિયાદ ખાલી રાખી શકાતી નથી');
+  c.text=t;c.editedDate=new Date().toLocaleDateString('gu-IN');
+  save();render();toast('ફરિયાદ સુધારાઈ');
+}
+
+// Add an Edit button only for the member's own complaint; admin can also edit.
+const _v12RenderBase=render;
+render=function(){
+  _v12RenderBase();
+  const cl=document.getElementById('cl');
+  if(cl){
+    cl.innerHTML=d.complaints.length?d.complaints.map((c,i)=>{
+      const own=role==='admin'||(role==='member'&&String(c.flat)===String(currentFlat));
+      return `<div class="list"><div><b>ઘર ${esc(c.flat)}</b> • ${esc(c.text)}<br><span class="muted">${esc(c.date||'')}${c.editedDate?' • સુધારેલ: '+esc(c.editedDate):''}</span></div><div style="display:flex;gap:6px;align-items:center"><span class="badge ${c.status==='પૂર્ણ'?'paid':'due'}">${esc(c.status||'બાકી')}</span>${own?`<button class="btn light small-btn" onclick="editComplaintV12_(${i})">Edit</button>`:''}</div></div>`;
+    }).join(''):'<span class="muted">કોઈ ફરિયાદ નથી.</span>';
+  }
+  applyMemberPermissionsV12_();
+};
+
+// Re-apply after finance/notice refreshes and after cloud updates.
+const _v12RefreshExtras=refreshExtras;
+refreshExtras=function(){_v12RefreshExtras();applyMemberPermissionsV12_();};
+
+applyMemberPermissionsV12_();
+</script>
+</body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),200)}
 </script>
 <script>
 // v5 upgrades: society name, imported member list, manual late fee, editable maintenance installment.
@@ -350,8 +439,55 @@ function saveIncome2(id){
   save();closeModal();refreshExtras();toast('આવક સાચવાઈ');
 }
 function incomeHeadTotal(h){return d.incomes.filter(x=>x.head===h).reduce((s,x)=>s+incomeEntryAmount(x),0)+(h==='મેન્ટેનન્સ આવક'?totalMaintenance():0)}
+function memberIncomeAmount_(head,no){
+  return d.incomes.filter(x=>x.head===head && String(x.flatNo||'')===String(no) && incomeEntryCounts(x)).reduce((s,x)=>s+Number(x.amount||0),0);
+}
+function renderMemberIncomeBox_(){
+  const box=document.getElementById('memberIncomeBox');
+  if(!box || role!=='admin') { if(box) box.innerHTML=''; return; }
+  const heads=d.incomeHeads.filter(h=>h!=='મેન્ટેનન્સ આવક');
+  if(!heads.length){ box.innerHTML=''; return; }
+  const occupied=d.flats.filter(isOccupiedHouse);
+  if(!occupied.length){
+    box.innerHTML='<div class="section-card"><b>સભ્યવાર અન્ય આવક</b><div class="muted" style="margin-top:6px">હાલ કોઈ ભરેલું મકાન નથી.</div></div>';
+    return;
+  }
+  const current=heads.includes(window.memberIncomeHead_) ? window.memberIncomeHead_ : heads[0];
+  window.memberIncomeHead_=current;
+  const rows=occupied.map(f=>{
+    const total=memberIncomeAmount_(current,f.no);
+    return `<div class="list" style="align-items:center;gap:8px;flex-wrap:wrap">
+      <div style="min-width:150px;flex:1"><b>ઘર ${esc(f.no)}</b><br><span class="muted">${esc(f.name||'સભ્ય')}</span>${total?`<br><span class="muted">આ હેડમાં જમા: <b>${money(total)}</b></span>`:''}</div>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+        <input id="miAmt_${esc(f.no)}" type="number" min="0" inputmode="numeric" placeholder="જમા રકમ" style="width:125px;padding:9px;border:1px solid #ddd;border-radius:10px">
+        <button class="btn primary small-btn" onclick="saveMemberIncome_('${esc(current)}','${esc(f.no)}')">જમા કરો</button>
+      </div>
+    </div>`;
+  }).join('');
+  box.innerHTML=`<div class="section-card" style="margin-bottom:12px">
+    <div class="section-head"><div><div class="title">સભ્યવાર આવક જમા</div><div class="sub">મેન્ટેનન્સ સિવાયના હેડ માટે સીધી સભ્યવાર રકમ જમા કરો</div></div></div>
+    <label>આવક હેડ</label>
+    <select id="memberIncomeHead" onchange="window.memberIncomeHead_=this.value;renderMemberIncomeBox_()">${heads.map(h=>`<option value="${esc(h)}" ${h===current?'selected':''}>${esc(h)}</option>`).join('')}</select>
+    <div style="margin-top:8px">${rows}</div>
+  </div>`;
+}
+function saveMemberIncome_(head,no){
+  if(role!=='admin')return;
+  const el=document.getElementById('miAmt_'+no);
+  const amount=Number(el?.value||0);
+  if(amount<=0){toast('જમા રકમ દાખલ કરો');el?.focus();return;}
+  const f=d.flats.find(x=>String(x.no)===String(no));
+  if(!f || !isOccupiedHouse(f)){toast('આ મકાન ખાલી છે');return;}
+  const today=new Date().toISOString().slice(0,10);
+  d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:`${head} • ઘર ${no} • ${f.name||'સભ્ય'}`,date:today,amount});
+  save();
+  renderFinance2();
+  refreshExtras();
+  toast(`ઘર ${no} માટે ${money(amount)} જમા થયું`);
+}
 function renderFinance2(){
   let il=document.getElementById('incomeList'),el=document.getElementById('expenseList');if(!il)return;
+  renderMemberIncomeBox_();
   il.innerHTML=d.incomes.length?d.incomes.map(x=>{let f=x.flatNo?d.flats.find(a=>a.no===String(x.flatNo)):null;return `<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">${f?`ઘર ${esc(f.no)} • ${esc(f.name||'મકાન ખાલી')} • `:''}${esc(x.date)} • ${esc(x.detail)}</span>${x.flatNo&&!isOccupiedHouse(f)?'<br><span class="muted">⚠️ ખાલી મકાન — કુલ આવકમાં ગણાશે નહીં</span>':''}</div><div><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div></div>`}).join(''):'<span class="muted">હજુ કોઈ આવક એન્ટ્રી નથી.</span>';
   el.innerHTML=d.expenses.length?d.expenses.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">ક્રમ ${x.seq} • ${esc(x.date)} • ${esc(x.detail)}</span><br><span class="muted">બિલ નં: ${esc(x.billNo||'-')}</span></div><div><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div></div>`).join(''):'<span class="muted">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</span>';
   let html='<b>આવક</b>';d.incomeHeads.forEach(h=>{html+=`<div class="list"><span>${esc(h)}</span><b>${money(incomeHeadTotal(h))}</b></div>`});
@@ -507,5 +643,83 @@ async function cloudPoll_(){
 showCloudTools_();
 setTimeout(async()=>{ await cloudLoad_(); cloudPollTimer=setInterval(cloudPoll_,15000); },100);
 
+</script>
+
+<script>
+/* =========================================================
+   v12 MEMBER PERMISSIONS
+   Members are view-only everywhere except Complaints.
+   Existing data is never changed by this layer.
+   ========================================================= */
+function applyMemberPermissionsV12_(){
+  const member = role==='member';
+  const hide=(id,on)=>{const el=document.getElementById(id);if(el)el.classList.toggle('hide',!!on);};
+
+  hide('adminAddIncomeBtnV12',member);
+  hide('adminAddExpenseBtnV12',member);
+  hide('addNoticeBtn',member);
+  hide('visitorEntryCardV12',member);
+
+  // Admin-only settings controls. Members can see a simple read-only message.
+  const settings=document.getElementById('settings');
+  if(settings){
+    [...settings.querySelectorAll('.security-card')].forEach(x=>x.classList.toggle('hide',member));
+    const cards=[...settings.children].filter(x=>x.classList.contains('card'));
+    cards.forEach((x,i)=>{ if(i>0) x.classList.toggle('hide',member); });
+    const adminBox=document.getElementById('adminSettings');
+    if(adminBox && member) adminBox.innerHTML='<div class="member-only"><b>સેટિંગ</b><p class="muted">આ વિભાગની માહિતી ફક્ત એડમિન બદલી શકે છે. સભ્ય માટે View Only છે.</p></div>';
+  }
+
+  // Finance add/head controls are admin-only.
+  const finance=document.getElementById('finance');
+  if(finance){
+    const addButtons=finance.querySelectorAll('#adminAddIncomeBtnV12,#adminAddExpenseBtnV12');
+    addButtons.forEach(b=>b.classList.toggle('hide',member));
+    const headCard=finance.children[3];
+    if(headCard) headCard.classList.toggle('hide',member);
+  }
+}
+
+// Defence-in-depth: even if a hidden button is triggered manually, members cannot mutate finance.
+const _v12DeleteIncome=deleteIncome2;
+deleteIncome2=function(id){if(role!=='admin'){toast('સભ્ય માટે આવક માહિતી View Only છે');return;}return _v12DeleteIncome(id);};
+const _v12DeleteExpense=deleteExpense2;
+deleteExpense2=function(id){if(role!=='admin'){toast('સભ્ય માટે ખર્ચ માહિતી View Only છે');return;}return _v12DeleteExpense(id);};
+const _v12SaveIncome=saveIncome2;
+saveIncome2=function(id){if(role!=='admin'){toast('સભ્ય માટે આવક માહિતી View Only છે');return;}return _v12SaveIncome(id);};
+const _v12SaveExpense=saveExpense2;
+saveExpense2=function(id){if(role!=='admin'){toast('સભ્ય માટે ખર્ચ માહિતી View Only છે');return;}return _v12SaveExpense(id);};
+
+// Complaint edit: a member may edit only their own complaint.
+function editComplaintV12_(index){
+  const c=d.complaints[index];
+  if(!c)return;
+  if(role==='member' && String(c.flat)!==String(currentFlat))return toast('સભ્ય માત્ર પોતાના મકાનની ફરિયાદ Edit કરી શકે');
+  const text=prompt('ફરિયાદમાં ફેરફાર કરો',c.text||'');
+  if(text===null)return;
+  const t=text.trim();if(!t)return toast('ફરિયાદ ખાલી રાખી શકાતી નથી');
+  c.text=t;c.editedDate=new Date().toLocaleDateString('gu-IN');
+  save();render();toast('ફરિયાદ સુધારાઈ');
+}
+
+// Add an Edit button only for the member's own complaint; admin can also edit.
+const _v12RenderBase=render;
+render=function(){
+  _v12RenderBase();
+  const cl=document.getElementById('cl');
+  if(cl){
+    cl.innerHTML=d.complaints.length?d.complaints.map((c,i)=>{
+      const own=role==='admin'||(role==='member'&&String(c.flat)===String(currentFlat));
+      return `<div class="list"><div><b>ઘર ${esc(c.flat)}</b> • ${esc(c.text)}<br><span class="muted">${esc(c.date||'')}${c.editedDate?' • સુધારેલ: '+esc(c.editedDate):''}</span></div><div style="display:flex;gap:6px;align-items:center"><span class="badge ${c.status==='પૂર્ણ'?'paid':'due'}">${esc(c.status||'બાકી')}</span>${own?`<button class="btn light small-btn" onclick="editComplaintV12_(${i})">Edit</button>`:''}</div></div>`;
+    }).join(''):'<span class="muted">કોઈ ફરિયાદ નથી.</span>';
+  }
+  applyMemberPermissionsV12_();
+};
+
+// Re-apply after finance/notice refreshes and after cloud updates.
+const _v12RefreshExtras=refreshExtras;
+refreshExtras=function(){_v12RefreshExtras();applyMemberPermissionsV12_();};
+
+applyMemberPermissionsV12_();
 </script>
 </body></html>
