@@ -146,7 +146,106 @@ function renderFinance2(){
 }
 function reportData(){let a=[['હેડ','પ્રકાર','રકમ']];d.incomeHeads.forEach(h=>a.push([h,'આવક',d.incomes.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)+(h==='મેન્ટેનન્સ આવક'?totalMaintenance():0)]));d.expenseHeads.forEach(h=>a.push([h,'ખર્ચ',d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)]));return a}
 function downloadHeadReport(){let rows=reportData();let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+rows.map(r=>r.join(',')).join('\n')],{type:'text/csv'}));a.download='Sardar_Township_Head_Wise_Report.csv';a.click()}
-function printHeadReport(){let rows=reportData();let w=window.open('','_blank');if(!w)return;w.document.write('<html lang="gu"><head><meta charset="utf-8"><title>હેડ વાઈઝ રિપોર્ટ</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #999;padding:8px;text-align:left}</style></head><body><h2>સરદાર સોસાયટી - હેડ વાઈઝ રિપોર્ટ</h2><table><tr><th>હેડ</th><th>પ્રકાર</th><th>રકમ</th></tr>'+rows.slice(1).map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+money(r[2])+'</td></tr>').join('')+'</table></body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),200)}
+function printHeadReport(){let rows=reportData();let w=window.open('','_blank');if(!w)return;w.document.write('<html lang="gu"><head><meta charset="utf-8"><title>હેડ વાઈઝ રિપોર્ટ</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #999;padding:8px;text-align:left}</style></head><body><h2>સરદાર સોસાયટી - હેડ વાઈઝ રિપોર્ટ</h2><table><tr><th>હેડ</th><th>પ્રકાર</th><th>રકમ</th></tr>'+rows.slice(1).map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+money(r[2])+'</td></tr>').join('')+'</table><style>
+/* =========================================================
+   v13 PREMIUM UI — visual-only layer
+   Keeps existing data/cloud logic unchanged.
+   ========================================================= */
+:root{--blue:#1769e0;--blue2:#0b3f91;--violet:#6d5dfc;--teal:#0f9d8a;--gold:#f5a524;--bg:#f4f7fc;--ink:#162033;--muted:#6b7280;--line:#e6ebf2}
+body{background:radial-gradient(circle at 10% 0%,#e9f3ff 0,#f7f9fc 38%,#f4f6fb 100%)}
+.app{background:transparent}
+.top{background:linear-gradient(135deg,#1769e0 0%,#2445b8 55%,#633fd0 100%);border-radius:0 0 30px 30px;padding:16px 16px 20px;box-shadow:0 12px 32px #173b8a26}
+.brand h1{font-size:22px;letter-spacing:.1px}.brand small{font-size:12px}
+.wrap{padding:15px 14px 92px}
+.card,.section-card{border:1px solid #e6edf7;box-shadow:0 8px 28px #183b6d0b;border-radius:20px}
+.hero{background:linear-gradient(135deg,#ffffff 0%,#edf6ff 55%,#f4efff 100%);border:1px solid #dce8fa}
+.title{font-size:18px;letter-spacing:.05px}.sub{line-height:1.45}
+.stat{position:relative;overflow:hidden;background:linear-gradient(145deg,#f7fbff,#edf5ff);border:1px solid #dfebfa;padding:13px;border-radius:16px}
+.stat:after{content:"";position:absolute;width:54px;height:54px;border-radius:50%;right:-20px;top:-20px;background:#fff8;box-shadow:0 0 0 10px #fff3}
+.stat b{font-size:20px;position:relative;z-index:1}
+.page-tools{gap:11px}.tool-btn{min-height:92px;background:linear-gradient(145deg,#fff,#f7faff);border:1px solid #e2eaf5;box-shadow:0 8px 20px #193b6d0d;transition:transform .15s ease,box-shadow .15s ease}.tool-btn:active{transform:scale(.98)}
+.tool-btn .ico{font-size:27px}.tool-btn small{font-size:10px}
+.btn{border-radius:13px;box-shadow:0 2px 5px #17365d0a}.primary{background:linear-gradient(135deg,#1769e0,#3154d5)}
+.nav{height:76px;background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid #e3e8f0;box-shadow:0 -10px 28px #183b6d12}.nav button{background:transparent}.nav button.on{color:#1769e0}
+/* compact finance */
+.finance-toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.finance-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.finance-mini{padding:12px;border-radius:15px;border:1px solid #e4ebf5;background:linear-gradient(145deg,#fff,#f7faff)}
+.finance-mini .k{font-size:11px;color:var(--muted)}.finance-mini .v{font-size:18px;font-weight:900;margin-top:3px}
+.finance-entry{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #edf0f4}
+.finance-entry:last-child{border-bottom:0}.finance-main{min-width:0;flex:1}.finance-title{font-weight:900;font-size:14px;line-height:1.35}.finance-amount{font-size:17px;font-weight:900;white-space:nowrap;color:#123f8a}.finance-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}.finance-chip{display:inline-flex;align-items:center;background:#f1f5fa;color:#667085;border-radius:20px;padding:4px 7px;font-size:10px}.finance-head-chip{background:#edf5ff;color:#1754a6}.finance-actions{display:flex;gap:5px;flex-shrink:0}.finance-actions .small-btn{min-width:42px}
+.finance-empty{padding:18px;text-align:center;color:#7b8492;background:#f8fafc;border-radius:14px}
+.finance-report{display:grid;gap:7px}.finance-report-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:#f7f9fc;border:1px solid #edf1f6}.finance-report-row b{white-space:nowrap}.finance-report-row.income{background:#f0fbf6}.finance-report-row.expense{background:#fff7f5}
+.member-income-card{background:linear-gradient(145deg,#f9fcff,#eef7ff);border:1px solid #dceafa;border-radius:18px;padding:13px;margin-bottom:12px}.member-income-row{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #e4edf7}.member-income-row:last-child{border-bottom:0}.member-income-person{min-width:0;flex:1}.member-income-person b{font-size:14px}.member-income-input{width:115px!important;padding:9px 10px!important;border-radius:10px!important}.member-income-save{padding:9px 10px!important;white-space:nowrap}
+.section-card .section-head{margin-bottom:4px}
+@media(max-width:430px){.finance-entry{align-items:flex-start}.finance-actions{flex-direction:column}.finance-actions .small-btn{min-width:48px}.member-income-row{align-items:center}.member-income-input{width:95px!important}.member-income-save{padding:8px!important}.finance-title{font-size:13px}.finance-amount{font-size:15px}}
+@media(max-width:360px){.page-tools{grid-template-columns:1fr 1fr}.finance-summary{gap:7px}.member-income-row{flex-wrap:wrap}.member-income-person{width:100%;flex-basis:100%}.member-income-input{flex:1;width:auto!important}}
+</style>
+<script>
+/* =========================================================
+   v13 compact finance renderer
+   Visual/UX change only. Existing records and cloud sync remain intact.
+   ========================================================= */
+function renderMemberIncomeBoxV13(){
+  const box=document.getElementById('memberIncomeBox');
+  if(!box || role!=='admin'){if(box)box.innerHTML='';return;}
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  if(!heads.length){box.innerHTML='';return;}
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  if(!occupied.length){box.innerHTML='<div class="member-income-card"><b>સભ્યવાર અન્ય આવક</b><div class="muted" style="margin-top:6px">હાલ કોઈ ભરેલું મકાન નથી.</div></div>';return;}
+  const current=heads.includes(window.memberIncomeHead_)?window.memberIncomeHead_:heads[0];
+  window.memberIncomeHead_=current;
+  const rows=occupied.map(f=>{
+    const total=memberIncomeAmount_(current,f.no);
+    return `<div class="member-income-row">
+      <div class="member-income-person"><b>ઘર ${esc(f.no)}</b> • ${esc(f.name||'સભ્ય')}<br>${total?`<span class="muted">આ હેડમાં જમા: <b>${money(total)}</b></span>`:'<span class="muted">હજુ જમા નથી</span>'}</div>
+      <input id="miAmt_${esc(f.no)}" class="member-income-input" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ">
+      <button class="btn primary member-income-save" onclick="saveMemberIncome_('${esc(current)}','${esc(f.no)}')">જમા કરો</button>
+    </div>`;
+  }).join('');
+  box.innerHTML=`<div class="member-income-card">
+    <div class="section-head"><div><div class="title" style="margin-bottom:2px">સભ્યવાર આવક જમા</div><div class="sub">મેન્ટેનન્સ સિવાયની આવક માટે સીધી સભ્યની સામે રકમ જમા કરો.</div></div><span class="pill">${occupied.length} સભ્યો</span></div>
+    <label>આવક હેડ</label>
+    <select id="memberIncomeHead" onchange="window.memberIncomeHead_=this.value;renderMemberIncomeBoxV13()">${heads.map(h=>`<option value="${esc(h)}" ${h===current?'selected':''}>${esc(h)}</option>`).join('')}</select>
+    <div style="margin-top:7px">${rows}</div>
+  </div>`;
+}
+
+function renderFinanceV13(){
+  const il=document.getElementById('incomeList'),el=document.getElementById('expenseList');
+  if(!il||!el)return;
+  renderMemberIncomeBoxV13();
+  const incomes=d.incomes||[], expenses=d.expenses||[];
+  il.innerHTML=incomes.length?incomes.map(x=>{
+    const f=x.flatNo?d.flats.find(a=>a.no===String(x.flatNo)):null;
+    const vacant=x.flatNo && f && !isOccupiedHouse(f);
+    return `<div class="finance-entry">
+      <div class="finance-main"><div class="finance-title">${esc(x.detail||x.head||'આવક')}</div><div class="finance-meta"><span class="finance-chip finance-head-chip">${esc(x.head||'આવક')}</span>${f?`<span class="finance-chip">🏠 ઘર ${esc(f.no)}</span>`:''}<span class="finance-chip">📅 ${esc(x.date||'')}</span>${vacant?'<span class="finance-chip">⚠️ કુલમાં નહીં</span>':''}</div></div>
+      <div class="finance-amount">${money(x.amount)}</div>
+      ${canEdit?`<div class="finance-actions"><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div>`:''}
+    </div>`;
+  }).join(''):'<div class="finance-empty">હજુ કોઈ આવક એન્ટ્રી નથી.</div>';
+  el.innerHTML=expenses.length?expenses.map(x=>`<div class="finance-entry">
+    <div class="finance-main"><div class="finance-title">${esc(x.detail||'ખર્ચ')}</div><div class="finance-meta"><span class="finance-chip finance-head-chip">${esc(x.head||'ખર્ચ')}</span><span class="finance-chip">ક્રમ ${esc(x.seq)}</span><span class="finance-chip">📅 ${esc(x.date||'')}</span>${x.billNo?`<span class="finance-chip">બિલ ${esc(x.billNo)}</span>`:''}</div></div>
+    <div class="finance-amount">${money(x.amount)}</div>
+    ${canEdit?`<div class="finance-actions"><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div>`:''}
+  </div>`).join(''):'<div class="finance-empty">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</div>';
+  let html='<div class="finance-report">';
+  html+='<div style="font-weight:900;margin:2px 0 4px">આવક</div>';
+  (d.incomeHeads||[]).forEach(h=>{html+=`<div class="finance-report-row income"><span>${esc(h)}</span><b>${money(incomeHeadTotal(h))}</b></div>`});
+  html+='<div style="font-weight:900;margin:8px 0 4px">ખર્ચ</div>';
+  (d.expenseHeads||[]).forEach(h=>{const v=expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0);html+=`<div class="finance-report-row expense"><span>${esc(h)}</span><b>${money(v)}</b></div>`});
+  html+=`<div class="finance-report-row" style="background:#eef5ff"><b>બાકી સિલક</b><b>${money(totalIncome()-totalExpense())}</b></div></div>`;
+  const hr=document.getElementById('headReport');if(hr)hr.innerHTML=html;
+  const hl=document.getElementById('headsList');if(hl)hl.innerHTML='<b>આવક હેડ:</b> '+(d.incomeHeads||[]).map(esc).join(' • ')+'<br><b>ખર્ચ હેડ:</b> '+(d.expenseHeads||[]).map(esc).join(' • ');
+}
+
+/* Replace only the presentation renderer; no data migration/reset. */
+renderFinance2=renderFinanceV13;
+renderMemberIncomeBox_=renderMemberIncomeBoxV13;
+</script>
+
+</body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),200)}
 </script>
 <script>
 /* =========================================================
@@ -225,6 +324,105 @@ refreshExtras=function(){_v12RefreshExtras();applyMemberPermissionsV12_();};
 
 applyMemberPermissionsV12_();
 </script>
+<style>
+/* =========================================================
+   v13 PREMIUM UI — visual-only layer
+   Keeps existing data/cloud logic unchanged.
+   ========================================================= */
+:root{--blue:#1769e0;--blue2:#0b3f91;--violet:#6d5dfc;--teal:#0f9d8a;--gold:#f5a524;--bg:#f4f7fc;--ink:#162033;--muted:#6b7280;--line:#e6ebf2}
+body{background:radial-gradient(circle at 10% 0%,#e9f3ff 0,#f7f9fc 38%,#f4f6fb 100%)}
+.app{background:transparent}
+.top{background:linear-gradient(135deg,#1769e0 0%,#2445b8 55%,#633fd0 100%);border-radius:0 0 30px 30px;padding:16px 16px 20px;box-shadow:0 12px 32px #173b8a26}
+.brand h1{font-size:22px;letter-spacing:.1px}.brand small{font-size:12px}
+.wrap{padding:15px 14px 92px}
+.card,.section-card{border:1px solid #e6edf7;box-shadow:0 8px 28px #183b6d0b;border-radius:20px}
+.hero{background:linear-gradient(135deg,#ffffff 0%,#edf6ff 55%,#f4efff 100%);border:1px solid #dce8fa}
+.title{font-size:18px;letter-spacing:.05px}.sub{line-height:1.45}
+.stat{position:relative;overflow:hidden;background:linear-gradient(145deg,#f7fbff,#edf5ff);border:1px solid #dfebfa;padding:13px;border-radius:16px}
+.stat:after{content:"";position:absolute;width:54px;height:54px;border-radius:50%;right:-20px;top:-20px;background:#fff8;box-shadow:0 0 0 10px #fff3}
+.stat b{font-size:20px;position:relative;z-index:1}
+.page-tools{gap:11px}.tool-btn{min-height:92px;background:linear-gradient(145deg,#fff,#f7faff);border:1px solid #e2eaf5;box-shadow:0 8px 20px #193b6d0d;transition:transform .15s ease,box-shadow .15s ease}.tool-btn:active{transform:scale(.98)}
+.tool-btn .ico{font-size:27px}.tool-btn small{font-size:10px}
+.btn{border-radius:13px;box-shadow:0 2px 5px #17365d0a}.primary{background:linear-gradient(135deg,#1769e0,#3154d5)}
+.nav{height:76px;background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid #e3e8f0;box-shadow:0 -10px 28px #183b6d12}.nav button{background:transparent}.nav button.on{color:#1769e0}
+/* compact finance */
+.finance-toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.finance-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.finance-mini{padding:12px;border-radius:15px;border:1px solid #e4ebf5;background:linear-gradient(145deg,#fff,#f7faff)}
+.finance-mini .k{font-size:11px;color:var(--muted)}.finance-mini .v{font-size:18px;font-weight:900;margin-top:3px}
+.finance-entry{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #edf0f4}
+.finance-entry:last-child{border-bottom:0}.finance-main{min-width:0;flex:1}.finance-title{font-weight:900;font-size:14px;line-height:1.35}.finance-amount{font-size:17px;font-weight:900;white-space:nowrap;color:#123f8a}.finance-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}.finance-chip{display:inline-flex;align-items:center;background:#f1f5fa;color:#667085;border-radius:20px;padding:4px 7px;font-size:10px}.finance-head-chip{background:#edf5ff;color:#1754a6}.finance-actions{display:flex;gap:5px;flex-shrink:0}.finance-actions .small-btn{min-width:42px}
+.finance-empty{padding:18px;text-align:center;color:#7b8492;background:#f8fafc;border-radius:14px}
+.finance-report{display:grid;gap:7px}.finance-report-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:#f7f9fc;border:1px solid #edf1f6}.finance-report-row b{white-space:nowrap}.finance-report-row.income{background:#f0fbf6}.finance-report-row.expense{background:#fff7f5}
+.member-income-card{background:linear-gradient(145deg,#f9fcff,#eef7ff);border:1px solid #dceafa;border-radius:18px;padding:13px;margin-bottom:12px}.member-income-row{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #e4edf7}.member-income-row:last-child{border-bottom:0}.member-income-person{min-width:0;flex:1}.member-income-person b{font-size:14px}.member-income-input{width:115px!important;padding:9px 10px!important;border-radius:10px!important}.member-income-save{padding:9px 10px!important;white-space:nowrap}
+.section-card .section-head{margin-bottom:4px}
+@media(max-width:430px){.finance-entry{align-items:flex-start}.finance-actions{flex-direction:column}.finance-actions .small-btn{min-width:48px}.member-income-row{align-items:center}.member-income-input{width:95px!important}.member-income-save{padding:8px!important}.finance-title{font-size:13px}.finance-amount{font-size:15px}}
+@media(max-width:360px){.page-tools{grid-template-columns:1fr 1fr}.finance-summary{gap:7px}.member-income-row{flex-wrap:wrap}.member-income-person{width:100%;flex-basis:100%}.member-income-input{flex:1;width:auto!important}}
+</style>
+<script>
+/* =========================================================
+   v13 compact finance renderer
+   Visual/UX change only. Existing records and cloud sync remain intact.
+   ========================================================= */
+function renderMemberIncomeBoxV13(){
+  const box=document.getElementById('memberIncomeBox');
+  if(!box || role!=='admin'){if(box)box.innerHTML='';return;}
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  if(!heads.length){box.innerHTML='';return;}
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  if(!occupied.length){box.innerHTML='<div class="member-income-card"><b>સભ્યવાર અન્ય આવક</b><div class="muted" style="margin-top:6px">હાલ કોઈ ભરેલું મકાન નથી.</div></div>';return;}
+  const current=heads.includes(window.memberIncomeHead_)?window.memberIncomeHead_:heads[0];
+  window.memberIncomeHead_=current;
+  const rows=occupied.map(f=>{
+    const total=memberIncomeAmount_(current,f.no);
+    return `<div class="member-income-row">
+      <div class="member-income-person"><b>ઘર ${esc(f.no)}</b> • ${esc(f.name||'સભ્ય')}<br>${total?`<span class="muted">આ હેડમાં જમા: <b>${money(total)}</b></span>`:'<span class="muted">હજુ જમા નથી</span>'}</div>
+      <input id="miAmt_${esc(f.no)}" class="member-income-input" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ">
+      <button class="btn primary member-income-save" onclick="saveMemberIncome_('${esc(current)}','${esc(f.no)}')">જમા કરો</button>
+    </div>`;
+  }).join('');
+  box.innerHTML=`<div class="member-income-card">
+    <div class="section-head"><div><div class="title" style="margin-bottom:2px">સભ્યવાર આવક જમા</div><div class="sub">મેન્ટેનન્સ સિવાયની આવક માટે સીધી સભ્યની સામે રકમ જમા કરો.</div></div><span class="pill">${occupied.length} સભ્યો</span></div>
+    <label>આવક હેડ</label>
+    <select id="memberIncomeHead" onchange="window.memberIncomeHead_=this.value;renderMemberIncomeBoxV13()">${heads.map(h=>`<option value="${esc(h)}" ${h===current?'selected':''}>${esc(h)}</option>`).join('')}</select>
+    <div style="margin-top:7px">${rows}</div>
+  </div>`;
+}
+
+function renderFinanceV13(){
+  const il=document.getElementById('incomeList'),el=document.getElementById('expenseList');
+  if(!il||!el)return;
+  renderMemberIncomeBoxV13();
+  const incomes=d.incomes||[], expenses=d.expenses||[];
+  il.innerHTML=incomes.length?incomes.map(x=>{
+    const f=x.flatNo?d.flats.find(a=>a.no===String(x.flatNo)):null;
+    const vacant=x.flatNo && f && !isOccupiedHouse(f);
+    return `<div class="finance-entry">
+      <div class="finance-main"><div class="finance-title">${esc(x.detail||x.head||'આવક')}</div><div class="finance-meta"><span class="finance-chip finance-head-chip">${esc(x.head||'આવક')}</span>${f?`<span class="finance-chip">🏠 ઘર ${esc(f.no)}</span>`:''}<span class="finance-chip">📅 ${esc(x.date||'')}</span>${vacant?'<span class="finance-chip">⚠️ કુલમાં નહીં</span>':''}</div></div>
+      <div class="finance-amount">${money(x.amount)}</div>
+      ${canEdit?`<div class="finance-actions"><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div>`:''}
+    </div>`;
+  }).join(''):'<div class="finance-empty">હજુ કોઈ આવક એન્ટ્રી નથી.</div>';
+  el.innerHTML=expenses.length?expenses.map(x=>`<div class="finance-entry">
+    <div class="finance-main"><div class="finance-title">${esc(x.detail||'ખર્ચ')}</div><div class="finance-meta"><span class="finance-chip finance-head-chip">${esc(x.head||'ખર્ચ')}</span><span class="finance-chip">ક્રમ ${esc(x.seq)}</span><span class="finance-chip">📅 ${esc(x.date||'')}</span>${x.billNo?`<span class="finance-chip">બિલ ${esc(x.billNo)}</span>`:''}</div></div>
+    <div class="finance-amount">${money(x.amount)}</div>
+    ${canEdit?`<div class="finance-actions"><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div>`:''}
+  </div>`).join(''):'<div class="finance-empty">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</div>';
+  let html='<div class="finance-report">';
+  html+='<div style="font-weight:900;margin:2px 0 4px">આવક</div>';
+  (d.incomeHeads||[]).forEach(h=>{html+=`<div class="finance-report-row income"><span>${esc(h)}</span><b>${money(incomeHeadTotal(h))}</b></div>`});
+  html+='<div style="font-weight:900;margin:8px 0 4px">ખર્ચ</div>';
+  (d.expenseHeads||[]).forEach(h=>{const v=expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0);html+=`<div class="finance-report-row expense"><span>${esc(h)}</span><b>${money(v)}</b></div>`});
+  html+=`<div class="finance-report-row" style="background:#eef5ff"><b>બાકી સિલક</b><b>${money(totalIncome()-totalExpense())}</b></div></div>`;
+  const hr=document.getElementById('headReport');if(hr)hr.innerHTML=html;
+  const hl=document.getElementById('headsList');if(hl)hl.innerHTML='<b>આવક હેડ:</b> '+(d.incomeHeads||[]).map(esc).join(' • ')+'<br><b>ખર્ચ હેડ:</b> '+(d.expenseHeads||[]).map(esc).join(' • ');
+}
+
+/* Replace only the presentation renderer; no data migration/reset. */
+renderFinance2=renderFinanceV13;
+renderMemberIncomeBox_=renderMemberIncomeBoxV13;
+</script>
+
 </body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),200)}
 </script>
 <script>
@@ -722,4 +920,103 @@ refreshExtras=function(){_v12RefreshExtras();applyMemberPermissionsV12_();};
 
 applyMemberPermissionsV12_();
 </script>
+<style>
+/* =========================================================
+   v13 PREMIUM UI — visual-only layer
+   Keeps existing data/cloud logic unchanged.
+   ========================================================= */
+:root{--blue:#1769e0;--blue2:#0b3f91;--violet:#6d5dfc;--teal:#0f9d8a;--gold:#f5a524;--bg:#f4f7fc;--ink:#162033;--muted:#6b7280;--line:#e6ebf2}
+body{background:radial-gradient(circle at 10% 0%,#e9f3ff 0,#f7f9fc 38%,#f4f6fb 100%)}
+.app{background:transparent}
+.top{background:linear-gradient(135deg,#1769e0 0%,#2445b8 55%,#633fd0 100%);border-radius:0 0 30px 30px;padding:16px 16px 20px;box-shadow:0 12px 32px #173b8a26}
+.brand h1{font-size:22px;letter-spacing:.1px}.brand small{font-size:12px}
+.wrap{padding:15px 14px 92px}
+.card,.section-card{border:1px solid #e6edf7;box-shadow:0 8px 28px #183b6d0b;border-radius:20px}
+.hero{background:linear-gradient(135deg,#ffffff 0%,#edf6ff 55%,#f4efff 100%);border:1px solid #dce8fa}
+.title{font-size:18px;letter-spacing:.05px}.sub{line-height:1.45}
+.stat{position:relative;overflow:hidden;background:linear-gradient(145deg,#f7fbff,#edf5ff);border:1px solid #dfebfa;padding:13px;border-radius:16px}
+.stat:after{content:"";position:absolute;width:54px;height:54px;border-radius:50%;right:-20px;top:-20px;background:#fff8;box-shadow:0 0 0 10px #fff3}
+.stat b{font-size:20px;position:relative;z-index:1}
+.page-tools{gap:11px}.tool-btn{min-height:92px;background:linear-gradient(145deg,#fff,#f7faff);border:1px solid #e2eaf5;box-shadow:0 8px 20px #193b6d0d;transition:transform .15s ease,box-shadow .15s ease}.tool-btn:active{transform:scale(.98)}
+.tool-btn .ico{font-size:27px}.tool-btn small{font-size:10px}
+.btn{border-radius:13px;box-shadow:0 2px 5px #17365d0a}.primary{background:linear-gradient(135deg,#1769e0,#3154d5)}
+.nav{height:76px;background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid #e3e8f0;box-shadow:0 -10px 28px #183b6d12}.nav button{background:transparent}.nav button.on{color:#1769e0}
+/* compact finance */
+.finance-toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.finance-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.finance-mini{padding:12px;border-radius:15px;border:1px solid #e4ebf5;background:linear-gradient(145deg,#fff,#f7faff)}
+.finance-mini .k{font-size:11px;color:var(--muted)}.finance-mini .v{font-size:18px;font-weight:900;margin-top:3px}
+.finance-entry{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #edf0f4}
+.finance-entry:last-child{border-bottom:0}.finance-main{min-width:0;flex:1}.finance-title{font-weight:900;font-size:14px;line-height:1.35}.finance-amount{font-size:17px;font-weight:900;white-space:nowrap;color:#123f8a}.finance-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}.finance-chip{display:inline-flex;align-items:center;background:#f1f5fa;color:#667085;border-radius:20px;padding:4px 7px;font-size:10px}.finance-head-chip{background:#edf5ff;color:#1754a6}.finance-actions{display:flex;gap:5px;flex-shrink:0}.finance-actions .small-btn{min-width:42px}
+.finance-empty{padding:18px;text-align:center;color:#7b8492;background:#f8fafc;border-radius:14px}
+.finance-report{display:grid;gap:7px}.finance-report-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:#f7f9fc;border:1px solid #edf1f6}.finance-report-row b{white-space:nowrap}.finance-report-row.income{background:#f0fbf6}.finance-report-row.expense{background:#fff7f5}
+.member-income-card{background:linear-gradient(145deg,#f9fcff,#eef7ff);border:1px solid #dceafa;border-radius:18px;padding:13px;margin-bottom:12px}.member-income-row{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #e4edf7}.member-income-row:last-child{border-bottom:0}.member-income-person{min-width:0;flex:1}.member-income-person b{font-size:14px}.member-income-input{width:115px!important;padding:9px 10px!important;border-radius:10px!important}.member-income-save{padding:9px 10px!important;white-space:nowrap}
+.section-card .section-head{margin-bottom:4px}
+@media(max-width:430px){.finance-entry{align-items:flex-start}.finance-actions{flex-direction:column}.finance-actions .small-btn{min-width:48px}.member-income-row{align-items:center}.member-income-input{width:95px!important}.member-income-save{padding:8px!important}.finance-title{font-size:13px}.finance-amount{font-size:15px}}
+@media(max-width:360px){.page-tools{grid-template-columns:1fr 1fr}.finance-summary{gap:7px}.member-income-row{flex-wrap:wrap}.member-income-person{width:100%;flex-basis:100%}.member-income-input{flex:1;width:auto!important}}
+</style>
+<script>
+/* =========================================================
+   v13 compact finance renderer
+   Visual/UX change only. Existing records and cloud sync remain intact.
+   ========================================================= */
+function renderMemberIncomeBoxV13(){
+  const box=document.getElementById('memberIncomeBox');
+  if(!box || role!=='admin'){if(box)box.innerHTML='';return;}
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  if(!heads.length){box.innerHTML='';return;}
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  if(!occupied.length){box.innerHTML='<div class="member-income-card"><b>સભ્યવાર અન્ય આવક</b><div class="muted" style="margin-top:6px">હાલ કોઈ ભરેલું મકાન નથી.</div></div>';return;}
+  const current=heads.includes(window.memberIncomeHead_)?window.memberIncomeHead_:heads[0];
+  window.memberIncomeHead_=current;
+  const rows=occupied.map(f=>{
+    const total=memberIncomeAmount_(current,f.no);
+    return `<div class="member-income-row">
+      <div class="member-income-person"><b>ઘર ${esc(f.no)}</b> • ${esc(f.name||'સભ્ય')}<br>${total?`<span class="muted">આ હેડમાં જમા: <b>${money(total)}</b></span>`:'<span class="muted">હજુ જમા નથી</span>'}</div>
+      <input id="miAmt_${esc(f.no)}" class="member-income-input" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ">
+      <button class="btn primary member-income-save" onclick="saveMemberIncome_('${esc(current)}','${esc(f.no)}')">જમા કરો</button>
+    </div>`;
+  }).join('');
+  box.innerHTML=`<div class="member-income-card">
+    <div class="section-head"><div><div class="title" style="margin-bottom:2px">સભ્યવાર આવક જમા</div><div class="sub">મેન્ટેનન્સ સિવાયની આવક માટે સીધી સભ્યની સામે રકમ જમા કરો.</div></div><span class="pill">${occupied.length} સભ્યો</span></div>
+    <label>આવક હેડ</label>
+    <select id="memberIncomeHead" onchange="window.memberIncomeHead_=this.value;renderMemberIncomeBoxV13()">${heads.map(h=>`<option value="${esc(h)}" ${h===current?'selected':''}>${esc(h)}</option>`).join('')}</select>
+    <div style="margin-top:7px">${rows}</div>
+  </div>`;
+}
+
+function renderFinanceV13(){
+  const il=document.getElementById('incomeList'),el=document.getElementById('expenseList');
+  if(!il||!el)return;
+  renderMemberIncomeBoxV13();
+  const incomes=d.incomes||[], expenses=d.expenses||[];
+  il.innerHTML=incomes.length?incomes.map(x=>{
+    const f=x.flatNo?d.flats.find(a=>a.no===String(x.flatNo)):null;
+    const vacant=x.flatNo && f && !isOccupiedHouse(f);
+    return `<div class="finance-entry">
+      <div class="finance-main"><div class="finance-title">${esc(x.detail||x.head||'આવક')}</div><div class="finance-meta"><span class="finance-chip finance-head-chip">${esc(x.head||'આવક')}</span>${f?`<span class="finance-chip">🏠 ઘર ${esc(f.no)}</span>`:''}<span class="finance-chip">📅 ${esc(x.date||'')}</span>${vacant?'<span class="finance-chip">⚠️ કુલમાં નહીં</span>':''}</div></div>
+      <div class="finance-amount">${money(x.amount)}</div>
+      ${canEdit?`<div class="finance-actions"><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div>`:''}
+    </div>`;
+  }).join(''):'<div class="finance-empty">હજુ કોઈ આવક એન્ટ્રી નથી.</div>';
+  el.innerHTML=expenses.length?expenses.map(x=>`<div class="finance-entry">
+    <div class="finance-main"><div class="finance-title">${esc(x.detail||'ખર્ચ')}</div><div class="finance-meta"><span class="finance-chip finance-head-chip">${esc(x.head||'ખર્ચ')}</span><span class="finance-chip">ક્રમ ${esc(x.seq)}</span><span class="finance-chip">📅 ${esc(x.date||'')}</span>${x.billNo?`<span class="finance-chip">બિલ ${esc(x.billNo)}</span>`:''}</div></div>
+    <div class="finance-amount">${money(x.amount)}</div>
+    ${canEdit?`<div class="finance-actions"><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div>`:''}
+  </div>`).join(''):'<div class="finance-empty">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</div>';
+  let html='<div class="finance-report">';
+  html+='<div style="font-weight:900;margin:2px 0 4px">આવક</div>';
+  (d.incomeHeads||[]).forEach(h=>{html+=`<div class="finance-report-row income"><span>${esc(h)}</span><b>${money(incomeHeadTotal(h))}</b></div>`});
+  html+='<div style="font-weight:900;margin:8px 0 4px">ખર્ચ</div>';
+  (d.expenseHeads||[]).forEach(h=>{const v=expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0);html+=`<div class="finance-report-row expense"><span>${esc(h)}</span><b>${money(v)}</b></div>`});
+  html+=`<div class="finance-report-row" style="background:#eef5ff"><b>બાકી સિલક</b><b>${money(totalIncome()-totalExpense())}</b></div></div>`;
+  const hr=document.getElementById('headReport');if(hr)hr.innerHTML=html;
+  const hl=document.getElementById('headsList');if(hl)hl.innerHTML='<b>આવક હેડ:</b> '+(d.incomeHeads||[]).map(esc).join(' • ')+'<br><b>ખર્ચ હેડ:</b> '+(d.expenseHeads||[]).map(esc).join(' • ');
+}
+
+/* Replace only the presentation renderer; no data migration/reset. */
+renderFinance2=renderFinanceV13;
+renderMemberIncomeBox_=renderMemberIncomeBoxV13;
+</script>
+
 </body></html>

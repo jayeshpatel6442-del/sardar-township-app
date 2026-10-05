@@ -1,11 +1,11 @@
 {
   "name": "સરદાર સોસાયટી",
   "short_name": "સરદાર સોસાયટી",
-  "start_url": "./?v=12.1",
+  "start_url": "./?v=13.0",
   "display": "standalone",
-  "background_color": "#f4f7fb",
-  "theme_color": "#0b5cab",
+  "background_color": "#f4f7fc",
+  "theme_color": "#1769e0",
   "lang": "gu",
   "description": "સરદાર સોસાયટી સોસાયટી મેનેજમેન્ટ એપ",
-  "version": "12.1"
+  "version": "13.0"
 }
