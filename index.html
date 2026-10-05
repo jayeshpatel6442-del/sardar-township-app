@@ -14,68 +14,37 @@
 </style>
 <script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js")}</script>
 
-<style id="v14-finance-style">
-/* v14 Premium finance/report UI */
-.finance-v14-hero{
-  background:linear-gradient(135deg,#0d63d8 0%,#3156d6 58%,#7045d5 100%);
-  color:#fff;border:0;border-radius:24px;padding:18px;
-  box-shadow:0 14px 30px rgba(35,75,170,.20);margin-bottom:12px;
-}
-.finance-v14-hero .title{font-size:21px;margin-bottom:3px}
-.finance-v14-hero .sub{color:rgba(255,255,255,.82);margin:0}
-.finance-v14-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
-.finance-v14-stat{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);
-  border-radius:15px;padding:11px}
-.finance-v14-stat span{display:block;font-size:10px;opacity:.82}
-.finance-v14-stat b{display:block;font-size:18px;margin-top:4px}
-.finance-v14-report{
-  background:linear-gradient(145deg,#ffffff,#f7faff);
-  border:1px solid #e2eaf5;border-radius:20px;padding:14px;margin-bottom:12px;
-  box-shadow:0 8px 24px rgba(24,59,109,.07)
-}
-.finance-v14-report-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-.finance-v14-report-btn{
-  min-height:74px;border:1px solid #dfe8f4;border-radius:16px;background:#fff;
-  color:#173b73;font-weight:800;padding:9px 6px;box-shadow:0 5px 14px rgba(30,70,120,.06);
-}
-.finance-v14-report-btn span{display:block;font-size:22px;margin-bottom:4px}
-.finance-v14-report-btn small{display:block;font-size:10px;color:#68758a;font-weight:700}
-.finance-v14-report-btn:active{transform:scale(.98)}
-.finance-v14-count{
-  display:inline-flex;align-items:center;gap:5px;background:#eef5ff;color:#1754a6;
-  padding:5px 9px;border-radius:20px;font-size:11px;font-weight:800
-}
-.finance-v14-list-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
-.finance-v14-entry{
-  display:grid;grid-template-columns:1fr auto;gap:8px;padding:12px 0;border-bottom:1px solid #edf0f5
-}
-.finance-v14-entry:last-child{border-bottom:0}
-.finance-v14-entry-title{font-weight:900;font-size:14px}
-.finance-v14-entry-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
-.finance-v14-chip{display:inline-flex;background:#f1f5fa;color:#667085;border-radius:20px;padding:4px 7px;font-size:10px}
-.finance-v14-amount{font-size:17px;font-weight:900;color:#12468f;white-space:nowrap}
-.finance-v14-actions{display:flex;gap:5px;justify-content:flex-end;margin-top:7px}
-.finance-v14-head{
-  margin-top:12px;border:1px solid #e3eaf4;border-radius:16px;overflow:hidden;background:#fff
-}
-.finance-v14-head-top{display:flex;justify-content:space-between;gap:8px;padding:11px 12px;
-  background:#f3f7fd;font-weight:900}
-.finance-v14-detail-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:9px 12px;border-top:1px solid #edf0f5}
-.finance-v14-empty{padding:18px;text-align:center;background:#f8fafc;border-radius:15px;color:#7b8492}
-.finance-v14-modal-title{font-size:19px;font-weight:900;margin-bottom:4px}
-.finance-v14-modal-sub{font-size:12px;color:#667085;margin-bottom:12px}
-.finance-v14-modal-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
-.finance-v14-tabbar{display:flex;gap:6px;overflow:auto;padding-bottom:3px}
-.finance-v14-tab{border:0;border-radius:20px;padding:8px 11px;background:#eef3f9;color:#5f6b7b;font-weight:800;font-size:11px;white-space:nowrap}
-.finance-v14-tab.on{background:#1769e0;color:#fff}
-@media(max-width:390px){
-  .finance-v14-report-grid{grid-template-columns:1fr 1fr}
-  .finance-v14-report-btn:last-child{grid-column:1/-1}
-  .finance-v14-entry{grid-template-columns:1fr}
-  .finance-v14-actions{justify-content:flex-start}
-}
+<style id="v14_1_finance_css">
+.finance14-wrap{display:grid;gap:12px}
+.finance14-hero{padding:18px;border-radius:24px;background:linear-gradient(135deg,#1769e0,#304fd0 58%,#7045d5);color:#fff;box-shadow:0 14px 32px #17448a22}
+.finance14-hero h2{margin:0;font-size:21px}.finance14-hero p{margin:4px 0 0;opacity:.82;font-size:12px}
+.finance14-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
+.finance14-stat{padding:10px;border-radius:15px;background:#ffffff1c;border:1px solid #ffffff2e}
+.finance14-stat span{display:block;font-size:10px;opacity:.8}.finance14-stat b{display:block;font-size:16px;margin-top:3px}
+.finance14-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.finance14-action{border:1px solid #dfe8f4;border-radius:18px;background:#fff;padding:13px 10px;text-align:left;box-shadow:0 7px 20px #173b6d0b}
+.finance14-action strong{display:block;font-size:14px}.finance14-action small{display:block;color:#7b8492;margin-top:3px}
+.finance14-action .ico{font-size:23px;float:right}
+.finance14-panel{background:#fff;border:1px solid #e3eaf3;border-radius:20px;padding:14px;box-shadow:0 7px 22px #173b6d0b}
+.finance14-panel-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.finance14-panel-head h3{margin:0;font-size:16px}.finance14-pill{font-size:10px;background:#eef5ff;color:#1754a6;border-radius:20px;padding:5px 8px;font-weight:800}
+.finance14-head-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.finance14-head-card{padding:11px;border:1px solid #e4ebf5;border-radius:15px;background:#f9fbfe}
+.finance14-head-card span{font-size:11px;color:#667085;display:block}.finance14-head-card b{font-size:15px;color:#164b95;display:block;margin-top:3px}
+.finance14-entry{display:grid;grid-template-columns:1fr auto;gap:8px;padding:11px 0;border-bottom:1px solid #edf1f5}
+.finance14-entry:last-child{border-bottom:0}.finance14-entry-title{font-weight:900;font-size:13px}
+.finance14-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}.finance14-chip{font-size:10px;background:#f2f5f9;color:#667085;border-radius:14px;padding:4px 6px}
+.finance14-amount{font-size:16px;font-weight:900;color:#1450a0;white-space:nowrap}
+.finance14-report-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.finance14-report-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:10px 0;border-bottom:1px solid #edf1f5}
+.finance14-report-row b:last-child{color:#1450a0}
+.finance14-modal-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.finance14-group{border:1px solid #e2e9f2;border-radius:16px;overflow:hidden;margin:9px 0;background:#fff}
+.finance14-group-head{padding:11px 12px;background:#f1f6fd;display:flex;justify-content:space-between;font-weight:900}
+.finance14-detail{padding:9px 12px;border-top:1px solid #edf1f5;display:grid;grid-template-columns:1fr auto;gap:8px;font-size:11px}
+.finance14-detail .muted{font-size:10px}
+@media(max-width:430px){.finance14-stats{grid-template-columns:1fr 1fr}.finance14-stats .finance14-stat:last-child{grid-column:1/-1}.finance14-actions{grid-template-columns:1fr 1fr}.finance14-head-grid{grid-template-columns:1fr 1fr}}
 </style>
-
 </head>
 <body>
 <div id="login" class="login"><div class="loginbox">
@@ -309,236 +278,128 @@ renderMemberIncomeBox_=renderMemberIncomeBoxV13;
 </script>
 
 
-<script>
-/* =========================================================
-   v14 FINANCE / REPORTS
-   UI-only/reporting enhancement. No data migration/reset.
-   ========================================================= */
-
-function v14FinanceEntries(){
-  const out=[];
-  (d.flats||[]).filter(isOccupiedHouse).forEach(f=>{
-    (f.payments||[]).forEach(p=>{
-      const period=(p.periodStart&&p.periodEnd)?`${p.periodStart} થી ${p.periodEnd}`:'મેન્ટેનન્સ';
-      out.push({
-        type:'income', head:'મેન્ટેનન્સ આવક', date:p.date||'',
-        amount:Number(p.amount||0), house:String(f.no), member:f.name||'સભ્ય',
-        detail:`મેન્ટેનન્સ • ${period}`, receipt:p.receipt||'', mode:p.mode||''
-      });
-    });
-  });
+<script id="v14_1_finance_script">
+/* v14.1 Finance UI: replaces the visible finance screen; data model unchanged. */
+function f14all(){
+  const a=[];
+  (d.flats||[]).filter(isOccupiedHouse).forEach(f=>(f.payments||[]).forEach(p=>a.push({
+    type:'income',head:'મેન્ટેનન્સ આવક',date:p.date||'',amount:Number(p.amount||0),
+    house:String(f.no),member:f.name||'',detail:'મેન્ટેનન્સ',period:p.periodStart&&p.periodEnd?`${p.periodStart} થી ${p.periodEnd}`:'',
+    receipt:p.receipt||''
+  })));
   (d.incomes||[]).forEach(x=>{
-    const f=x.flatNo?d.flats.find(a=>a.no===String(x.flatNo)):null;
-    out.push({
-      type:'income', head:x.head||'અન્ય આવક', date:x.date||'',
-      amount:Number(x.amount||0), house:f?String(f.no):'', member:f?(f.name||'સભ્ય'):'',
-      detail:x.detail||'', receipt:'', mode:'', vacant:!!(x.flatNo&&f&&!isOccupiedHouse(f))
-    });
+    const f=x.flatNo?d.flats.find(q=>String(q.no)===String(x.flatNo)):null;
+    a.push({type:'income',head:x.head||'અન્ય આવક',date:x.date||'',amount:Number(x.amount||0),
+      house:f?String(f.no):'',member:f?(f.name||''):'',detail:x.detail||'',receipt:'',vacant:!!(x.flatNo&&f&&!isOccupiedHouse(f))});
   });
-  (d.expenses||[]).forEach(x=>{
-    out.push({
-      type:'expense', head:x.head||'ખર્ચ', date:x.date||'',
-      amount:Number(x.amount||0), house:'', member:'',
-      detail:x.detail||'', billNo:x.billNo||'', seq:x.seq||''
-    });
-  });
-  return out;
+  (d.expenses||[]).forEach(x=>a.push({type:'expense',head:x.head||'ખર્ચ',date:x.date||'',amount:Number(x.amount||0),
+    house:'',member:'',detail:x.detail||'',billNo:x.billNo||'',seq:x.seq||''}));
+  return a;
 }
-
-function v14Money(n){return money(Number(n||0));}
-
-function v14ReportCardButton(icon,title,sub,fn){
-  return `<button class="finance-v14-report-btn" onclick="${fn}">
-    <span>${icon}</span>${title}<small>${sub}</small>
-  </button>`;
-}
-
-function ensureFinanceV14(){
-  const sec=document.getElementById('finance');
-  if(!sec || document.getElementById('financeV14Hero')) return;
-  const hero=document.createElement('div');
-  hero.id='financeV14Hero';
-  hero.className='finance-v14-hero';
-  hero.innerHTML=`
-    <div class="section-head">
-      <div><div class="title">આવક • ખર્ચ</div><div class="sub">સોસાયટીના હિસાબની સંપૂર્ણ માહિતી</div></div>
-      <span style="font-size:28px">📊</span>
-    </div>
-    <div class="finance-v14-stats">
-      <div class="finance-v14-stat"><span>કુલ આવક</span><b id="v14TotalIncome">₹0</b></div>
-      <div class="finance-v14-stat"><span>કુલ ખર્ચ</span><b id="v14TotalExpense">₹0</b></div>
-      <div class="finance-v14-stat"><span>બાકી સિલક</span><b id="v14Balance">₹0</b></div>
-      <div class="finance-v14-stat"><span>કુલ એન્ટ્રી</span><b id="v14EntryCount">0</b></div>
-    </div>`;
-  sec.insertBefore(hero,sec.firstElementChild);
-
-  const report=document.createElement('div');
-  report.id='financeV14Report';
-  report.className='finance-v14-report';
-  report.innerHTML=`
-    <div class="section-head">
-      <div><div class="title" style="margin-bottom:2px">રિપોર્ટ અને એન્ટ્રી જુઓ</div>
-      <div class="sub">આવક, ખર્ચ અને હેડ પ્રમાણે સંપૂર્ણ હિસાબ</div></div>
-      <span class="finance-v14-count">🖨️ Print</span>
-    </div>
-    <div class="finance-v14-report-grid">
-      ${v14ReportCardButton('💰','આવક એન્ટ્રી','બધી આવક જુઓ','openFinanceReportV14("income")')}
-      ${v14ReportCardButton('💸','ખર્ચ એન્ટ્રી','બધો ખર્ચ જુઓ','openFinanceReportV14("expense")')}
-      ${v14ReportCardButton('📊','હેડ વાઈઝ','દરેક હેડની વિગત','openFinanceReportV14("head")')}
-    </div>`;
-  sec.insertBefore(report,hero.nextSibling);
-}
-
-function updateFinanceV14Stats(){
-  const all=v14FinanceEntries();
-  const ti=all.filter(x=>x.type==='income').reduce((s,x)=>s+x.amount,0);
-  const te=all.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0);
-  const a=document.getElementById('v14TotalIncome'),b=document.getElementById('v14TotalExpense'),
-        c=document.getElementById('v14Balance'),n=document.getElementById('v14EntryCount');
-  if(a)a.textContent=v14Money(ti); if(b)b.textContent=v14Money(te);
-  if(c)c.textContent=v14Money(ti-te); if(n)n.textContent=all.length;
-}
-
-function v14EntryHtml(x, admin){
-  const who=x.house?`🏠 ઘર ${esc(x.house)}${x.member?` • ${esc(x.member)}`:''}`:'';
-  const extra=x.type==='expense'
-    ? `${x.seq?`ક્રમ ${esc(x.seq)} • `:''}${x.billNo?`બિલ ${esc(x.billNo)} • `:''}`
-    : `${x.receipt?`રસીદ ${esc(x.receipt)} • `:''}${x.mode?`મોડ ${esc(x.mode)} • `:''}`;
-  return `<div class="finance-v14-entry">
-    <div>
-      <div class="finance-v14-entry-title">${esc(x.head)}</div>
-      <div style="margin-top:2px;font-size:12px">${esc(x.detail||'-')}</div>
-      <div class="finance-v14-entry-meta">
-        ${x.date?`<span class="finance-v14-chip">📅 ${esc(x.date)}</span>`:''}
-        ${who?`<span class="finance-v14-chip">${who}</span>`:''}
-        ${extra?`<span class="finance-v14-chip">${extra}</span>`:''}
-        ${x.vacant?`<span class="finance-v14-chip">⚠️ કુલમાં નહીં</span>`:''}
+function f14money(n){return money(Number(n||0))}
+function f14escape(s){return esc(String(s??''))}
+function f14render(){
+  const sec=document.getElementById('finance'); if(!sec)return;
+  const all=f14all(), inc=all.filter(x=>x.type==='income'), exp=all.filter(x=>x.type==='expense');
+  const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+  const can=role==='admin';
+  const headsI=d.incomeHeads||[], headsE=d.expenseHeads||[];
+  sec.innerHTML=`
+  <div class="finance14-wrap">
+    <div class="finance14-hero">
+      <h2>💰 આવક • 💸 ખર્ચ</h2><p>સોસાયટીના હિસાબની એન્ટ્રી અને હેડ વાઈઝ સંપૂર્ણ રિપોર્ટ</p>
+      <div class="finance14-stats">
+        <div class="finance14-stat"><span>કુલ આવક</span><b>${f14money(ti)}</b></div>
+        <div class="finance14-stat"><span>કુલ ખર્ચ</span><b>${f14money(te)}</b></div>
+        <div class="finance14-stat"><span>બાકી સિલક</span><b>${f14money(ti-te)}</b></div>
       </div>
     </div>
-    <div style="text-align:right">
-      <div class="finance-v14-amount">${v14Money(x.amount)}</div>
+
+    ${can?`<div class="finance14-actions">
+      <button class="finance14-action" onclick="incomeForm()"><span class="ico">➕</span><strong>નવી આવક નોંધો</strong><small>આવકની નવી એન્ટ્રી</small></button>
+      <button class="finance14-action" onclick="expenseForm()"><span class="ico">➕</span><strong>નવો ખર્ચ નોંધો</strong><small>ખર્ચની નવી એન્ટ્રી</small></button>
+    </div>`:''}
+
+    ${can?`<div id="memberIncomeBox" style="margin:0"></div>`:''}
+
+    <div class="finance14-panel">
+      <div class="finance14-panel-head"><h3>📊 હેડ પ્રમાણે કુલ</h3><span class="finance14-pill">${headsI.length+headsE.length} હેડ</span></div>
+      <div class="finance14-head-grid">
+        ${headsI.map(h=>`<div class="finance14-head-card"><span>💰 ${f14escape(h)}</span><b>${f14money(incomeHeadTotal(h))}</b></div>`).join('')}
+        ${headsE.map(h=>{const v=exp.filter(x=>x.head===h).reduce((s,x)=>s+x.amount,0);return `<div class="finance14-head-card"><span>💸 ${f14escape(h)}</span><b>${f14money(v)}</b></div>`}).join('')}
+      </div>
     </div>
+
+    <div class="finance14-panel">
+      <div class="finance14-panel-head"><h3>📋 એન્ટ્રી જુઓ</h3><span class="finance14-pill">${all.length} એન્ટ્રી</span></div>
+      <div class="finance14-actions">
+        <button class="finance14-action" onclick="f14open('income')"><span class="ico">💰</span><strong>આવક એન્ટ્રી જુઓ</strong><small>બધી આવકની વિગત</small></button>
+        <button class="finance14-action" onclick="f14open('expense')"><span class="ico">💸</span><strong>ખર્ચ એન્ટ્રી જુઓ</strong><small>બધા ખર્ચની વિગત</small></button>
+        <button class="finance14-action" onclick="f14open('head')"><span class="ico">📊</span><strong>હેડ વાઈઝ જુઓ</strong><small>દરેક હેડની તમામ એન્ટ્રી</small></button>
+        <button class="finance14-action" onclick="f14open('all')"><span class="ico">🧾</span><strong>આવક / ખર્ચ બધું</strong><small>સંપૂર્ણ હિસાબ</small></button>
+      </div>
+    </div>
+
+    ${can?`<div class="finance14-panel">
+      <div class="finance14-panel-head"><h3>⚙️ આવક / ખર્ચ હેડ</h3></div>
+      <div class="finance14-actions">
+        <button class="btn light" onclick="headForm('income')">+ આવક હેડ</button>
+        <button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button>
+      </div>
+    </div>`:''}
   </div>`;
+  if(can && typeof renderMemberIncomeBoxV13==='function') setTimeout(()=>renderMemberIncomeBoxV13(),0);
 }
-
-function openFinanceReportV14(type){
-  const all=v14FinanceEntries();
-  let rows=[];
-  let title='',sub='';
-  if(type==='income'){
-    rows=all.filter(x=>x.type==='income');
-    title='આવક એન્ટ્રી';
-    sub=`કુલ ${rows.length} આવક એન્ટ્રી • ${v14Money(rows.reduce((s,x)=>s+x.amount,0))}`;
-  }else if(type==='expense'){
-    rows=all.filter(x=>x.type==='expense');
-    title='ખર્ચ એન્ટ્રી';
-    sub=`કુલ ${rows.length} ખર્ચ એન્ટ્રી • ${v14Money(rows.reduce((s,x)=>s+x.amount,0))}`;
-  }else{
-    title='હેડ વાઈઝ સંપૂર્ણ રિપોર્ટ';
-    sub='દરેક આવક અને ખર્ચ હેડની અંદરની તમામ એન્ટ્રી';
-  }
-
+function f14open(type){
+  const all=f14all();
+  let title=type==='income'?'આવક એન્ટ્રી':type==='expense'?'ખર્ચ એન્ટ્રી':type==='head'?'હેડ વાઈઝ રિપોર્ટ':'સંપૂર્ણ આવક / ખર્ચ';
+  let rows=type==='income'?all.filter(x=>x.type==='income'):type==='expense'?all.filter(x=>x.type==='expense'):all;
   let body='';
   if(type==='head'){
-    const heads=[
-      ...(d.incomeHeads||[]).map(h=>({type:'income',head:h})),
-      ...(d.expenseHeads||[]).map(h=>({type:'expense',head:h}))
-    ];
-    body=heads.map(g=>{
-      const rr=all.filter(x=>x.type===g.type&&x.head===g.head);
-      const total=rr.reduce((s,x)=>s+x.amount,0);
-      return `<div class="finance-v14-head">
-        <div class="finance-v14-head-top"><span>${g.type==='income'?'💰':'💸'} ${esc(g.head)}</span><b>${v14Money(total)}</b></div>
-        ${rr.length?rr.map(x=>`<div class="finance-v14-detail-row">
-          <div><b>${esc(x.detail||'-')}</b><div class="muted">${esc(x.date||'')}${x.house?` • ઘર ${esc(x.house)}`:''}${x.member?` • ${esc(x.member)}`:''}${x.billNo?` • બિલ ${esc(x.billNo)}`:''}</div></div>
-          <b>${v14Money(x.amount)}</b>
-        </div>`).join(''):'<div class="finance-v14-detail-row"><span class="muted">આ હેડમાં કોઈ એન્ટ્રી નથી.</span><span></span></div>'}
-      </div>`;
+    const keys=[...new Set(all.map(x=>x.type+'|||'+x.head))];
+    body=keys.map(k=>{
+      const [kind,head]=k.split('|||'), rr=all.filter(x=>x.type===kind&&x.head===head), tot=rr.reduce((s,x)=>s+x.amount,0);
+      return `<div class="finance14-group"><div class="finance14-group-head"><span>${kind==='income'?'💰':'💸'} ${f14escape(head)}</span><span>${f14money(tot)}</span></div>
+      ${rr.length?rr.map(x=>f14detail(x)).join(''):'<div class="finance14-detail"><span>કોઈ એન્ટ્રી નથી</span><span></span></div>'}</div>`;
     }).join('');
   }else{
-    rows.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-    body=rows.length?rows.map(x=>v14EntryHtml(x,role==='admin')).join(''):'<div class="finance-v14-empty">આ પ્રકારની કોઈ એન્ટ્રી મળી નથી.</div>';
+    body=rows.length?rows.sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(x=>f14detail(x,true)).join(''):'<div class="finance14-detail"><span>કોઈ એન્ટ્રી મળી નથી.</span><span></span></div>';
   }
-
   document.getElementById('sheet').innerHTML=`
-    <div class="finance-v14-modal-title">${title}</div>
-    <div class="finance-v14-modal-sub">${sub}</div>
-    <div class="finance-v14-modal-tools">
-      <button class="btn primary" onclick="printFinanceReportV14('${type}')">🖨️ પ્રિન્ટ</button>
-      <button class="btn light" onclick="downloadFinanceReportV14('${type}')">📥 ડાઉનલોડ</button>
-    </div>
-    <div>${body}</div>
-    <button class="btn light" style="width:100%;margin-top:12px" onclick="closeModal()">બંધ કરો</button>`;
+    <div class="title">${title}</div><div class="sub">બધી માહિતી Cloudમાંથી</div>
+    <div class="finance14-modal-tools">
+      <button class="btn primary" onclick="f14print('${type}')">🖨️ પ્રિન્ટ</button>
+      <button class="btn light" onclick="f14csv('${type}')">📥 ડાઉનલોડ</button>
+    </div>${body}<button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal()">બંધ કરો</button>`;
   document.getElementById('modal').classList.remove('hide');
 }
-
-function v14PrintableRows(type){
-  const all=v14FinanceEntries();
-  if(type==='income') return all.filter(x=>x.type==='income');
-  if(type==='expense') return all.filter(x=>x.type==='expense');
-  return all;
+function f14detail(x){
+  const meta=[x.date?`📅 ${f14escape(x.date)}`:'',x.house?`🏠 ઘર ${f14escape(x.house)}`:'',x.member?f14escape(x.member):'',x.billNo?`બિલ ${f14escape(x.billNo)}`:'',x.receipt?`રસીદ ${f14escape(x.receipt)}`:''].filter(Boolean).join(' • ');
+  return `<div class="finance14-detail"><div><b>${f14escape(x.detail||x.head)}</b><div class="muted">${meta}</div></div><b>${f14money(x.amount)}</b></div>`;
 }
-
-function printFinanceReportV14(type){
-  const all=v14PrintableRows(type);
-  const title=type==='income'?'આવક એન્ટ્રી':type==='expense'?'ખર્ચ એન્ટ્રી':'આવક / ખર્ચ હેડ વાઈઝ સંપૂર્ણ રિપોર્ટ';
-  const groups=type==='head'
-    ? [...new Set(all.map(x=>`${x.type}|||${x.head}`))]
-    : [null];
-
-  let rowsHtml='';
+function f14print(type){
+  const all=f14all(), rows=type==='income'?all.filter(x=>x.type==='income'):type==='expense'?all.filter(x=>x.type==='expense'):all;
+  const title=type==='income'?'આવક એન્ટ્રી':type==='expense'?'ખર્ચ એન્ટ્રી':type==='head'?'હેડ વાઈઝ આવક / ખર્ચ':'આવક / ખર્ચ સંપૂર્ણ રિપોર્ટ';
+  let tr='';
   if(type==='head'){
-    groups.forEach(key=>{
-      const [kind,head]=key.split('|||');
-      const rr=all.filter(x=>x.type===kind&&x.head===head);
-      const total=rr.reduce((s,x)=>s+x.amount,0);
-      rowsHtml+=`<tr class="group"><th colspan="5">${kind==='income'?'આવક':'ખર્ચ'} • ${esc(head)} — ${v14Money(total)}</th></tr>`;
-      rr.forEach(x=>rowsHtml+=`<tr><td>${esc(x.date||'')}</td><td>${esc(x.house||'-')}</td><td>${esc(x.member||'-')}</td><td>${esc(x.detail||'-')}</td><td>${v14Money(x.amount)}</td></tr>`);
+    [...new Set(all.map(x=>x.type+'|||'+x.head))].forEach(k=>{const [kind,h]=k.split('|||'),rr=all.filter(x=>x.type===kind&&x.head===h),tot=rr.reduce((s,x)=>s+x.amount,0);
+      tr+=`<tr><th colspan="5">${kind==='income'?'આવક':'ખર્ચ'} • ${f14escape(h)} — ${f14money(tot)}</th></tr>`;
+      rr.forEach(x=>tr+=`<tr><td>${f14escape(x.date)}</td><td>${f14escape(x.head)}</td><td>${f14escape(x.house||'-')}</td><td>${f14escape(x.member||x.detail||'-')}</td><td>${f14money(x.amount)}</td></tr>`);
     });
-  }else{
-    all.forEach(x=>rowsHtml+=`<tr><td>${esc(x.date||'')}</td><td>${esc(x.head||'')}</td><td>${esc(x.house||'-')}</td><td>${esc(x.detail||'-')}</td><td>${v14Money(x.amount)}</td></tr>`);
-  }
-  const total=all.reduce((s,x)=>s+x.amount,0);
-  const w=window.open('','_blank'); if(!w)return;
-  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${title}</title>
-  <style>
-  body{font-family:Arial,"Noto Sans Gujarati",sans-serif;padding:24px;color:#182230}
-  h1{margin:0 0 5px;color:#1769e0}p{color:#667085}
-  table{width:100%;border-collapse:collapse;margin-top:18px}
-  th,td{border:1px solid #d9e0e8;padding:8px;text-align:left;font-size:12px}
-  th{background:#eef5ff}.group th{background:#e7f0ff;color:#12468f;font-size:13px}
-  .total{margin-top:16px;padding:12px;background:#f3f7fc;border-radius:10px;font-weight:bold}
-  @media print{button{display:none}}
-  </style></head><body>
-  <h1>સરદાર સોસાયટી</h1><h2>${title}</h2>
-  <p>તારીખ: ${new Date().toLocaleDateString('gu-IN')}</p>
-  <table><tr><th>તારીખ</th><th>હેડ</th><th>ઘર</th><th>વિગત / સભ્ય</th><th>રકમ</th></tr>${type==='head'?rowsHtml:rowsHtml}</table>
-  <div class="total">કુલ રકમ: ${v14Money(total)}</div>
-  </body></html>`);
-  w.document.close(); w.focus(); setTimeout(()=>w.print(),250);
+  }else rows.forEach(x=>tr+=`<tr><td>${f14escape(x.date)}</td><td>${f14escape(x.head)}</td><td>${f14escape(x.house||'-')}</td><td>${f14escape(x.member||x.detail||'-')}</td><td>${f14money(x.amount)}</td></tr>`);
+  const w=window.open('','_blank');if(!w)return;
+  w.document.write(`<html lang="gu"><meta charset="utf-8"><title>${title}</title><style>body{font-family:Arial,sans-serif;padding:24px}h1{color:#1769e0}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ccd5df;padding:8px;text-align:left;font-size:12px}th{background:#edf4ff}</style><h1>સરદાર સોસાયટી</h1><h2>${title}</h2><table><tr><th>તારીખ</th><th>હેડ</th><th>ઘર</th><th>સભ્ય / વિગત</th><th>રકમ</th></tr>${tr}</table></html>`);
+  w.document.close();setTimeout(()=>w.print(),250);
 }
-
-function downloadFinanceReportV14(type){
-  const rows=v14PrintableRows(type);
-  const title=type==='income'?'આવક એન્ટ્રી':type==='expense'?'ખર્ચ એન્ટ્રી':'આવક ખર્ચ હેડ વાઈઝ';
-  const csv=[['તારીખ','પ્રકાર','હેડ','ઘર','સભ્ય','વિગત','રકમ','બિલ/રસીદ']];
-  rows.forEach(x=>csv.push([
-    x.date||'',x.type==='income'?'આવક':'ખર્ચ',x.head||'',x.house||'',x.member||'',
-    x.detail||'',Number(x.amount||0),x.billNo||x.receipt||''
-  ]));
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob(['\ufeff'+csv.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n')],{type:'text/csv;charset=utf-8'}));
-  a.download=`Sardar_Society_${title.replaceAll(' ','_')}.csv`;a.click();
+function f14csv(type){
+  const all=f14all(), rows=type==='income'?all.filter(x=>x.type==='income'):type==='expense'?all.filter(x=>x.type==='expense'):all;
+  const data=[['તારીખ','પ્રકાર','હેડ','ઘર','સભ્ય','વિગત','રકમ','બિલ/રસીદ'],...rows.map(x=>[x.date,x.type==='income'?'આવક':'ખર્ચ',x.head,x.house,x.member,x.detail,x.amount,x.billNo||x.receipt||''])];
+  const blob=new Blob(['\ufeff'+data.map(r=>r.map(v=>`"${String(v??'').replaceAll('"','""')}"`).join(',')).join('\n')],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Sardar_Society_Finance_Report.csv';a.click();
 }
-
-const _renderFinanceV13Base = renderFinance2;
-renderFinance2=function(){
-  ensureFinanceV14();
-  _renderFinanceV13Base();
-  updateFinanceV14Stats();
-};
+/* Override after all previous renderers have loaded. */
+renderFinance2=f14render;
 </script>
-
 </body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),200)}
 </script>
 <script>
