@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="gu">
 <head>
+<meta name="sardar-build" content="14.3">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b5cab"><title>સરદાર સોસાયટી</title>
 <link rel="manifest" href="manifest.webmanifest">
@@ -1322,4 +1323,25 @@ renderFinance2=renderFinanceV13;
 renderMemberIncomeBox_=renderMemberIncomeBoxV13;
 </script>
 
+<script id="sardar-finance-final-v143">
+/* FINAL FINANCE PATCH: placed AFTER every older renderFinance2 definition. */
+(function(){
+  function install(){
+    if(typeof renderFinanceV14_2==='function'){
+      window.renderFinance2=window.renderFinanceV14_2;
+      try{ if(document.getElementById('finance') && !document.getElementById('finance').classList.contains('hide')) window.renderFinanceV14_2(); }catch(e){}
+    }
+  }
+  install();
+  document.addEventListener('DOMContentLoaded',install);
+  let last=false;
+  setInterval(function(){
+    const el=document.getElementById('finance');
+    if(!el)return;
+    const visible=!el.classList.contains('hide');
+    if(visible && !last){ install(); }
+    last=visible;
+  },250);
+})();
+</script>
 </body></html>
