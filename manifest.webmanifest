@@ -1,11 +1,11 @@
 {
-  "name":"સરદાર સોસાયટી",
-  "short_name":"સરદાર સોસાયટી",
-  "start_url":"./?v=18.0",
-  "display":"standalone",
-  "background_color":"#f4f7fc",
-  "theme_color":"#1769e0",
-  "lang":"gu",
-  "description":"સરદાર સોસાયટી મેનેજમેન્ટ એપ",
-  "version":"18.0"
+  "name": "સરદાર સોસાયટી",
+  "short_name": "સરદાર સોસાયટી",
+  "start_url": "./?v=19.0",
+  "display": "standalone",
+  "background_color": "#f4f7fc",
+  "theme_color": "#0b5cab",
+  "lang": "gu",
+  "description": "સરદાર સોસાયટી હિસાબ અને વ્યવસ્થાપન એપ",
+  "version": "19.0"
 }
