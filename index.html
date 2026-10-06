@@ -508,7 +508,89 @@ function fxPrint(type){
     return `<tr><th colspan="5">${k==='income'?'આવક':'ખર્ચ'} • ${fxEsc(h)} — ${fxMoney(rr.reduce((s,x)=>s+x.amount,0))}</th></tr>`+
       rr.map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxEsc(x.detail||x.member||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('');
   }).join('') : all.map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxEsc(x.detail||x.member||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('');
-  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${title}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${title}</h2><table><tr><th>તારીખ</th><th>હેડ</th><th>ઘર</th><th>વિગત / સભ્ય</th><th>રકમ</th></tr>${body}</table></body></html>`);
+  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${title}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${title}</h2><table><tr><th>તારીખ</th><th>હેડ</th><th>ઘર</th><th>વિગત / સભ્ય</th><th>રકમ</th></tr>${body}</table><style id="v15-finance-css">
+.fx-v15-reports{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.fx-v15-report{border:1px solid #dfe7f3;background:#fff;border-radius:17px;padding:14px;text-align:center;cursor:pointer;box-shadow:0 6px 18px #183b6d0b;font-weight:800}
+.fx-v15-report .ico{font-size:24px;display:block;margin-bottom:5px}
+@media(max-width:520px){.fx-v15-reports{grid-template-columns:1fr 1fr}}
+</style>
+<script>
+/* ================= V15 FINANCE: REPORTS + MEMBER-WISE AT BOTTOM ================= */
+function fxV15Rows(type){
+  const all=fxAll();
+  return type==='income'?all.filter(x=>x.type==='income'):type==='expense'?all.filter(x=>x.type==='expense'):all;
+}
+function fxV15ReportBody(type){
+  const all=fxAll();
+  if(type==='summary'){
+    const inc=all.filter(x=>x.type==='income'&&!x.excluded), exp=all.filter(x=>x.type==='expense');
+    const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+    return `<div class="fx-card"><h3 style="margin:0 0 10px">આવક જાવક રિપોર્ટ</h3>
+      <div class="fx-stats" style="color:#182230;background:#f7f9fc;padding:8px;border-radius:14px"><div class="fx-stat" style="background:#fff;color:#182230"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx-stat" style="background:#fff;color:#182230"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx-stat" style="background:#fff;color:#182230"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div></div>
+      <div class="fx-list" style="margin-top:10px"><div class="fx-row"><div><b>💰 કુલ આવક</b></div><b>${fxMoney(ti)}</b></div><div class="fx-row"><div><b>💸 કુલ ખર્ચ</b></div><b>${fxMoney(te)}</b></div><div class="fx-row"><div><b>💵 બાકી સિલક</b></div><b>${fxMoney(ti-te)}</b></div></div></div>`;
+  }
+  if(type==='head'){
+    let body='';
+    [...(d.incomeHeads||[]).map(h=>['income',h]),...(d.expenseHeads||[]).map(h=>['expense',h])].forEach(([k,h])=>{
+      const rr=all.filter(x=>x.type===k&&x.head===h&&!x.excluded), total=rr.reduce((s,x)=>s+x.amount,0);
+      body+=`<div class="fx-head"><div class="fx-head-top"><span>${k==='income'?'💰':'💸'} ${fxEsc(h)}</span><b>${fxMoney(total)}</b></div>`;
+      body+=rr.length?rr.map(x=>`<div class="fx-detail"><div><b>${fxEsc(x.detail||x.member||'-')}</b><br><small>${fxEsc(x.date||'')}${x.house?' • ઘર '+fxEsc(x.house):''}${x.member?' • '+fxEsc(x.member):''}</small></div><b>${fxMoney(x.amount)}</b></div>`).join(''):`<div class="fx-detail"><small>કોઈ એન્ટ્રી નથી.</small><span></span></div>`;
+      body+='</div>';
+    });
+    return body||'<div class="finance-empty">કોઈ હેડ ઉપલબ્ધ નથી.</div>';
+  }
+  if(type==='member'){
+    const flats=(d.flats||[]).filter(isOccupiedHouse);
+    const rows=flats.map(f=>{
+      const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no)&&!x.excluded);
+      const total=rr.reduce((s,x)=>s+x.amount,0);
+      return `<div class="fx-row"><div><div class="title">ઘર ${fxEsc(f.no)} • ${fxEsc(f.name||'')}</div><div class="fx-meta"><span class="fx-chip">સભ્યની કુલ આવક</span><span class="fx-chip">${rr.length} એન્ટ્રી</span></div></div><div class="fx-amt">${fxMoney(total)}</div></div>`;
+    }).join('');
+    const exp=all.filter(x=>x.type==='expense'), et=exp.reduce((s,x)=>s+x.amount,0);
+    return `<div class="fx-card"><h3 style="margin:0 0 10px">સભ્ય વાઈઝ આવક જાવક રિપોર્ટ</h3>${rows||'<div class="finance-empty">કોઈ સભ્ય ઉપલબ્ધ નથી.</div>'}<div class="fx-row" style="margin-top:9px"><div><b>સોસાયટીનો કુલ ખર્ચ</b><div class="fx-meta"><span class="fx-chip">ખર્ચ સભ્યવાર ફાળવેલ નથી</span></div></div><div class="fx-amt">${fxMoney(et)}</div></div></div>`;
+  }
+  const rows=all.filter(x=>!x.excluded).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  return `<div class="fx-list">${rows.map(fxRow).join('')||'<div class="finance-empty">કોઈ એન્ટ્રી નથી.</div>'}</div>`;
+}
+function fxV15Open(type){
+  const titles={summary:'આવક જાવક રિપોર્ટ',head:'હેડ વાઈઝ આવક જાવક રિપોર્ટ',member:'સભ્ય વાઈઝ આવક જાવક રિપોર્ટ',all:'તમામ આવક જાવક એન્ટ્રી'};
+  const body=fxV15ReportBody(type);
+  const safeType=type;
+  document.getElementById('sheet').innerHTML=`<div class="title">${titles[type]||'રિપોર્ટ'}</div><div class="sub" style="margin:4px 0 10px">સરદાર સોસાયટી</div><div class="grid" style="margin-bottom:10px"><button class="btn primary" onclick="fxV15Print('${safeType}')">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="fxV15Download('${safeType}')">📥 ડાઉનલોડ</button></div>${body}<button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+}
+function fxV15Print(type){
+  const titles={summary:'આવક જાવક રિપોર્ટ',head:'હેડ વાઈઝ આવક જાવક રિપોર્ટ',member:'સભ્ય વાઈઝ આવક જાવક રિપોર્ટ',all:'તમામ આવક જાવક એન્ટ્રી'};
+  const all=fxAll().filter(x=>!x.excluded), w=window.open('','_blank'); if(!w)return;
+  let body='';
+  if(type==='summary'){
+    const inc=all.filter(x=>x.type==='income'),exp=all.filter(x=>x.type==='expense'); const ti=inc.reduce((s,x)=>s+x.amount,0),te=exp.reduce((s,x)=>s+x.amount,0);
+    body=`<h3>કુલ આવક: ${fxMoney(ti)}</h3><h3>કુલ ખર્ચ: ${fxMoney(te)}</h3><h3>બાકી સિલક: ${fxMoney(ti-te)}</h3>`;
+  } else if(type==='head'){
+    body=[...(d.incomeHeads||[]).map(h=>['income',h]),...(d.expenseHeads||[]).map(h=>['expense',h])].map(([k,h])=>{const rr=all.filter(x=>x.type===k&&x.head===h);const t=rr.reduce((s,x)=>s+x.amount,0);return `<tr><th colspan="5">${k==='income'?'આવક':'ખર્ચ'} • ${fxEsc(h)} — ${fxMoney(t)}</th></tr>`+rr.map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxEsc(x.detail||x.member||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('')}).join('');
+  } else if(type==='member'){
+    const flats=(d.flats||[]).filter(isOccupiedHouse); body=flats.map(f=>{const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no));const t=rr.reduce((s,x)=>s+x.amount,0);return `<tr><td>${fxEsc(f.no)}</td><td>${fxEsc(f.name||'')}</td><td>સભ્ય આવક</td><td>${rr.length}</td><td>${fxMoney(t)}</td></tr>`}).join(''); const et=all.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0); body+=`<tr><th colspan="4">સોસાયટીનો કુલ ખર્ચ</th><th>${fxMoney(et)}</th></tr>`;
+  } else body=all.sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${x.type==='income'?'આવક':'ખર્ચ'}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('');
+  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${titles[type]}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${titles[type]}</h2>${type==='summary'?body:`<table><tr><th>તારીખ/ઘર</th><th>પ્રકાર/સભ્ય</th><th>હેડ</th><th>વિગત/એન્ટ્રી</th><th>રકમ</th></tr>${body}</table>`}</body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
+}
+function fxV15Download(type){
+  const all=fxAll().filter(x=>!x.excluded); let rows=[];
+  if(type==='member'){
+    rows=[['ઘર','સભ્ય','પ્રકાર','એન્ટ્રી','કુલ રકમ']]; (d.flats||[]).filter(isOccupiedHouse).forEach(f=>{const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no));rows.push([f.no,f.name||'','સભ્ય આવક',rr.length,rr.reduce((s,x)=>s+x.amount,0)]);});
+  }else{rows=[['તારીખ','પ્રકાર','હેડ','ઘર','સભ્ય','વિગત','રકમ']]; all.forEach(x=>rows.push([x.date||'',x.type==='income'?'આવક':'ખર્ચ',x.head||'',x.house||'',x.member||'',x.detail||'',x.amount||0]));}
+  const blob=new Blob(['\ufeff'+rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n')],{type:'text/csv;charset=utf-8'}); const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Sardar_Society_'+type+'_Report.csv';a.click();
+}
+function renderFinanceV15(){
+  const sec=document.getElementById('finance');if(!sec)return; const all=fxAll(),inc=all.filter(x=>x.type==='income'&&!x.excluded),exp=all.filter(x=>x.type==='expense'); const ti=inc.reduce((s,x)=>s+x.amount,0),te=exp.reduce((s,x)=>s+x.amount,0);
+  sec.innerHTML=`<div class="finance-v14x"><div class="fx-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સંપૂર્ણ હિસાબ</p><div class="fx-stats"><div class="fx-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div></div>${role==='admin'?`<div class="fx-actions"><button class="fx-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>નવી આવક નોંધો</small></button><button class="fx-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>નવો ખર્ચ નોંધો</small></button></div>`:''}<div class="fx-card"><div class="fx-card-head"><b>રિપોર્ટ</b><span class="fx-count">પ્રિન્ટ / ડાઉનલોડ</span></div><div class="fx-v15-reports"><button class="fx-v15-report" onclick="fxV15Open('summary')"><span class="ico">📑</span>આવક જાવક રિપોર્ટ</button><button class="fx-v15-report" onclick="fxV15Open('head')"><span class="ico">📊</span>હેડ વાઈઝ આવક જાવક રિપોર્ટ</button><button class="fx-v15-report" onclick="fxV15Open('member')"><span class="ico">👥</span>સભ્ય વાઈઝ આવક જાવક રિપોર્ટ</button><button class="fx-v15-report" onclick="fxV15Open('all')"><span class="ico">📚</span>તમામ એન્ટ્રી</button></div></div><div class="fx-card"><div class="fx-card-head"><b>ઝડપી હેડ સારાંશ</b></div><div class="fx-list">${(d.incomeHeads||[]).map(h=>`<div class="fx-row"><div><b>💰 ${fxEsc(h)}</b></div><b>${fxMoney(incomeHeadTotal(h))}</b></div>`).join('')}${(d.expenseHeads||[]).map(h=>`<div class="fx-row"><div><b>💸 ${fxEsc(h)}</b></div><b>${fxMoney(exp.filter(x=>x.head===h).reduce((s,x)=>s+x.amount,0))}</b></div>`).join('')}</div></div>${role==='admin'?`<div class="fx-card"><div class="fx-card-head"><b>આવક / ખર્ચના હેડ</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}${fxMemberBox()}</div>`;
+}
+window.renderFinance2=renderFinanceV15;
+window.renderFinanceV14_2=renderFinanceV15;
+try{renderFinanceV15()}catch(e){}
+document.addEventListener('DOMContentLoaded',()=>{try{renderFinanceV15()}catch(e){}});
+setTimeout(()=>{try{renderFinanceV15()}catch(e){}},350);
+</script>
+</body></html>`);
   w.document.close();setTimeout(()=>w.print(),250);
 }
 function fxDownload(type){
@@ -549,6 +631,88 @@ function renderFinanceV14_2(){
 renderFinance2=renderFinanceV14_2;
 </script>
 
+<style id="v15-finance-css">
+.fx-v15-reports{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.fx-v15-report{border:1px solid #dfe7f3;background:#fff;border-radius:17px;padding:14px;text-align:center;cursor:pointer;box-shadow:0 6px 18px #183b6d0b;font-weight:800}
+.fx-v15-report .ico{font-size:24px;display:block;margin-bottom:5px}
+@media(max-width:520px){.fx-v15-reports{grid-template-columns:1fr 1fr}}
+</style>
+<script>
+/* ================= V15 FINANCE: REPORTS + MEMBER-WISE AT BOTTOM ================= */
+function fxV15Rows(type){
+  const all=fxAll();
+  return type==='income'?all.filter(x=>x.type==='income'):type==='expense'?all.filter(x=>x.type==='expense'):all;
+}
+function fxV15ReportBody(type){
+  const all=fxAll();
+  if(type==='summary'){
+    const inc=all.filter(x=>x.type==='income'&&!x.excluded), exp=all.filter(x=>x.type==='expense');
+    const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+    return `<div class="fx-card"><h3 style="margin:0 0 10px">આવક જાવક રિપોર્ટ</h3>
+      <div class="fx-stats" style="color:#182230;background:#f7f9fc;padding:8px;border-radius:14px"><div class="fx-stat" style="background:#fff;color:#182230"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx-stat" style="background:#fff;color:#182230"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx-stat" style="background:#fff;color:#182230"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div></div>
+      <div class="fx-list" style="margin-top:10px"><div class="fx-row"><div><b>💰 કુલ આવક</b></div><b>${fxMoney(ti)}</b></div><div class="fx-row"><div><b>💸 કુલ ખર્ચ</b></div><b>${fxMoney(te)}</b></div><div class="fx-row"><div><b>💵 બાકી સિલક</b></div><b>${fxMoney(ti-te)}</b></div></div></div>`;
+  }
+  if(type==='head'){
+    let body='';
+    [...(d.incomeHeads||[]).map(h=>['income',h]),...(d.expenseHeads||[]).map(h=>['expense',h])].forEach(([k,h])=>{
+      const rr=all.filter(x=>x.type===k&&x.head===h&&!x.excluded), total=rr.reduce((s,x)=>s+x.amount,0);
+      body+=`<div class="fx-head"><div class="fx-head-top"><span>${k==='income'?'💰':'💸'} ${fxEsc(h)}</span><b>${fxMoney(total)}</b></div>`;
+      body+=rr.length?rr.map(x=>`<div class="fx-detail"><div><b>${fxEsc(x.detail||x.member||'-')}</b><br><small>${fxEsc(x.date||'')}${x.house?' • ઘર '+fxEsc(x.house):''}${x.member?' • '+fxEsc(x.member):''}</small></div><b>${fxMoney(x.amount)}</b></div>`).join(''):`<div class="fx-detail"><small>કોઈ એન્ટ્રી નથી.</small><span></span></div>`;
+      body+='</div>';
+    });
+    return body||'<div class="finance-empty">કોઈ હેડ ઉપલબ્ધ નથી.</div>';
+  }
+  if(type==='member'){
+    const flats=(d.flats||[]).filter(isOccupiedHouse);
+    const rows=flats.map(f=>{
+      const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no)&&!x.excluded);
+      const total=rr.reduce((s,x)=>s+x.amount,0);
+      return `<div class="fx-row"><div><div class="title">ઘર ${fxEsc(f.no)} • ${fxEsc(f.name||'')}</div><div class="fx-meta"><span class="fx-chip">સભ્યની કુલ આવક</span><span class="fx-chip">${rr.length} એન્ટ્રી</span></div></div><div class="fx-amt">${fxMoney(total)}</div></div>`;
+    }).join('');
+    const exp=all.filter(x=>x.type==='expense'), et=exp.reduce((s,x)=>s+x.amount,0);
+    return `<div class="fx-card"><h3 style="margin:0 0 10px">સભ્ય વાઈઝ આવક જાવક રિપોર્ટ</h3>${rows||'<div class="finance-empty">કોઈ સભ્ય ઉપલબ્ધ નથી.</div>'}<div class="fx-row" style="margin-top:9px"><div><b>સોસાયટીનો કુલ ખર્ચ</b><div class="fx-meta"><span class="fx-chip">ખર્ચ સભ્યવાર ફાળવેલ નથી</span></div></div><div class="fx-amt">${fxMoney(et)}</div></div></div>`;
+  }
+  const rows=all.filter(x=>!x.excluded).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  return `<div class="fx-list">${rows.map(fxRow).join('')||'<div class="finance-empty">કોઈ એન્ટ્રી નથી.</div>'}</div>`;
+}
+function fxV15Open(type){
+  const titles={summary:'આવક જાવક રિપોર્ટ',head:'હેડ વાઈઝ આવક જાવક રિપોર્ટ',member:'સભ્ય વાઈઝ આવક જાવક રિપોર્ટ',all:'તમામ આવક જાવક એન્ટ્રી'};
+  const body=fxV15ReportBody(type);
+  const safeType=type;
+  document.getElementById('sheet').innerHTML=`<div class="title">${titles[type]||'રિપોર્ટ'}</div><div class="sub" style="margin:4px 0 10px">સરદાર સોસાયટી</div><div class="grid" style="margin-bottom:10px"><button class="btn primary" onclick="fxV15Print('${safeType}')">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="fxV15Download('${safeType}')">📥 ડાઉનલોડ</button></div>${body}<button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+}
+function fxV15Print(type){
+  const titles={summary:'આવક જાવક રિપોર્ટ',head:'હેડ વાઈઝ આવક જાવક રિપોર્ટ',member:'સભ્ય વાઈઝ આવક જાવક રિપોર્ટ',all:'તમામ આવક જાવક એન્ટ્રી'};
+  const all=fxAll().filter(x=>!x.excluded), w=window.open('','_blank'); if(!w)return;
+  let body='';
+  if(type==='summary'){
+    const inc=all.filter(x=>x.type==='income'),exp=all.filter(x=>x.type==='expense'); const ti=inc.reduce((s,x)=>s+x.amount,0),te=exp.reduce((s,x)=>s+x.amount,0);
+    body=`<h3>કુલ આવક: ${fxMoney(ti)}</h3><h3>કુલ ખર્ચ: ${fxMoney(te)}</h3><h3>બાકી સિલક: ${fxMoney(ti-te)}</h3>`;
+  } else if(type==='head'){
+    body=[...(d.incomeHeads||[]).map(h=>['income',h]),...(d.expenseHeads||[]).map(h=>['expense',h])].map(([k,h])=>{const rr=all.filter(x=>x.type===k&&x.head===h);const t=rr.reduce((s,x)=>s+x.amount,0);return `<tr><th colspan="5">${k==='income'?'આવક':'ખર્ચ'} • ${fxEsc(h)} — ${fxMoney(t)}</th></tr>`+rr.map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxEsc(x.detail||x.member||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('')}).join('');
+  } else if(type==='member'){
+    const flats=(d.flats||[]).filter(isOccupiedHouse); body=flats.map(f=>{const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no));const t=rr.reduce((s,x)=>s+x.amount,0);return `<tr><td>${fxEsc(f.no)}</td><td>${fxEsc(f.name||'')}</td><td>સભ્ય આવક</td><td>${rr.length}</td><td>${fxMoney(t)}</td></tr>`}).join(''); const et=all.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0); body+=`<tr><th colspan="4">સોસાયટીનો કુલ ખર્ચ</th><th>${fxMoney(et)}</th></tr>`;
+  } else body=all.sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${x.type==='income'?'આવક':'ખર્ચ'}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('');
+  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${titles[type]}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${titles[type]}</h2>${type==='summary'?body:`<table><tr><th>તારીખ/ઘર</th><th>પ્રકાર/સભ્ય</th><th>હેડ</th><th>વિગત/એન્ટ્રી</th><th>રકમ</th></tr>${body}</table>`}</body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
+}
+function fxV15Download(type){
+  const all=fxAll().filter(x=>!x.excluded); let rows=[];
+  if(type==='member'){
+    rows=[['ઘર','સભ્ય','પ્રકાર','એન્ટ્રી','કુલ રકમ']]; (d.flats||[]).filter(isOccupiedHouse).forEach(f=>{const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no));rows.push([f.no,f.name||'','સભ્ય આવક',rr.length,rr.reduce((s,x)=>s+x.amount,0)]);});
+  }else{rows=[['તારીખ','પ્રકાર','હેડ','ઘર','સભ્ય','વિગત','રકમ']]; all.forEach(x=>rows.push([x.date||'',x.type==='income'?'આવક':'ખર્ચ',x.head||'',x.house||'',x.member||'',x.detail||'',x.amount||0]));}
+  const blob=new Blob(['\ufeff'+rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n')],{type:'text/csv;charset=utf-8'}); const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Sardar_Society_'+type+'_Report.csv';a.click();
+}
+function renderFinanceV15(){
+  const sec=document.getElementById('finance');if(!sec)return; const all=fxAll(),inc=all.filter(x=>x.type==='income'&&!x.excluded),exp=all.filter(x=>x.type==='expense'); const ti=inc.reduce((s,x)=>s+x.amount,0),te=exp.reduce((s,x)=>s+x.amount,0);
+  sec.innerHTML=`<div class="finance-v14x"><div class="fx-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સંપૂર્ણ હિસાબ</p><div class="fx-stats"><div class="fx-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div></div>${role==='admin'?`<div class="fx-actions"><button class="fx-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>નવી આવક નોંધો</small></button><button class="fx-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>નવો ખર્ચ નોંધો</small></button></div>`:''}<div class="fx-card"><div class="fx-card-head"><b>રિપોર્ટ</b><span class="fx-count">પ્રિન્ટ / ડાઉનલોડ</span></div><div class="fx-v15-reports"><button class="fx-v15-report" onclick="fxV15Open('summary')"><span class="ico">📑</span>આવક જાવક રિપોર્ટ</button><button class="fx-v15-report" onclick="fxV15Open('head')"><span class="ico">📊</span>હેડ વાઈઝ આવક જાવક રિપોર્ટ</button><button class="fx-v15-report" onclick="fxV15Open('member')"><span class="ico">👥</span>સભ્ય વાઈઝ આવક જાવક રિપોર્ટ</button><button class="fx-v15-report" onclick="fxV15Open('all')"><span class="ico">📚</span>તમામ એન્ટ્રી</button></div></div><div class="fx-card"><div class="fx-card-head"><b>ઝડપી હેડ સારાંશ</b></div><div class="fx-list">${(d.incomeHeads||[]).map(h=>`<div class="fx-row"><div><b>💰 ${fxEsc(h)}</b></div><b>${fxMoney(incomeHeadTotal(h))}</b></div>`).join('')}${(d.expenseHeads||[]).map(h=>`<div class="fx-row"><div><b>💸 ${fxEsc(h)}</b></div><b>${fxMoney(exp.filter(x=>x.head===h).reduce((s,x)=>s+x.amount,0))}</b></div>`).join('')}</div></div>${role==='admin'?`<div class="fx-card"><div class="fx-card-head"><b>આવક / ખર્ચના હેડ</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}${fxMemberBox()}</div>`;
+}
+window.renderFinance2=renderFinanceV15;
+window.renderFinanceV14_2=renderFinanceV15;
+try{renderFinanceV15()}catch(e){}
+document.addEventListener('DOMContentLoaded',()=>{try{renderFinanceV15()}catch(e){}});
+setTimeout(()=>{try{renderFinanceV15()}catch(e){}},350);
+</script>
 </body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),200)}
 </script>
 <script>
@@ -727,6 +891,88 @@ renderFinance2=renderFinanceV13;
 renderMemberIncomeBox_=renderMemberIncomeBoxV13;
 </script>
 
+<style id="v15-finance-css">
+.fx-v15-reports{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.fx-v15-report{border:1px solid #dfe7f3;background:#fff;border-radius:17px;padding:14px;text-align:center;cursor:pointer;box-shadow:0 6px 18px #183b6d0b;font-weight:800}
+.fx-v15-report .ico{font-size:24px;display:block;margin-bottom:5px}
+@media(max-width:520px){.fx-v15-reports{grid-template-columns:1fr 1fr}}
+</style>
+<script>
+/* ================= V15 FINANCE: REPORTS + MEMBER-WISE AT BOTTOM ================= */
+function fxV15Rows(type){
+  const all=fxAll();
+  return type==='income'?all.filter(x=>x.type==='income'):type==='expense'?all.filter(x=>x.type==='expense'):all;
+}
+function fxV15ReportBody(type){
+  const all=fxAll();
+  if(type==='summary'){
+    const inc=all.filter(x=>x.type==='income'&&!x.excluded), exp=all.filter(x=>x.type==='expense');
+    const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+    return `<div class="fx-card"><h3 style="margin:0 0 10px">આવક જાવક રિપોર્ટ</h3>
+      <div class="fx-stats" style="color:#182230;background:#f7f9fc;padding:8px;border-radius:14px"><div class="fx-stat" style="background:#fff;color:#182230"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx-stat" style="background:#fff;color:#182230"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx-stat" style="background:#fff;color:#182230"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div></div>
+      <div class="fx-list" style="margin-top:10px"><div class="fx-row"><div><b>💰 કુલ આવક</b></div><b>${fxMoney(ti)}</b></div><div class="fx-row"><div><b>💸 કુલ ખર્ચ</b></div><b>${fxMoney(te)}</b></div><div class="fx-row"><div><b>💵 બાકી સિલક</b></div><b>${fxMoney(ti-te)}</b></div></div></div>`;
+  }
+  if(type==='head'){
+    let body='';
+    [...(d.incomeHeads||[]).map(h=>['income',h]),...(d.expenseHeads||[]).map(h=>['expense',h])].forEach(([k,h])=>{
+      const rr=all.filter(x=>x.type===k&&x.head===h&&!x.excluded), total=rr.reduce((s,x)=>s+x.amount,0);
+      body+=`<div class="fx-head"><div class="fx-head-top"><span>${k==='income'?'💰':'💸'} ${fxEsc(h)}</span><b>${fxMoney(total)}</b></div>`;
+      body+=rr.length?rr.map(x=>`<div class="fx-detail"><div><b>${fxEsc(x.detail||x.member||'-')}</b><br><small>${fxEsc(x.date||'')}${x.house?' • ઘર '+fxEsc(x.house):''}${x.member?' • '+fxEsc(x.member):''}</small></div><b>${fxMoney(x.amount)}</b></div>`).join(''):`<div class="fx-detail"><small>કોઈ એન્ટ્રી નથી.</small><span></span></div>`;
+      body+='</div>';
+    });
+    return body||'<div class="finance-empty">કોઈ હેડ ઉપલબ્ધ નથી.</div>';
+  }
+  if(type==='member'){
+    const flats=(d.flats||[]).filter(isOccupiedHouse);
+    const rows=flats.map(f=>{
+      const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no)&&!x.excluded);
+      const total=rr.reduce((s,x)=>s+x.amount,0);
+      return `<div class="fx-row"><div><div class="title">ઘર ${fxEsc(f.no)} • ${fxEsc(f.name||'')}</div><div class="fx-meta"><span class="fx-chip">સભ્યની કુલ આવક</span><span class="fx-chip">${rr.length} એન્ટ્રી</span></div></div><div class="fx-amt">${fxMoney(total)}</div></div>`;
+    }).join('');
+    const exp=all.filter(x=>x.type==='expense'), et=exp.reduce((s,x)=>s+x.amount,0);
+    return `<div class="fx-card"><h3 style="margin:0 0 10px">સભ્ય વાઈઝ આવક જાવક રિપોર્ટ</h3>${rows||'<div class="finance-empty">કોઈ સભ્ય ઉપલબ્ધ નથી.</div>'}<div class="fx-row" style="margin-top:9px"><div><b>સોસાયટીનો કુલ ખર્ચ</b><div class="fx-meta"><span class="fx-chip">ખર્ચ સભ્યવાર ફાળવેલ નથી</span></div></div><div class="fx-amt">${fxMoney(et)}</div></div></div>`;
+  }
+  const rows=all.filter(x=>!x.excluded).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  return `<div class="fx-list">${rows.map(fxRow).join('')||'<div class="finance-empty">કોઈ એન્ટ્રી નથી.</div>'}</div>`;
+}
+function fxV15Open(type){
+  const titles={summary:'આવક જાવક રિપોર્ટ',head:'હેડ વાઈઝ આવક જાવક રિપોર્ટ',member:'સભ્ય વાઈઝ આવક જાવક રિપોર્ટ',all:'તમામ આવક જાવક એન્ટ્રી'};
+  const body=fxV15ReportBody(type);
+  const safeType=type;
+  document.getElementById('sheet').innerHTML=`<div class="title">${titles[type]||'રિપોર્ટ'}</div><div class="sub" style="margin:4px 0 10px">સરદાર સોસાયટી</div><div class="grid" style="margin-bottom:10px"><button class="btn primary" onclick="fxV15Print('${safeType}')">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="fxV15Download('${safeType}')">📥 ડાઉનલોડ</button></div>${body}<button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+}
+function fxV15Print(type){
+  const titles={summary:'આવક જાવક રિપોર્ટ',head:'હેડ વાઈઝ આવક જાવક રિપોર્ટ',member:'સભ્ય વાઈઝ આવક જાવક રિપોર્ટ',all:'તમામ આવક જાવક એન્ટ્રી'};
+  const all=fxAll().filter(x=>!x.excluded), w=window.open('','_blank'); if(!w)return;
+  let body='';
+  if(type==='summary'){
+    const inc=all.filter(x=>x.type==='income'),exp=all.filter(x=>x.type==='expense'); const ti=inc.reduce((s,x)=>s+x.amount,0),te=exp.reduce((s,x)=>s+x.amount,0);
+    body=`<h3>કુલ આવક: ${fxMoney(ti)}</h3><h3>કુલ ખર્ચ: ${fxMoney(te)}</h3><h3>બાકી સિલક: ${fxMoney(ti-te)}</h3>`;
+  } else if(type==='head'){
+    body=[...(d.incomeHeads||[]).map(h=>['income',h]),...(d.expenseHeads||[]).map(h=>['expense',h])].map(([k,h])=>{const rr=all.filter(x=>x.type===k&&x.head===h);const t=rr.reduce((s,x)=>s+x.amount,0);return `<tr><th colspan="5">${k==='income'?'આવક':'ખર્ચ'} • ${fxEsc(h)} — ${fxMoney(t)}</th></tr>`+rr.map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxEsc(x.detail||x.member||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('')}).join('');
+  } else if(type==='member'){
+    const flats=(d.flats||[]).filter(isOccupiedHouse); body=flats.map(f=>{const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no));const t=rr.reduce((s,x)=>s+x.amount,0);return `<tr><td>${fxEsc(f.no)}</td><td>${fxEsc(f.name||'')}</td><td>સભ્ય આવક</td><td>${rr.length}</td><td>${fxMoney(t)}</td></tr>`}).join(''); const et=all.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0); body+=`<tr><th colspan="4">સોસાયટીનો કુલ ખર્ચ</th><th>${fxMoney(et)}</th></tr>`;
+  } else body=all.sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${x.type==='income'?'આવક':'ખર્ચ'}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('');
+  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${titles[type]}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${titles[type]}</h2>${type==='summary'?body:`<table><tr><th>તારીખ/ઘર</th><th>પ્રકાર/સભ્ય</th><th>હેડ</th><th>વિગત/એન્ટ્રી</th><th>રકમ</th></tr>${body}</table>`}</body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
+}
+function fxV15Download(type){
+  const all=fxAll().filter(x=>!x.excluded); let rows=[];
+  if(type==='member'){
+    rows=[['ઘર','સભ્ય','પ્રકાર','એન્ટ્રી','કુલ રકમ']]; (d.flats||[]).filter(isOccupiedHouse).forEach(f=>{const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no));rows.push([f.no,f.name||'','સભ્ય આવક',rr.length,rr.reduce((s,x)=>s+x.amount,0)]);});
+  }else{rows=[['તારીખ','પ્રકાર','હેડ','ઘર','સભ્ય','વિગત','રકમ']]; all.forEach(x=>rows.push([x.date||'',x.type==='income'?'આવક':'ખર્ચ',x.head||'',x.house||'',x.member||'',x.detail||'',x.amount||0]));}
+  const blob=new Blob(['\ufeff'+rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n')],{type:'text/csv;charset=utf-8'}); const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Sardar_Society_'+type+'_Report.csv';a.click();
+}
+function renderFinanceV15(){
+  const sec=document.getElementById('finance');if(!sec)return; const all=fxAll(),inc=all.filter(x=>x.type==='income'&&!x.excluded),exp=all.filter(x=>x.type==='expense'); const ti=inc.reduce((s,x)=>s+x.amount,0),te=exp.reduce((s,x)=>s+x.amount,0);
+  sec.innerHTML=`<div class="finance-v14x"><div class="fx-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સંપૂર્ણ હિસાબ</p><div class="fx-stats"><div class="fx-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div></div>${role==='admin'?`<div class="fx-actions"><button class="fx-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>નવી આવક નોંધો</small></button><button class="fx-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>નવો ખર્ચ નોંધો</small></button></div>`:''}<div class="fx-card"><div class="fx-card-head"><b>રિપોર્ટ</b><span class="fx-count">પ્રિન્ટ / ડાઉનલોડ</span></div><div class="fx-v15-reports"><button class="fx-v15-report" onclick="fxV15Open('summary')"><span class="ico">📑</span>આવક જાવક રિપોર્ટ</button><button class="fx-v15-report" onclick="fxV15Open('head')"><span class="ico">📊</span>હેડ વાઈઝ આવક જાવક રિપોર્ટ</button><button class="fx-v15-report" onclick="fxV15Open('member')"><span class="ico">👥</span>સભ્ય વાઈઝ આવક જાવક રિપોર્ટ</button><button class="fx-v15-report" onclick="fxV15Open('all')"><span class="ico">📚</span>તમામ એન્ટ્રી</button></div></div><div class="fx-card"><div class="fx-card-head"><b>ઝડપી હેડ સારાંશ</b></div><div class="fx-list">${(d.incomeHeads||[]).map(h=>`<div class="fx-row"><div><b>💰 ${fxEsc(h)}</b></div><b>${fxMoney(incomeHeadTotal(h))}</b></div>`).join('')}${(d.expenseHeads||[]).map(h=>`<div class="fx-row"><div><b>💸 ${fxEsc(h)}</b></div><b>${fxMoney(exp.filter(x=>x.head===h).reduce((s,x)=>s+x.amount,0))}</b></div>`).join('')}</div></div>${role==='admin'?`<div class="fx-card"><div class="fx-card-head"><b>આવક / ખર્ચના હેડ</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}${fxMemberBox()}</div>`;
+}
+window.renderFinance2=renderFinanceV15;
+window.renderFinanceV14_2=renderFinanceV15;
+try{renderFinanceV15()}catch(e){}
+document.addEventListener('DOMContentLoaded',()=>{try{renderFinanceV15()}catch(e){}});
+setTimeout(()=>{try{renderFinanceV15()}catch(e){}},350);
+</script>
 </body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),200)}
 </script>
 <script>
@@ -1343,5 +1589,87 @@ renderMemberIncomeBox_=renderMemberIncomeBoxV13;
     last=visible;
   },250);
 })();
+</script>
+<style id="v15-finance-css">
+.fx-v15-reports{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.fx-v15-report{border:1px solid #dfe7f3;background:#fff;border-radius:17px;padding:14px;text-align:center;cursor:pointer;box-shadow:0 6px 18px #183b6d0b;font-weight:800}
+.fx-v15-report .ico{font-size:24px;display:block;margin-bottom:5px}
+@media(max-width:520px){.fx-v15-reports{grid-template-columns:1fr 1fr}}
+</style>
+<script>
+/* ================= V15 FINANCE: REPORTS + MEMBER-WISE AT BOTTOM ================= */
+function fxV15Rows(type){
+  const all=fxAll();
+  return type==='income'?all.filter(x=>x.type==='income'):type==='expense'?all.filter(x=>x.type==='expense'):all;
+}
+function fxV15ReportBody(type){
+  const all=fxAll();
+  if(type==='summary'){
+    const inc=all.filter(x=>x.type==='income'&&!x.excluded), exp=all.filter(x=>x.type==='expense');
+    const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+    return `<div class="fx-card"><h3 style="margin:0 0 10px">આવક જાવક રિપોર્ટ</h3>
+      <div class="fx-stats" style="color:#182230;background:#f7f9fc;padding:8px;border-radius:14px"><div class="fx-stat" style="background:#fff;color:#182230"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx-stat" style="background:#fff;color:#182230"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx-stat" style="background:#fff;color:#182230"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div></div>
+      <div class="fx-list" style="margin-top:10px"><div class="fx-row"><div><b>💰 કુલ આવક</b></div><b>${fxMoney(ti)}</b></div><div class="fx-row"><div><b>💸 કુલ ખર્ચ</b></div><b>${fxMoney(te)}</b></div><div class="fx-row"><div><b>💵 બાકી સિલક</b></div><b>${fxMoney(ti-te)}</b></div></div></div>`;
+  }
+  if(type==='head'){
+    let body='';
+    [...(d.incomeHeads||[]).map(h=>['income',h]),...(d.expenseHeads||[]).map(h=>['expense',h])].forEach(([k,h])=>{
+      const rr=all.filter(x=>x.type===k&&x.head===h&&!x.excluded), total=rr.reduce((s,x)=>s+x.amount,0);
+      body+=`<div class="fx-head"><div class="fx-head-top"><span>${k==='income'?'💰':'💸'} ${fxEsc(h)}</span><b>${fxMoney(total)}</b></div>`;
+      body+=rr.length?rr.map(x=>`<div class="fx-detail"><div><b>${fxEsc(x.detail||x.member||'-')}</b><br><small>${fxEsc(x.date||'')}${x.house?' • ઘર '+fxEsc(x.house):''}${x.member?' • '+fxEsc(x.member):''}</small></div><b>${fxMoney(x.amount)}</b></div>`).join(''):`<div class="fx-detail"><small>કોઈ એન્ટ્રી નથી.</small><span></span></div>`;
+      body+='</div>';
+    });
+    return body||'<div class="finance-empty">કોઈ હેડ ઉપલબ્ધ નથી.</div>';
+  }
+  if(type==='member'){
+    const flats=(d.flats||[]).filter(isOccupiedHouse);
+    const rows=flats.map(f=>{
+      const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no)&&!x.excluded);
+      const total=rr.reduce((s,x)=>s+x.amount,0);
+      return `<div class="fx-row"><div><div class="title">ઘર ${fxEsc(f.no)} • ${fxEsc(f.name||'')}</div><div class="fx-meta"><span class="fx-chip">સભ્યની કુલ આવક</span><span class="fx-chip">${rr.length} એન્ટ્રી</span></div></div><div class="fx-amt">${fxMoney(total)}</div></div>`;
+    }).join('');
+    const exp=all.filter(x=>x.type==='expense'), et=exp.reduce((s,x)=>s+x.amount,0);
+    return `<div class="fx-card"><h3 style="margin:0 0 10px">સભ્ય વાઈઝ આવક જાવક રિપોર્ટ</h3>${rows||'<div class="finance-empty">કોઈ સભ્ય ઉપલબ્ધ નથી.</div>'}<div class="fx-row" style="margin-top:9px"><div><b>સોસાયટીનો કુલ ખર્ચ</b><div class="fx-meta"><span class="fx-chip">ખર્ચ સભ્યવાર ફાળવેલ નથી</span></div></div><div class="fx-amt">${fxMoney(et)}</div></div></div>`;
+  }
+  const rows=all.filter(x=>!x.excluded).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  return `<div class="fx-list">${rows.map(fxRow).join('')||'<div class="finance-empty">કોઈ એન્ટ્રી નથી.</div>'}</div>`;
+}
+function fxV15Open(type){
+  const titles={summary:'આવક જાવક રિપોર્ટ',head:'હેડ વાઈઝ આવક જાવક રિપોર્ટ',member:'સભ્ય વાઈઝ આવક જાવક રિપોર્ટ',all:'તમામ આવક જાવક એન્ટ્રી'};
+  const body=fxV15ReportBody(type);
+  const safeType=type;
+  document.getElementById('sheet').innerHTML=`<div class="title">${titles[type]||'રિપોર્ટ'}</div><div class="sub" style="margin:4px 0 10px">સરદાર સોસાયટી</div><div class="grid" style="margin-bottom:10px"><button class="btn primary" onclick="fxV15Print('${safeType}')">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="fxV15Download('${safeType}')">📥 ડાઉનલોડ</button></div>${body}<button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+}
+function fxV15Print(type){
+  const titles={summary:'આવક જાવક રિપોર્ટ',head:'હેડ વાઈઝ આવક જાવક રિપોર્ટ',member:'સભ્ય વાઈઝ આવક જાવક રિપોર્ટ',all:'તમામ આવક જાવક એન્ટ્રી'};
+  const all=fxAll().filter(x=>!x.excluded), w=window.open('','_blank'); if(!w)return;
+  let body='';
+  if(type==='summary'){
+    const inc=all.filter(x=>x.type==='income'),exp=all.filter(x=>x.type==='expense'); const ti=inc.reduce((s,x)=>s+x.amount,0),te=exp.reduce((s,x)=>s+x.amount,0);
+    body=`<h3>કુલ આવક: ${fxMoney(ti)}</h3><h3>કુલ ખર્ચ: ${fxMoney(te)}</h3><h3>બાકી સિલક: ${fxMoney(ti-te)}</h3>`;
+  } else if(type==='head'){
+    body=[...(d.incomeHeads||[]).map(h=>['income',h]),...(d.expenseHeads||[]).map(h=>['expense',h])].map(([k,h])=>{const rr=all.filter(x=>x.type===k&&x.head===h);const t=rr.reduce((s,x)=>s+x.amount,0);return `<tr><th colspan="5">${k==='income'?'આવક':'ખર્ચ'} • ${fxEsc(h)} — ${fxMoney(t)}</th></tr>`+rr.map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxEsc(x.detail||x.member||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('')}).join('');
+  } else if(type==='member'){
+    const flats=(d.flats||[]).filter(isOccupiedHouse); body=flats.map(f=>{const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no));const t=rr.reduce((s,x)=>s+x.amount,0);return `<tr><td>${fxEsc(f.no)}</td><td>${fxEsc(f.name||'')}</td><td>સભ્ય આવક</td><td>${rr.length}</td><td>${fxMoney(t)}</td></tr>`}).join(''); const et=all.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0); body+=`<tr><th colspan="4">સોસાયટીનો કુલ ખર્ચ</th><th>${fxMoney(et)}</th></tr>`;
+  } else body=all.sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${x.type==='income'?'આવક':'ખર્ચ'}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('');
+  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${titles[type]}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${titles[type]}</h2>${type==='summary'?body:`<table><tr><th>તારીખ/ઘર</th><th>પ્રકાર/સભ્ય</th><th>હેડ</th><th>વિગત/એન્ટ્રી</th><th>રકમ</th></tr>${body}</table>`}</body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
+}
+function fxV15Download(type){
+  const all=fxAll().filter(x=>!x.excluded); let rows=[];
+  if(type==='member'){
+    rows=[['ઘર','સભ્ય','પ્રકાર','એન્ટ્રી','કુલ રકમ']]; (d.flats||[]).filter(isOccupiedHouse).forEach(f=>{const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no));rows.push([f.no,f.name||'','સભ્ય આવક',rr.length,rr.reduce((s,x)=>s+x.amount,0)]);});
+  }else{rows=[['તારીખ','પ્રકાર','હેડ','ઘર','સભ્ય','વિગત','રકમ']]; all.forEach(x=>rows.push([x.date||'',x.type==='income'?'આવક':'ખર્ચ',x.head||'',x.house||'',x.member||'',x.detail||'',x.amount||0]));}
+  const blob=new Blob(['\ufeff'+rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n')],{type:'text/csv;charset=utf-8'}); const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Sardar_Society_'+type+'_Report.csv';a.click();
+}
+function renderFinanceV15(){
+  const sec=document.getElementById('finance');if(!sec)return; const all=fxAll(),inc=all.filter(x=>x.type==='income'&&!x.excluded),exp=all.filter(x=>x.type==='expense'); const ti=inc.reduce((s,x)=>s+x.amount,0),te=exp.reduce((s,x)=>s+x.amount,0);
+  sec.innerHTML=`<div class="finance-v14x"><div class="fx-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સંપૂર્ણ હિસાબ</p><div class="fx-stats"><div class="fx-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div></div>${role==='admin'?`<div class="fx-actions"><button class="fx-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>નવી આવક નોંધો</small></button><button class="fx-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>નવો ખર્ચ નોંધો</small></button></div>`:''}<div class="fx-card"><div class="fx-card-head"><b>રિપોર્ટ</b><span class="fx-count">પ્રિન્ટ / ડાઉનલોડ</span></div><div class="fx-v15-reports"><button class="fx-v15-report" onclick="fxV15Open('summary')"><span class="ico">📑</span>આવક જાવક રિપોર્ટ</button><button class="fx-v15-report" onclick="fxV15Open('head')"><span class="ico">📊</span>હેડ વાઈઝ આવક જાવક રિપોર્ટ</button><button class="fx-v15-report" onclick="fxV15Open('member')"><span class="ico">👥</span>સભ્ય વાઈઝ આવક જાવક રિપોર્ટ</button><button class="fx-v15-report" onclick="fxV15Open('all')"><span class="ico">📚</span>તમામ એન્ટ્રી</button></div></div><div class="fx-card"><div class="fx-card-head"><b>ઝડપી હેડ સારાંશ</b></div><div class="fx-list">${(d.incomeHeads||[]).map(h=>`<div class="fx-row"><div><b>💰 ${fxEsc(h)}</b></div><b>${fxMoney(incomeHeadTotal(h))}</b></div>`).join('')}${(d.expenseHeads||[]).map(h=>`<div class="fx-row"><div><b>💸 ${fxEsc(h)}</b></div><b>${fxMoney(exp.filter(x=>x.head===h).reduce((s,x)=>s+x.amount,0))}</b></div>`).join('')}</div></div>${role==='admin'?`<div class="fx-card"><div class="fx-card-head"><b>આવક / ખર્ચના હેડ</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}${fxMemberBox()}</div>`;
+}
+window.renderFinance2=renderFinanceV15;
+window.renderFinanceV14_2=renderFinanceV15;
+try{renderFinanceV15()}catch(e){}
+document.addEventListener('DOMContentLoaded',()=>{try{renderFinanceV15()}catch(e){}});
+setTimeout(()=>{try{renderFinanceV15()}catch(e){}},350);
 </script>
 </body></html>
