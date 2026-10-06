@@ -1,124 +1,1325 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="gu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>સરદાર સોસાયટી - સ્માર્ટ મેનેજમેન્ટ એપ</title>
-    <!-- Tailwind CSS ફોર મોર્ડન ડિઝાઇન -->
-    <script src="https://tailwindcss.com"></script>
-    <link rel="manifest" href="./manifest.webmanifest">
-    <style>
-        @import url('https://googleapis.com');
-        body { font-family: 'Hind Vadodara', sans-serif; background-color: #f8fafc; }
-        
-        /* પ્રિન્ટ સેટીંગ્સ */
-        @media print {
-            body { background-color: #fff; color: #000; }
-            .no-print { display: none !important; }
-            .print-card { border: 1px solid #e2e8f0 !important; box-shadow: none !important; background: #fff !important; }
-            main { max-width: 100% !important; padding: 0 !important; }
-            nav { display: none !important; }
-        }
-    </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b5cab"><title>સરદાર સોસાયટી</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--blue:#0b5cab;--blue2:#083b78;--gold:#f4b942;--bg:#f4f7fb;--ink:#172033;--muted:#667085;--line:#e5eaf1;--green:#08763b;--red:#b42318;--orange:#9b5a00}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#edf5ff,#f8fafc);font-family:Arial,"Noto Sans Gujarati",sans-serif;color:var(--ink)}button,input,select{font:inherit}.app{max-width:520px;margin:auto;min-height:100vh;background:var(--bg);padding-bottom:82px}.top{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;padding:14px 16px 18px;border-radius:0 0 26px 26px;position:sticky;top:0;z-index:5;box-shadow:0 8px 24px #063b7828}.brand{display:flex;align-items:center;gap:12px}.brand img,.login-logo{width:58px;height:58px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 3px 12px #0003;background:#fff}.brand h1{margin:0;font-size:21px}.brand small{opacity:.88}.wrap{padding:14px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px;margin-bottom:12px;box-shadow:0 6px 20px #17365d0b}.hero{background:linear-gradient(135deg,#fff,#eef7ff);border:1px solid #dceafb}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#f1f7ff;border-radius:14px;padding:12px}.stat b{display:block;font-size:19px;margin-top:5px}.muted{font-size:12px;color:var(--muted)}.title{font-weight:800;font-size:17px;margin-bottom:10px}.sub{font-size:13px;color:var(--muted);margin:-4px 0 10px}.btn{border:0;border-radius:12px;padding:12px 14px;font-weight:800;font-size:14px;cursor:pointer}.primary{background:var(--blue);color:#fff}.light{background:#eaf3ff;color:#0753ad}.green{background:#e8f8ef;color:var(--green)}.red{background:#ffecec;color:var(--red)}.orange{background:#fff2dc;color:var(--orange)}.ghost{background:#f5f7fa;color:#344054}.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}input,select{width:100%;padding:12px;border:1px solid #d5dce6;border-radius:11px;font-size:14px;background:#fff}label{display:block;color:#667085;font-size:12px;margin:9px 0 5px}.badge{display:inline-block;border-radius:20px;padding:5px 9px;font-size:11px;font-weight:800}.paid{background:#e8f8ef;color:var(--green)}.due{background:#fff1dc;color:var(--orange)}.info{background:#eef6ff;color:#0753ad}.list{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #e7ebf0}.list:last-child{border:0}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);height:72px;background:#fff;border-top:1px solid #dfe5ec;display:flex;z-index:9;box-shadow:0 -8px 24px #17365d0c}.nav button{flex:1;border:0;background:#fff;color:#6b7280;font-size:10px}.nav button.on{color:var(--blue);font-weight:800}.nav span{display:block;font-size:19px;margin-bottom:3px}.hide{display:none!important}.modal{position:fixed;inset:0;background:#0007;z-index:20;display:flex;align-items:flex-end}.sheet{background:#fff;width:min(520px,100%);padding:18px;border-radius:24px 24px 0 0;max-height:92vh;overflow:auto}.notice{padding:12px;border-left:4px solid var(--blue);background:#f5f9ff;border-radius:10px;margin-bottom:8px}.toast{position:fixed;bottom:86px;left:50%;transform:translateX(-50%);background:#172033;color:#fff;padding:10px 16px;border-radius:22px;z-index:30;font-size:13px;max-width:90%;text-align:center}.error{color:#b42318;font-size:12px;margin-top:8px}.success{color:#08763b;font-size:12px}.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at top,#dceeff,#fff 55%)}.loginbox{max-width:430px;width:100%;background:#fff;border-radius:26px;padding:24px;box-shadow:0 14px 45px #164b8020;text-align:center}.login-logo{width:92px;height:92px;margin:auto;display:block}.pill{display:inline-block;background:#edf5ff;color:#0753ad;border-radius:20px;padding:6px 10px;font-size:11px;font-weight:800}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.house{font-size:18px;font-weight:900;color:var(--blue)}.small-btn{padding:7px 9px;font-size:12px}.locked{opacity:.72}.member-only{border-left:4px solid var(--gold)}table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:8px 4px;text-align:left;border-bottom:1px solid #e7ebf0}th{color:#667085}.footer-note{font-size:11px;color:#667085;text-align:center;padding:10px}.photo-credit{font-size:9px;color:#98a2b3;margin-top:5px}
+
+/* v8 final visual polish */
+.page-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.tool-btn{border:0;border-radius:16px;padding:13px 8px;background:#fff;box-shadow:0 5px 16px #17365d10;border:1px solid #e7edf5;color:#172033;font-weight:800;cursor:pointer}.tool-btn .ico{display:block;font-size:25px;margin-bottom:5px}.tool-btn small{display:block;color:#667085;font-weight:600;font-size:10px;margin-top:3px}.section-card{background:linear-gradient(145deg,#fff,#f8fbff);border:1px solid #e5edf7;border-radius:20px;padding:15px;margin-bottom:12px;box-shadow:0 8px 24px #17365d0b}.primary-wide{width:100%;min-height:48px;border-radius:14px}.member-preview{margin-top:12px;background:#f8fbff;border:1px solid #dce8f5;border-radius:16px;padding:14px}.member-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.top-actions{margin-top:10px;display:flex;justify-content:flex-end;gap:8px}.top-actions button{background:#ffffff1c;border:1px solid #ffffff44;color:#fff;border-radius:10px;padding:7px 10px;font-size:12px}.settings-grid{display:grid;gap:10px}.security-card{border:1px solid #dce8f5;background:linear-gradient(135deg,#f7fbff,#fff);border-radius:18px;padding:15px}.member-search{display:grid;grid-template-columns:120px 1fr;gap:8px;align-items:end}.code-like{display:none!important}
+@media(max-width:380px){.page-tools{grid-template-columns:repeat(2,1fr)}.member-fields{grid-template-columns:1fr}.member-search{grid-template-columns:1fr}}
+</style>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js")}</script>
+
+<style id="v14_1_finance_css">
+.finance14-wrap{display:grid;gap:12px}
+.finance14-hero{padding:18px;border-radius:24px;background:linear-gradient(135deg,#1769e0,#304fd0 58%,#7045d5);color:#fff;box-shadow:0 14px 32px #17448a22}
+.finance14-hero h2{margin:0;font-size:21px}.finance14-hero p{margin:4px 0 0;opacity:.82;font-size:12px}
+.finance14-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
+.finance14-stat{padding:10px;border-radius:15px;background:#ffffff1c;border:1px solid #ffffff2e}
+.finance14-stat span{display:block;font-size:10px;opacity:.8}.finance14-stat b{display:block;font-size:16px;margin-top:3px}
+.finance14-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.finance14-action{border:1px solid #dfe8f4;border-radius:18px;background:#fff;padding:13px 10px;text-align:left;box-shadow:0 7px 20px #173b6d0b}
+.finance14-action strong{display:block;font-size:14px}.finance14-action small{display:block;color:#7b8492;margin-top:3px}
+.finance14-action .ico{font-size:23px;float:right}
+.finance14-panel{background:#fff;border:1px solid #e3eaf3;border-radius:20px;padding:14px;box-shadow:0 7px 22px #173b6d0b}
+.finance14-panel-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.finance14-panel-head h3{margin:0;font-size:16px}.finance14-pill{font-size:10px;background:#eef5ff;color:#1754a6;border-radius:20px;padding:5px 8px;font-weight:800}
+.finance14-head-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.finance14-head-card{padding:11px;border:1px solid #e4ebf5;border-radius:15px;background:#f9fbfe}
+.finance14-head-card span{font-size:11px;color:#667085;display:block}.finance14-head-card b{font-size:15px;color:#164b95;display:block;margin-top:3px}
+.finance14-entry{display:grid;grid-template-columns:1fr auto;gap:8px;padding:11px 0;border-bottom:1px solid #edf1f5}
+.finance14-entry:last-child{border-bottom:0}.finance14-entry-title{font-weight:900;font-size:13px}
+.finance14-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}.finance14-chip{font-size:10px;background:#f2f5f9;color:#667085;border-radius:14px;padding:4px 6px}
+.finance14-amount{font-size:16px;font-weight:900;color:#1450a0;white-space:nowrap}
+.finance14-report-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.finance14-report-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:10px 0;border-bottom:1px solid #edf1f5}
+.finance14-report-row b:last-child{color:#1450a0}
+.finance14-modal-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.finance14-group{border:1px solid #e2e9f2;border-radius:16px;overflow:hidden;margin:9px 0;background:#fff}
+.finance14-group-head{padding:11px 12px;background:#f1f6fd;display:flex;justify-content:space-between;font-weight:900}
+.finance14-detail{padding:9px 12px;border-top:1px solid #edf1f5;display:grid;grid-template-columns:1fr auto;gap:8px;font-size:11px}
+.finance14-detail .muted{font-size:10px}
+@media(max-width:430px){.finance14-stats{grid-template-columns:1fr 1fr}.finance14-stats .finance14-stat:last-child{grid-column:1/-1}.finance14-actions{grid-template-columns:1fr 1fr}.finance14-head-grid{grid-template-columns:1fr 1fr}}
+</style>
+
+<style id="v14-2-finance-css">
+.finance-v14x{display:grid;gap:12px}
+.finance-v14x .fx-hero{background:linear-gradient(135deg,#1769e0,#4d46d6 65%,#713ed1);color:#fff;border-radius:22px;padding:16px;box-shadow:0 12px 28px rgba(30,70,150,.18)}
+.finance-v14x .fx-hero h2{margin:0;font-size:20px}.finance-v14x .fx-hero p{margin:4px 0 0;opacity:.85;font-size:12px}
+.fx-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}
+.fx-stat{background:#ffffff1c;border:1px solid #ffffff30;border-radius:14px;padding:10px}.fx-stat small{display:block;opacity:.8}.fx-stat b{display:block;font-size:17px;margin-top:3px}
+.fx-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.fx-action{border:1px solid #dfe7f3;background:#fff;border-radius:17px;padding:13px;text-align:left;box-shadow:0 6px 18px #183b6d0b;cursor:pointer}
+.fx-action .ico{font-size:23px}.fx-action b{display:block;margin-top:5px;font-size:14px}.fx-action small{color:#68758a}
+.fx-card{background:#fff;border:1px solid #e2e9f2;border-radius:19px;padding:13px;box-shadow:0 6px 20px #183b6d09}
+.fx-card-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px}
+.fx-card-head b{font-size:17px}.fx-count{font-size:10px;background:#eef5ff;color:#1754a6;border-radius:20px;padding:5px 8px;font-weight:800}
+.fx-list{display:grid;gap:7px}
+.fx-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:11px;border:1px solid #e9eef5;border-radius:14px;background:#fbfcfe}
+.fx-row .title{font-size:13px;font-weight:900}.fx-meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}.fx-chip{font-size:10px;background:#f0f4f8;color:#667085;border-radius:12px;padding:4px 6px}.fx-amt{font-size:16px;font-weight:900;color:#12468f;white-space:nowrap}.fx-edit{display:flex;gap:5px;justify-content:flex-end;margin-top:6px}
+.fx-report-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.fx-report-btn{border:0;border-radius:14px;padding:12px;background:#eef5ff;color:#174f9c;font-weight:900}.fx-report-btn:nth-child(2){background:#fff2ef;color:#a13e2f}.fx-report-btn:nth-child(3){background:#f3efff;color:#5b3bb2}.fx-report-btn:nth-child(4){background:#eefaf5;color:#16744f}
+.fx-head{border:1px solid #e1e8f1;border-radius:14px;overflow:hidden;margin-top:8px}.fx-head-top{padding:10px 11px;background:#f3f7fc;display:flex;justify-content:space-between;font-weight:900}.fx-detail{display:grid;grid-template-columns:1fr auto;gap:8px;padding:9px 11px;border-top:1px solid #edf0f4}.fx-detail small{color:#6b7280}
+.fx-member{margin-top:10px;background:#f6faff;border:1px solid #dceafa;border-radius:15px;padding:11px}.fx-member-row{display:flex;align-items:center;gap:7px;padding:8px 0;border-bottom:1px solid #e3edf7}.fx-member-row:last-child{border-bottom:0}.fx-member-name{flex:1;min-width:0}.fx-member input{width:95px!important}.fx-member button{white-space:nowrap}
+@media(max-width:390px){.fx-actions,.fx-report-grid{grid-template-columns:1fr}.fx-row{grid-template-columns:1fr}.fx-edit{justify-content:flex-start}}
+</style>
+
 </head>
-<body class="text-slate-800 pb-20 antialiased">
+<body>
+<div id="login" class="login"><div class="loginbox">
+<img class="login-logo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sardar_patel_(cropped).jpg" alt="સરદાર પટેલ">
+<h1 style="margin:12px 0 4px">સરદાર સોસાયટી</h1><p class="muted">સોસાયટી મેનેજમેન્ટ એપ • 60 મકાન</p>
+<div class="pill">સભ્ય / એડમિન લૉગિન</div>
+<label>યુઝરનેમ / મોબાઇલ નંબર</label><input id="mobile" inputmode="numeric" maxlength="10" placeholder="10 અંકનો મોબાઇલ નંબર">
+<label>લૉગિન પ્રકાર</label><select id="role"><option value="admin">એડમિન / કમિટી</option><option value="member">સભ્ય</option></select>
+<label id="flatLabel">મકાન નંબર (સભ્ય માટે)</label><select id="loginFlat"><option value="">મકાન પસંદ કરો</option></select>
+<label>પાસવર્ડ</label><input id="password" type="password" placeholder="પાસવર્ડ">
+<button class="btn primary" style="width:100%;margin-top:12px" onclick="login()">લૉગિન</button>
+<div id="loginErr" class="error"></div>
+<p class="muted" style="margin-top:14px">સભ્યનો પાસવર્ડ: <b>user@મોબાઇલના છેલ્લા 4 અંક</b><br>એડમિનનો પાસવર્ડ સુરક્ષિત રીતે સેટિંગમાંથી સંચાલિત થાય છે.</p>
+<div class="photo-credit">Logo photo: Government of India work, via Wikimedia Commons (public-domain listing)</div>
+</div></div>
 
-    <!-- 🔐 ૧. અલ્ટ્રા મોર્ડન લૉગઇન પેજ -->
-    <div id="login-page" class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-900">
-        <div class="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-2xl w-full max-w-md text-center space-y-6 border border-white/20">
-            <div class="w-20 h-20 bg-gradient-to-tr from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto text-4xl shadow-lg shadow-indigo-500/30 transform rotate-3">🏢</div>
-            <div>
-                <h1 class="text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">સરદાર સોસાયટી</h1>
-                <p class="text-sm text-slate-500 mt-1 font-medium">ડિજિટલ સોસાયટી મેનેજમેન્ટ • 60 મકાન</p>
-            </div>
-            
-            <div class="space-y-4 text-left">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">યુઝરનેમ / મોબાઇલ નંબર</label>
-                    <input type="text" id="login-user" placeholder="દા.ત. admin અથવા મોબાઇલ" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">લૉગિન પ્રકાર</label>
-                    <select id="login-type" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
-                        <option value="admin">👨‍💼 એડમિન / કમિટી સભ્ય</option>
-                        <option value="member">🏡 સોસાયટી રહેવાસી (સભ્ય)</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">પાસવર્ડ</label>
-                    <input type="password" id="login-pass" placeholder="••••••••" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
-                </div>
-            </div>
+<div id="app" class="app hide">
+<header class="top"><div class="brand"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sardar_patel_(cropped).jpg" alt="સરદાર પટેલ"><div><h1>સરદાર સોસાયટી</h1><small id="who">સોસાયટી મેનેજમેન્ટ • 60 મકાન</small></div></div><div class="top-actions"><button onclick="logoutV8()">↩ લૉગઆઉટ</button></div></header>
+<main class="wrap">
+<section id="home">
+<div class="card hero"><div class="section-head"><div><div class="title" style="margin-bottom:2px">નમસ્કાર 👋</div><div id="homeMsg" class="muted">સોસાયટીની માહિતી એક જ જગ્યાએ.</div></div><span class="pill">60 મકાન</span></div></div>
+<div class="card"><div class="title">હોમ ડેશબોર્ડ</div><div class="grid"><div class="stat"><span class="muted">કુલ જમા આવક</span><b id="sIncome">₹0</b></div><div class="stat"><span class="muted">કુલ સોસાયટી ખર્ચ</span><b id="sExpense">₹0</b></div><div class="stat"><span class="muted">બાકી સિલક</span><b id="sBalance">₹0</b></div><div class="stat"><span class="muted">કુલ બાકી મેન્ટેનન્સ</span><b id="sDue2">₹0</b></div></div></div><div class="card"><div class="title">આ ક્વાર્ટરનું સંક્ષિપ્ત રિપોર્ટ</div><div class="grid"><div class="stat"><span class="muted">કુલ જમા</span><b id="sPaid">₹0</b></div><div class="stat"><span class="muted">કુલ બાકી</span><b id="sDue">₹0</b></div><div class="stat"><span class="muted">લેટ ફી</span><b id="sLate">₹0</b></div><div class="stat"><span class="muted">જમા થયેલ</span><b id="sCount">0 / 60</b></div></div></div>
+<div class="card"><div class="title">મકાન નંબરથી માહિતી શોધો</div><div class="row"><select id="search"><option value="">મકાન નંબર પસંદ કરો</option></select><button class="btn primary" onclick="findFlat()">શોધો</button></div><div id="found" style="margin-top:12px"></div></div>
+<div class="section-card"><div class="title">ઝડપી વિકલ્પો</div><div class="sub">દરેક માહિતી અલગ પેજ પર</div><div class="page-tools"><button class="tool-btn" onclick="goV8('maintenance')"><span class="ico">💰</span>મેન્ટેનન્સ<small>જમા / બાકી</small></button><button class="tool-btn" onclick="goV8('members')"><span class="ico">👥</span>સભ્યો<small>મકાન માહિતી</small></button><button class="tool-btn" onclick="goV8('finance')"><span class="ico">💼</span>આવક / ખર્ચ<small>હિસાબ</small></button><button class="tool-btn" onclick="goV8('reports')"><span class="ico">📊</span>રિપોર્ટ<small>પ્રિન્ટ / ડાઉનલોડ</small></button><button class="tool-btn" onclick="goV8('notices')"><span class="ico">📢</span>નોટિસ<small>જાહેરાત</small></button><button class="tool-btn" onclick="goV8('complaints')"><span class="ico">🛠️</span>ફરિયાદ<small>નોંધણી</small></button><button class="tool-btn" onclick="goV8('visitors')"><span class="ico">🚶</span>વિઝિટર<small>એન્ટ્રી</small></button><button class="tool-btn" onclick="goV8('parking')"><span class="ico">🚗</span>પાર્કિંગ<small>વાહન</small></button><button class="tool-btn" onclick="goV8('settings')"><span class="ico">⚙️</span>સેટિંગ<small>એડમિન</small></button></div></div>
+</section>
 
-            <button onclick="handleLogin()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3.5 rounded-xl transition-all shadow-xl shadow-blue-500/20 active:scale-[0.99]">
-                🔐 સુરક્ષિત લૉગઇન
-            </button>
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                <p class="text-xs text-slate-500">💡 સભ્યનો ડેમો પાસવર્ડ: <span class="font-mono font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">user@1234</span></p>
-            </div>
-        </div>
+<section id="maintenance" class="hide"><div class="card"><div class="title">મેન્ટેનન્સ</div><div id="memberMaintenance"></div><div id="adminMaintenance"></div></div><div class="card"><div class="title">મકાનવાર સ્થિતિ</div><div id="flatList"></div></div></section>
+
+<section id="reports" class="hide"><div class="card"><div class="title">જમા-ઉધાર રિપોર્ટ</div><div class="grid"><div class="stat"><span class="muted">કુલ જમા</span><b id="rPaid">₹0</b></div><div class="stat"><span class="muted">કુલ બાકી</span><b id="rDue">₹0</b></div><div class="stat"><span class="muted">લેટ ફી</span><b id="rLate">₹0</b></div><div class="stat"><span class="muted">બાકી મકાન</span><b id="rPending">0</b></div></div></div><div class="card"><div class="title">મકાનવાર રિપોર્ટ</div><div style="overflow:auto"><table><thead><tr><th>મકાન</th><th>સભ્ય</th><th>ક્વાર્ટર</th><th>બાકી</th><th>સ્થિતિ</th></tr></thead><tbody id="table"></tbody></table></div></div><button id="csvBtn" class="btn primary" onclick="csv()">📥 CSV ડાઉનલોડ</button></section>
+
+<section id="finance" class="hide"><div class="card"><div class="section-head"><div><div class="title">આવક નોંધણી</div><div class="sub">આવકના હેડ પ્રમાણે એન્ટ્રી</div></div><button id="adminAddIncomeBtnV12" class="btn primary small-btn" onclick="incomeForm()">+ આવક</button></div><div id="memberIncomeBox" style="margin-top:12px"></div><div id="incomeList"></div></div><div class="card"><div class="section-head"><div><div class="title">ખર્ચ નોંધણી</div><div class="sub">ક્રમ, ખર્ચની વિગત, તારીખ, બિલની રકમ અને હેડ</div></div><button id="adminAddExpenseBtnV12" class="btn primary small-btn" onclick="expenseForm()">+ ખર્ચ</button></div><div id="expenseList"></div></div><div class="card"><div class="title">હેડ વાઈઝ રિપોર્ટ</div><div id="headReport"></div><div class="grid" style="margin-top:10px"><button class="btn primary" onclick="printHeadReport()">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="downloadHeadReport()">📥 ડાઉનલોડ</button></div></div><div class="card"><div class="title">આવક / ખર્ચના હેડ</div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div><div id="headsList" style="margin-top:10px"></div></div></section>
+
+<section id="members" class="hide"><div id="memberAdminBox" class="card"></div><div class="section-card"><div class="title">સભ્ય / મકાનની માહિતી</div><div class="sub">ઘર નંબર લખો. નીચે માત્ર તે જ મકાનની માહિતી આવશે. ફેરફાર કર્યા સિવાય બીજી માહિતી બદલાશે નહીં.</div><div class="member-search"><div><label>ઘર નંબર</label><input id="memberHouseNo" type="number" min="1" max="60" placeholder="1 થી 60" oninput="loadMemberHouseV8()"></div><button class="btn primary primary-wide" onclick="loadMemberHouseV8(true)">માહિતી જુઓ</button></div><div id="memberEditArea" class="member-preview"><span class="muted">ઘર નંબર દાખલ કરો.</span></div></div><div class="card"><div class="title">સભ્યોની યાદી</div><div id="membersList"></div></div></section>
+
+<section id="notices" class="hide"><div class="card"><div class="section-head"><div class="title">નોટિસ બોર્ડ</div><button id="addNoticeBtn" class="btn primary small-btn" onclick="noticeForm2()">+ Add Notice</button></div><div id="noticeList"></div></div></section>
+
+<section id="complaints" class="hide"><div id="complaintForm" class="card"><div class="title">ફરિયાદ નોંધાવો</div><label>મકાન નંબર</label><select id="cf"></select><label>ફરિયાદ</label><input id="ct" placeholder="પાણી, લાઇટ, સફાઈ વગેરે"><button class="btn primary" style="width:100%;margin-top:10px" onclick="complaint()">ફરિયાદ જમા કરો</button></div><div class="card"><div class="title">ફરિયાદોની યાદી</div><div id="cl"></div></div></section>
+
+<section id="visitors" class="hide"><div id="visitorEntryCardV12" class="card"><div class="title">વિઝિટર એન્ટ્રી</div><label>વિઝિટરનું નામ</label><input id="vn"><label>મોબાઇલ</label><input id="vm"><label>મકાન નંબર</label><select id="vf"></select><label>હેતુ</label><input id="vp" placeholder="મુલાકાત / ડિલિવરી"><button class="btn primary" style="width:100%;margin-top:10px" onclick="visitor()">એન્ટ્રી નોંધો</button></div><div class="card"><div class="title">એન્ટ્રીઓ</div><div id="vl"></div></div></section>
+
+<section id="parking" class="hide"><div class="card"><div class="title">પાર્કિંગ</div><div id="pl"></div></div></section>
+
+<section id="settings" class="hide"><div class="section-card"><div class="title">⚙️ એડમિન સેટિંગ</div><div id="adminSettings"></div></div><div class="security-card"><div class="title">🔐 એડમિન પાસવર્ડ બદલો</div><div class="sub">હાલનો પાસવર્ડ સ્ક્રીન પર ક્યારેય બતાવવામાં આવતો નથી.</div><div class="settings-grid"><div><label>એડમિન મોબાઇલ નંબર</label><input id="adminMobile" inputmode="numeric" maxlength="10" placeholder="10 અંકનો મોબાઇલ નંબર"></div><div><label>નવો પાસવર્ડ</label><input id="adminPassword" type="password" placeholder="નવો પાસવર્ડ"></div><div><label>નવો પાસવર્ડ ફરી લખો</label><input id="adminPassword2" type="password" placeholder="પાસવર્ડ ફરી લખો"></div><button class="btn primary primary-wide" onclick="saveAdminV8()">🔐 પાસવર્ડ / માહિતી સાચવો</button></div></div><div class="card"><div class="title">મેન્ટેનન્સ ડિફૉલ્ટ</div><div class="grid"><div><label>માસિક</label><input id="monthly" type="number"></div><div><label>મેન્યુઅલ લેટ ફી (માત્ર સૂચન)</label><input id="late" type="number"></div></div><label>ચુકવણીની છેલ્લી તારીખ</label><input id="deadline" type="date"><button class="btn primary primary-wide" style="margin-top:10px" onclick="saveSettingsV8()">સેટિંગ સાચવો</button></div><div class="card"><div class="title">UPI / સ્કેનર</div><label>સોસાયટી UPI ID</label><input id="upi" placeholder="example@upi"><button class="btn primary primary-wide" style="margin-top:10px" onclick="saveUPI()">UPI ID સાચવો</button><label style="margin-top:12px">UPI QR / સ્કેનર ફોટો</label><input id="upiQrFile" type="file" accept="image/*" onchange="saveUPIQR(event)"><div id="upiQrPreview" style="margin-top:10px"></div><button class="btn light primary-wide" style="margin-top:8px" onclick="removeUPIQR()">QR ફોટો દૂર કરો</button></div><div class="card"><div class="title">દૈનિક બેકઅપ</div><p class="muted">દિવસની તમામ એન્ટ્રીઓની બેકઅપ ફાઇલ તૈયાર કરી શકાય છે.</p><div class="action-grid"><button class="btn primary" onclick="downloadBackup()">📦 બેકઅપ ફાઇલ</button><button class="btn light" onclick="emailBackup()">✉️ Email draft</button></div><div id="backupStatus" class="muted" style="margin-top:8px"></div></div></section>
+</main>
+<nav class="nav"><button class="on" onclick="go('home',this)">⌂<span>હોમ</span></button><button onclick="go('maintenance',this)">₹<span>મેન્ટેનન્સ</span></button><button onclick="go('finance',this)">₹<span>આવક/ખર્ચ</span></button><button onclick="go('reports',this)">▥<span>રિપોર્ટ</span></button><button onclick="go('notices',this)">♢<span>નોટિસ</span></button></nav>
+</div>
+<div id="modal" class="modal hide" onclick="if(event.target.id==='modal')closeModal()"><div class="sheet"><div id="sheet"></div></div></div>
+<script>
+const KEY='ST_SOCIETY_V2';
+const defaultData={settings:{monthly:1000,late:100,deadline:new Date().toISOString().slice(0,10),upi:'',upiQr:''},admin:{username:'',password:'Jayesh@09638'},flats:Array.from({length:60},(_,i)=>({no:String(i+1),name:'',mobile:'',type:'ઘરમાલિક',quarterly:3000,paid:false,payments:[]})),complaints:[],visitors:[],parking:Array.from({length:10},(_,i)=>({p:'P-'+String(i+1).padStart(2,'0'),car:'',name:''}))};
+let d=JSON.parse(localStorage.getItem(KEY)||'null')||defaultData;let role='admin',currentFlat='';
+function save(){localStorage.setItem(KEY,JSON.stringify(d))} function money(n){return '₹'+Math.round(n||0).toLocaleString('en-IN')}
+function bill(f){return Number(f?.quarterly||d.settings.monthly*3)} function late(f){if(f.paid)return 0;let x=Math.ceil((Date.now()-new Date(d.settings.deadline+'T23:59:59'))/86400000);return x>0?x*Number(d.settings.late):0}
+function stats(){let paid=d.flats.filter(x=>x.paid),col=paid.reduce((s,x)=>s+(x.payments.at(-1)?.amount||bill(x)),0),due=d.flats.filter(x=>!x.paid).reduce((s,x)=>s+bill(x),0);return{paid,col,due,late:d.flats.reduce((s,x)=>s+late(x),0)}}
+function populate(){let opts=d.flats.map(f=>`<option value="${f.no}">${f.no}${f.name?' • '+esc(f.name):''}</option>`).join('');['loginFlat','search','cf','vf'].forEach(id=>{let el=document.getElementById(id);if(el)el.innerHTML=(id==='loginFlat'?'<option value="">મકાન પસંદ કરો</option>':id==='search'?'<option value="">મકાન નંબર પસંદ કરો</option>':'')+opts});}
+function esc(s){return String(s||'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
+function login(){let m=document.getElementById('mobile').value.replace(/\D/g,''),r=document.getElementById('role').value,f=document.getElementById('loginFlat').value,p=document.getElementById('password').value.trim();if(m.length!==10)return err('મોબાઇલ નંબર 10 અંકનો હોવો જોઈએ');if(r==='admin'){if(!d.admin.username){d.admin.username=m;save()}if(m!==d.admin.username)return err('એડમિન મોબાઇલ નંબર સાચો નથી');if(p!==d.admin.password)return err('એડમિન પાસવર્ડ ખોટો છે')}else{let x=d.flats.find(v=>v.no===f);if(!x)return err('મકાન નંબર પસંદ કરો');if(!x.mobile)return err('આ મકાન માટે સભ્યનો મોબાઇલ નંબર ઉમેરાયેલ નથી');if(m!==x.mobile)return err('સભ્યનો મોબાઇલ નંબર ખોટો છે');let def='user@'+m.slice(-4);if(p!==def)return err('સભ્યનો પાસવર્ડ user@મોબાઇલના છેલ્લા 4 અંક છે')}role=r;currentFlat=f;document.getElementById('login').classList.add('hide');document.getElementById('app').classList.remove('hide');document.getElementById('who').textContent=r==='admin'?'એડમિન / કમિટી • 60 મકાન':f+' • '+(d.flats.find(x=>x.no===f)?.name||'સભ્ય');render();}
+function err(t){document.getElementById('loginErr').textContent=t}
+function go(id,btn){document.querySelectorAll('main section').forEach(x=>x.classList.add('hide'));document.getElementById(id).classList.remove('hide');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('on'));if(btn)btn.classList.add('on');render();scrollTo(0,0)}
+function render(){populate();let s=stats();document.getElementById('sPaid').textContent=money(s.col);document.getElementById('sDue').textContent=money(s.due);document.getElementById('sLate').textContent=money(s.late);document.getElementById('sCount').textContent=s.paid.length+' / 60';document.getElementById('rPaid').textContent=money(s.col);document.getElementById('rDue').textContent=money(s.due);document.getElementById('rLate').textContent=money(s.late);document.getElementById('rPending').textContent=60-s.paid.length;document.getElementById('monthly').value=d.settings.monthly;document.getElementById('late').value=d.settings.late;document.getElementById('deadline').value=d.settings.deadline;document.getElementById('upi').value=d.settings.upi;
+let me=role==='member'?d.flats.find(x=>x.no===currentFlat):null;document.getElementById('homeMsg').textContent=role==='member'?`${currentFlat} • ${me?.name||'સભ્ય'} • ${me?.type||''}`:'એડમિન • સભ્યો અને મેન્ટેનન્સનું સંચાલન';
+document.getElementById('flatList').innerHTML=d.flats.map(f=>`<div class="list"><div><span class="house">ઘર ${f.no}</span><br><span class="muted">${esc(f.name||'સભ્ય ઉમેરાયેલ નથી')} • ${esc(f.type)}</span><br><span class="muted">ક્વાર્ટર: ${money(bill(f))}</span></div><div><span class="badge ${f.paid?'paid':'due'}">${f.paid?'જમા':'બાકી'}</span>${role==='admin'?`<br><button class="btn ${f.paid?'green':'primary'} small-btn" style="margin-top:4px" onclick="payment('${f.no}')">${f.paid?'રસીદ':'પેમેન્ટ'}</button>`:''}</div></div>`).join('');
+document.getElementById('table').innerHTML=d.flats.map(f=>{let l=late(f),b=bill(f),v=f.paid?0:b+l;return `<tr><td>${f.no}</td><td>${esc(f.name||'-')}</td><td>${money(b)}</td><td>${money(v)}</td><td><span class="badge ${f.paid?'paid':'due'}">${f.paid?'જમા':'ઉધાર'}</span></td></tr>`}).join('');
+document.getElementById('membersList').innerHTML=d.flats.map(f=>`<div class="list"><div><b>ઘર ${f.no}</b><br><span class="muted">${esc(f.name||'સભ્ય ઉમેરાયેલ નથી')} • ${esc(f.type)}</span>${role==='admin'&&f.mobile?`<br><span class="muted">📱 ${esc(f.mobile)}</span>`:''}</div><span class="badge info">${f.paid?'મેન્ટેનન્સ જમા':'મેન્ટેનન્સ બાકી'}</span></div>`).join('');
+document.getElementById('cl').innerHTML=d.complaints.length?d.complaints.map(c=>`<div class="list"><div><b>ઘર ${esc(c.flat)}</b> • ${esc(c.text)}<br><span class="muted">${esc(c.date)}</span></div><span class="badge ${c.status==='પૂર્ણ'?'paid':'due'}">${esc(c.status||'બાકી')}</span></div>`).join(''):'<span class="muted">કોઈ ફરિયાદ નથી.</span>';
+document.getElementById('vl').innerHTML=d.visitors.length?d.visitors.map(v=>`<div class="list"><div><b>${esc(v.name)}</b> • ઘર ${esc(v.flat)}<br><span class="muted">${esc(v.purpose)} • ${esc(v.date)}</span></div></div>`).join(''):'<span class="muted">કોઈ એન્ટ્રી નથી.</span>';
+document.getElementById('pl').innerHTML=d.parking.map(p=>`<div class="list"><div><b>${p.p}</b><br><span class="muted">${esc(p.car||'વાહન નથી')} ${p.name?'• '+esc(p.name):''}</span></div></div>`).join('');
+document.getElementById('memberMaintenance').innerHTML=role==='member'?`<div class="member-only card"><div class="row"><div><b>ઘર ${me.no}</b><br><span class="muted">${esc(me.name||'સભ્ય')}</span></div><span class="badge ${me.paid?'paid':'due'}">${me.paid?'જમા':'બાકી'}</span></div><hr style="border:0;border-top:1px solid #eee"><div class="row"><span>ક્વાર્ટર મેન્ટેનન્સ</span><b>${money(bill(me))}</b></div><div class="row"><span>લેટ ફી</span><b>${money(late(me))}</b></div><div class="row"><span>કુલ બાકી</span><b>${money(me.paid?0:bill(me)+late(me))}</b></div></div>`:'';
+document.getElementById('adminMaintenance').innerHTML=role==='admin'?`<p class="muted">દરેક મકાન માટે ક્વાર્ટર પ્રમાણે અલગ મેન્ટેનન્સ રકમ સેટ કરી શકાય છે.</p>`:'';
+document.getElementById('memberAdminBox').innerHTML=role==='admin'?`<button class="btn primary" style="width:100%" onclick="memberForm()">➕ સભ્ય / મકાનની માહિતી ઉમેરો અથવા બદલો</button>`:`<div class="member-only"><b>સભ્ય માહિતી</b><p class="muted">સભ્યો માટે માહિતી જોવા માટે છે. ફેરફાર ફક્ત એડમિન કરી શકે છે.</p></div>`;
+document.getElementById('adminSettings').innerHTML=role==='admin'?`<label>એડમિન મોબાઇલ / Username</label><input id="adminMobile" inputmode="numeric" maxlength="10" value="${esc(d.admin.username)}"><label>એડમિન નવો પાસવર્ડ</label><input id="adminPassword" type="password" placeholder="નવો પાસવર્ડ લખો"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveAdmin()">એડમિન સેટિંગ સાચવો</button><p class="muted">એડમિન પાસવર્ડ અહીં બતાવવામાં આવતો નથી. એડમિન સેટિંગમાંથી પાસવર્ડ બદલી શકાય છે.</p>`:'<p class="muted">એડમિન સેટિંગ સભ્યો માટે ઉપલબ્ધ નથી.</p>';
+if(role==='admin'){const q=document.getElementById('upiQrPreview');if(q)q.innerHTML=d.settings.upiQr?`<img src="${d.settings.upiQr}" alt="UPI QR" style="max-width:220px;max-height:220px;border:1px solid #ddd;border-radius:12px">`:'<span class="muted">હજુ QR અપલોડ નથી.</span>'; }
+if(role==='member'){document.getElementById('csvBtn').classList.add('hide');document.getElementById('adminMaintenance').classList.add('hide');document.getElementById('memberAdminBox').classList.add('hide')}else{document.getElementById('csvBtn').classList.remove('hide');document.getElementById('adminMaintenance').classList.remove('hide');document.getElementById('memberAdminBox').classList.remove('hide')}
+}
+function findFlat(){let q=document.getElementById('search').value,f=d.flats.find(x=>x.no===q),b=document.getElementById('found');if(!f){b.innerHTML='<span class="muted">મકાન નંબર પસંદ કરો.</span>';return}if(role==='member'&&f.no!==currentFlat){b.innerHTML='<span class="muted">સભ્ય માત્ર પોતાના મકાનની માહિતી જોઈ શકે.</span>';return}let l=late(f),t=f.paid?0:bill(f)+l;b.innerHTML=`<div class="card" style="margin:0"><div class="row"><div><b>ઘર ${f.no}</b><br><span class="muted">${esc(f.name||'સભ્ય ઉમેરાયેલ નથી')} • ${esc(f.type)}</span></div><span class="badge ${f.paid?'paid':'due'}">${f.paid?'જમા':'બાકી'}</span></div><hr style="border:0;border-top:1px solid #eee"><div class="row"><span>ક્વાર્ટર મેન્ટેનન્સ</span><b>${money(bill(f))}</b></div><div class="row"><span>લેટ ફી</span><b>${money(l)}</b></div><div class="row"><span>કુલ</span><b>${money(t)}</b></div>${f.paid?`<button class="btn green" style="width:100%;margin-top:10px" onclick="receipt('${f.no}')">રસીદ જુઓ</button>`:role==='admin'?`<button class="btn primary" style="width:100%;margin-top:10px" onclick="payment('${f.no}')">પેમેન્ટ જમા કરો</button>`:''}</div>`}
+function memberForm(no=currentFlat||'1'){if(role!=='admin')return;let f=d.flats.find(x=>x.no===no)||d.flats[0];document.getElementById('sheet').innerHTML=`<div class="title">સભ્ય / મકાન માહિતી</div><label>ઘર નંબર</label><select id="mfno">${d.flats.map(x=>`<option value="${x.no}" ${x.no===f.no?'selected':''}>${x.no}</option>`).join('')}</select><label>સભ્યનું નામ</label><input id="mfn" value="${esc(f.name)}" placeholder="સભ્યનું નામ"><label>મોબાઇલ નંબર</label><input id="mfm" inputmode="numeric" maxlength="10" value="${esc(f.mobile)}" placeholder="10 અંકનો મોબાઇલ નંબર"><label>મકાનનો પ્રકાર</label><select id="mft"><option ${f.type==='ઘરમાલિક'?'selected':''}>ઘરમાલિક</option><option ${f.type==='ભાડુઆત'?'selected':''}>ભાડુઆત</option></select><label>ક્વાર્ટર મેન્ટેનન્સ</label><input id="mfq" type="number" value="${f.quarterly}"><p class="muted">સભ્યનો ડિફૉલ્ટ પાસવર્ડ આપમેળે <b>user@મોબાઇલના છેલ્લા 4 અંક</b> રહેશે અને સભ્ય તેને બદલી શકશે નહીં.</p><button class="btn primary" style="width:100%" onclick="saveMember()">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
+function saveMember(){let no=document.getElementById('mfno').value,n=document.getElementById('mfn').value.trim(),m=document.getElementById('mfm').value.replace(/\D/g,''),t=document.getElementById('mft').value,q=+document.getElementById('mfq').value||3000;if(!n||m.length!==10)return toast('સભ્યનું નામ અને 10 અંકનો મોબાઇલ નંબર જરૂરી છે');let f=d.flats.find(x=>x.no===no);f.name=n;f.mobile=m;f.type=t;f.quarterly=q;save();closeModal();render();toast('સભ્યની માહિતી સાચવાઈ')}
+function quarterPeriod(){const now=new Date();const q=Math.floor(now.getMonth()/3);const start=new Date(now.getFullYear(),q*3,1);const end=new Date(now.getFullYear(),q*3+3,0);const fmt=d=>d.toLocaleDateString('gu-IN',{day:'2-digit',month:'long',year:'numeric'});return{start:fmt(start),end:fmt(end),shortStart:start.toISOString().slice(0,10),shortEnd:end.toISOString().slice(0,10)}}
+function paymentMessage(f,p){const period=p.periodStart&&p.periodEnd?`${p.periodStart} થી ${p.periodEnd}`:quarterPeriod().start+' થી '+quarterPeriod().end;return `સરદાર સોસાયટી\n\nઘર નંબર: ${f.no}\nસભ્ય: ${f.name||'સભ્ય'}\n\nતમારું મેન્ટેનન્સ ${period} સુધીનું જમા થયેલ છે.\nજમા રકમ: ${money(p.amount)}\nરસીદ નંબર: ${p.receipt}\nતારીખ: ${p.date}\nપેમેન્ટ મોડ: ${p.mode}\n\nઆભાર.\nસરદાર સોસાયટી સોસાયટી`}
+function whatsappPayment(no){const f=d.flats.find(x=>x.no===no),p=f?.payments?.at(-1);if(!f||!p||!f.mobile){toast('સભ્યનો WhatsApp મોબાઇલ નંબર ઉપલબ્ધ નથી');return}const phone=String(f.mobile).replace(/\D/g,'');if(phone.length<10){toast('મોબાઇલ નંબર સાચો નથી');return}const msg=encodeURIComponent(paymentMessage(f,p));window.open(`https://wa.me/91${phone}?text=${msg}`,'_blank')}
+function upiQrHtml(){return d.settings.upiQr?`<div class="card" style="text-align:center;margin-top:10px"><b>UPI સ્કેનર</b><div style="margin-top:8px"><img src="${d.settings.upiQr}" alt="UPI QR" style="width:min(260px,80vw);max-height:260px;object-fit:contain;border-radius:12px;border:1px solid #ddd"></div>${d.settings.upi?`<div class="muted" style="margin-top:6px">UPI ID: ${esc(d.settings.upi)}</div>`:''}</div>`:d.settings.upi?`<div class="notice" style="margin-top:10px"><b>UPI ID:</b> ${esc(d.settings.upi)}</div>`:''}
+function saveUPIQR(e){if(role!=='admin')return;const file=e.target.files?.[0];if(!file)return;const r=new FileReader();r.onload=()=>{d.settings.upiQr=r.result;save();render();toast('UPI QR સ્કેનર સાચવાયું')};r.readAsDataURL(file)}
+function removeUPIQR(){if(role!=='admin')return;d.settings.upiQr='';save();render();toast('UPI QR દૂર કરાયું')}
+
+function payment(no){if(role!=='admin')return;let f=d.flats.find(x=>x.no===no),l=late(f),t=f.paid?0:bill(f)+l;document.getElementById('sheet').innerHTML=`<div class="title">ઘર ${f.no} • ${esc(f.name||'સભ્ય')}</div><div class="card"><div class="row"><span>મેન્ટેનન્સ</span><b>${money(bill(f))}</b></div><div class="row"><span>લેટ ફી</span><b>${money(l)}</b></div><div class="row"><span>કુલ</span><b>${money(t)}</b></div></div>${f.paid?`<button class="btn green" style="width:100%" onclick="receipt('${no}')">રસીદ જુઓ</button><button class="btn" style="width:100%;margin-top:8px" onclick="whatsappPayment('${no}')">💬 WhatsApp મોકલો</button>`:`<label>પેમેન્ટ મોડ</label><select id="pm" onchange="document.getElementById('upiPayBox').classList.toggle('hide',this.value!=='UPI')"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option></select><div id="upiPayBox" class="${d.settings.upi||d.settings.upiQr?'':'hide'}">${d.settings.upi||d.settings.upiQr?upiQrHtml():''}</div><button class="btn primary" style="width:100%;margin-top:10px" onclick="markPaid('${no}',${t})">પેમેન્ટ જમા કરો</button>`}<button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
+function markPaid(no,amt){let f=d.flats.find(x=>x.no===no),rec='ST-'+Date.now().toString().slice(-8),period=quarterPeriod();f.paid=true;f.payments.push({amount:amt,mode:document.getElementById('pm').value,date:new Date().toLocaleDateString('gu-IN'),receipt:rec,periodStart:period.start,periodEnd:period.end,periodStartISO:period.shortStart,periodEndISO:period.shortEnd});save();closeModal();render();toast('પેમેન્ટ જમા થયું • '+rec);setTimeout(()=>receipt(no),250)}
+function receipt(no){let f=d.flats.find(x=>x.no===no),p=f.payments.at(-1);if(!p)return;const period=p.periodStart&&p.periodEnd?`${p.periodStart} થી ${p.periodEnd}`:`${quarterPeriod().start} થી ${quarterPeriod().end}`;document.getElementById('sheet').innerHTML=`<div class="title">ચુકવણી રસીદ</div><div class="card"><div class="brand"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sardar_patel_(cropped).jpg" alt="સરદાર પટેલ"><div><h2 style="margin:0">સરદાર સોસાયટી</h2><small>ચુકવણી રસીદ</small></div></div><p><b>રસીદ નંબર:</b> ${p.receipt}</p><p><b>ઘર:</b> ${f.no}</p><p><b>સભ્ય:</b> ${esc(f.name)}</p><p><b>મેન્ટેનન્સ સમયગાળો:</b> ${period}</p><p><b>રકમ:</b> ${money(p.amount)}</p><p><b>મોડ:</b> ${esc(p.mode)}</p><p><b>તારીખ:</b> ${esc(p.date)}</p><p class="success">ચુકવણી સફળતાપૂર્વક જમા</p></div><button class="btn primary" style="width:100%" onclick="window.print()">🖨️ રસીદ પ્રિન્ટ / PDF</button><button class="btn" style="width:100%;margin-top:8px" onclick="whatsappPayment('${no}')">💬 સભ્યના WhatsApp માં મોકલો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
+function saveSettings(){if(role!=='admin')return;d.settings.monthly=+document.getElementById('monthly').value||1000;d.settings.late=+document.getElementById('late').value||100;d.settings.deadline=document.getElementById('deadline').value;d.flats.forEach(f=>{if(!f.quarterly||f.quarterly===3000)f.quarterly=d.settings.monthly*3});save();render();toast('મેન્ટેનન્સ સેટિંગ સાચવાયું')}
+function saveUPI(){if(role!=='admin')return;d.settings.upi=document.getElementById('upi').value.trim();save();toast('UPI ID સાચવાઈ')}
+function saveAdmin(){if(role!=='admin')return;let m=document.getElementById('adminMobile').value.replace(/\D/g,''),p=document.getElementById('adminPassword').value.trim();if(m.length!==10)return toast('એડમિન મોબાઇલ 10 અંકનો હોવો જોઈએ');d.admin.username=m;if(p)d.admin.password=p;save();render();toast('એડમિન એકાઉન્ટ સાચવાયું')}
+function complaint(){let f=document.getElementById('cf').value,t=document.getElementById('ct').value.trim();if(role==='member'&&f!==currentFlat)return toast('સભ્ય માત્ર પોતાના મકાનની ફરિયાદ કરી શકે');if(!f||!t)return toast('મકાન નંબર અને ફરિયાદ ભરો');d.complaints.unshift({flat:f,text:t,date:new Date().toLocaleDateString('gu-IN'),status:'બાકી'});save();document.getElementById('ct').value='';render();toast('ફરિયાદ જમા થઈ')}
+function visitor(){if(role!=='admin')return;let n=document.getElementById('vn').value.trim(),m=document.getElementById('vm').value.trim(),f=document.getElementById('vf').value,p=document.getElementById('vp').value.trim();if(!n||!f)return toast('નામ અને મકાન નંબર ભરો');d.visitors.unshift({name:n,mobile:m,flat:f,purpose:p,date:new Date().toLocaleString('gu-IN')});save();render();toast('વિઝિટર એન્ટ્રી થઈ')}
+function csv(){if(role!=='admin')return;let rows=[['ઘર નંબર','સભ્ય','મોબાઇલ','પ્રકાર','ક્વાર્ટર મેન્ટેનન્સ','લેટ ફી','કુલ બાકી','સ્થિતિ']];d.flats.forEach(f=>rows.push([f.no,f.name,f.mobile,f.type,bill(f),late(f),f.paid?0:bill(f)+late(f),f.paid?'જમા':'ઉધાર']));let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+rows.map(r=>r.join(',')).join('\n')],{type:'text/csv'}));a.download='Sardar_Township_Jama_Udhar.csv';a.click()}
+function closeModal(){document.getElementById('modal').classList.add('hide')}function toast(t){let x=document.createElement('div');x.className='toast';x.textContent=t;document.body.appendChild(x);setTimeout(()=>x.remove(),2500)}
+document.getElementById('role').addEventListener('change',()=>{let r=document.getElementById('role').value;document.getElementById('flatLabel').style.display=r==='member'?'block':'none';document.getElementById('loginFlat').style.display=r==='member'?'block':'none';if(r==='admin'){document.getElementById('loginFlat').value=''}});
+populate();document.getElementById('role').dispatchEvent(new Event('change'));save();render();
+</script>
+<script>
+const _oldDataKey=KEY;
+// Upgrade existing v3 data without losing records
+if(!d.incomes)d.incomes=[]; if(!d.expenses)d.expenses=[]; if(!d.notices)d.notices=[]; if(!d.incomeHeads)d.incomeHeads=['મેન્ટેનન્સ આવક','હોલ બુકીંગ આવક','ઉત્સવ ઉજવણી ફંડ','રીપેરીંગ ફંડ','અન્ય આવક']; if(!d.expenseHeads)d.expenseHeads=['સિક્યુરિટી પગાર','લાઇટ બિલ','રીપેરીંગ કામ','અન્ય વહીવટી ખર્ચ','સફાઈ કામ']; if(!d.backupDates)d.backupDates={}; d.flats.forEach(f=>{f.payments=f.payments||[];f.paid=f.payments.length>0||!!f.paid});
+function save2(){save()}
+function totalMaintenance(){return d.flats.reduce((s,f)=>s+(f.payments||[]).reduce((a,p)=>a+Number(p.amount||0),0),0)}
+function totalIncome(){return totalMaintenance()+d.incomes.reduce((s,x)=>s+Number(x.amount||0),0)}
+function totalExpense(){return d.expenses.reduce((s,x)=>s+Number(x.amount||0),0)}
+function refreshExtras(){
+ let inc=document.getElementById('sIncome'),exp=document.getElementById('sExpense'),bal=document.getElementById('sBalance'),due=document.getElementById('sDue2');if(inc)inc.textContent=money(totalIncome());if(exp)exp.textContent=money(totalExpense());if(bal)bal.textContent=money(totalIncome()-totalExpense());if(due){due.textContent=money(d.flats.filter(f=>!f.paid).reduce((s,f)=>s+bill(f),0));}
+ renderNotices2();renderFinance2();let bs=document.getElementById('backupStatus');if(bs){let day=new Date().toISOString().slice(0,10);bs.textContent=d.backupDates[day]?'આજનો બેકઅપ તૈયાર છે.':'દિવસના અંતે આજનો બેકઅપ ડાઉનલોડ કરો.'}
+}
+function renderNotices2(){let el=document.getElementById('noticeList');if(!el)return;el.innerHTML=d.notices.length?d.notices.map(n=>`<div class="notice"><div class="section-head"><b>${esc(n.title)}</b>${role==='admin'?`<span><button class="btn light small-btn" onclick="noticeForm2('${n.id}')">Edit</button> <button class="btn red small-btn" onclick="deleteNotice2('${n.id}')">Delete</button></span>`:''}</div><div class="muted" style="margin-top:6px">${esc(n.text)}</div><div class="muted">${esc(n.date||'')}</div></div>`).join(''):'<span class="muted">કોઈ નોટિસ નથી.</span>'}
+function noticeForm2(id){if(role!=='admin')return;let n=d.notices.find(x=>x.id===id)||{title:'',text:''};document.getElementById('sheet').innerHTML=`<div class="title">${id?'નોટિસ Edit':'Add Notice'}</div><label>શીર્ષક</label><input id="nTitle" value="${esc(n.title)}"><label>વિગત</label><input id="nText" value="${esc(n.text)}"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveNotice2('${id||''}')">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
+function saveNotice2(id){if(role!=='admin')return;let title=document.getElementById('nTitle').value.trim(),text=document.getElementById('nText').value.trim();if(!title||!text)return toast('શીર્ષક અને વિગત જરૂરી છે');if(id){let n=d.notices.find(x=>x.id===id);n.title=title;n.text=text;n.date=new Date().toLocaleDateString('gu-IN')}else d.notices.unshift({id:'n'+Date.now(),title,text,date:new Date().toLocaleDateString('gu-IN')});save();closeModal();refreshExtras();toast('નોટિસ સાચવાઈ')}
+function deleteNotice2(id){if(role!=='admin')return;if(!confirm('નોટિસ ડિલીટ કરવી છે?'))return;d.notices=d.notices.filter(x=>x.id!==id);save();refreshExtras();toast('નોટિસ ડિલીટ થઈ')}
+function incomeForm(id){if(role!=='admin')return;let x=d.incomes.find(a=>a.id===id)||{head:d.incomeHeads[0],detail:'',date:new Date().toISOString().slice(0,10),amount:''};document.getElementById('sheet').innerHTML=`<div class="title">${id?'આવક Edit':'આવક નોંધણી'}</div><label>આવક હેડ</label><select id="iHead">${d.incomeHeads.map(h=>`<option ${h===x.head?'selected':''}>${esc(h)}</option>`).join('')}</select><label>આવકની વિગત</label><input id="iDetail" value="${esc(x.detail)}"><label>તારીખ</label><input id="iDate" type="date" value="${esc(x.date)}"><label>રકમ</label><input id="iAmount" type="number" value="${x.amount}"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveIncome2('${id||''}')">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
+function saveIncome2(id){let x={id:id||'i'+Date.now(),head:document.getElementById('iHead').value,detail:document.getElementById('iDetail').value.trim(),date:document.getElementById('iDate').value,amount:+document.getElementById('iAmount').value||0};if(!x.amount)return toast('રકમ જરૂરી છે');if(id)Object.assign(d.incomes.find(a=>a.id===id),x);else d.incomes.unshift(x);save();closeModal();refreshExtras();toast('આવક સાચવાઈ')}
+function deleteIncome2(id){if(role!=='admin')return;if(!confirm('આવક ડિલીટ કરવી છે?'))return;d.incomes=d.incomes.filter(x=>x.id!==id);save();refreshExtras();toast('આવક ડિલીટ થઈ')}
+function expenseForm(id){if(role!=='admin')return;let x=d.expenses.find(a=>a.id===id)||{seq:d.expenses.length+1,head:d.expenseHeads[0],detail:'',date:new Date().toISOString().slice(0,10),amount:'',billNo:''};document.getElementById('sheet').innerHTML=`<div class="title">${id?'ખર્ચ Edit':'ખર્ચ નોંધણી'}</div><label>ક્રમ</label><input id="eSeq" type="number" value="${x.seq}"><label>ખર્ચ હેડ</label><select id="eHead">${d.expenseHeads.map(h=>`<option ${h===x.head?'selected':''}>${esc(h)}</option>`).join('')}</select><label>ખર્ચની વિગત</label><input id="eDetail" value="${esc(x.detail)}"><label>તારીખ</label><input id="eDate" type="date" value="${esc(x.date)}"><label>બિલની રકમ</label><input id="eAmount" type="number" value="${x.amount}"><label>બિલ નંબર / નોંધ</label><input id="eBill" value="${esc(x.billNo||'')}"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveExpense2('${id||''}')">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
+function saveExpense2(id){if(role!=='admin')return;let x={id:id||'e'+Date.now(),seq:+document.getElementById('eSeq').value||1,head:document.getElementById('eHead').value,detail:document.getElementById('eDetail').value.trim(),date:document.getElementById('eDate').value,amount:+document.getElementById('eAmount').value||0,billNo:document.getElementById('eBill').value.trim()};if(!x.detail||!x.amount)return toast('ખર્ચની વિગત અને રકમ જરૂરી છે');if(id)Object.assign(d.expenses.find(a=>a.id===id),x);else d.expenses.unshift(x);save();closeModal();refreshExtras();toast('ખર્ચ સાચવાયો')}
+function deleteExpense2(id){if(role!=='admin')return;if(!confirm('આ ખર્ચ ડિલીટ કરવો છે?'))return;d.expenses=d.expenses.filter(x=>x.id!==id);save();refreshExtras();toast('ખર્ચ ડિલીટ થયો')}
+function headForm(type){if(role!=='admin')return;let name=prompt(type==='income'?'નવો આવક હેડ':'નવો ખર્ચ હેડ');if(!name?.trim())return;name=name.trim();let arr=type==='income'?d.incomeHeads:d.expenseHeads;if(!arr.includes(name))arr.push(name);save();refreshExtras();toast('હેડ ઉમેરાયો')}
+function renderFinance2(){
+  let il=document.getElementById('incomeList'),el=document.getElementById('expenseList');if(!il)return;
+  renderMemberIncomeBox_();
+  const canEdit=role==='admin';
+  il.innerHTML=d.incomes.length?d.incomes.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">${esc(x.date)} • ${esc(x.detail)}</span></div>${canEdit?`<div><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div>`:''}</div>`).join(''):'<span class="muted">હજુ કોઈ આવક એન્ટ્રી નથી.</span>';
+  el.innerHTML=d.expenses.length?d.expenses.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">ક્રમ ${x.seq} • ${esc(x.date)} • ${esc(x.detail)}</span><br><span class="muted">બિલ નં: ${esc(x.billNo||'-')}</span></div>${canEdit?`<div><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div>`:''}</div>`).join(''):'<span class="muted">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</span>';
+  let html='<b>આવક</b>';d.incomeHeads.forEach(h=>{let v=d.incomes.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)+(h==='મેન્ટેનન્સ આવક'?totalMaintenance():0);html+=`<div class="list"><span>${esc(h)}</span><b>${money(v)}</b></div>`});
+  html+='<hr><b>ખર્ચ</b>';d.expenseHeads.forEach(h=>{let v=d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0);html+=`<div class="list"><span>${esc(h)}</span><b>${money(v)}</b></div>`});
+  html+=`<hr><div class="row"><span>બાકી સિલક</span><b>${money(totalIncome()-totalExpense())}</b></div>`;
+  document.getElementById('headReport').innerHTML=html;document.getElementById('headsList').innerHTML='<b>આવક હેડ:</b> '+d.incomeHeads.map(esc).join(' • ')+'<br><b>ખર્ચ હેડ:</b> '+d.expenseHeads.map(esc).join(' • ')
+}
+function reportData(){let a=[['હેડ','પ્રકાર','રકમ']];d.incomeHeads.forEach(h=>a.push([h,'આવક',d.incomes.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)+(h==='મેન્ટેનન્સ આવક'?totalMaintenance():0)]));d.expenseHeads.forEach(h=>a.push([h,'ખર્ચ',d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)]));return a}
+function downloadHeadReport(){let rows=reportData();let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+rows.map(r=>r.join(',')).join('\n')],{type:'text/csv'}));a.download='Sardar_Township_Head_Wise_Report.csv';a.click()}
+function printHeadReport(){let rows=reportData();let w=window.open('','_blank');if(!w)return;w.document.write('<html lang="gu"><head><meta charset="utf-8"><title>હેડ વાઈઝ રિપોર્ટ</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #999;padding:8px;text-align:left}</style></head><body><h2>સરદાર સોસાયટી - હેડ વાઈઝ રિપોર્ટ</h2><table><tr><th>હેડ</th><th>પ્રકાર</th><th>રકમ</th></tr>'+rows.slice(1).map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+money(r[2])+'</td></tr>').join('')+'</table><style>
+/* =========================================================
+   v13 PREMIUM UI — visual-only layer
+   Keeps existing data/cloud logic unchanged.
+   ========================================================= */
+:root{--blue:#1769e0;--blue2:#0b3f91;--violet:#6d5dfc;--teal:#0f9d8a;--gold:#f5a524;--bg:#f4f7fc;--ink:#162033;--muted:#6b7280;--line:#e6ebf2}
+body{background:radial-gradient(circle at 10% 0%,#e9f3ff 0,#f7f9fc 38%,#f4f6fb 100%)}
+.app{background:transparent}
+.top{background:linear-gradient(135deg,#1769e0 0%,#2445b8 55%,#633fd0 100%);border-radius:0 0 30px 30px;padding:16px 16px 20px;box-shadow:0 12px 32px #173b8a26}
+.brand h1{font-size:22px;letter-spacing:.1px}.brand small{font-size:12px}
+.wrap{padding:15px 14px 92px}
+.card,.section-card{border:1px solid #e6edf7;box-shadow:0 8px 28px #183b6d0b;border-radius:20px}
+.hero{background:linear-gradient(135deg,#ffffff 0%,#edf6ff 55%,#f4efff 100%);border:1px solid #dce8fa}
+.title{font-size:18px;letter-spacing:.05px}.sub{line-height:1.45}
+.stat{position:relative;overflow:hidden;background:linear-gradient(145deg,#f7fbff,#edf5ff);border:1px solid #dfebfa;padding:13px;border-radius:16px}
+.stat:after{content:"";position:absolute;width:54px;height:54px;border-radius:50%;right:-20px;top:-20px;background:#fff8;box-shadow:0 0 0 10px #fff3}
+.stat b{font-size:20px;position:relative;z-index:1}
+.page-tools{gap:11px}.tool-btn{min-height:92px;background:linear-gradient(145deg,#fff,#f7faff);border:1px solid #e2eaf5;box-shadow:0 8px 20px #193b6d0d;transition:transform .15s ease,box-shadow .15s ease}.tool-btn:active{transform:scale(.98)}
+.tool-btn .ico{font-size:27px}.tool-btn small{font-size:10px}
+.btn{border-radius:13px;box-shadow:0 2px 5px #17365d0a}.primary{background:linear-gradient(135deg,#1769e0,#3154d5)}
+.nav{height:76px;background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid #e3e8f0;box-shadow:0 -10px 28px #183b6d12}.nav button{background:transparent}.nav button.on{color:#1769e0}
+/* compact finance */
+.finance-toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.finance-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.finance-mini{padding:12px;border-radius:15px;border:1px solid #e4ebf5;background:linear-gradient(145deg,#fff,#f7faff)}
+.finance-mini .k{font-size:11px;color:var(--muted)}.finance-mini .v{font-size:18px;font-weight:900;margin-top:3px}
+.finance-entry{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #edf0f4}
+.finance-entry:last-child{border-bottom:0}.finance-main{min-width:0;flex:1}.finance-title{font-weight:900;font-size:14px;line-height:1.35}.finance-amount{font-size:17px;font-weight:900;white-space:nowrap;color:#123f8a}.finance-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}.finance-chip{display:inline-flex;align-items:center;background:#f1f5fa;color:#667085;border-radius:20px;padding:4px 7px;font-size:10px}.finance-head-chip{background:#edf5ff;color:#1754a6}.finance-actions{display:flex;gap:5px;flex-shrink:0}.finance-actions .small-btn{min-width:42px}
+.finance-empty{padding:18px;text-align:center;color:#7b8492;background:#f8fafc;border-radius:14px}
+.finance-report{display:grid;gap:7px}.finance-report-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:#f7f9fc;border:1px solid #edf1f6}.finance-report-row b{white-space:nowrap}.finance-report-row.income{background:#f0fbf6}.finance-report-row.expense{background:#fff7f5}
+.member-income-card{background:linear-gradient(145deg,#f9fcff,#eef7ff);border:1px solid #dceafa;border-radius:18px;padding:13px;margin-bottom:12px}.member-income-row{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #e4edf7}.member-income-row:last-child{border-bottom:0}.member-income-person{min-width:0;flex:1}.member-income-person b{font-size:14px}.member-income-input{width:115px!important;padding:9px 10px!important;border-radius:10px!important}.member-income-save{padding:9px 10px!important;white-space:nowrap}
+.section-card .section-head{margin-bottom:4px}
+@media(max-width:430px){.finance-entry{align-items:flex-start}.finance-actions{flex-direction:column}.finance-actions .small-btn{min-width:48px}.member-income-row{align-items:center}.member-income-input{width:95px!important}.member-income-save{padding:8px!important}.finance-title{font-size:13px}.finance-amount{font-size:15px}}
+@media(max-width:360px){.page-tools{grid-template-columns:1fr 1fr}.finance-summary{gap:7px}.member-income-row{flex-wrap:wrap}.member-income-person{width:100%;flex-basis:100%}.member-income-input{flex:1;width:auto!important}}
+</style>
+<script>
+/* =========================================================
+   v13 compact finance renderer
+   Visual/UX change only. Existing records and cloud sync remain intact.
+   ========================================================= */
+function renderMemberIncomeBoxV13(){
+  const box=document.getElementById('memberIncomeBox');
+  if(!box || role!=='admin'){if(box)box.innerHTML='';return;}
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  if(!heads.length){box.innerHTML='';return;}
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  if(!occupied.length){box.innerHTML='<div class="member-income-card"><b>સભ્યવાર અન્ય આવક</b><div class="muted" style="margin-top:6px">હાલ કોઈ ભરેલું મકાન નથી.</div></div>';return;}
+  const current=heads.includes(window.memberIncomeHead_)?window.memberIncomeHead_:heads[0];
+  window.memberIncomeHead_=current;
+  const rows=occupied.map(f=>{
+    const total=memberIncomeAmount_(current,f.no);
+    return `<div class="member-income-row">
+      <div class="member-income-person"><b>ઘર ${esc(f.no)}</b> • ${esc(f.name||'સભ્ય')}<br>${total?`<span class="muted">આ હેડમાં જમા: <b>${money(total)}</b></span>`:'<span class="muted">હજુ જમા નથી</span>'}</div>
+      <input id="miAmt_${esc(f.no)}" class="member-income-input" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ">
+      <button class="btn primary member-income-save" onclick="saveMemberIncome_('${esc(current)}','${esc(f.no)}')">જમા કરો</button>
+    </div>`;
+  }).join('');
+  box.innerHTML=`<div class="member-income-card">
+    <div class="section-head"><div><div class="title" style="margin-bottom:2px">સભ્યવાર આવક જમા</div><div class="sub">મેન્ટેનન્સ સિવાયની આવક માટે સીધી સભ્યની સામે રકમ જમા કરો.</div></div><span class="pill">${occupied.length} સભ્યો</span></div>
+    <label>આવક હેડ</label>
+    <select id="memberIncomeHead" onchange="window.memberIncomeHead_=this.value;renderMemberIncomeBoxV13()">${heads.map(h=>`<option value="${esc(h)}" ${h===current?'selected':''}>${esc(h)}</option>`).join('')}</select>
+    <div style="margin-top:7px">${rows}</div>
+  </div>`;
+}
+
+function renderFinanceV13(){
+  const il=document.getElementById('incomeList'),el=document.getElementById('expenseList');
+  if(!il||!el)return;
+  renderMemberIncomeBoxV13();
+  const incomes=d.incomes||[], expenses=d.expenses||[];
+  il.innerHTML=incomes.length?incomes.map(x=>{
+    const f=x.flatNo?d.flats.find(a=>a.no===String(x.flatNo)):null;
+    const vacant=x.flatNo && f && !isOccupiedHouse(f);
+    return `<div class="finance-entry">
+      <div class="finance-main"><div class="finance-title">${esc(x.detail||x.head||'આવક')}</div><div class="finance-meta"><span class="finance-chip finance-head-chip">${esc(x.head||'આવક')}</span>${f?`<span class="finance-chip">🏠 ઘર ${esc(f.no)}</span>`:''}<span class="finance-chip">📅 ${esc(x.date||'')}</span>${vacant?'<span class="finance-chip">⚠️ કુલમાં નહીં</span>':''}</div></div>
+      <div class="finance-amount">${money(x.amount)}</div>
+      ${canEdit?`<div class="finance-actions"><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div>`:''}
+    </div>`;
+  }).join(''):'<div class="finance-empty">હજુ કોઈ આવક એન્ટ્રી નથી.</div>';
+  el.innerHTML=expenses.length?expenses.map(x=>`<div class="finance-entry">
+    <div class="finance-main"><div class="finance-title">${esc(x.detail||'ખર્ચ')}</div><div class="finance-meta"><span class="finance-chip finance-head-chip">${esc(x.head||'ખર્ચ')}</span><span class="finance-chip">ક્રમ ${esc(x.seq)}</span><span class="finance-chip">📅 ${esc(x.date||'')}</span>${x.billNo?`<span class="finance-chip">બિલ ${esc(x.billNo)}</span>`:''}</div></div>
+    <div class="finance-amount">${money(x.amount)}</div>
+    ${canEdit?`<div class="finance-actions"><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div>`:''}
+  </div>`).join(''):'<div class="finance-empty">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</div>';
+  let html='<div class="finance-report">';
+  html+='<div style="font-weight:900;margin:2px 0 4px">આવક</div>';
+  (d.incomeHeads||[]).forEach(h=>{html+=`<div class="finance-report-row income"><span>${esc(h)}</span><b>${money(incomeHeadTotal(h))}</b></div>`});
+  html+='<div style="font-weight:900;margin:8px 0 4px">ખર્ચ</div>';
+  (d.expenseHeads||[]).forEach(h=>{const v=expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0);html+=`<div class="finance-report-row expense"><span>${esc(h)}</span><b>${money(v)}</b></div>`});
+  html+=`<div class="finance-report-row" style="background:#eef5ff"><b>બાકી સિલક</b><b>${money(totalIncome()-totalExpense())}</b></div></div>`;
+  const hr=document.getElementById('headReport');if(hr)hr.innerHTML=html;
+  const hl=document.getElementById('headsList');if(hl)hl.innerHTML='<b>આવક હેડ:</b> '+(d.incomeHeads||[]).map(esc).join(' • ')+'<br><b>ખર્ચ હેડ:</b> '+(d.expenseHeads||[]).map(esc).join(' • ');
+}
+
+/* Replace only the presentation renderer; no data migration/reset. */
+renderFinance2=renderFinanceV13;
+renderMemberIncomeBox_=renderMemberIncomeBoxV13;
+</script>
+
+
+<script id="v14_1_finance_script">
+/* v14.1 Finance UI: replaces the visible finance screen; data model unchanged. */
+function f14all(){
+  const a=[];
+  (d.flats||[]).filter(isOccupiedHouse).forEach(f=>(f.payments||[]).forEach(p=>a.push({
+    type:'income',head:'મેન્ટેનન્સ આવક',date:p.date||'',amount:Number(p.amount||0),
+    house:String(f.no),member:f.name||'',detail:'મેન્ટેનન્સ',period:p.periodStart&&p.periodEnd?`${p.periodStart} થી ${p.periodEnd}`:'',
+    receipt:p.receipt||''
+  })));
+  (d.incomes||[]).forEach(x=>{
+    const f=x.flatNo?d.flats.find(q=>String(q.no)===String(x.flatNo)):null;
+    a.push({type:'income',head:x.head||'અન્ય આવક',date:x.date||'',amount:Number(x.amount||0),
+      house:f?String(f.no):'',member:f?(f.name||''):'',detail:x.detail||'',receipt:'',vacant:!!(x.flatNo&&f&&!isOccupiedHouse(f))});
+  });
+  (d.expenses||[]).forEach(x=>a.push({type:'expense',head:x.head||'ખર્ચ',date:x.date||'',amount:Number(x.amount||0),
+    house:'',member:'',detail:x.detail||'',billNo:x.billNo||'',seq:x.seq||''}));
+  return a;
+}
+function f14money(n){return money(Number(n||0))}
+function f14escape(s){return esc(String(s??''))}
+function f14render(){
+  const sec=document.getElementById('finance'); if(!sec)return;
+  const all=f14all(), inc=all.filter(x=>x.type==='income'), exp=all.filter(x=>x.type==='expense');
+  const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+  const can=role==='admin';
+  const headsI=d.incomeHeads||[], headsE=d.expenseHeads||[];
+  sec.innerHTML=`
+  <div class="finance14-wrap">
+    <div class="finance14-hero">
+      <h2>💰 આવક • 💸 ખર્ચ</h2><p>સોસાયટીના હિસાબની એન્ટ્રી અને હેડ વાઈઝ સંપૂર્ણ રિપોર્ટ</p>
+      <div class="finance14-stats">
+        <div class="finance14-stat"><span>કુલ આવક</span><b>${f14money(ti)}</b></div>
+        <div class="finance14-stat"><span>કુલ ખર્ચ</span><b>${f14money(te)}</b></div>
+        <div class="finance14-stat"><span>બાકી સિલક</span><b>${f14money(ti-te)}</b></div>
+      </div>
     </div>
 
-    <!-- 📱 મુખ્ય એપ કન્ટેનર -->
-    <div id="main-app" class="hidden">
-        <!-- આકર્ષક ટોપ હેડર -->
-        <header class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-4 shadow-xl flex justify-between items-center border-b border-indigo-900/50">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-tr from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center text-xl font-bold shadow-md shadow-blue-500/20">🏡</div>
-                <div>
-                    <h1 class="text-xl font-bold tracking-wide">સરદાર સોસાયટી</h1>
-                    <p class="text-[10px] text-slate-400 font-medium tracking-wider uppercase">Smart Management Dashboard</p>
-                </div>
-            </div>
-            <button onclick="handleLogout()" class="no-print bg-slate-800/80 hover:bg-rose-600 text-slate-300 hover:text-white text-xs px-3 py-2 rounded-xl transition-all border border-slate-700/50 font-medium">↩ લૉગઆઉટ</button>
-        </header>
+    ${can?`<div class="finance14-actions">
+      <button class="finance14-action" onclick="incomeForm()"><span class="ico">➕</span><strong>નવી આવક નોંધો</strong><small>આવકની નવી એન્ટ્રી</small></button>
+      <button class="finance14-action" onclick="expenseForm()"><span class="ico">➕</span><strong>નવો ખર્ચ નોંધો</strong><small>ખર્ચની નવી એન્ટ્રી</small></button>
+    </div>`:''}
 
-        <!-- ⌂ નવો મોર્ડન મેનુ નેવિગેશન બાર -->
-        <nav class="no-print bg-white border-b border-slate-100 flex justify-around p-1 text-xs font-semibold text-slate-600 shadow-md sticky top-0 z-50 overflow-x-auto gap-1">
-            <button onclick="showSection('dashboard')" class="nav-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-50 text-blue-600 transition-all">🏠 હોમ</button>
-            <button onclick="showSection('maintenance')" class="nav-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl hover:bg-slate-50 text-slate-600 transition-all">💰 મેન્ટેનન્સ</button>
-            <button onclick="showSection('ledger')" class="nav-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl hover:bg-slate-50 text-slate-600 transition-all">💼 આવક/ખર્ચ</button>
-            <button onclick="showSection('members')" class="nav-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl hover:bg-slate-50 text-slate-600 transition-all">👥 સભ્યો</button>
-            <button onclick="showSection('notices')" class="nav-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl hover:bg-slate-50 text-slate-600 transition-all">📢 નોટિસ</button>
-            <button onclick="showSection('complaints')" class="nav-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl hover:bg-slate-50 text-slate-600 transition-all">🛠️ ફરિયાદ</button>
-            <button onclick="showSection('visitors')" class="nav-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl hover:bg-slate-50 text-slate-600 transition-all">🚶 વિઝિટર</button>
-            <button onclick="showSection('settings')" class="nav-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl hover:bg-slate-50 text-slate-600 transition-all">⚙️ સેટિંગ</button>
-        </nav>
+    ${can?`<div id="memberIncomeBox" style="margin:0"></div>`:''}
 
-        <main class="max-w-6xl mx-auto p-4 space-y-6">
+    <div class="finance14-panel">
+      <div class="finance14-panel-head"><h3>📊 હેડ પ્રમાણે કુલ</h3><span class="finance14-pill">${headsI.length+headsE.length} હેડ</span></div>
+      <div class="finance14-head-grid">
+        ${headsI.map(h=>`<div class="finance14-head-card"><span>💰 ${f14escape(h)}</span><b>${f14money(incomeHeadTotal(h))}</b></div>`).join('')}
+        ${headsE.map(h=>{const v=exp.filter(x=>x.head===h).reduce((s,x)=>s+x.amount,0);return `<div class="finance14-head-card"><span>💸 ${f14escape(h)}</span><b>${f14money(v)}</b></div>`}).join('')}
+      </div>
+    </div>
 
-            <!-- 📊 લાઈવ ડેશબોર્ડ વિભાગ -->
-            <section id="sec-dashboard" class="app-section space-y-6">
-                <div class="bg-gradient-to-r from-blue-500 to-indigo-600 p-5 rounded-2xl text-white shadow-xl shadow-blue-500/10 no-print relative overflow-hidden">
-                    <div class="relative z-10">
-                        <h2 class="text-xl font-bold">નમસ્કાર, ડિજિટલ એડમિન 👋</h2>
-                        <p class="text-xs text-blue-100 mt-1 opacity-90">સોસાયટીની તમામ માહિતી, હિસાબ કિતાબ અને સભ્યોનો ડેટા એક જ જગ્યાએ સુરક્ષિત છે.</p>
-                    </div>
-                    <div class="absolute right-0 bottom-0 text-white/5 text-9xl font-bold translate-x-10 translate-y-10 pointer-events-none">S</div>
-                </div>
-                
-                <!-- ડેશબોર્ડ કાર્ડ્સ -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 border-l-4 border-l-emerald-500 print-card transition-all hover:shadow-md">
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">કુલ જમા આવક</p>
-                        <h3 class="text-2xl font-bold text-emerald-600 mt-1" id="dash-income">₹0</h3>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 border-l-4 border-l-rose-500 print-card transition-all hover:shadow-md">
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">કુલ સોસાયટી ખર્ચ</p>
-                        <h3 class="text-2xl font-bold text-rose-600 mt-1" id="dash-expense">₹0</h3>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 border-l-4 border-l-blue-600 print-card transition-all hover:shadow-md">
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">બાકી સિલક</p>
-                        <h3 class="text-2xl font-bold text-blue-600 mt-1" id="dash-net">₹0</h3>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 border-l-4 border-l-amber-500 print-card transition-all hover:shadow-md">
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">બાકી મેન્ટેનન્સ</p>
-                        <h3 class="text-2xl font-bold text-amber-500 mt-1" id="dash-pending-maint">₹0</h3>
-                    </div>
-                </div>
+    <div class="finance14-panel">
+      <div class="finance14-panel-head"><h3>📋 એન્ટ્રી જુઓ</h3><span class="finance14-pill">${all.length} એન્ટ્રી</span></div>
+      <div class="finance14-actions">
+        <button class="finance14-action" onclick="f14open('income')"><span class="ico">💰</span><strong>આવક એન્ટ્રી જુઓ</strong><small>બધી આવકની વિગત</small></button>
+        <button class="finance14-action" onclick="f14open('expense')"><span class="ico">💸</span><strong>ખર્ચ એન્ટ્રી જુઓ</strong><small>બધા ખર્ચની વિગત</small></button>
+        <button class="finance14-action" onclick="f14open('head')"><span class="ico">📊</span><strong>હેડ વાઈઝ જુઓ</strong><small>દરેક હેડની તમામ એન્ટ્રી</small></button>
+        <button class="finance14-action" onclick="f14open('all')"><span class="ico">🧾</span><strong>આવક / ખર્ચ બધું</strong><small>સંપૂર્ણ હિસાબ</small></button>
+      </div>
+    </div>
 
-                <!-- સ્માર્ટ સર્ચ બાર -->
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 no-print">
-                    <h3 class="font-bold text-slate-700 text-sm mb-2 flex items-center gap-1.5">🔍 મકાન નંબરથી માહિતી શોધો</h3>
-                    <div class="flex gap-2">
-                        <input type="number" id="search-house" min="1" max="60" placeholder="मકાન નંબર લખો (1 થી 60)" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white text-sm transition-all">
+    ${can?`<div class="finance14-panel">
+      <div class="finance14-panel-head"><h3>⚙️ આવક / ખર્ચ હેડ</h3></div>
+      <div class="finance14-actions">
+        <button class="btn light" onclick="headForm('income')">+ આવક હેડ</button>
+        <button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button>
+      </div>
+    </div>`:''}
+  </div>`;
+  if(can && typeof renderMemberIncomeBoxV13==='function') setTimeout(()=>renderMemberIncomeBoxV13(),0);
+}
+function f14open(type){
+  const all=f14all();
+  let title=type==='income'?'આવક એન્ટ્રી':type==='expense'?'ખર્ચ એન્ટ્રી':type==='head'?'હેડ વાઈઝ રિપોર્ટ':'સંપૂર્ણ આવક / ખર્ચ';
+  let rows=type==='income'?all.filter(x=>x.type==='income'):type==='expense'?all.filter(x=>x.type==='expense'):all;
+  let body='';
+  if(type==='head'){
+    const keys=[...new Set(all.map(x=>x.type+'|||'+x.head))];
+    body=keys.map(k=>{
+      const [kind,head]=k.split('|||'), rr=all.filter(x=>x.type===kind&&x.head===head), tot=rr.reduce((s,x)=>s+x.amount,0);
+      return `<div class="finance14-group"><div class="finance14-group-head"><span>${kind==='income'?'💰':'💸'} ${f14escape(head)}</span><span>${f14money(tot)}</span></div>
+      ${rr.length?rr.map(x=>f14detail(x)).join(''):'<div class="finance14-detail"><span>કોઈ એન્ટ્રી નથી</span><span></span></div>'}</div>`;
+    }).join('');
+  }else{
+    body=rows.length?rows.sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(x=>f14detail(x,true)).join(''):'<div class="finance14-detail"><span>કોઈ એન્ટ્રી મળી નથી.</span><span></span></div>';
+  }
+  document.getElementById('sheet').innerHTML=`
+    <div class="title">${title}</div><div class="sub">બધી માહિતી Cloudમાંથી</div>
+    <div class="finance14-modal-tools">
+      <button class="btn primary" onclick="f14print('${type}')">🖨️ પ્રિન્ટ</button>
+      <button class="btn light" onclick="f14csv('${type}')">📥 ડાઉનલોડ</button>
+    </div>${body}<button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+}
+function f14detail(x){
+  const meta=[x.date?`📅 ${f14escape(x.date)}`:'',x.house?`🏠 ઘર ${f14escape(x.house)}`:'',x.member?f14escape(x.member):'',x.billNo?`બિલ ${f14escape(x.billNo)}`:'',x.receipt?`રસીદ ${f14escape(x.receipt)}`:''].filter(Boolean).join(' • ');
+  return `<div class="finance14-detail"><div><b>${f14escape(x.detail||x.head)}</b><div class="muted">${meta}</div></div><b>${f14money(x.amount)}</b></div>`;
+}
+function f14print(type){
+  const all=f14all(), rows=type==='income'?all.filter(x=>x.type==='income'):type==='expense'?all.filter(x=>x.type==='expense'):all;
+  const title=type==='income'?'આવક એન્ટ્રી':type==='expense'?'ખર્ચ એન્ટ્રી':type==='head'?'હેડ વાઈઝ આવક / ખર્ચ':'આવક / ખર્ચ સંપૂર્ણ રિપોર્ટ';
+  let tr='';
+  if(type==='head'){
+    [...new Set(all.map(x=>x.type+'|||'+x.head))].forEach(k=>{const [kind,h]=k.split('|||'),rr=all.filter(x=>x.type===kind&&x.head===h),tot=rr.reduce((s,x)=>s+x.amount,0);
+      tr+=`<tr><th colspan="5">${kind==='income'?'આવક':'ખર્ચ'} • ${f14escape(h)} — ${f14money(tot)}</th></tr>`;
+      rr.forEach(x=>tr+=`<tr><td>${f14escape(x.date)}</td><td>${f14escape(x.head)}</td><td>${f14escape(x.house||'-')}</td><td>${f14escape(x.member||x.detail||'-')}</td><td>${f14money(x.amount)}</td></tr>`);
+    });
+  }else rows.forEach(x=>tr+=`<tr><td>${f14escape(x.date)}</td><td>${f14escape(x.head)}</td><td>${f14escape(x.house||'-')}</td><td>${f14escape(x.member||x.detail||'-')}</td><td>${f14money(x.amount)}</td></tr>`);
+  const w=window.open('','_blank');if(!w)return;
+  w.document.write(`<html lang="gu"><meta charset="utf-8"><title>${title}</title><style>body{font-family:Arial,sans-serif;padding:24px}h1{color:#1769e0}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ccd5df;padding:8px;text-align:left;font-size:12px}th{background:#edf4ff}</style><h1>સરદાર સોસાયટી</h1><h2>${title}</h2><table><tr><th>તારીખ</th><th>હેડ</th><th>ઘર</th><th>સભ્ય / વિગત</th><th>રકમ</th></tr>${tr}</table></html>`);
+  w.document.close();setTimeout(()=>w.print(),250);
+}
+function f14csv(type){
+  const all=f14all(), rows=type==='income'?all.filter(x=>x.type==='income'):type==='expense'?all.filter(x=>x.type==='expense'):all;
+  const data=[['તારીખ','પ્રકાર','હેડ','ઘર','સભ્ય','વિગત','રકમ','બિલ/રસીદ'],...rows.map(x=>[x.date,x.type==='income'?'આવક':'ખર્ચ',x.head,x.house,x.member,x.detail,x.amount,x.billNo||x.receipt||''])];
+  const blob=new Blob(['\ufeff'+data.map(r=>r.map(v=>`"${String(v??'').replaceAll('"','""')}"`).join(',')).join('\n')],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Sardar_Society_Finance_Report.csv';a.click();
+}
+/* Override after all previous renderers have loaded. */
+renderFinance2=f14render;
+</script>
+
+<script id="v14-2-finance-js">
+/* v14.2 - actual finance page replacement. Existing cloud data is read-only from d; no reset/migration. */
+function fxEsc(v){return esc(v==null?'':String(v))}
+function fxMoney(v){return money(Number(v||0))}
+function fxAll(){
+  const a=[];
+  (d.flats||[]).filter(isOccupiedHouse).forEach(f=>(f.payments||[]).forEach(p=>a.push({
+    type:'income',head:'મેન્ટેનન્સ આવક',date:p.date||'',amount:Number(p.amount||0),
+    house:String(f.no),member:f.name||'',detail:`મેન્ટેનન્સ ${p.periodStart||''} થી ${p.periodEnd||''}`,ref:p.receipt||''
+  })));
+  (d.incomes||[]).forEach(x=>{
+    const f=x.flatNo?d.flats.find(z=>String(z.no)===String(x.flatNo)):null;
+    a.push({type:'income',head:x.head||'અન્ય આવક',date:x.date||'',amount:Number(x.amount||0),
+      house:f?String(f.no):'',member:f?.name||'',detail:x.detail||'',ref:x.id||'',
+      excluded:!!(x.flatNo&&f&&!isOccupiedHouse(f))});
+  });
+  (d.expenses||[]).forEach(x=>a.push({type:'expense',head:x.head||'ખર્ચ',date:x.date||'',amount:Number(x.amount||0),
+    house:'',member:'',detail:x.detail||'',ref:x.billNo||'',seq:x.seq||''}));
+  return a;
+}
+function fxMemberBox(){
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  if(role!=='admin'||!heads.length)return '';
+  const head=window.fxMemberHead&&heads.includes(window.fxMemberHead)?window.fxMemberHead:heads[0];
+  window.fxMemberHead=head;
+  const flats=(d.flats||[]).filter(isOccupiedHouse);
+  const rows=flats.map(f=>{
+    const total=(d.incomes||[]).filter(x=>x.head===head&&String(x.flatNo)===String(f.no)).reduce((s,x)=>s+Number(x.amount||0),0);
+    return `<div class="fx-member-row"><div class="fx-member-name"><b>ઘર ${fxEsc(f.no)} • ${fxEsc(f.name)}</b><br><small>આ હેડમાં જમા: ${fxMoney(total)}</small></div>
+      <input id="fxAmt_${fxEsc(f.no)}" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ">
+      <button class="btn primary small-btn" onclick="saveMemberIncome_('${fxEsc(head)}','${fxEsc(f.no)}')">જમા કરો</button></div>`;
+  }).join('');
+  return `<div class="fx-member"><div class="fx-card-head"><b>સભ્યવાર અન્ય આવક</b><span class="fx-count">${flats.length} સભ્યો</span></div>
+    <label>આવક હેડ</label><select onchange="window.fxMemberHead=this.value;renderFinance2()">${heads.map(h=>`<option ${h===head?'selected':''}>${fxEsc(h)}</option>`).join('')}</select>
+    <div style="margin-top:6px">${rows||'<small>ભરેલા મકાન નથી.</small>'}</div></div>`;
+}
+function fxRow(x){
+  const edit=role==='admin'?(x.type==='income'
+    ?`<button class="btn light small-btn" onclick="incomeForm('${fxEsc(x.ref)}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${fxEsc(x.ref)}')">Delete</button>`
+    :`<button class="btn light small-btn" onclick="expenseForm('${fxEsc(x.ref)}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${fxEsc(x.ref)}')">Delete</button>`):'';
+  return `<div class="fx-row"><div><div class="title">${fxEsc(x.head)}</div><div>${fxEsc(x.detail||'-')}</div><div class="fx-meta">
+    ${x.date?`<span class="fx-chip">📅 ${fxEsc(x.date)}</span>`:''}
+    ${x.house?`<span class="fx-chip">🏠 ${fxEsc(x.house)}${x.member?' • '+fxEsc(x.member):''}</span>`:''}
+    ${x.seq?`<span class="fx-chip">ક્રમ ${fxEsc(x.seq)}</span>`:''}
+    ${x.ref?`<span class="fx-chip">${x.type==='income'?'રસીદ':'બિલ'} ${fxEsc(x.ref)}</span>`:''}
+    ${x.excluded?`<span class="fx-chip">કુલમાં નહીં</span>`:''}
+  </div>${edit?`<div class="fx-edit">${edit}</div>`:''}</div><div class="fx-amt">${fxMoney(x.amount)}</div></div>`;
+}
+function fxOpen(type){
+  const all=fxAll();
+  let title='આવક એન્ટ્રી', rows=all.filter(x=>x.type==='income');
+  if(type==='expense'){title='ખર્ચ એન્ટ્રી';rows=all.filter(x=>x.type==='expense')}
+  if(type==='all'){title='તમામ આવક / ખર્ચ એન્ટ્રી'}
+  if(type==='head'){title='હેડ વાઈઝ સંપૂર્ણ રિપોર્ટ'}
+  if(type==='head'){
+    let body='';
+    [...(d.incomeHeads||[]).map(h=>['income',h]),...(d.expenseHeads||[]).map(h=>['expense',h])].forEach(([kind,h])=>{
+      const rr=all.filter(x=>x.type===kind&&x.head===h), total=rr.reduce((s,x)=>s+x.amount,0);
+      body+=`<div class="fx-head"><div class="fx-head-top"><span>${kind==='income'?'💰':'💸'} ${fxEsc(h)}</span><b>${fxMoney(total)}</b></div>`;
+      body+=rr.length?rr.map(x=>`<div class="fx-detail"><div><b>${fxEsc(x.detail||'-')}</b><br><small>${fxEsc(x.date||'')}${x.house?' • ઘર '+fxEsc(x.house):''}${x.member?' • '+fxEsc(x.member):''}</small></div><b>${fxMoney(x.amount)}</b></div>`).join(''):`<div class="fx-detail"><small>કોઈ એન્ટ્રી નથી.</small><span></span></div>`;
+      body+='</div>';
+    });
+    fxModal(title,body,'head');return;
+  }
+  if(type==='all')rows=all;
+  rows.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  fxModal(title,rows.length?`<div class="fx-list">${rows.map(fxRow).join('')}</div>`:'<div class="finance-empty">કોઈ એન્ટ્રી નથી.</div>',type);
+}
+function fxModal(title,body,type){
+  const total=fxAll().filter(x=>type==='income'?x.type==='income':type==='expense'?x.type==='expense':true).reduce((s,x)=>s+x.amount,0);
+  document.getElementById('sheet').innerHTML=`<div class="title">${title}</div><div class="sub" style="margin:4px 0 10px">કુલ રકમ: <b>${fxMoney(total)}</b></div>
+    <div class="grid" style="margin-bottom:10px"><button class="btn primary" onclick="fxPrint('${type}')">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="fxDownload('${type}')">📥 ડાઉનલોડ</button></div>${body}
+    <button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+}
+function fxPrint(type){
+  const all=fxAll().filter(x=>type==='income'?x.type==='income':type==='expense'?x.type==='expense':true);
+  const title=type==='income'?'આવક એન્ટ્રી':type==='expense'?'ખર્ચ એન્ટ્રી':type==='head'?'હેડ વાઈઝ રિપોર્ટ':'આવક / ખર્ચ તમામ એન્ટ્રી';
+  const w=window.open('','_blank');if(!w)return;
+  const body=type==='head'?[...(d.incomeHeads||[]).map(h=>['income',h]),...(d.expenseHeads||[]).map(h=>['expense',h])].map(([k,h])=>{
+    const rr=fxAll().filter(x=>x.type===k&&x.head===h);
+    return `<tr><th colspan="5">${k==='income'?'આવક':'ખર્ચ'} • ${fxEsc(h)} — ${fxMoney(rr.reduce((s,x)=>s+x.amount,0))}</th></tr>`+
+      rr.map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxEsc(x.detail||x.member||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('');
+  }).join('') : all.map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxEsc(x.detail||x.member||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('');
+  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${title}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${title}</h2><table><tr><th>તારીખ</th><th>હેડ</th><th>ઘર</th><th>વિગત / સભ્ય</th><th>રકમ</th></tr>${body}</table></body></html>`);
+  w.document.close();setTimeout(()=>w.print(),250);
+}
+function fxDownload(type){
+  const all=fxAll().filter(x=>type==='income'?x.type==='income':type==='expense'?x.type==='expense':true);
+  const rows=[['તારીખ','પ્રકાર','હેડ','ઘર','સભ્ય','વિગત','રકમ','બિલ/રસીદ']];
+  all.forEach(x=>rows.push([x.date||'',x.type==='income'?'આવક':'ખર્ચ',x.head||'',x.house||'',x.member||'',x.detail||'',x.amount||0,x.ref||'']));
+  const blob=new Blob(['\ufeff'+rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n')],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Sardar_Society_Finance.csv';a.click();
+}
+function renderFinanceV14_2(){
+  const sec=document.getElementById('finance'); if(!sec)return;
+  const all=fxAll(), inc=all.filter(x=>x.type==='income'), exp=all.filter(x=>x.type==='expense');
+  const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+  sec.innerHTML=`<div class="finance-v14x">
+    <div class="fx-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સંપૂર્ણ હિસાબ</p>
+      <div class="fx-stats"><div class="fx-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div>
+    </div>
+    ${role==='admin'?`<div class="fx-actions"><button class="fx-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>નવી આવક નોંધો</small></button><button class="fx-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>નવો ખર્ચ નોંધો</small></button></div>`:''}
+    ${fxMemberBox()}
+    <div class="fx-card"><div class="fx-card-head"><b>એન્ટ્રી જુઓ</b><span class="fx-count">${all.length} એન્ટ્રી</span></div>
+      <div class="fx-report-grid">
+        <button class="fx-report-btn" onclick="fxOpen('income')">💰<br>આવક એન્ટ્રી</button>
+        <button class="fx-report-btn" onclick="fxOpen('expense')">💸<br>ખર્ચ એન્ટ્રી</button>
+        <button class="fx-report-btn" onclick="fxOpen('head')">📊<br>હેડ વાઈઝ</button>
+        <button class="fx-report-btn" onclick="fxOpen('all')">📚<br>તમામ એન્ટ્રી</button>
+      </div>
+    </div>
+    <div class="fx-card"><div class="fx-card-head"><b>ઝડપી હેડ સારાંશ</b><span class="fx-count">Print / View</span></div>
+      <div class="fx-list">
+        ${(d.incomeHeads||[]).map(h=>`<div class="fx-row"><div><b>💰 ${fxEsc(h)}</b></div><b>${fxMoney(incomeHeadTotal(h))}</b></div>`).join('')}
+        ${(d.expenseHeads||[]).map(h=>`<div class="fx-row"><div><b>💸 ${fxEsc(h)}</b></div><b>${fxMoney(exp.filter(x=>x.head===h).reduce((s,x)=>s+x.amount,0))}</b></div>`).join('')}
+      </div>
+      <div class="grid" style="margin-top:9px"><button class="btn primary" onclick="fxPrint('head')">🖨️ હેડ વાઈઝ પ્રિન્ટ</button><button class="btn light" onclick="fxDownload('all')">📥 તમામ ડાઉનલોડ</button></div>
+    </div>
+    ${role==='admin'?`<div class="fx-card"><div class="fx-card-head"><b>આવક / ખર્ચના હેડ</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}
+  </div>`;
+}
+renderFinance2=renderFinanceV14_2;
+</script>
+
+</body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),200)}
+</script>
+<script>
+/* =========================================================
+   v12 MEMBER PERMISSIONS
+   Members are view-only everywhere except Complaints.
+   Existing data is never changed by this layer.
+   ========================================================= */
+function applyMemberPermissionsV12_(){
+  const member = role==='member';
+  const hide=(id,on)=>{const el=document.getElementById(id);if(el)el.classList.toggle('hide',!!on);};
+
+  hide('adminAddIncomeBtnV12',member);
+  hide('adminAddExpenseBtnV12',member);
+  hide('addNoticeBtn',member);
+  hide('visitorEntryCardV12',member);
+
+  // Admin-only settings controls. Members can see a simple read-only message.
+  const settings=document.getElementById('settings');
+  if(settings){
+    [...settings.querySelectorAll('.security-card')].forEach(x=>x.classList.toggle('hide',member));
+    const cards=[...settings.children].filter(x=>x.classList.contains('card'));
+    cards.forEach((x,i)=>{ if(i>0) x.classList.toggle('hide',member); });
+    const adminBox=document.getElementById('adminSettings');
+    if(adminBox && member) adminBox.innerHTML='<div class="member-only"><b>સેટિંગ</b><p class="muted">આ વિભાગની માહિતી ફક્ત એડમિન બદલી શકે છે. સભ્ય માટે View Only છે.</p></div>';
+  }
+
+  // Finance add/head controls are admin-only.
+  const finance=document.getElementById('finance');
+  if(finance){
+    const addButtons=finance.querySelectorAll('#adminAddIncomeBtnV12,#adminAddExpenseBtnV12');
+    addButtons.forEach(b=>b.classList.toggle('hide',member));
+    const headCard=finance.children[3];
+    if(headCard) headCard.classList.toggle('hide',member);
+  }
+}
+
+// Defence-in-depth: even if a hidden button is triggered manually, members cannot mutate finance.
+const _v12DeleteIncome=deleteIncome2;
+deleteIncome2=function(id){if(role!=='admin'){toast('સભ્ય માટે આવક માહિતી View Only છે');return;}return _v12DeleteIncome(id);};
+const _v12DeleteExpense=deleteExpense2;
+deleteExpense2=function(id){if(role!=='admin'){toast('સભ્ય માટે ખર્ચ માહિતી View Only છે');return;}return _v12DeleteExpense(id);};
+const _v12SaveIncome=saveIncome2;
+saveIncome2=function(id){if(role!=='admin'){toast('સભ્ય માટે આવક માહિતી View Only છે');return;}return _v12SaveIncome(id);};
+const _v12SaveExpense=saveExpense2;
+saveExpense2=function(id){if(role!=='admin'){toast('સભ્ય માટે ખર્ચ માહિતી View Only છે');return;}return _v12SaveExpense(id);};
+
+// Complaint edit: a member may edit only their own complaint.
+function editComplaintV12_(index){
+  const c=d.complaints[index];
+  if(!c)return;
+  if(role==='member' && String(c.flat)!==String(currentFlat))return toast('સભ્ય માત્ર પોતાના મકાનની ફરિયાદ Edit કરી શકે');
+  const text=prompt('ફરિયાદમાં ફેરફાર કરો',c.text||'');
+  if(text===null)return;
+  const t=text.trim();if(!t)return toast('ફરિયાદ ખાલી રાખી શકાતી નથી');
+  c.text=t;c.editedDate=new Date().toLocaleDateString('gu-IN');
+  save();render();toast('ફરિયાદ સુધારાઈ');
+}
+
+// Add an Edit button only for the member's own complaint; admin can also edit.
+const _v12RenderBase=render;
+render=function(){
+  _v12RenderBase();
+  const cl=document.getElementById('cl');
+  if(cl){
+    cl.innerHTML=d.complaints.length?d.complaints.map((c,i)=>{
+      const own=role==='admin'||(role==='member'&&String(c.flat)===String(currentFlat));
+      return `<div class="list"><div><b>ઘર ${esc(c.flat)}</b> • ${esc(c.text)}<br><span class="muted">${esc(c.date||'')}${c.editedDate?' • સુધારેલ: '+esc(c.editedDate):''}</span></div><div style="display:flex;gap:6px;align-items:center"><span class="badge ${c.status==='પૂર્ણ'?'paid':'due'}">${esc(c.status||'બાકી')}</span>${own?`<button class="btn light small-btn" onclick="editComplaintV12_(${i})">Edit</button>`:''}</div></div>`;
+    }).join(''):'<span class="muted">કોઈ ફરિયાદ નથી.</span>';
+  }
+  applyMemberPermissionsV12_();
+};
+
+// Re-apply after finance/notice refreshes and after cloud updates.
+const _v12RefreshExtras=refreshExtras;
+refreshExtras=function(){_v12RefreshExtras();applyMemberPermissionsV12_();};
+
+applyMemberPermissionsV12_();
+</script>
+<style>
+/* =========================================================
+   v13 PREMIUM UI — visual-only layer
+   Keeps existing data/cloud logic unchanged.
+   ========================================================= */
+:root{--blue:#1769e0;--blue2:#0b3f91;--violet:#6d5dfc;--teal:#0f9d8a;--gold:#f5a524;--bg:#f4f7fc;--ink:#162033;--muted:#6b7280;--line:#e6ebf2}
+body{background:radial-gradient(circle at 10% 0%,#e9f3ff 0,#f7f9fc 38%,#f4f6fb 100%)}
+.app{background:transparent}
+.top{background:linear-gradient(135deg,#1769e0 0%,#2445b8 55%,#633fd0 100%);border-radius:0 0 30px 30px;padding:16px 16px 20px;box-shadow:0 12px 32px #173b8a26}
+.brand h1{font-size:22px;letter-spacing:.1px}.brand small{font-size:12px}
+.wrap{padding:15px 14px 92px}
+.card,.section-card{border:1px solid #e6edf7;box-shadow:0 8px 28px #183b6d0b;border-radius:20px}
+.hero{background:linear-gradient(135deg,#ffffff 0%,#edf6ff 55%,#f4efff 100%);border:1px solid #dce8fa}
+.title{font-size:18px;letter-spacing:.05px}.sub{line-height:1.45}
+.stat{position:relative;overflow:hidden;background:linear-gradient(145deg,#f7fbff,#edf5ff);border:1px solid #dfebfa;padding:13px;border-radius:16px}
+.stat:after{content:"";position:absolute;width:54px;height:54px;border-radius:50%;right:-20px;top:-20px;background:#fff8;box-shadow:0 0 0 10px #fff3}
+.stat b{font-size:20px;position:relative;z-index:1}
+.page-tools{gap:11px}.tool-btn{min-height:92px;background:linear-gradient(145deg,#fff,#f7faff);border:1px solid #e2eaf5;box-shadow:0 8px 20px #193b6d0d;transition:transform .15s ease,box-shadow .15s ease}.tool-btn:active{transform:scale(.98)}
+.tool-btn .ico{font-size:27px}.tool-btn small{font-size:10px}
+.btn{border-radius:13px;box-shadow:0 2px 5px #17365d0a}.primary{background:linear-gradient(135deg,#1769e0,#3154d5)}
+.nav{height:76px;background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid #e3e8f0;box-shadow:0 -10px 28px #183b6d12}.nav button{background:transparent}.nav button.on{color:#1769e0}
+/* compact finance */
+.finance-toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.finance-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.finance-mini{padding:12px;border-radius:15px;border:1px solid #e4ebf5;background:linear-gradient(145deg,#fff,#f7faff)}
+.finance-mini .k{font-size:11px;color:var(--muted)}.finance-mini .v{font-size:18px;font-weight:900;margin-top:3px}
+.finance-entry{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #edf0f4}
+.finance-entry:last-child{border-bottom:0}.finance-main{min-width:0;flex:1}.finance-title{font-weight:900;font-size:14px;line-height:1.35}.finance-amount{font-size:17px;font-weight:900;white-space:nowrap;color:#123f8a}.finance-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}.finance-chip{display:inline-flex;align-items:center;background:#f1f5fa;color:#667085;border-radius:20px;padding:4px 7px;font-size:10px}.finance-head-chip{background:#edf5ff;color:#1754a6}.finance-actions{display:flex;gap:5px;flex-shrink:0}.finance-actions .small-btn{min-width:42px}
+.finance-empty{padding:18px;text-align:center;color:#7b8492;background:#f8fafc;border-radius:14px}
+.finance-report{display:grid;gap:7px}.finance-report-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:#f7f9fc;border:1px solid #edf1f6}.finance-report-row b{white-space:nowrap}.finance-report-row.income{background:#f0fbf6}.finance-report-row.expense{background:#fff7f5}
+.member-income-card{background:linear-gradient(145deg,#f9fcff,#eef7ff);border:1px solid #dceafa;border-radius:18px;padding:13px;margin-bottom:12px}.member-income-row{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #e4edf7}.member-income-row:last-child{border-bottom:0}.member-income-person{min-width:0;flex:1}.member-income-person b{font-size:14px}.member-income-input{width:115px!important;padding:9px 10px!important;border-radius:10px!important}.member-income-save{padding:9px 10px!important;white-space:nowrap}
+.section-card .section-head{margin-bottom:4px}
+@media(max-width:430px){.finance-entry{align-items:flex-start}.finance-actions{flex-direction:column}.finance-actions .small-btn{min-width:48px}.member-income-row{align-items:center}.member-income-input{width:95px!important}.member-income-save{padding:8px!important}.finance-title{font-size:13px}.finance-amount{font-size:15px}}
+@media(max-width:360px){.page-tools{grid-template-columns:1fr 1fr}.finance-summary{gap:7px}.member-income-row{flex-wrap:wrap}.member-income-person{width:100%;flex-basis:100%}.member-income-input{flex:1;width:auto!important}}
+</style>
+<script>
+/* =========================================================
+   v13 compact finance renderer
+   Visual/UX change only. Existing records and cloud sync remain intact.
+   ========================================================= */
+function renderMemberIncomeBoxV13(){
+  const box=document.getElementById('memberIncomeBox');
+  if(!box || role!=='admin'){if(box)box.innerHTML='';return;}
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  if(!heads.length){box.innerHTML='';return;}
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  if(!occupied.length){box.innerHTML='<div class="member-income-card"><b>સભ્યવાર અન્ય આવક</b><div class="muted" style="margin-top:6px">હાલ કોઈ ભરેલું મકાન નથી.</div></div>';return;}
+  const current=heads.includes(window.memberIncomeHead_)?window.memberIncomeHead_:heads[0];
+  window.memberIncomeHead_=current;
+  const rows=occupied.map(f=>{
+    const total=memberIncomeAmount_(current,f.no);
+    return `<div class="member-income-row">
+      <div class="member-income-person"><b>ઘર ${esc(f.no)}</b> • ${esc(f.name||'સભ્ય')}<br>${total?`<span class="muted">આ હેડમાં જમા: <b>${money(total)}</b></span>`:'<span class="muted">હજુ જમા નથી</span>'}</div>
+      <input id="miAmt_${esc(f.no)}" class="member-income-input" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ">
+      <button class="btn primary member-income-save" onclick="saveMemberIncome_('${esc(current)}','${esc(f.no)}')">જમા કરો</button>
+    </div>`;
+  }).join('');
+  box.innerHTML=`<div class="member-income-card">
+    <div class="section-head"><div><div class="title" style="margin-bottom:2px">સભ્યવાર આવક જમા</div><div class="sub">મેન્ટેનન્સ સિવાયની આવક માટે સીધી સભ્યની સામે રકમ જમા કરો.</div></div><span class="pill">${occupied.length} સભ્યો</span></div>
+    <label>આવક હેડ</label>
+    <select id="memberIncomeHead" onchange="window.memberIncomeHead_=this.value;renderMemberIncomeBoxV13()">${heads.map(h=>`<option value="${esc(h)}" ${h===current?'selected':''}>${esc(h)}</option>`).join('')}</select>
+    <div style="margin-top:7px">${rows}</div>
+  </div>`;
+}
+
+function renderFinanceV13(){
+  const il=document.getElementById('incomeList'),el=document.getElementById('expenseList');
+  if(!il||!el)return;
+  renderMemberIncomeBoxV13();
+  const incomes=d.incomes||[], expenses=d.expenses||[];
+  il.innerHTML=incomes.length?incomes.map(x=>{
+    const f=x.flatNo?d.flats.find(a=>a.no===String(x.flatNo)):null;
+    const vacant=x.flatNo && f && !isOccupiedHouse(f);
+    return `<div class="finance-entry">
+      <div class="finance-main"><div class="finance-title">${esc(x.detail||x.head||'આવક')}</div><div class="finance-meta"><span class="finance-chip finance-head-chip">${esc(x.head||'આવક')}</span>${f?`<span class="finance-chip">🏠 ઘર ${esc(f.no)}</span>`:''}<span class="finance-chip">📅 ${esc(x.date||'')}</span>${vacant?'<span class="finance-chip">⚠️ કુલમાં નહીં</span>':''}</div></div>
+      <div class="finance-amount">${money(x.amount)}</div>
+      ${canEdit?`<div class="finance-actions"><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div>`:''}
+    </div>`;
+  }).join(''):'<div class="finance-empty">હજુ કોઈ આવક એન્ટ્રી નથી.</div>';
+  el.innerHTML=expenses.length?expenses.map(x=>`<div class="finance-entry">
+    <div class="finance-main"><div class="finance-title">${esc(x.detail||'ખર્ચ')}</div><div class="finance-meta"><span class="finance-chip finance-head-chip">${esc(x.head||'ખર્ચ')}</span><span class="finance-chip">ક્રમ ${esc(x.seq)}</span><span class="finance-chip">📅 ${esc(x.date||'')}</span>${x.billNo?`<span class="finance-chip">બિલ ${esc(x.billNo)}</span>`:''}</div></div>
+    <div class="finance-amount">${money(x.amount)}</div>
+    ${canEdit?`<div class="finance-actions"><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div>`:''}
+  </div>`).join(''):'<div class="finance-empty">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</div>';
+  let html='<div class="finance-report">';
+  html+='<div style="font-weight:900;margin:2px 0 4px">આવક</div>';
+  (d.incomeHeads||[]).forEach(h=>{html+=`<div class="finance-report-row income"><span>${esc(h)}</span><b>${money(incomeHeadTotal(h))}</b></div>`});
+  html+='<div style="font-weight:900;margin:8px 0 4px">ખર્ચ</div>';
+  (d.expenseHeads||[]).forEach(h=>{const v=expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0);html+=`<div class="finance-report-row expense"><span>${esc(h)}</span><b>${money(v)}</b></div>`});
+  html+=`<div class="finance-report-row" style="background:#eef5ff"><b>બાકી સિલક</b><b>${money(totalIncome()-totalExpense())}</b></div></div>`;
+  const hr=document.getElementById('headReport');if(hr)hr.innerHTML=html;
+  const hl=document.getElementById('headsList');if(hl)hl.innerHTML='<b>આવક હેડ:</b> '+(d.incomeHeads||[]).map(esc).join(' • ')+'<br><b>ખર્ચ હેડ:</b> '+(d.expenseHeads||[]).map(esc).join(' • ');
+}
+
+/* Replace only the presentation renderer; no data migration/reset. */
+renderFinance2=renderFinanceV13;
+renderMemberIncomeBox_=renderMemberIncomeBoxV13;
+</script>
+
+</body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),200)}
+</script>
+<script>
+// v5 upgrades: society name, imported member list, manual late fee, editable maintenance installment.
+const V5_MEMBERS = [
+['1','રમેશભાઈ ચતરભાઈ ફેફર','9879463973'],
+['2','લલીતભાઈ વાલજીભાઈ લોરૈયા','9879973420'],
+['3','શ્યામભાઈ મકેશભાઈ સીણોજીયા','8140886274'],
+['4','દિલીપભાઈ દેવકરણભાઈ ભોરણીયા','9316733726'],
+['5','નવીનભાઈ ઈશ્વરભાઈ કડાવાર','9428718544'],
+['6','મહેન્દ્રભાઈ ઈશ્વરભાઈ કડાવાર','8866631544'],
+['7','જયેશભાઈ શૈવલાલ પટેલ','8200042818'],
+['8','ભાઈલાલભાઈ ગુણવતભાઈ સતાપરા','9904666409'],
+['9','રાકેશભાઈ નટવરભાઈ કાવર','6352614380'],
+['10','રાજેશભાઈ અમરશીભાઈ એરવાડીયા','9979001190'],
+['11','પાર્થભાઈ હરેશભાઈ ફણપરા','7359551599'],
+['12','મેઘુલભાઈ વાસુદેવભાઈ સતાપરા','9428917909'],
+['13','હિતેશભાઈ નારણભાઈ ગાભા','9998806566'],
+['14','પ્રકાશભાઈ લક્ષ્મણભાઈ કાલરીયા','9879399757'],
+['15','દિલીપભાઈ ભવાનભાઈ પટેલ','9714058230'],
+['16','જયભાઈ દિનેશભાઈ ભાલોડાયા','8160650653'],
+['17','સંદીપભાઈ દિનેશભાઈ કેલા','8238234335'],
+['18','ભાવેશભાઈ દિલીપભાઈ પટેલ','9724521318'],
+['19','ગૌતમભાઈ શંકરભાઈ પટેલ','9099925735'],
+['20','અશોકભાઈ ભાગવતભાઈ મોટકા','6353882522'],
+['21','રમેશભાઈ અણદાભાઈ કેલા','8469894730'],
+['22','અમાતભાઈ વસનજીભાઈ માવાણા','9427661626'],
+['23','ભરતભાઈ વસનજીભાઈ માવાણા','9825794218'],
+['24','નરસીંહભાઈ દેવજીભાઈ માવાણા','8320830392'],
+['25','મહેન્દ્રભાઈ ઠાકરશીભાઈ પટેલ','9426958555'],
+['26','કિશોરભાઈ છગનભાઈ એરવાડીયા','9825638533'],
+['27','સતીશભાઈ કાંતિલાલ સંઘાણા','9725079454'],
+['28','ધવલકુમાર અરવિંદભાઈ એરવાડીયા','8140506236'],
+['29','સંદીપભાઈ રામભાઈ પટેલ','9909962862'],
+['30','જયદીપભાઈ ધરામશીભાઈ કાવર','9574984028'],
+['31','કિરીટભાઈ મહાદેવભાઈ વરમોરા','9428193405'],
+['32','હિતેશભાઈ મનસુખભાઈ લોરિયા','9909626542'],
+['33','અરવિંદભાઈ અમરશીભાઈ દઢાણીયા','9879668840'],
+['34','રોહિતભાઈ રસિકભાઈ પટેલ','9429186254'],
+['35','હિતેશભાઈ હરજીવનભાઈ પટેલ','9825495187'],
+['36','પ્રજ્ઞેશભાઈ વિષ્ણુભાઈ પટેલ','7434040839'],
+['37','જિગ્નેશભાઈ અમૃતભાઈ પટેલ','9998666435'],
+['38','જિગરભાઈ ચીનુભાઈ પટેલ','9824585603'],
+['39','ઉમેશભાઈ જગજીવનભાઈ કાવર','7201004059'],
+['40','કેતનભાઈ વાસુદેવભાઈ પટેલ','9723199408'],
+['41','કિશોરભાઈ મનજીભાઈ સોલગામા','9429934499'],
+['42','નાતાનભાઈ જીતેન્દ્રભાઈ પટેલ','9638888016'],
+['43','બીપીનભાઈ મગનભાઈ બાવરવા','9662774700'],
+['44','સુરેશભાઈ વિઠ્ઠલભાઈ વરમોરા','9106875642'],
+['45','કલ્પેશભાઈ વલુભાઈ વરમોરા','7984971414'],
+['46','અલ્પેશભાઈ ધાતુભાઈ પનારા','9726614004'],
+['47','જલારામભાઈ જીવરાજભાઈ વામજા','9328279579'],
+['48','રોહિતભાઈ ખુશાલભાઈ પટેલ','9427668565'],
+['49','મેહુલભાઈ અમૃતભાઈ પટેલ','8320900063'],
+['50','તુષારભાઈ મોહનભાઈ સાપરિયા','9879924092'],
+['51','ધર્મેન્દ્રભાઈ લાલજીભાઈ વરમોરા','9908564616'],
+['52','પરેશભાઈ રણછોડભાઈ વરમોરા','9265429395'],
+['53','નીકુલભાઈ જગદીશભાઈ પટેલ','8401113764'],
+['54','પરેશભાઈ ભાઈલાલભાઈ પટેલ','9624346013'],
+['55','વિરાંગભાઈ લલિતભાઈ પટેલ','8140222403'],
+['56','ચુડલાલ સવજીભાઈ પનારા','7539964404'],
+['57','ધવલભાઈ મૂળજીભાઈ કેલા','8200960432'],
+['58','વાસુદેવભાઈ ગોવિંદભાઈ માલવણિયા','8160845523'],
+['59','વિમલભાઈ ઘનશ્યામભાઈ પટેલ','9727153575'],
+['60','અશોકભાઈ જોરમભાઈ ખાડાવાર','9998213068']
+];
+
+// Sheet2 import: apply the supplied 1-60 list once, then keep later admin edits.
+if (typeof d !== 'undefined' && Array.isArray(d.flats)) {
+  if (d._sheet2MemberImportVersion !== '2026-09-27') {
+    V5_MEMBERS.forEach(([no,name,mobile])=>{
+      const f=d.flats.find(x=>x.no===no);
+      if(f){ f.name=name; f.mobile=mobile; if(f.lateFee==null) f.lateFee=0; if(f.quarterly==null) f.quarterly=0; }
+    });
+    d._sheet2MemberImportVersion='2026-09-27';
+  } else {
+    V5_MEMBERS.forEach(([no,name,mobile])=>{
+      const f=d.flats.find(x=>x.no===no);
+      if(f){ if(f.lateFee==null) f.lateFee=0; if(f.quarterly==null) f.quarterly=0; }
+    });
+  }
+  if(!d.settings) d.settings={};
+  if(d.settings.late==null) d.settings.late=0;
+}
+
+// Manual late fee only. No date/deadline based calculation.
+late=function(f){ return Number(f?.lateFee||0); };
+bill=function(f){ return Number(f?.quarterly ?? 0); };
+
+// Member/house form: empty homes can be saved with no details; maintenance is manually entered.
+memberForm=function(no=currentFlat||'1'){
+  if(role!=='admin')return;
+  let f=d.flats.find(x=>x.no===no)||d.flats[0];
+  document.getElementById('sheet').innerHTML=`<div class="title">સભ્ય / મકાન માહિતી</div>
+  <label>ઘર નંબર</label><select id="mfno">${d.flats.map(x=>`<option value="${x.no}" ${x.no===f.no?'selected':''}>${x.no}</option>`).join('')}</select>
+  <label>સભ્યનું નામ</label><input id="mfn" value="${esc(f.name)}" placeholder="મકાન ખાલી હોય તો ખાલી રાખો">
+  <label>મોબાઇલ નંબર</label><input id="mfm" inputmode="numeric" maxlength="10" value="${esc(f.mobile)}" placeholder="મકાન ખાલી હોય તો ખાલી રાખો">
+  <label>મકાનનો પ્રકાર</label><select id="mft"><option ${f.type==='ઘરમાલિક'?'selected':''}>ઘરમાલિક</option><option ${f.type==='ભાડુઆત'?'selected':''}>ભાડુઆત</option></select>
+  <label>ક્વાર્ટર મેન્ટેનન્સ / હપ્તો (મેન્યુઅલ)</label><input id="mfq" type="number" min="0" value="${f.quarterly||''}" placeholder="જેમ કે 3000">
+  <p class="muted">મકાન ખાલી હોય તો નામ, મોબાઇલ અને અન્ય વિગતો ખાલી રાખી શકાય છે. મેન્ટેનન્સની રકમ દરેક મકાન માટે અલગથી મેન્યુઅલ નાખી શકાય છે.</p>
+  <button class="btn primary" style="width:100%" onclick="saveMemberV5()">સાચવો</button>
+  <button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+};
+saveMemberV5=function(){
+  let no=document.getElementById('mfno').value,n=document.getElementById('mfn').value.trim(),m=document.getElementById('mfm').value.replace(/\D/g,''),t=document.getElementById('mft').value,qRaw=document.getElementById('mfq').value.trim();
+  if(n && m.length!==10)return toast('સભ્યનું નામ આપ્યું હોય તો 10 અંકનો મોબાઇલ નંબર નાખો');
+  if(m && !n)return toast('મોબાઇલ નંબર સાથે સભ્યનું નામ પણ નાખો');
+  let f=d.flats.find(x=>x.no===no); if(!f)return;
+  f.name=n; f.mobile=m; f.type=t; f.quarterly=qRaw===''?0:Number(qRaw);
+  if(!n&&!m){f.paid=false;f.payments=[];f.lateFee=0;}
+  save();closeModal();render();refreshExtras();toast('મકાનની માહિતી સાચવાઈ');
+};
+
+// Manual payment entry with manual late fee.
+payment=function(no){
+  if(role!=='admin')return;
+  let f=d.flats.find(x=>x.no===no); if(!f)return;
+  let l=late(f), t=f.paid?0:bill(f)+l;
+  let history=f.payments?.length?`<div class="card"><b>પેમેન્ટ ઇતિહાસ</b>${f.payments.map(p=>`<div class="list"><div><b>${money(p.amount)}</b><br><span class="muted">${esc(p.date)} • ${esc(p.mode)} • ${esc(p.receipt)}</span><br><span class="muted">મેન્ટેનન્સ: ${esc(p.periodStart||'')} થી ${esc(p.periodEnd||'')} • લેટ ફી: ${money(p.lateFee||0)}</span></div><div><button class="btn light small-btn" onclick="editPaymentV5('${no}','${p.id}')">Edit</button><button class="btn red small-btn" onclick="deletePayment3('${no}','${p.id}')">Delete</button></div></div>`).join('')}</div>`:'';
+  document.getElementById('sheet').innerHTML=`<div class="title">ઘર ${f.no} • ${esc(f.name||'મકાન ખાલી')}</div>
+  <div class="card"><div class="row"><span>મેન્ટેનન્સ</span><b>${money(bill(f))}</b></div>
+  <label>લેટ ફી (મેન્યુઅલ)</label><input id="manualLate" type="number" min="0" value="${l||''}" placeholder="લેટ ફી હોય તો નાખો" oninput="updatePaymentTotalV5('${no}')">
+  <div class="row"><span>કુલ</span><b id="manualTotal">${money(t)}</b></div></div>
+  ${f.paid?`<button class="btn green" style="width:100%" onclick="receipt('${no}')">રસીદ જુઓ</button><button class="btn" style="width:100%;margin-top:8px" onclick="whatsappPayment('${no}')">💬 WhatsApp મોકલો</button>`:`<label>પેમેન્ટ મોડ</label><select id="pm" onchange="document.getElementById('upiPayBox').classList.toggle('hide',this.value!=='UPI')"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option></select><div id="upiPayBox" class="${d.settings.upi||d.settings.upiQr?'':'hide'}">${d.settings.upi||d.settings.upiQr?upiQrHtml():''}</div><button class="btn primary" style="width:100%;margin-top:10px" onclick="markPaidV5('${no}')">પેમેન્ટ જમા કરો</button>`}${history}<button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+};
+updatePaymentTotalV5=function(no){let f=d.flats.find(x=>x.no===no),v=(bill(f)+(Number(document.getElementById('manualLate')?.value||0)));let el=document.getElementById('manualTotal');if(el)el.textContent=money(v);};
+markPaidV5=function(no){
+  let f=d.flats.find(x=>x.no===no); if(!f)return;
+  let lateFee=Number(document.getElementById('manualLate')?.value||0), amount=bill(f)+lateFee, rec='SS-'+Date.now().toString().slice(-8), period=quarterPeriod();
+  f.lateFee=lateFee; f.paid=true; f.payments=f.payments||[];
+  f.payments.push({id:'p'+Date.now(),amount,lateFee,mode:document.getElementById('pm').value,date:new Date().toLocaleDateString('gu-IN'),receipt:rec,periodStart:period.start,periodEnd:period.end,periodStartISO:period.shortStart,periodEndISO:period.shortEnd});
+  save();closeModal();render();refreshExtras();toast('પેમેન્ટ જમા થયું • '+rec);setTimeout(()=>receipt(no),250);
+};
+editPaymentV5=function(no,id){
+  let f=d.flats.find(x=>x.no===no),p=f?.payments.find(x=>x.id===id);if(!p)return;
+  document.getElementById('sheet').innerHTML=`<div class="title">પેમેન્ટ Edit</div><label>મેન્ટેનન્સ + લેટ ફી સહિત રકમ</label><input id="peAmt" type="number" value="${p.amount}"><label>લેટ ફી (મેન્યુઅલ)</label><input id="peLate" type="number" min="0" value="${p.lateFee||0}"><label>તારીખ</label><input id="peDate" value="${esc(p.date)}"><label>પેમેન્ટ મોડ</label><select id="peMode"><option ${p.mode==='કેશ'?'selected':''}>કેશ</option><option ${p.mode==='UPI'?'selected':''}>UPI</option><option ${p.mode==='બેંક ટ્રાન્સફર'?'selected':''}>બેંક ટ્રાન્સફર</option></select><label>સમયગાળો</label><div class="row"><input id="peStart" value="${esc(p.periodStart||'')}"><input id="peEnd" value="${esc(p.periodEnd||'')}"></div><button class="btn primary" style="width:100%;margin-top:10px" onclick="savePaymentV5('${no}','${id}')">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="payment('${no}')">પાછા</button>`;
+  document.getElementById('modal').classList.remove('hide');
+};
+savePaymentV5=function(no,id){let f=d.flats.find(x=>x.no===no),p=f?.payments.find(x=>x.id===id);if(!p)return;p.amount=Number(document.getElementById('peAmt').value||0);p.lateFee=Number(document.getElementById('peLate').value||0);p.date=document.getElementById('peDate').value;p.mode=document.getElementById('peMode').value;p.periodStart=document.getElementById('peStart').value;p.periodEnd=document.getElementById('peEnd').value;f.lateFee=p.lateFee;save();closeModal();render();refreshExtras();toast('પેમેન્ટ અપડેટ થયું')};
+
+// Keep labels/reporting aligned with new society name.
+try{document.title='સરદાર સોસાયટી';}catch(e){}
+if(typeof save==='function')save();
+if(typeof render==='function')render();
+if(typeof refreshExtras==='function')refreshExtras();
+</script>
+<script>
+function goV8(id){const b=[...document.querySelectorAll('.nav button')].find(x=>x.getAttribute('onclick')?.includes("go('"+id+"'"));go(id,b)}
+function logoutV8(){role='';currentFlat='';document.getElementById('app').classList.add('hide');document.getElementById('login').classList.remove('hide');document.getElementById('password').value='';document.getElementById('loginErr').textContent='';document.getElementById('role').value='admin';document.getElementById('role').dispatchEvent(new Event('change'))}
+function loadMemberHouseV8(open){if(role!=='admin')return;const area=document.getElementById('memberEditArea');let no=String(document.getElementById('memberHouseNo')?.value||'').trim();if(!/^([1-9]|[1-5][0-9]|60)$/.test(no)){area.innerHTML='<span class="muted">1 થી 60 વચ્ચેનો ઘર નંબર દાખલ કરો.</span>';return}let f=d.flats.find(x=>x.no===no);if(!f)return;area.innerHTML=`<div class="section-head"><div><div class="house">ઘર ${esc(f.no)}</div><span class="muted">આ મકાનની માહિતી</span></div><span class="badge ${f.name?'info':'due'}">${f.name?'સભ્ય નોંધાયેલ':'મકાન ખાલી'}</span></div><div class="member-fields"><div><label>સભ્યનું નામ</label><input id="v8Name" value="${esc(f.name)}" placeholder="ખાલી મકાન હોય તો ખાલી રાખો"></div><div><label>મોબાઇલ નંબર</label><input id="v8Mobile" inputmode="numeric" maxlength="10" value="${esc(f.mobile)}" placeholder="ખાલી મકાન હોય તો ખાલી રાખો"></div><div><label>મકાનનો પ્રકાર</label><select id="v8Type"><option ${f.type==='ઘરમાલિક'?'selected':''}>ઘરમાલિક</option><option ${f.type==='ભાડુઆત'?'selected':''}>ભાડુઆત</option></select></div><div><label>ક્વાર્ટર મેન્ટેનન્સ / હપ્તો</label><input id="v8Quarterly" type="number" min="0" value="${Number(f.quarterly||0)}"></div></div><div class="action-grid" style="margin-top:12px"><button class="btn primary" onclick="saveMemberHouseV8('${no}')">💾 ફેરફાર સાચવો</button><button class="btn light" onclick="clearMemberEditV8()">↩ રદ કરો</button></div>`;if(open)area.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function clearMemberEditV8(){document.getElementById('memberEditArea').innerHTML='<span class="muted">ઘર નંબર દાખલ કરો.</span>'}
+function saveMemberHouseV8(no){if(role!=='admin')return;let f=d.flats.find(x=>x.no===String(no));if(!f)return;let n=document.getElementById('v8Name').value.trim(),m=document.getElementById('v8Mobile').value.replace(/\D/g,''),t=document.getElementById('v8Type').value,q=document.getElementById('v8Quarterly').value.trim();if(n&&m.length!==10)return toast('સભ્યનું નામ આપ્યું હોય તો 10 અંકનો મોબાઇલ નંબર નાખો');if(m&&!n)return toast('મોબાઇલ નંબર સાથે સભ્યનું નામ પણ નાખો');f.name=n;f.mobile=m;f.type=t;f.quarterly=q===''?0:Number(q);save();render();loadMemberHouseV8();toast('ઘર '+no+' ની માહિતી સાચવાઈ')}
+function saveAdminV8(){if(role!=='admin')return;let m=document.getElementById('adminMobile').value.replace(/\D/g,''),p=document.getElementById('adminPassword').value.trim(),p2=document.getElementById('adminPassword2').value.trim();if(m.length!==10)return toast('એડમિન મોબાઇલ 10 અંકનો હોવો જોઈએ');if(p&&p!==p2)return toast('બંને પાસવર્ડ સરખા નથી');if(p&&p.length<6)return toast('પાસવર્ડ ઓછામાં ઓછા 6 અક્ષરનો રાખો');d.admin.username=m;if(p)d.admin.password=p;save();document.getElementById('adminPassword').value='';document.getElementById('adminPassword2').value='';render();toast(p?'એડમિન પાસવર્ડ બદલાઈ ગયો':'એડમિન માહિતી સાચવાઈ')}
+function saveSettingsV8(){if(role!=='admin')return;d.settings.monthly=Number(document.getElementById('monthly').value||1000);d.settings.late=Number(document.getElementById('late').value||0);d.settings.deadline=document.getElementById('deadline').value;save();render();toast('સેટિંગ સાચવાયું')}
+function hideTechnicalV8(){document.querySelectorAll('.code-like,[data-code],pre,code').forEach(x=>x.classList.add('code-like'))}
+const _renderV8=render;render=function(){_renderV8();hideTechnicalV8();const ab=document.getElementById('adminSettings');if(ab)ab.innerHTML=role==='admin'?'<div class=\"muted\">એડમિનનું મોબાઇલ અને પાસવર્ડ નીચેના સુરક્ષા વિભાગમાંથી બદલી શકાય છે.</div>':'<div class=\"muted\">આ વિભાગ ફક્ત એડમિન માટે છે.</div>';const mb=document.getElementById('memberAdminBox');if(mb)mb.innerHTML=role==='admin'?'<button class=\"btn primary primary-wide\" onclick=\"goV8(\'members\');document.getElementById(\'memberHouseNo\').focus()\">➕ સભ્ય / મકાનની માહિતી ઉમેરો અથવા બદલો</button>':'<div class=\"member-only\"><b>સભ્ય માહિતી</b><p class=\"muted\">સભ્યો માટે માહિતી જોવા માટે છે. ફેરફાર ફક્ત એડમિન કરી શકે છે.</p></div>';if(role==='admin'){const am=document.getElementById('adminMobile');if(am)am.value=d.admin.username||'';const ap=document.getElementById('adminPassword');if(ap)ap.value='';const ap2=document.getElementById('adminPassword2');if(ap2)ap2.value=''}};render();
+</script>
+
+<script>
+// v9 fixes: payment deletion, member-wise income, and exclusion of vacant houses from totals.
+function isOccupiedHouse(f){return !!(String(f?.name||'').trim()||String(f?.mobile||'').trim())}
+function paidMaintenanceForHouse(f){return (f?.payments||[]).reduce((a,p)=>a+Number(p.amount||0),0)}
+function totalMaintenance(){return d.flats.filter(isOccupiedHouse).reduce((s,f)=>s+paidMaintenanceForHouse(f),0)}
+function incomeEntryCounts(x){if(!x||!x.flatNo)return true;let f=d.flats.find(a=>a.no===String(x.flatNo));return !!f&&isOccupiedHouse(f)}
+function incomeEntryAmount(x){return incomeEntryCounts(x)?Number(x.amount||0):0}
+function totalOtherIncome(){return d.incomes.reduce((s,x)=>s+incomeEntryAmount(x),0)}
+function totalIncome(){return totalMaintenance()+totalOtherIncome()}
+function totalExpense(){return d.expenses.reduce((s,x)=>s+Number(x.amount||0),0)}
+function refreshExtras(){
+  let inc=document.getElementById('sIncome'),exp=document.getElementById('sExpense'),bal=document.getElementById('sBalance'),due=document.getElementById('sDue2');
+  if(inc)inc.textContent=money(totalIncome()); if(exp)exp.textContent=money(totalExpense()); if(bal)bal.textContent=money(totalIncome()-totalExpense());
+  if(due)due.textContent=money(d.flats.filter(f=>isOccupiedHouse(f)&&!f.paid).reduce((s,f)=>s+bill(f),0));
+  renderNotices2();renderFinance2();
+  let bs=document.getElementById('backupStatus');if(bs){let day=new Date().toISOString().slice(0,10);bs.textContent=d.backupDates?.[day]?'આજનો બેકઅપ તૈયાર છે.':'દિવસના અંતે આજનો બેકઅપ ડાઉનલોડ કરો.'}
+}
+// Late fee is manual only; never auto-calculate it from the date.
+function late(f){if(!f)return 0;return f.paid?Number(f.payments?.at(-1)?.lateFee||f.lateFee||0):0}
+function stats(){let occupied=d.flats.filter(isOccupiedHouse),paid=occupied.filter(x=>x.paid),col=paid.reduce((s,x)=>s+paidMaintenanceForHouse(x),0),due=occupied.filter(x=>!x.paid).reduce((s,x)=>s+bill(x),0);return{paid,col,due,late:occupied.reduce((s,x)=>s+late(x),0)}}
+function deletePayment3(no,id){
+  if(role!=='admin')return;
+  let f=d.flats.find(x=>x.no===String(no));
+  if(!f)return;
+  let p=(f.payments||[]).find(x=>x.id===id);
+  if(!p)return toast('પેમેન્ટ એન્ટ્રી મળી નથી');
+  if(!confirm('આ પેમેન્ટ એન્ટ્રી કાયમી રીતે Delete કરવી છે?'))return;
+  f.payments=(f.payments||[]).filter(x=>x.id!==id);
+  f.paid=f.payments.length>0;
+  f.lateFee=f.payments.length?Number(f.payments.at(-1).lateFee||0):0;
+  save();closeModal();render();refreshExtras();toast('પેમેન્ટ એન્ટ્રી Delete થઈ');
+}
+function incomeForm(id){
+  if(role!=='admin')return;
+  let x=d.incomes.find(a=>a.id===id)||{head:d.incomeHeads.find(h=>h!=='મેન્ટેનન્સ આવક')||d.incomeHeads[0],detail:'',date:new Date().toISOString().slice(0,10),amount:'',flatNo:''};
+  let flatOpts='<option value="">સામાન્ય આવક (સભ્ય વગર)</option>'+d.flats.map(f=>`<option value="${f.no}" ${String(x.flatNo||'')===f.no?'selected':''}>ઘર ${f.no} • ${esc(f.name||'મકાન ખાલી')}</option>`).join('');
+  document.getElementById('sheet').innerHTML=`<div class="title">${id?'આવક Edit':'આવક નોંધણી'}</div>
+  <label>આવક હેડ</label><select id="iHead">${d.incomeHeads.map(h=>`<option ${h===x.head?'selected':''}>${esc(h)}</option>`).join('')}</select>
+  <label>સભ્ય / મકાન પ્રમાણે (વૈકલ્પિક)</label><select id="iFlat">${flatOpts}</select>
+  <p class="muted">મકાન પસંદ કરશો તો આ આવક તે સભ્ય/મકાન સાથે જોડાશે. મકાન ખાલી હશે તો આ આવક નોંધાશે, પરંતુ સોસાયટીના કુલ આવક ટોટલમાં ગણાશે નહીં.</p>
+  <label>આવકની વિગત</label><input id="iDetail" value="${esc(x.detail)}">
+  <label>તારીખ</label><input id="iDate" type="date" value="${esc(x.date)}">
+  <label>રકમ</label><input id="iAmount" type="number" min="0" value="${x.amount}">
+  <button class="btn primary" style="width:100%;margin-top:10px" onclick="saveIncome2('${id||''}')">સાચવો</button>
+  <button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+}
+function saveIncome2(id){
+  let x={id:id||'i'+Date.now(),head:document.getElementById('iHead').value,flatNo:document.getElementById('iFlat').value||'',detail:document.getElementById('iDetail').value.trim(),date:document.getElementById('iDate').value,amount:+document.getElementById('iAmount').value||0};
+  if(!x.amount)return toast('રકમ જરૂરી છે');
+  if(id)Object.assign(d.incomes.find(a=>a.id===id),x);else d.incomes.unshift(x);
+  save();closeModal();refreshExtras();toast('આવક સાચવાઈ');
+}
+function incomeHeadTotal(h){return d.incomes.filter(x=>x.head===h).reduce((s,x)=>s+incomeEntryAmount(x),0)+(h==='મેન્ટેનન્સ આવક'?totalMaintenance():0)}
+function memberIncomeAmount_(head,no){
+  return d.incomes.filter(x=>x.head===head && String(x.flatNo||'')===String(no) && incomeEntryCounts(x)).reduce((s,x)=>s+Number(x.amount||0),0);
+}
+function renderMemberIncomeBox_(){
+  const box=document.getElementById('memberIncomeBox');
+  if(!box || role!=='admin') { if(box) box.innerHTML=''; return; }
+  const heads=d.incomeHeads.filter(h=>h!=='મેન્ટેનન્સ આવક');
+  if(!heads.length){ box.innerHTML=''; return; }
+  const occupied=d.flats.filter(isOccupiedHouse);
+  if(!occupied.length){
+    box.innerHTML='<div class="section-card"><b>સભ્યવાર અન્ય આવક</b><div class="muted" style="margin-top:6px">હાલ કોઈ ભરેલું મકાન નથી.</div></div>';
+    return;
+  }
+  const current=heads.includes(window.memberIncomeHead_) ? window.memberIncomeHead_ : heads[0];
+  window.memberIncomeHead_=current;
+  const rows=occupied.map(f=>{
+    const total=memberIncomeAmount_(current,f.no);
+    return `<div class="list" style="align-items:center;gap:8px;flex-wrap:wrap">
+      <div style="min-width:150px;flex:1"><b>ઘર ${esc(f.no)}</b><br><span class="muted">${esc(f.name||'સભ્ય')}</span>${total?`<br><span class="muted">આ હેડમાં જમા: <b>${money(total)}</b></span>`:''}</div>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+        <input id="miAmt_${esc(f.no)}" type="number" min="0" inputmode="numeric" placeholder="જમા રકમ" style="width:125px;padding:9px;border:1px solid #ddd;border-radius:10px">
+        <button class="btn primary small-btn" onclick="saveMemberIncome_('${esc(current)}','${esc(f.no)}')">જમા કરો</button>
+      </div>
+    </div>`;
+  }).join('');
+  box.innerHTML=`<div class="section-card" style="margin-bottom:12px">
+    <div class="section-head"><div><div class="title">સભ્યવાર આવક જમા</div><div class="sub">મેન્ટેનન્સ સિવાયના હેડ માટે સીધી સભ્યવાર રકમ જમા કરો</div></div></div>
+    <label>આવક હેડ</label>
+    <select id="memberIncomeHead" onchange="window.memberIncomeHead_=this.value;renderMemberIncomeBox_()">${heads.map(h=>`<option value="${esc(h)}" ${h===current?'selected':''}>${esc(h)}</option>`).join('')}</select>
+    <div style="margin-top:8px">${rows}</div>
+  </div>`;
+}
+function saveMemberIncome_(head,no){
+  if(role!=='admin')return;
+  const el=document.getElementById('miAmt_'+no);
+  const amount=Number(el?.value||0);
+  if(amount<=0){toast('જમા રકમ દાખલ કરો');el?.focus();return;}
+  const f=d.flats.find(x=>String(x.no)===String(no));
+  if(!f || !isOccupiedHouse(f)){toast('આ મકાન ખાલી છે');return;}
+  const today=new Date().toISOString().slice(0,10);
+  d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:`${head} • ઘર ${no} • ${f.name||'સભ્ય'}`,date:today,amount});
+  save();
+  renderFinance2();
+  refreshExtras();
+  toast(`ઘર ${no} માટે ${money(amount)} જમા થયું`);
+}
+function renderFinance2(){
+  let il=document.getElementById('incomeList'),el=document.getElementById('expenseList');if(!il)return;
+  renderMemberIncomeBox_();
+  il.innerHTML=d.incomes.length?d.incomes.map(x=>{let f=x.flatNo?d.flats.find(a=>a.no===String(x.flatNo)):null;return `<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">${f?`ઘર ${esc(f.no)} • ${esc(f.name||'મકાન ખાલી')} • `:''}${esc(x.date)} • ${esc(x.detail)}</span>${x.flatNo&&!isOccupiedHouse(f)?'<br><span class="muted">⚠️ ખાલી મકાન — કુલ આવકમાં ગણાશે નહીં</span>':''}</div><div><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div></div>`}).join(''):'<span class="muted">હજુ કોઈ આવક એન્ટ્રી નથી.</span>';
+  el.innerHTML=d.expenses.length?d.expenses.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">ક્રમ ${x.seq} • ${esc(x.date)} • ${esc(x.detail)}</span><br><span class="muted">બિલ નં: ${esc(x.billNo||'-')}</span></div><div><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div></div>`).join(''):'<span class="muted">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</span>';
+  let html='<b>આવક</b>';d.incomeHeads.forEach(h=>{html+=`<div class="list"><span>${esc(h)}</span><b>${money(incomeHeadTotal(h))}</b></div>`});
+  html+='<hr><b>ખર્ચ</b>';d.expenseHeads.forEach(h=>{let v=d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0);html+=`<div class="list"><span>${esc(h)}</span><b>${money(v)}</b></div>`});
+  html+=`<hr><div class="row"><span>બાકી સિલક</span><b>${money(totalIncome()-totalExpense())}</b></div>`;
+  document.getElementById('headReport').innerHTML=html;document.getElementById('headsList').innerHTML='<b>આવક હેડ:</b> '+d.incomeHeads.map(esc).join(' • ')+'<br><b>ખર્ચ હેડ:</b> '+d.expenseHeads.map(esc).join(' • ');
+}
+function reportData(){let a=[['હેડ','પ્રકાર','રકમ']];d.incomeHeads.forEach(h=>a.push([h,'આવક',incomeHeadTotal(h)]));d.expenseHeads.forEach(h=>a.push([h,'ખર્ચ',d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)]));return a}
+const _renderV9Base=render;
+render=function(){_renderV9Base();refreshExtras();};
+</script>
+
+<script>
+/* =========================================================
+   v10 CLOUD SYNC — Sardar Society
+   Google Apps Script is the authoritative database.
+   localStorage remains only as an offline cache.
+   ========================================================= */
+const CLOUD_API = 'https://script.google.com/macros/s/AKfycbwIjSJnUVoMQRxGrTkCP0wEArJRHQuGL4gEO23CDvC2rEIe3S4taGwBZ4HpaOyczcDD/exec';
+let cloudLoaded = false;
+let cloudSaving = false;
+let cloudSaveTimer = null;
+let cloudVersion = '';
+let cloudPollTimer = null;
+
+function cloudStatus_(msg, ok=true){
+  let el=document.getElementById('cloudStatusV10');
+  if(!el){
+    el=document.createElement('div');
+    el.id='cloudStatusV10';
+    el.style.cssText='position:fixed;right:12px;bottom:72px;z-index:9999;padding:7px 11px;border-radius:18px;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.12);font:600 12px system-ui;color:#555;display:none';
+    document.body.appendChild(el);
+  }
+  el.textContent=msg;
+  el.style.display='block';
+  el.style.color=ok?'#16794a':'#b42318';
+  clearTimeout(el._t);
+  el._t=setTimeout(()=>el.style.display='none',2200);
+}
+
+function showCloudTools_(){
+  let el=document.getElementById('cloudToolsV10');
+  if(el)return;
+  el=document.createElement('div');
+  el.id='cloudToolsV10';
+  el.style.cssText='position:fixed;right:12px;bottom:112px;z-index:9998;display:flex;gap:6px';
+  el.innerHTML='<button type="button" style="border:0;border-radius:18px;padding:7px 10px;background:#0b5cab;color:#fff;font:600 12px system-ui;box-shadow:0 2px 10px rgba(0,0,0,.15);cursor:pointer">☁️ Sync</button>';
+  el.querySelector('button').onclick=()=>cloudLoad_(true);
+  document.body.appendChild(el);
+}
+
+function localSnapshot_(){
+  try{return JSON.parse(JSON.stringify(d));}catch(e){return d;}
+}
+
+async function cloudLoad_(silent=false){
+  try{
+    if(!silent) cloudStatus_('☁️ Cloud data લોડ થઈ રહ્યું છે…');
+    const r=await fetch(CLOUD_API+'?action=load',{method:'GET',cache:'no-store'});
+    const j=await r.json();
+    if(!j.ok) throw new Error(j.error||'Cloud load failed');
+
+    if(j.exists && j.data){
+      d=j.data;
+      // Keep compatibility with older versions / newly added fields.
+      d.settings=d.settings||{};
+      d.admin=d.admin||{username:'',password:''};
+      d.flats=Array.isArray(d.flats)?d.flats:[];
+      d.incomes=Array.isArray(d.incomes)?d.incomes:[];
+      d.expenses=Array.isArray(d.expenses)?d.expenses:[];
+      d.notices=Array.isArray(d.notices)?d.notices:[];
+      d.complaints=Array.isArray(d.complaints)?d.complaints:[];
+      d.visitors=Array.isArray(d.visitors)?d.visitors:[];
+      d.parking=Array.isArray(d.parking)?d.parking:[];
+      d.incomeHeads=Array.isArray(d.incomeHeads)?d.incomeHeads:['મેન્ટેનન્સ આવક','હોલ બુકીંગ આવક','ઉત્સવ ઉજવણી ફંડ','રીપેરીંગ ફંડ','અન્ય આવક'];
+      d.expenseHeads=Array.isArray(d.expenseHeads)?d.expenseHeads:['સિક્યુરિટી પગાર','લાઇટ બિલ','રીપેરીંગ કામ','અન્ય વહીવટી ખર્ચ','સફાઈ કામ'];
+      localStorage.setItem(KEY,JSON.stringify(d));
+      cloudVersion=String(j.version||'');
+      cloudLoaded=true;
+      if(typeof render==='function')render();
+      if(typeof refreshExtras==='function')refreshExtras();
+      if(!silent) cloudStatus_('☁️ Cloud data જોડાયું છે',true);
+      return;
+    }
+
+    // First-time migration: preserve the data already present on this device.
+    cloudLoaded=true;
+    if(!silent) cloudStatus_('☁️ Cloudમાં પહેલો data સાચવાઈ રહ્યો છે…');
+    await cloudSaveNow_();
+    if(!silent) cloudStatus_('☁️ Cloud backup તૈયાર છે',true);
+  }catch(err){
+    console.error('Cloud load error',err);
+    cloudLoaded=false;
+    cloudStatus_('⚠️ Cloud sync ઉપલબ્ધ નથી',false);
+  }
+}
+
+async function cloudSaveNow_(){
+  if(!cloudLoaded || cloudSaving) return;
+  cloudSaving=true;
+  try{
+    const payload={action:'save',data:localSnapshot_()};
+    const r=await fetch(CLOUD_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+    const j=await r.json();
+    if(!j.ok) throw new Error(j.error||'Cloud save failed');
+    localStorage.setItem(KEY,JSON.stringify(d));
+    cloudVersion=String(j.version||cloudVersion||'');
+    cloudStatus_('☁️ Cloudમાં સાચવાયું',true);
+  }catch(err){
+    console.error('Cloud save error',err);
+    cloudStatus_('⚠️ Cloud save નિષ્ફળ',false);
+  }finally{
+    cloudSaving=false;
+  }
+}
+
+function scheduleCloudSave_(){
+  if(!cloudLoaded) return;
+  clearTimeout(cloudSaveTimer);
+  cloudSaveTimer=setTimeout(cloudSaveNow_,350);
+}
+
+// Replace the old local-only save with local cache + cloud persistence.
+save=function(){
+  try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}
+  scheduleCloudSave_();
+};
+
+async function cloudPoll_(){
+  if(!cloudLoaded || document.hidden) return;
+  const modal=document.getElementById('modal');
+  if(modal && !modal.classList.contains('hide')) return;
+  try{
+    const r=await fetch(CLOUD_API+'?action=load',{method:'GET',cache:'no-store'});
+    const j=await r.json();
+    if(!j.ok || !j.exists || !j.data) return;
+    const v=String(j.version||'');
+    if(v && v!==cloudVersion){
+      d=j.data;
+      d.settings=d.settings||{}; d.admin=d.admin||{username:'',password:''};
+      d.flats=Array.isArray(d.flats)?d.flats:[]; d.incomes=Array.isArray(d.incomes)?d.incomes:[]; d.expenses=Array.isArray(d.expenses)?d.expenses:[];
+      d.notices=Array.isArray(d.notices)?d.notices:[]; d.complaints=Array.isArray(d.complaints)?d.complaints:[]; d.visitors=Array.isArray(d.visitors)?d.visitors:[]; d.parking=Array.isArray(d.parking)?d.parking:[];
+      d.incomeHeads=Array.isArray(d.incomeHeads)?d.incomeHeads:['મેન્ટેનન્સ આવક','હોલ બુકીંગ આવક','ઉત્સવ ઉજવણી ફંડ','રીપેરીંગ ફંડ','અન્ય આવક'];
+      d.expenseHeads=Array.isArray(d.expenseHeads)?d.expenseHeads:['સિક્યુરિટી પગાર','લાઇટ બિલ','રીપેરીંગ કામ','અન્ય વહીવટી ખર્ચ','સફાઈ કામ'];
+      cloudVersion=v; localStorage.setItem(KEY,JSON.stringify(d));
+      if(typeof render==='function')render();
+      if(typeof refreshExtras==='function')refreshExtras();
+      cloudStatus_('☁️ નવી માહિતી મળી',true);
+    }
+  }catch(e){ console.warn('Cloud polling failed',e); }
+}
+
+showCloudTools_();
+setTimeout(async()=>{ await cloudLoad_(); cloudPollTimer=setInterval(cloudPoll_,15000); },100);
+
+</script>
+
+<script>
+/* =========================================================
+   v12 MEMBER PERMISSIONS
+   Members are view-only everywhere except Complaints.
+   Existing data is never changed by this layer.
+   ========================================================= */
+function applyMemberPermissionsV12_(){
+  const member = role==='member';
+  const hide=(id,on)=>{const el=document.getElementById(id);if(el)el.classList.toggle('hide',!!on);};
+
+  hide('adminAddIncomeBtnV12',member);
+  hide('adminAddExpenseBtnV12',member);
+  hide('addNoticeBtn',member);
+  hide('visitorEntryCardV12',member);
+
+  // Admin-only settings controls. Members can see a simple read-only message.
+  const settings=document.getElementById('settings');
+  if(settings){
+    [...settings.querySelectorAll('.security-card')].forEach(x=>x.classList.toggle('hide',member));
+    const cards=[...settings.children].filter(x=>x.classList.contains('card'));
+    cards.forEach((x,i)=>{ if(i>0) x.classList.toggle('hide',member); });
+    const adminBox=document.getElementById('adminSettings');
+    if(adminBox && member) adminBox.innerHTML='<div class="member-only"><b>સેટિંગ</b><p class="muted">આ વિભાગની માહિતી ફક્ત એડમિન બદલી શકે છે. સભ્ય માટે View Only છે.</p></div>';
+  }
+
+  // Finance add/head controls are admin-only.
+  const finance=document.getElementById('finance');
+  if(finance){
+    const addButtons=finance.querySelectorAll('#adminAddIncomeBtnV12,#adminAddExpenseBtnV12');
+    addButtons.forEach(b=>b.classList.toggle('hide',member));
+    const headCard=finance.children[3];
+    if(headCard) headCard.classList.toggle('hide',member);
+  }
+}
+
+// Defence-in-depth: even if a hidden button is triggered manually, members cannot mutate finance.
+const _v12DeleteIncome=deleteIncome2;
+deleteIncome2=function(id){if(role!=='admin'){toast('સભ્ય માટે આવક માહિતી View Only છે');return;}return _v12DeleteIncome(id);};
+const _v12DeleteExpense=deleteExpense2;
+deleteExpense2=function(id){if(role!=='admin'){toast('સભ્ય માટે ખર્ચ માહિતી View Only છે');return;}return _v12DeleteExpense(id);};
+const _v12SaveIncome=saveIncome2;
+saveIncome2=function(id){if(role!=='admin'){toast('સભ્ય માટે આવક માહિતી View Only છે');return;}return _v12SaveIncome(id);};
+const _v12SaveExpense=saveExpense2;
+saveExpense2=function(id){if(role!=='admin'){toast('સભ્ય માટે ખર્ચ માહિતી View Only છે');return;}return _v12SaveExpense(id);};
+
+// Complaint edit: a member may edit only their own complaint.
+function editComplaintV12_(index){
+  const c=d.complaints[index];
+  if(!c)return;
+  if(role==='member' && String(c.flat)!==String(currentFlat))return toast('સભ્ય માત્ર પોતાના મકાનની ફરિયાદ Edit કરી શકે');
+  const text=prompt('ફરિયાદમાં ફેરફાર કરો',c.text||'');
+  if(text===null)return;
+  const t=text.trim();if(!t)return toast('ફરિયાદ ખાલી રાખી શકાતી નથી');
+  c.text=t;c.editedDate=new Date().toLocaleDateString('gu-IN');
+  save();render();toast('ફરિયાદ સુધારાઈ');
+}
+
+// Add an Edit button only for the member's own complaint; admin can also edit.
+const _v12RenderBase=render;
+render=function(){
+  _v12RenderBase();
+  const cl=document.getElementById('cl');
+  if(cl){
+    cl.innerHTML=d.complaints.length?d.complaints.map((c,i)=>{
+      const own=role==='admin'||(role==='member'&&String(c.flat)===String(currentFlat));
+      return `<div class="list"><div><b>ઘર ${esc(c.flat)}</b> • ${esc(c.text)}<br><span class="muted">${esc(c.date||'')}${c.editedDate?' • સુધારેલ: '+esc(c.editedDate):''}</span></div><div style="display:flex;gap:6px;align-items:center"><span class="badge ${c.status==='પૂર્ણ'?'paid':'due'}">${esc(c.status||'બાકી')}</span>${own?`<button class="btn light small-btn" onclick="editComplaintV12_(${i})">Edit</button>`:''}</div></div>`;
+    }).join(''):'<span class="muted">કોઈ ફરિયાદ નથી.</span>';
+  }
+  applyMemberPermissionsV12_();
+};
+
+// Re-apply after finance/notice refreshes and after cloud updates.
+const _v12RefreshExtras=refreshExtras;
+refreshExtras=function(){_v12RefreshExtras();applyMemberPermissionsV12_();};
+
+applyMemberPermissionsV12_();
+</script>
+<style>
+/* =========================================================
+   v13 PREMIUM UI — visual-only layer
+   Keeps existing data/cloud logic unchanged.
+   ========================================================= */
+:root{--blue:#1769e0;--blue2:#0b3f91;--violet:#6d5dfc;--teal:#0f9d8a;--gold:#f5a524;--bg:#f4f7fc;--ink:#162033;--muted:#6b7280;--line:#e6ebf2}
+body{background:radial-gradient(circle at 10% 0%,#e9f3ff 0,#f7f9fc 38%,#f4f6fb 100%)}
+.app{background:transparent}
+.top{background:linear-gradient(135deg,#1769e0 0%,#2445b8 55%,#633fd0 100%);border-radius:0 0 30px 30px;padding:16px 16px 20px;box-shadow:0 12px 32px #173b8a26}
+.brand h1{font-size:22px;letter-spacing:.1px}.brand small{font-size:12px}
+.wrap{padding:15px 14px 92px}
+.card,.section-card{border:1px solid #e6edf7;box-shadow:0 8px 28px #183b6d0b;border-radius:20px}
+.hero{background:linear-gradient(135deg,#ffffff 0%,#edf6ff 55%,#f4efff 100%);border:1px solid #dce8fa}
+.title{font-size:18px;letter-spacing:.05px}.sub{line-height:1.45}
+.stat{position:relative;overflow:hidden;background:linear-gradient(145deg,#f7fbff,#edf5ff);border:1px solid #dfebfa;padding:13px;border-radius:16px}
+.stat:after{content:"";position:absolute;width:54px;height:54px;border-radius:50%;right:-20px;top:-20px;background:#fff8;box-shadow:0 0 0 10px #fff3}
+.stat b{font-size:20px;position:relative;z-index:1}
+.page-tools{gap:11px}.tool-btn{min-height:92px;background:linear-gradient(145deg,#fff,#f7faff);border:1px solid #e2eaf5;box-shadow:0 8px 20px #193b6d0d;transition:transform .15s ease,box-shadow .15s ease}.tool-btn:active{transform:scale(.98)}
+.tool-btn .ico{font-size:27px}.tool-btn small{font-size:10px}
+.btn{border-radius:13px;box-shadow:0 2px 5px #17365d0a}.primary{background:linear-gradient(135deg,#1769e0,#3154d5)}
+.nav{height:76px;background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid #e3e8f0;box-shadow:0 -10px 28px #183b6d12}.nav button{background:transparent}.nav button.on{color:#1769e0}
+/* compact finance */
+.finance-toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.finance-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.finance-mini{padding:12px;border-radius:15px;border:1px solid #e4ebf5;background:linear-gradient(145deg,#fff,#f7faff)}
+.finance-mini .k{font-size:11px;color:var(--muted)}.finance-mini .v{font-size:18px;font-weight:900;margin-top:3px}
+.finance-entry{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #edf0f4}
+.finance-entry:last-child{border-bottom:0}.finance-main{min-width:0;flex:1}.finance-title{font-weight:900;font-size:14px;line-height:1.35}.finance-amount{font-size:17px;font-weight:900;white-space:nowrap;color:#123f8a}.finance-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}.finance-chip{display:inline-flex;align-items:center;background:#f1f5fa;color:#667085;border-radius:20px;padding:4px 7px;font-size:10px}.finance-head-chip{background:#edf5ff;color:#1754a6}.finance-actions{display:flex;gap:5px;flex-shrink:0}.finance-actions .small-btn{min-width:42px}
+.finance-empty{padding:18px;text-align:center;color:#7b8492;background:#f8fafc;border-radius:14px}
+.finance-report{display:grid;gap:7px}.finance-report-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:#f7f9fc;border:1px solid #edf1f6}.finance-report-row b{white-space:nowrap}.finance-report-row.income{background:#f0fbf6}.finance-report-row.expense{background:#fff7f5}
+.member-income-card{background:linear-gradient(145deg,#f9fcff,#eef7ff);border:1px solid #dceafa;border-radius:18px;padding:13px;margin-bottom:12px}.member-income-row{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #e4edf7}.member-income-row:last-child{border-bottom:0}.member-income-person{min-width:0;flex:1}.member-income-person b{font-size:14px}.member-income-input{width:115px!important;padding:9px 10px!important;border-radius:10px!important}.member-income-save{padding:9px 10px!important;white-space:nowrap}
+.section-card .section-head{margin-bottom:4px}
+@media(max-width:430px){.finance-entry{align-items:flex-start}.finance-actions{flex-direction:column}.finance-actions .small-btn{min-width:48px}.member-income-row{align-items:center}.member-income-input{width:95px!important}.member-income-save{padding:8px!important}.finance-title{font-size:13px}.finance-amount{font-size:15px}}
+@media(max-width:360px){.page-tools{grid-template-columns:1fr 1fr}.finance-summary{gap:7px}.member-income-row{flex-wrap:wrap}.member-income-person{width:100%;flex-basis:100%}.member-income-input{flex:1;width:auto!important}}
+</style>
+<script>
+/* =========================================================
+   v13 compact finance renderer
+   Visual/UX change only. Existing records and cloud sync remain intact.
+   ========================================================= */
+function renderMemberIncomeBoxV13(){
+  const box=document.getElementById('memberIncomeBox');
+  if(!box || role!=='admin'){if(box)box.innerHTML='';return;}
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  if(!heads.length){box.innerHTML='';return;}
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  if(!occupied.length){box.innerHTML='<div class="member-income-card"><b>સભ્યવાર અન્ય આવક</b><div class="muted" style="margin-top:6px">હાલ કોઈ ભરેલું મકાન નથી.</div></div>';return;}
+  const current=heads.includes(window.memberIncomeHead_)?window.memberIncomeHead_:heads[0];
+  window.memberIncomeHead_=current;
+  const rows=occupied.map(f=>{
+    const total=memberIncomeAmount_(current,f.no);
+    return `<div class="member-income-row">
+      <div class="member-income-person"><b>ઘર ${esc(f.no)}</b> • ${esc(f.name||'સભ્ય')}<br>${total?`<span class="muted">આ હેડમાં જમા: <b>${money(total)}</b></span>`:'<span class="muted">હજુ જમા નથી</span>'}</div>
+      <input id="miAmt_${esc(f.no)}" class="member-income-input" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ">
+      <button class="btn primary member-income-save" onclick="saveMemberIncome_('${esc(current)}','${esc(f.no)}')">જમા કરો</button>
+    </div>`;
+  }).join('');
+  box.innerHTML=`<div class="member-income-card">
+    <div class="section-head"><div><div class="title" style="margin-bottom:2px">સભ્યવાર આવક જમા</div><div class="sub">મેન્ટેનન્સ સિવાયની આવક માટે સીધી સભ્યની સામે રકમ જમા કરો.</div></div><span class="pill">${occupied.length} સભ્યો</span></div>
+    <label>આવક હેડ</label>
+    <select id="memberIncomeHead" onchange="window.memberIncomeHead_=this.value;renderMemberIncomeBoxV13()">${heads.map(h=>`<option value="${esc(h)}" ${h===current?'selected':''}>${esc(h)}</option>`).join('')}</select>
+    <div style="margin-top:7px">${rows}</div>
+  </div>`;
+}
+
+function renderFinanceV13(){
+  const il=document.getElementById('incomeList'),el=document.getElementById('expenseList');
+  if(!il||!el)return;
+  renderMemberIncomeBoxV13();
+  const incomes=d.incomes||[], expenses=d.expenses||[];
+  il.innerHTML=incomes.length?incomes.map(x=>{
+    const f=x.flatNo?d.flats.find(a=>a.no===String(x.flatNo)):null;
+    const vacant=x.flatNo && f && !isOccupiedHouse(f);
+    return `<div class="finance-entry">
+      <div class="finance-main"><div class="finance-title">${esc(x.detail||x.head||'આવક')}</div><div class="finance-meta"><span class="finance-chip finance-head-chip">${esc(x.head||'આવક')}</span>${f?`<span class="finance-chip">🏠 ઘર ${esc(f.no)}</span>`:''}<span class="finance-chip">📅 ${esc(x.date||'')}</span>${vacant?'<span class="finance-chip">⚠️ કુલમાં નહીં</span>':''}</div></div>
+      <div class="finance-amount">${money(x.amount)}</div>
+      ${canEdit?`<div class="finance-actions"><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div>`:''}
+    </div>`;
+  }).join(''):'<div class="finance-empty">હજુ કોઈ આવક એન્ટ્રી નથી.</div>';
+  el.innerHTML=expenses.length?expenses.map(x=>`<div class="finance-entry">
+    <div class="finance-main"><div class="finance-title">${esc(x.detail||'ખર્ચ')}</div><div class="finance-meta"><span class="finance-chip finance-head-chip">${esc(x.head||'ખર્ચ')}</span><span class="finance-chip">ક્રમ ${esc(x.seq)}</span><span class="finance-chip">📅 ${esc(x.date||'')}</span>${x.billNo?`<span class="finance-chip">બિલ ${esc(x.billNo)}</span>`:''}</div></div>
+    <div class="finance-amount">${money(x.amount)}</div>
+    ${canEdit?`<div class="finance-actions"><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div>`:''}
+  </div>`).join(''):'<div class="finance-empty">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</div>';
+  let html='<div class="finance-report">';
+  html+='<div style="font-weight:900;margin:2px 0 4px">આવક</div>';
+  (d.incomeHeads||[]).forEach(h=>{html+=`<div class="finance-report-row income"><span>${esc(h)}</span><b>${money(incomeHeadTotal(h))}</b></div>`});
+  html+='<div style="font-weight:900;margin:8px 0 4px">ખર્ચ</div>';
+  (d.expenseHeads||[]).forEach(h=>{const v=expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0);html+=`<div class="finance-report-row expense"><span>${esc(h)}</span><b>${money(v)}</b></div>`});
+  html+=`<div class="finance-report-row" style="background:#eef5ff"><b>બાકી સિલક</b><b>${money(totalIncome()-totalExpense())}</b></div></div>`;
+  const hr=document.getElementById('headReport');if(hr)hr.innerHTML=html;
+  const hl=document.getElementById('headsList');if(hl)hl.innerHTML='<b>આવક હેડ:</b> '+(d.incomeHeads||[]).map(esc).join(' • ')+'<br><b>ખર્ચ હેડ:</b> '+(d.expenseHeads||[]).map(esc).join(' • ');
+}
+
+/* Replace only the presentation renderer; no data migration/reset. */
+renderFinance2=renderFinanceV13;
+renderMemberIncomeBox_=renderMemberIncomeBoxV13;
+</script>
+
+</body></html>
