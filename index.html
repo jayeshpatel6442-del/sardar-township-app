@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="gu">
 <head>
-<meta name="sardar-build" content="14.3">
+<meta name="sardar-build" content="15.1">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b5cab"><title>સરદાર સોસાયટી</title>
 <link rel="manifest" href="manifest.webmanifest">
@@ -13,7 +13,7 @@
 .page-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.tool-btn{border:0;border-radius:16px;padding:13px 8px;background:#fff;box-shadow:0 5px 16px #17365d10;border:1px solid #e7edf5;color:#172033;font-weight:800;cursor:pointer}.tool-btn .ico{display:block;font-size:25px;margin-bottom:5px}.tool-btn small{display:block;color:#667085;font-weight:600;font-size:10px;margin-top:3px}.section-card{background:linear-gradient(145deg,#fff,#f8fbff);border:1px solid #e5edf7;border-radius:20px;padding:15px;margin-bottom:12px;box-shadow:0 8px 24px #17365d0b}.primary-wide{width:100%;min-height:48px;border-radius:14px}.member-preview{margin-top:12px;background:#f8fbff;border:1px solid #dce8f5;border-radius:16px;padding:14px}.member-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.top-actions{margin-top:10px;display:flex;justify-content:flex-end;gap:8px}.top-actions button{background:#ffffff1c;border:1px solid #ffffff44;color:#fff;border-radius:10px;padding:7px 10px;font-size:12px}.settings-grid{display:grid;gap:10px}.security-card{border:1px solid #dce8f5;background:linear-gradient(135deg,#f7fbff,#fff);border-radius:18px;padding:15px}.member-search{display:grid;grid-template-columns:120px 1fr;gap:8px;align-items:end}.code-like{display:none!important}
 @media(max-width:380px){.page-tools{grid-template-columns:repeat(2,1fr)}.member-fields{grid-template-columns:1fr}.member-search{grid-template-columns:1fr}}
 </style>
-<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js")}</script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js?v=15.1")}</script>
 
 <style id="v14_1_finance_css">
 .finance14-wrap{display:grid;gap:12px}
@@ -571,7 +571,61 @@ function fxV15Print(type){
   } else if(type==='member'){
     const flats=(d.flats||[]).filter(isOccupiedHouse); body=flats.map(f=>{const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no));const t=rr.reduce((s,x)=>s+x.amount,0);return `<tr><td>${fxEsc(f.no)}</td><td>${fxEsc(f.name||'')}</td><td>સભ્ય આવક</td><td>${rr.length}</td><td>${fxMoney(t)}</td></tr>`}).join(''); const et=all.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0); body+=`<tr><th colspan="4">સોસાયટીનો કુલ ખર્ચ</th><th>${fxMoney(et)}</th></tr>`;
   } else body=all.sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${x.type==='income'?'આવક':'ખર્ચ'}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('');
-  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${titles[type]}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${titles[type]}</h2>${type==='summary'?body:`<table><tr><th>તારીખ/ઘર</th><th>પ્રકાર/સભ્ય</th><th>હેડ</th><th>વિગત/એન્ટ્રી</th><th>રકમ</th></tr>${body}</table>`}</body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
+  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${titles[type]}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${titles[type]}</h2>${type==='summary'?body:`<table><tr><th>તારીખ/ઘર</th><th>પ્રકાર/સભ્ય</th><th>હેડ</th><th>વિગત/એન્ટ્રી</th><th>રકમ</th></tr>${body}</table>`}
+<style id="v15-1-polish">
+/* v15.1 visual cleanup */
+.photo-credit,.code-like,pre,code,[data-code],[data-technical],.technical-text{display:none!important}
+.finance-v151{display:grid;gap:13px}
+.fx151-hero{background:linear-gradient(135deg,#1769e0 0%,#4d46d6 55%,#7b3fd1 100%);color:#fff;border-radius:24px;padding:18px;box-shadow:0 15px 35px #173b8a26;position:relative;overflow:hidden}
+.fx151-hero:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-55px;top:-55px;background:#ffffff18}
+.fx151-hero h2{margin:0;font-size:22px;position:relative;z-index:1}.fx151-hero p{margin:5px 0 0;opacity:.86;font-size:12px;position:relative;z-index:1}
+.fx151-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px;position:relative;z-index:1}
+.fx151-stat{background:#ffffff1b;border:1px solid #ffffff30;border-radius:15px;padding:11px}.fx151-stat small{opacity:.82}.fx151-stat b{display:block;font-size:18px;margin-top:3px}
+.fx151-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-action{border:1px solid #e0e8f3;background:#fff;border-radius:18px;padding:14px;text-align:left;box-shadow:0 8px 22px #183b6d0d;cursor:pointer}.fx151-action:active{transform:scale(.98)}.fx151-action .ico{font-size:25px;float:right}.fx151-action b{display:block;font-size:14px;margin-top:4px}.fx151-action small{display:block;color:#667085;margin-top:3px}
+.fx151-card{background:#fff;border:1px solid #e2e9f2;border-radius:20px;padding:14px;box-shadow:0 8px 24px #183b6d0b}.fx151-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.fx151-head b{font-size:16px}.fx151-badge{font-size:10px;background:#eef5ff;color:#1754a6;border-radius:20px;padding:5px 8px;font-weight:800}
+.fx151-reports{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-report{border:1px solid #e0e8f3;border-radius:16px;background:linear-gradient(145deg,#fff,#f7faff);padding:13px 10px;text-align:center;font-weight:900;color:#174f9c;box-shadow:0 5px 15px #183b6d09;cursor:pointer}.fx151-report .ico{display:block;font-size:24px;margin-bottom:5px}
+.fx151-headrow{display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:13px;background:#f7f9fc;border:1px solid #edf1f6;margin-top:7px}.fx151-headrow b:last-child{color:#174f9c}
+.fx151-member{background:linear-gradient(145deg,#f9fcff,#edf7ff);border:1px solid #d7e9fb;border-radius:20px;padding:14px}.fx151-member-intro{font-size:12px;color:#667085;line-height:1.5;margin:4px 0 10px}.fx151-member-select{margin-bottom:8px}.fx151-person{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #dfebf6}.fx151-person:last-child{border-bottom:0}.fx151-person-info{flex:1;min-width:0}.fx151-person-info b{font-size:13px}.fx151-person-info small{display:block;color:#667085;margin-top:3px}.fx151-person input{width:105px!important;padding:9px!important}.fx151-person button{white-space:nowrap;padding:9px 10px!important}
+.fx151-note{padding:10px 11px;border-radius:13px;background:#f6f8fb;color:#667085;font-size:11px;margin-top:8px}
+@media(max-width:390px){.fx151-reports,.fx151-actions{grid-template-columns:1fr}.fx151-person{flex-wrap:wrap}.fx151-person-info{flex-basis:100%}.fx151-person input{flex:1;width:auto!important}}
+</style>
+<script>
+/* ================= V15.1 FINAL FINANCE + CLEAN UI ================= */
+function renderFinanceV151(){
+  const sec=document.getElementById('finance'); if(!sec)return;
+  const all=fxAll(), inc=all.filter(x=>x.type==='income'&&!x.excluded), exp=all.filter(x=>x.type==='expense');
+  const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  const head=window.fxMemberHead&&heads.includes(window.fxMemberHead)?window.fxMemberHead:(heads[0]||''); window.fxMemberHead=head;
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  const memberRows=occupied.map(f=>{
+    const total=(d.incomes||[]).filter(x=>x.head===head&&String(x.flatNo)===String(f.no)&&incomeEntryCounts(x)).reduce((s,x)=>s+Number(x.amount||0),0);
+    return `<div class="fx151-person"><div class="fx151-person-info"><b>ઘર ${fxEsc(f.no)} • ${fxEsc(f.name||'સભ્ય')}</b><small>${total?'આ હેડમાં જમા: '+fxMoney(total):'હજુ જમા નથી'}</small></div><input id="fx151Amt_${fxEsc(f.no)}" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ"><button class="btn primary" onclick="saveMemberIncome151('${fxEsc(head)}','${fxEsc(f.no)}')">જમા કરો</button></div>`;
+  }).join('');
+  const memberBox=role==='admin'&&heads.length?`<div class="fx151-member"><div class="fx151-head"><b>👥 સભ્યવાર અન્ય આવક</b><span class="fx151-badge">સૌથી નીચે</span></div><div class="fx151-member-intro">મેન્ટેનન્સ સિવાયની આવક સભ્ય/મકાન પ્રમાણે અહીં સીધી જમા કરો. દરેક એન્ટ્રી Cloudમાં સેવ થશે.</div><select class="fx151-member-select" onchange="window.fxMemberHead=this.value;renderFinanceV151()">${heads.map(h=>`<option ${h===head?'selected':''}>${fxEsc(h)}</option>`).join('')}</select>${memberRows||'<div class="fx151-note">હાલ કોઈ ભરેલું મકાન ઉપલબ્ધ નથી.</div>'}</div>`:'';
+  const quickHeads=[...(d.incomeHeads||[]).map(h=>({k:'income',h})),...(d.expenseHeads||[]).map(h=>({k:'expense',h}))];
+  sec.innerHTML=`<div class="finance-v151">
+    <div class="fx151-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સરળ અને સુંદર હિસાબ</p><div class="fx151-stats"><div class="fx151-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx151-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx151-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx151-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div></div>
+    ${role==='admin'?`<div class="fx151-actions"><button class="fx151-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>આવકની નવી એન્ટ્રી</small></button><button class="fx151-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>ખર્ચની નવી એન્ટ્રી</small></button></div>`:''}
+    <div class="fx151-card"><div class="fx151-head"><b>📊 રિપોર્ટ</b><span class="fx151-badge">પ્રિન્ટ / ડાઉનલોડ</span></div><div class="fx151-reports"><button class="fx151-report" onclick="fxV15Open('summary')"><span class="ico">📑</span>આવક જાવક રિપોર્ટ</button><button class="fx151-report" onclick="fxV15Open('head')"><span class="ico">📊</span>હેડ વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('member')"><span class="ico">👥</span>સભ્ય વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('all')"><span class="ico">📚</span>તમામ એન્ટ્રી</button></div></div>
+    <div class="fx151-card"><div class="fx151-head"><b>⚡ હેડ પ્રમાણે સારાંશ</b><span class="fx151-badge">કુલ રકમ</span></div>${quickHeads.map(o=>{const v=o.k==='income'?incomeHeadTotal(o.h):exp.filter(x=>x.head===o.h).reduce((s,x)=>s+x.amount,0);return `<div class="fx151-headrow"><span>${o.k==='income'?'💰':'💸'} ${fxEsc(o.h)}</span><b>${fxMoney(v)}</b></div>`}).join('')}</div>
+    ${role==='admin'?`<div class="fx151-card"><div class="fx151-head"><b>⚙️ હેડ વ્યવસ્થા</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}
+    ${memberBox}
+  </div>`;
+}
+function saveMemberIncome151(head,no){
+  if(role!=='admin')return;
+  const el=document.getElementById('fx151Amt_'+no), amount=Number(el?.value||0), f=d.flats.find(x=>String(x.no)===String(no));
+  if(amount<=0){toast('જમા રકમ દાખલ કરો');el?.focus();return;}
+  if(!f||!isOccupiedHouse(f)){toast('આ મકાન ખાલી છે');return;}
+  d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:`${head} • ઘર ${no} • ${f.name||'સભ્ય'}`,date:new Date().toISOString().slice(0,10),amount});
+  save(); renderFinanceV151(); refreshExtras(); toast(`ઘર ${no} માટે ${money(amount)} જમા થયું`);
+}
+window.renderFinance2=renderFinanceV151; window.renderFinanceV14_2=renderFinanceV151; window.renderFinanceV15=renderFinanceV151;
+try{renderFinanceV151()}catch(e){}
+</script>
+
+</body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
 }
 function fxV15Download(type){
   const all=fxAll().filter(x=>!x.excluded); let rows=[];
@@ -590,6 +644,60 @@ try{renderFinanceV15()}catch(e){}
 document.addEventListener('DOMContentLoaded',()=>{try{renderFinanceV15()}catch(e){}});
 setTimeout(()=>{try{renderFinanceV15()}catch(e){}},350);
 </script>
+
+<style id="v15-1-polish">
+/* v15.1 visual cleanup */
+.photo-credit,.code-like,pre,code,[data-code],[data-technical],.technical-text{display:none!important}
+.finance-v151{display:grid;gap:13px}
+.fx151-hero{background:linear-gradient(135deg,#1769e0 0%,#4d46d6 55%,#7b3fd1 100%);color:#fff;border-radius:24px;padding:18px;box-shadow:0 15px 35px #173b8a26;position:relative;overflow:hidden}
+.fx151-hero:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-55px;top:-55px;background:#ffffff18}
+.fx151-hero h2{margin:0;font-size:22px;position:relative;z-index:1}.fx151-hero p{margin:5px 0 0;opacity:.86;font-size:12px;position:relative;z-index:1}
+.fx151-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px;position:relative;z-index:1}
+.fx151-stat{background:#ffffff1b;border:1px solid #ffffff30;border-radius:15px;padding:11px}.fx151-stat small{opacity:.82}.fx151-stat b{display:block;font-size:18px;margin-top:3px}
+.fx151-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-action{border:1px solid #e0e8f3;background:#fff;border-radius:18px;padding:14px;text-align:left;box-shadow:0 8px 22px #183b6d0d;cursor:pointer}.fx151-action:active{transform:scale(.98)}.fx151-action .ico{font-size:25px;float:right}.fx151-action b{display:block;font-size:14px;margin-top:4px}.fx151-action small{display:block;color:#667085;margin-top:3px}
+.fx151-card{background:#fff;border:1px solid #e2e9f2;border-radius:20px;padding:14px;box-shadow:0 8px 24px #183b6d0b}.fx151-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.fx151-head b{font-size:16px}.fx151-badge{font-size:10px;background:#eef5ff;color:#1754a6;border-radius:20px;padding:5px 8px;font-weight:800}
+.fx151-reports{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-report{border:1px solid #e0e8f3;border-radius:16px;background:linear-gradient(145deg,#fff,#f7faff);padding:13px 10px;text-align:center;font-weight:900;color:#174f9c;box-shadow:0 5px 15px #183b6d09;cursor:pointer}.fx151-report .ico{display:block;font-size:24px;margin-bottom:5px}
+.fx151-headrow{display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:13px;background:#f7f9fc;border:1px solid #edf1f6;margin-top:7px}.fx151-headrow b:last-child{color:#174f9c}
+.fx151-member{background:linear-gradient(145deg,#f9fcff,#edf7ff);border:1px solid #d7e9fb;border-radius:20px;padding:14px}.fx151-member-intro{font-size:12px;color:#667085;line-height:1.5;margin:4px 0 10px}.fx151-member-select{margin-bottom:8px}.fx151-person{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #dfebf6}.fx151-person:last-child{border-bottom:0}.fx151-person-info{flex:1;min-width:0}.fx151-person-info b{font-size:13px}.fx151-person-info small{display:block;color:#667085;margin-top:3px}.fx151-person input{width:105px!important;padding:9px!important}.fx151-person button{white-space:nowrap;padding:9px 10px!important}
+.fx151-note{padding:10px 11px;border-radius:13px;background:#f6f8fb;color:#667085;font-size:11px;margin-top:8px}
+@media(max-width:390px){.fx151-reports,.fx151-actions{grid-template-columns:1fr}.fx151-person{flex-wrap:wrap}.fx151-person-info{flex-basis:100%}.fx151-person input{flex:1;width:auto!important}}
+</style>
+<script>
+/* ================= V15.1 FINAL FINANCE + CLEAN UI ================= */
+function renderFinanceV151(){
+  const sec=document.getElementById('finance'); if(!sec)return;
+  const all=fxAll(), inc=all.filter(x=>x.type==='income'&&!x.excluded), exp=all.filter(x=>x.type==='expense');
+  const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  const head=window.fxMemberHead&&heads.includes(window.fxMemberHead)?window.fxMemberHead:(heads[0]||''); window.fxMemberHead=head;
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  const memberRows=occupied.map(f=>{
+    const total=(d.incomes||[]).filter(x=>x.head===head&&String(x.flatNo)===String(f.no)&&incomeEntryCounts(x)).reduce((s,x)=>s+Number(x.amount||0),0);
+    return `<div class="fx151-person"><div class="fx151-person-info"><b>ઘર ${fxEsc(f.no)} • ${fxEsc(f.name||'સભ્ય')}</b><small>${total?'આ હેડમાં જમા: '+fxMoney(total):'હજુ જમા નથી'}</small></div><input id="fx151Amt_${fxEsc(f.no)}" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ"><button class="btn primary" onclick="saveMemberIncome151('${fxEsc(head)}','${fxEsc(f.no)}')">જમા કરો</button></div>`;
+  }).join('');
+  const memberBox=role==='admin'&&heads.length?`<div class="fx151-member"><div class="fx151-head"><b>👥 સભ્યવાર અન્ય આવક</b><span class="fx151-badge">સૌથી નીચે</span></div><div class="fx151-member-intro">મેન્ટેનન્સ સિવાયની આવક સભ્ય/મકાન પ્રમાણે અહીં સીધી જમા કરો. દરેક એન્ટ્રી Cloudમાં સેવ થશે.</div><select class="fx151-member-select" onchange="window.fxMemberHead=this.value;renderFinanceV151()">${heads.map(h=>`<option ${h===head?'selected':''}>${fxEsc(h)}</option>`).join('')}</select>${memberRows||'<div class="fx151-note">હાલ કોઈ ભરેલું મકાન ઉપલબ્ધ નથી.</div>'}</div>`:'';
+  const quickHeads=[...(d.incomeHeads||[]).map(h=>({k:'income',h})),...(d.expenseHeads||[]).map(h=>({k:'expense',h}))];
+  sec.innerHTML=`<div class="finance-v151">
+    <div class="fx151-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સરળ અને સુંદર હિસાબ</p><div class="fx151-stats"><div class="fx151-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx151-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx151-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx151-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div></div>
+    ${role==='admin'?`<div class="fx151-actions"><button class="fx151-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>આવકની નવી એન્ટ્રી</small></button><button class="fx151-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>ખર્ચની નવી એન્ટ્રી</small></button></div>`:''}
+    <div class="fx151-card"><div class="fx151-head"><b>📊 રિપોર્ટ</b><span class="fx151-badge">પ્રિન્ટ / ડાઉનલોડ</span></div><div class="fx151-reports"><button class="fx151-report" onclick="fxV15Open('summary')"><span class="ico">📑</span>આવક જાવક રિપોર્ટ</button><button class="fx151-report" onclick="fxV15Open('head')"><span class="ico">📊</span>હેડ વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('member')"><span class="ico">👥</span>સભ્ય વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('all')"><span class="ico">📚</span>તમામ એન્ટ્રી</button></div></div>
+    <div class="fx151-card"><div class="fx151-head"><b>⚡ હેડ પ્રમાણે સારાંશ</b><span class="fx151-badge">કુલ રકમ</span></div>${quickHeads.map(o=>{const v=o.k==='income'?incomeHeadTotal(o.h):exp.filter(x=>x.head===o.h).reduce((s,x)=>s+x.amount,0);return `<div class="fx151-headrow"><span>${o.k==='income'?'💰':'💸'} ${fxEsc(o.h)}</span><b>${fxMoney(v)}</b></div>`}).join('')}</div>
+    ${role==='admin'?`<div class="fx151-card"><div class="fx151-head"><b>⚙️ હેડ વ્યવસ્થા</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}
+    ${memberBox}
+  </div>`;
+}
+function saveMemberIncome151(head,no){
+  if(role!=='admin')return;
+  const el=document.getElementById('fx151Amt_'+no), amount=Number(el?.value||0), f=d.flats.find(x=>String(x.no)===String(no));
+  if(amount<=0){toast('જમા રકમ દાખલ કરો');el?.focus();return;}
+  if(!f||!isOccupiedHouse(f)){toast('આ મકાન ખાલી છે');return;}
+  d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:`${head} • ઘર ${no} • ${f.name||'સભ્ય'}`,date:new Date().toISOString().slice(0,10),amount});
+  save(); renderFinanceV151(); refreshExtras(); toast(`ઘર ${no} માટે ${money(amount)} જમા થયું`);
+}
+window.renderFinance2=renderFinanceV151; window.renderFinanceV14_2=renderFinanceV151; window.renderFinanceV15=renderFinanceV151;
+try{renderFinanceV151()}catch(e){}
+</script>
+
 </body></html>`);
   w.document.close();setTimeout(()=>w.print(),250);
 }
@@ -694,7 +802,61 @@ function fxV15Print(type){
   } else if(type==='member'){
     const flats=(d.flats||[]).filter(isOccupiedHouse); body=flats.map(f=>{const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no));const t=rr.reduce((s,x)=>s+x.amount,0);return `<tr><td>${fxEsc(f.no)}</td><td>${fxEsc(f.name||'')}</td><td>સભ્ય આવક</td><td>${rr.length}</td><td>${fxMoney(t)}</td></tr>`}).join(''); const et=all.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0); body+=`<tr><th colspan="4">સોસાયટીનો કુલ ખર્ચ</th><th>${fxMoney(et)}</th></tr>`;
   } else body=all.sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${x.type==='income'?'આવક':'ખર્ચ'}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('');
-  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${titles[type]}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${titles[type]}</h2>${type==='summary'?body:`<table><tr><th>તારીખ/ઘર</th><th>પ્રકાર/સભ્ય</th><th>હેડ</th><th>વિગત/એન્ટ્રી</th><th>રકમ</th></tr>${body}</table>`}</body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
+  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${titles[type]}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${titles[type]}</h2>${type==='summary'?body:`<table><tr><th>તારીખ/ઘર</th><th>પ્રકાર/સભ્ય</th><th>હેડ</th><th>વિગત/એન્ટ્રી</th><th>રકમ</th></tr>${body}</table>`}
+<style id="v15-1-polish">
+/* v15.1 visual cleanup */
+.photo-credit,.code-like,pre,code,[data-code],[data-technical],.technical-text{display:none!important}
+.finance-v151{display:grid;gap:13px}
+.fx151-hero{background:linear-gradient(135deg,#1769e0 0%,#4d46d6 55%,#7b3fd1 100%);color:#fff;border-radius:24px;padding:18px;box-shadow:0 15px 35px #173b8a26;position:relative;overflow:hidden}
+.fx151-hero:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-55px;top:-55px;background:#ffffff18}
+.fx151-hero h2{margin:0;font-size:22px;position:relative;z-index:1}.fx151-hero p{margin:5px 0 0;opacity:.86;font-size:12px;position:relative;z-index:1}
+.fx151-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px;position:relative;z-index:1}
+.fx151-stat{background:#ffffff1b;border:1px solid #ffffff30;border-radius:15px;padding:11px}.fx151-stat small{opacity:.82}.fx151-stat b{display:block;font-size:18px;margin-top:3px}
+.fx151-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-action{border:1px solid #e0e8f3;background:#fff;border-radius:18px;padding:14px;text-align:left;box-shadow:0 8px 22px #183b6d0d;cursor:pointer}.fx151-action:active{transform:scale(.98)}.fx151-action .ico{font-size:25px;float:right}.fx151-action b{display:block;font-size:14px;margin-top:4px}.fx151-action small{display:block;color:#667085;margin-top:3px}
+.fx151-card{background:#fff;border:1px solid #e2e9f2;border-radius:20px;padding:14px;box-shadow:0 8px 24px #183b6d0b}.fx151-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.fx151-head b{font-size:16px}.fx151-badge{font-size:10px;background:#eef5ff;color:#1754a6;border-radius:20px;padding:5px 8px;font-weight:800}
+.fx151-reports{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-report{border:1px solid #e0e8f3;border-radius:16px;background:linear-gradient(145deg,#fff,#f7faff);padding:13px 10px;text-align:center;font-weight:900;color:#174f9c;box-shadow:0 5px 15px #183b6d09;cursor:pointer}.fx151-report .ico{display:block;font-size:24px;margin-bottom:5px}
+.fx151-headrow{display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:13px;background:#f7f9fc;border:1px solid #edf1f6;margin-top:7px}.fx151-headrow b:last-child{color:#174f9c}
+.fx151-member{background:linear-gradient(145deg,#f9fcff,#edf7ff);border:1px solid #d7e9fb;border-radius:20px;padding:14px}.fx151-member-intro{font-size:12px;color:#667085;line-height:1.5;margin:4px 0 10px}.fx151-member-select{margin-bottom:8px}.fx151-person{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #dfebf6}.fx151-person:last-child{border-bottom:0}.fx151-person-info{flex:1;min-width:0}.fx151-person-info b{font-size:13px}.fx151-person-info small{display:block;color:#667085;margin-top:3px}.fx151-person input{width:105px!important;padding:9px!important}.fx151-person button{white-space:nowrap;padding:9px 10px!important}
+.fx151-note{padding:10px 11px;border-radius:13px;background:#f6f8fb;color:#667085;font-size:11px;margin-top:8px}
+@media(max-width:390px){.fx151-reports,.fx151-actions{grid-template-columns:1fr}.fx151-person{flex-wrap:wrap}.fx151-person-info{flex-basis:100%}.fx151-person input{flex:1;width:auto!important}}
+</style>
+<script>
+/* ================= V15.1 FINAL FINANCE + CLEAN UI ================= */
+function renderFinanceV151(){
+  const sec=document.getElementById('finance'); if(!sec)return;
+  const all=fxAll(), inc=all.filter(x=>x.type==='income'&&!x.excluded), exp=all.filter(x=>x.type==='expense');
+  const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  const head=window.fxMemberHead&&heads.includes(window.fxMemberHead)?window.fxMemberHead:(heads[0]||''); window.fxMemberHead=head;
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  const memberRows=occupied.map(f=>{
+    const total=(d.incomes||[]).filter(x=>x.head===head&&String(x.flatNo)===String(f.no)&&incomeEntryCounts(x)).reduce((s,x)=>s+Number(x.amount||0),0);
+    return `<div class="fx151-person"><div class="fx151-person-info"><b>ઘર ${fxEsc(f.no)} • ${fxEsc(f.name||'સભ્ય')}</b><small>${total?'આ હેડમાં જમા: '+fxMoney(total):'હજુ જમા નથી'}</small></div><input id="fx151Amt_${fxEsc(f.no)}" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ"><button class="btn primary" onclick="saveMemberIncome151('${fxEsc(head)}','${fxEsc(f.no)}')">જમા કરો</button></div>`;
+  }).join('');
+  const memberBox=role==='admin'&&heads.length?`<div class="fx151-member"><div class="fx151-head"><b>👥 સભ્યવાર અન્ય આવક</b><span class="fx151-badge">સૌથી નીચે</span></div><div class="fx151-member-intro">મેન્ટેનન્સ સિવાયની આવક સભ્ય/મકાન પ્રમાણે અહીં સીધી જમા કરો. દરેક એન્ટ્રી Cloudમાં સેવ થશે.</div><select class="fx151-member-select" onchange="window.fxMemberHead=this.value;renderFinanceV151()">${heads.map(h=>`<option ${h===head?'selected':''}>${fxEsc(h)}</option>`).join('')}</select>${memberRows||'<div class="fx151-note">હાલ કોઈ ભરેલું મકાન ઉપલબ્ધ નથી.</div>'}</div>`:'';
+  const quickHeads=[...(d.incomeHeads||[]).map(h=>({k:'income',h})),...(d.expenseHeads||[]).map(h=>({k:'expense',h}))];
+  sec.innerHTML=`<div class="finance-v151">
+    <div class="fx151-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સરળ અને સુંદર હિસાબ</p><div class="fx151-stats"><div class="fx151-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx151-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx151-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx151-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div></div>
+    ${role==='admin'?`<div class="fx151-actions"><button class="fx151-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>આવકની નવી એન્ટ્રી</small></button><button class="fx151-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>ખર્ચની નવી એન્ટ્રી</small></button></div>`:''}
+    <div class="fx151-card"><div class="fx151-head"><b>📊 રિપોર્ટ</b><span class="fx151-badge">પ્રિન્ટ / ડાઉનલોડ</span></div><div class="fx151-reports"><button class="fx151-report" onclick="fxV15Open('summary')"><span class="ico">📑</span>આવક જાવક રિપોર્ટ</button><button class="fx151-report" onclick="fxV15Open('head')"><span class="ico">📊</span>હેડ વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('member')"><span class="ico">👥</span>સભ્ય વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('all')"><span class="ico">📚</span>તમામ એન્ટ્રી</button></div></div>
+    <div class="fx151-card"><div class="fx151-head"><b>⚡ હેડ પ્રમાણે સારાંશ</b><span class="fx151-badge">કુલ રકમ</span></div>${quickHeads.map(o=>{const v=o.k==='income'?incomeHeadTotal(o.h):exp.filter(x=>x.head===o.h).reduce((s,x)=>s+x.amount,0);return `<div class="fx151-headrow"><span>${o.k==='income'?'💰':'💸'} ${fxEsc(o.h)}</span><b>${fxMoney(v)}</b></div>`}).join('')}</div>
+    ${role==='admin'?`<div class="fx151-card"><div class="fx151-head"><b>⚙️ હેડ વ્યવસ્થા</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}
+    ${memberBox}
+  </div>`;
+}
+function saveMemberIncome151(head,no){
+  if(role!=='admin')return;
+  const el=document.getElementById('fx151Amt_'+no), amount=Number(el?.value||0), f=d.flats.find(x=>String(x.no)===String(no));
+  if(amount<=0){toast('જમા રકમ દાખલ કરો');el?.focus();return;}
+  if(!f||!isOccupiedHouse(f)){toast('આ મકાન ખાલી છે');return;}
+  d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:`${head} • ઘર ${no} • ${f.name||'સભ્ય'}`,date:new Date().toISOString().slice(0,10),amount});
+  save(); renderFinanceV151(); refreshExtras(); toast(`ઘર ${no} માટે ${money(amount)} જમા થયું`);
+}
+window.renderFinance2=renderFinanceV151; window.renderFinanceV14_2=renderFinanceV151; window.renderFinanceV15=renderFinanceV151;
+try{renderFinanceV151()}catch(e){}
+</script>
+
+</body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
 }
 function fxV15Download(type){
   const all=fxAll().filter(x=>!x.excluded); let rows=[];
@@ -713,6 +875,60 @@ try{renderFinanceV15()}catch(e){}
 document.addEventListener('DOMContentLoaded',()=>{try{renderFinanceV15()}catch(e){}});
 setTimeout(()=>{try{renderFinanceV15()}catch(e){}},350);
 </script>
+
+<style id="v15-1-polish">
+/* v15.1 visual cleanup */
+.photo-credit,.code-like,pre,code,[data-code],[data-technical],.technical-text{display:none!important}
+.finance-v151{display:grid;gap:13px}
+.fx151-hero{background:linear-gradient(135deg,#1769e0 0%,#4d46d6 55%,#7b3fd1 100%);color:#fff;border-radius:24px;padding:18px;box-shadow:0 15px 35px #173b8a26;position:relative;overflow:hidden}
+.fx151-hero:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-55px;top:-55px;background:#ffffff18}
+.fx151-hero h2{margin:0;font-size:22px;position:relative;z-index:1}.fx151-hero p{margin:5px 0 0;opacity:.86;font-size:12px;position:relative;z-index:1}
+.fx151-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px;position:relative;z-index:1}
+.fx151-stat{background:#ffffff1b;border:1px solid #ffffff30;border-radius:15px;padding:11px}.fx151-stat small{opacity:.82}.fx151-stat b{display:block;font-size:18px;margin-top:3px}
+.fx151-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-action{border:1px solid #e0e8f3;background:#fff;border-radius:18px;padding:14px;text-align:left;box-shadow:0 8px 22px #183b6d0d;cursor:pointer}.fx151-action:active{transform:scale(.98)}.fx151-action .ico{font-size:25px;float:right}.fx151-action b{display:block;font-size:14px;margin-top:4px}.fx151-action small{display:block;color:#667085;margin-top:3px}
+.fx151-card{background:#fff;border:1px solid #e2e9f2;border-radius:20px;padding:14px;box-shadow:0 8px 24px #183b6d0b}.fx151-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.fx151-head b{font-size:16px}.fx151-badge{font-size:10px;background:#eef5ff;color:#1754a6;border-radius:20px;padding:5px 8px;font-weight:800}
+.fx151-reports{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-report{border:1px solid #e0e8f3;border-radius:16px;background:linear-gradient(145deg,#fff,#f7faff);padding:13px 10px;text-align:center;font-weight:900;color:#174f9c;box-shadow:0 5px 15px #183b6d09;cursor:pointer}.fx151-report .ico{display:block;font-size:24px;margin-bottom:5px}
+.fx151-headrow{display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:13px;background:#f7f9fc;border:1px solid #edf1f6;margin-top:7px}.fx151-headrow b:last-child{color:#174f9c}
+.fx151-member{background:linear-gradient(145deg,#f9fcff,#edf7ff);border:1px solid #d7e9fb;border-radius:20px;padding:14px}.fx151-member-intro{font-size:12px;color:#667085;line-height:1.5;margin:4px 0 10px}.fx151-member-select{margin-bottom:8px}.fx151-person{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #dfebf6}.fx151-person:last-child{border-bottom:0}.fx151-person-info{flex:1;min-width:0}.fx151-person-info b{font-size:13px}.fx151-person-info small{display:block;color:#667085;margin-top:3px}.fx151-person input{width:105px!important;padding:9px!important}.fx151-person button{white-space:nowrap;padding:9px 10px!important}
+.fx151-note{padding:10px 11px;border-radius:13px;background:#f6f8fb;color:#667085;font-size:11px;margin-top:8px}
+@media(max-width:390px){.fx151-reports,.fx151-actions{grid-template-columns:1fr}.fx151-person{flex-wrap:wrap}.fx151-person-info{flex-basis:100%}.fx151-person input{flex:1;width:auto!important}}
+</style>
+<script>
+/* ================= V15.1 FINAL FINANCE + CLEAN UI ================= */
+function renderFinanceV151(){
+  const sec=document.getElementById('finance'); if(!sec)return;
+  const all=fxAll(), inc=all.filter(x=>x.type==='income'&&!x.excluded), exp=all.filter(x=>x.type==='expense');
+  const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  const head=window.fxMemberHead&&heads.includes(window.fxMemberHead)?window.fxMemberHead:(heads[0]||''); window.fxMemberHead=head;
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  const memberRows=occupied.map(f=>{
+    const total=(d.incomes||[]).filter(x=>x.head===head&&String(x.flatNo)===String(f.no)&&incomeEntryCounts(x)).reduce((s,x)=>s+Number(x.amount||0),0);
+    return `<div class="fx151-person"><div class="fx151-person-info"><b>ઘર ${fxEsc(f.no)} • ${fxEsc(f.name||'સભ્ય')}</b><small>${total?'આ હેડમાં જમા: '+fxMoney(total):'હજુ જમા નથી'}</small></div><input id="fx151Amt_${fxEsc(f.no)}" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ"><button class="btn primary" onclick="saveMemberIncome151('${fxEsc(head)}','${fxEsc(f.no)}')">જમા કરો</button></div>`;
+  }).join('');
+  const memberBox=role==='admin'&&heads.length?`<div class="fx151-member"><div class="fx151-head"><b>👥 સભ્યવાર અન્ય આવક</b><span class="fx151-badge">સૌથી નીચે</span></div><div class="fx151-member-intro">મેન્ટેનન્સ સિવાયની આવક સભ્ય/મકાન પ્રમાણે અહીં સીધી જમા કરો. દરેક એન્ટ્રી Cloudમાં સેવ થશે.</div><select class="fx151-member-select" onchange="window.fxMemberHead=this.value;renderFinanceV151()">${heads.map(h=>`<option ${h===head?'selected':''}>${fxEsc(h)}</option>`).join('')}</select>${memberRows||'<div class="fx151-note">હાલ કોઈ ભરેલું મકાન ઉપલબ્ધ નથી.</div>'}</div>`:'';
+  const quickHeads=[...(d.incomeHeads||[]).map(h=>({k:'income',h})),...(d.expenseHeads||[]).map(h=>({k:'expense',h}))];
+  sec.innerHTML=`<div class="finance-v151">
+    <div class="fx151-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સરળ અને સુંદર હિસાબ</p><div class="fx151-stats"><div class="fx151-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx151-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx151-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx151-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div></div>
+    ${role==='admin'?`<div class="fx151-actions"><button class="fx151-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>આવકની નવી એન્ટ્રી</small></button><button class="fx151-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>ખર્ચની નવી એન્ટ્રી</small></button></div>`:''}
+    <div class="fx151-card"><div class="fx151-head"><b>📊 રિપોર્ટ</b><span class="fx151-badge">પ્રિન્ટ / ડાઉનલોડ</span></div><div class="fx151-reports"><button class="fx151-report" onclick="fxV15Open('summary')"><span class="ico">📑</span>આવક જાવક રિપોર્ટ</button><button class="fx151-report" onclick="fxV15Open('head')"><span class="ico">📊</span>હેડ વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('member')"><span class="ico">👥</span>સભ્ય વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('all')"><span class="ico">📚</span>તમામ એન્ટ્રી</button></div></div>
+    <div class="fx151-card"><div class="fx151-head"><b>⚡ હેડ પ્રમાણે સારાંશ</b><span class="fx151-badge">કુલ રકમ</span></div>${quickHeads.map(o=>{const v=o.k==='income'?incomeHeadTotal(o.h):exp.filter(x=>x.head===o.h).reduce((s,x)=>s+x.amount,0);return `<div class="fx151-headrow"><span>${o.k==='income'?'💰':'💸'} ${fxEsc(o.h)}</span><b>${fxMoney(v)}</b></div>`}).join('')}</div>
+    ${role==='admin'?`<div class="fx151-card"><div class="fx151-head"><b>⚙️ હેડ વ્યવસ્થા</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}
+    ${memberBox}
+  </div>`;
+}
+function saveMemberIncome151(head,no){
+  if(role!=='admin')return;
+  const el=document.getElementById('fx151Amt_'+no), amount=Number(el?.value||0), f=d.flats.find(x=>String(x.no)===String(no));
+  if(amount<=0){toast('જમા રકમ દાખલ કરો');el?.focus();return;}
+  if(!f||!isOccupiedHouse(f)){toast('આ મકાન ખાલી છે');return;}
+  d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:`${head} • ઘર ${no} • ${f.name||'સભ્ય'}`,date:new Date().toISOString().slice(0,10),amount});
+  save(); renderFinanceV151(); refreshExtras(); toast(`ઘર ${no} માટે ${money(amount)} જમા થયું`);
+}
+window.renderFinance2=renderFinanceV151; window.renderFinanceV14_2=renderFinanceV151; window.renderFinanceV15=renderFinanceV151;
+try{renderFinanceV151()}catch(e){}
+</script>
+
 </body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),200)}
 </script>
 <script>
@@ -954,7 +1170,61 @@ function fxV15Print(type){
   } else if(type==='member'){
     const flats=(d.flats||[]).filter(isOccupiedHouse); body=flats.map(f=>{const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no));const t=rr.reduce((s,x)=>s+x.amount,0);return `<tr><td>${fxEsc(f.no)}</td><td>${fxEsc(f.name||'')}</td><td>સભ્ય આવક</td><td>${rr.length}</td><td>${fxMoney(t)}</td></tr>`}).join(''); const et=all.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0); body+=`<tr><th colspan="4">સોસાયટીનો કુલ ખર્ચ</th><th>${fxMoney(et)}</th></tr>`;
   } else body=all.sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${x.type==='income'?'આવક':'ખર્ચ'}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('');
-  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${titles[type]}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${titles[type]}</h2>${type==='summary'?body:`<table><tr><th>તારીખ/ઘર</th><th>પ્રકાર/સભ્ય</th><th>હેડ</th><th>વિગત/એન્ટ્રી</th><th>રકમ</th></tr>${body}</table>`}</body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
+  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${titles[type]}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${titles[type]}</h2>${type==='summary'?body:`<table><tr><th>તારીખ/ઘર</th><th>પ્રકાર/સભ્ય</th><th>હેડ</th><th>વિગત/એન્ટ્રી</th><th>રકમ</th></tr>${body}</table>`}
+<style id="v15-1-polish">
+/* v15.1 visual cleanup */
+.photo-credit,.code-like,pre,code,[data-code],[data-technical],.technical-text{display:none!important}
+.finance-v151{display:grid;gap:13px}
+.fx151-hero{background:linear-gradient(135deg,#1769e0 0%,#4d46d6 55%,#7b3fd1 100%);color:#fff;border-radius:24px;padding:18px;box-shadow:0 15px 35px #173b8a26;position:relative;overflow:hidden}
+.fx151-hero:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-55px;top:-55px;background:#ffffff18}
+.fx151-hero h2{margin:0;font-size:22px;position:relative;z-index:1}.fx151-hero p{margin:5px 0 0;opacity:.86;font-size:12px;position:relative;z-index:1}
+.fx151-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px;position:relative;z-index:1}
+.fx151-stat{background:#ffffff1b;border:1px solid #ffffff30;border-radius:15px;padding:11px}.fx151-stat small{opacity:.82}.fx151-stat b{display:block;font-size:18px;margin-top:3px}
+.fx151-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-action{border:1px solid #e0e8f3;background:#fff;border-radius:18px;padding:14px;text-align:left;box-shadow:0 8px 22px #183b6d0d;cursor:pointer}.fx151-action:active{transform:scale(.98)}.fx151-action .ico{font-size:25px;float:right}.fx151-action b{display:block;font-size:14px;margin-top:4px}.fx151-action small{display:block;color:#667085;margin-top:3px}
+.fx151-card{background:#fff;border:1px solid #e2e9f2;border-radius:20px;padding:14px;box-shadow:0 8px 24px #183b6d0b}.fx151-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.fx151-head b{font-size:16px}.fx151-badge{font-size:10px;background:#eef5ff;color:#1754a6;border-radius:20px;padding:5px 8px;font-weight:800}
+.fx151-reports{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-report{border:1px solid #e0e8f3;border-radius:16px;background:linear-gradient(145deg,#fff,#f7faff);padding:13px 10px;text-align:center;font-weight:900;color:#174f9c;box-shadow:0 5px 15px #183b6d09;cursor:pointer}.fx151-report .ico{display:block;font-size:24px;margin-bottom:5px}
+.fx151-headrow{display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:13px;background:#f7f9fc;border:1px solid #edf1f6;margin-top:7px}.fx151-headrow b:last-child{color:#174f9c}
+.fx151-member{background:linear-gradient(145deg,#f9fcff,#edf7ff);border:1px solid #d7e9fb;border-radius:20px;padding:14px}.fx151-member-intro{font-size:12px;color:#667085;line-height:1.5;margin:4px 0 10px}.fx151-member-select{margin-bottom:8px}.fx151-person{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #dfebf6}.fx151-person:last-child{border-bottom:0}.fx151-person-info{flex:1;min-width:0}.fx151-person-info b{font-size:13px}.fx151-person-info small{display:block;color:#667085;margin-top:3px}.fx151-person input{width:105px!important;padding:9px!important}.fx151-person button{white-space:nowrap;padding:9px 10px!important}
+.fx151-note{padding:10px 11px;border-radius:13px;background:#f6f8fb;color:#667085;font-size:11px;margin-top:8px}
+@media(max-width:390px){.fx151-reports,.fx151-actions{grid-template-columns:1fr}.fx151-person{flex-wrap:wrap}.fx151-person-info{flex-basis:100%}.fx151-person input{flex:1;width:auto!important}}
+</style>
+<script>
+/* ================= V15.1 FINAL FINANCE + CLEAN UI ================= */
+function renderFinanceV151(){
+  const sec=document.getElementById('finance'); if(!sec)return;
+  const all=fxAll(), inc=all.filter(x=>x.type==='income'&&!x.excluded), exp=all.filter(x=>x.type==='expense');
+  const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  const head=window.fxMemberHead&&heads.includes(window.fxMemberHead)?window.fxMemberHead:(heads[0]||''); window.fxMemberHead=head;
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  const memberRows=occupied.map(f=>{
+    const total=(d.incomes||[]).filter(x=>x.head===head&&String(x.flatNo)===String(f.no)&&incomeEntryCounts(x)).reduce((s,x)=>s+Number(x.amount||0),0);
+    return `<div class="fx151-person"><div class="fx151-person-info"><b>ઘર ${fxEsc(f.no)} • ${fxEsc(f.name||'સભ્ય')}</b><small>${total?'આ હેડમાં જમા: '+fxMoney(total):'હજુ જમા નથી'}</small></div><input id="fx151Amt_${fxEsc(f.no)}" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ"><button class="btn primary" onclick="saveMemberIncome151('${fxEsc(head)}','${fxEsc(f.no)}')">જમા કરો</button></div>`;
+  }).join('');
+  const memberBox=role==='admin'&&heads.length?`<div class="fx151-member"><div class="fx151-head"><b>👥 સભ્યવાર અન્ય આવક</b><span class="fx151-badge">સૌથી નીચે</span></div><div class="fx151-member-intro">મેન્ટેનન્સ સિવાયની આવક સભ્ય/મકાન પ્રમાણે અહીં સીધી જમા કરો. દરેક એન્ટ્રી Cloudમાં સેવ થશે.</div><select class="fx151-member-select" onchange="window.fxMemberHead=this.value;renderFinanceV151()">${heads.map(h=>`<option ${h===head?'selected':''}>${fxEsc(h)}</option>`).join('')}</select>${memberRows||'<div class="fx151-note">હાલ કોઈ ભરેલું મકાન ઉપલબ્ધ નથી.</div>'}</div>`:'';
+  const quickHeads=[...(d.incomeHeads||[]).map(h=>({k:'income',h})),...(d.expenseHeads||[]).map(h=>({k:'expense',h}))];
+  sec.innerHTML=`<div class="finance-v151">
+    <div class="fx151-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સરળ અને સુંદર હિસાબ</p><div class="fx151-stats"><div class="fx151-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx151-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx151-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx151-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div></div>
+    ${role==='admin'?`<div class="fx151-actions"><button class="fx151-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>આવકની નવી એન્ટ્રી</small></button><button class="fx151-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>ખર્ચની નવી એન્ટ્રી</small></button></div>`:''}
+    <div class="fx151-card"><div class="fx151-head"><b>📊 રિપોર્ટ</b><span class="fx151-badge">પ્રિન્ટ / ડાઉનલોડ</span></div><div class="fx151-reports"><button class="fx151-report" onclick="fxV15Open('summary')"><span class="ico">📑</span>આવક જાવક રિપોર્ટ</button><button class="fx151-report" onclick="fxV15Open('head')"><span class="ico">📊</span>હેડ વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('member')"><span class="ico">👥</span>સભ્ય વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('all')"><span class="ico">📚</span>તમામ એન્ટ્રી</button></div></div>
+    <div class="fx151-card"><div class="fx151-head"><b>⚡ હેડ પ્રમાણે સારાંશ</b><span class="fx151-badge">કુલ રકમ</span></div>${quickHeads.map(o=>{const v=o.k==='income'?incomeHeadTotal(o.h):exp.filter(x=>x.head===o.h).reduce((s,x)=>s+x.amount,0);return `<div class="fx151-headrow"><span>${o.k==='income'?'💰':'💸'} ${fxEsc(o.h)}</span><b>${fxMoney(v)}</b></div>`}).join('')}</div>
+    ${role==='admin'?`<div class="fx151-card"><div class="fx151-head"><b>⚙️ હેડ વ્યવસ્થા</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}
+    ${memberBox}
+  </div>`;
+}
+function saveMemberIncome151(head,no){
+  if(role!=='admin')return;
+  const el=document.getElementById('fx151Amt_'+no), amount=Number(el?.value||0), f=d.flats.find(x=>String(x.no)===String(no));
+  if(amount<=0){toast('જમા રકમ દાખલ કરો');el?.focus();return;}
+  if(!f||!isOccupiedHouse(f)){toast('આ મકાન ખાલી છે');return;}
+  d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:`${head} • ઘર ${no} • ${f.name||'સભ્ય'}`,date:new Date().toISOString().slice(0,10),amount});
+  save(); renderFinanceV151(); refreshExtras(); toast(`ઘર ${no} માટે ${money(amount)} જમા થયું`);
+}
+window.renderFinance2=renderFinanceV151; window.renderFinanceV14_2=renderFinanceV151; window.renderFinanceV15=renderFinanceV151;
+try{renderFinanceV151()}catch(e){}
+</script>
+
+</body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
 }
 function fxV15Download(type){
   const all=fxAll().filter(x=>!x.excluded); let rows=[];
@@ -973,6 +1243,60 @@ try{renderFinanceV15()}catch(e){}
 document.addEventListener('DOMContentLoaded',()=>{try{renderFinanceV15()}catch(e){}});
 setTimeout(()=>{try{renderFinanceV15()}catch(e){}},350);
 </script>
+
+<style id="v15-1-polish">
+/* v15.1 visual cleanup */
+.photo-credit,.code-like,pre,code,[data-code],[data-technical],.technical-text{display:none!important}
+.finance-v151{display:grid;gap:13px}
+.fx151-hero{background:linear-gradient(135deg,#1769e0 0%,#4d46d6 55%,#7b3fd1 100%);color:#fff;border-radius:24px;padding:18px;box-shadow:0 15px 35px #173b8a26;position:relative;overflow:hidden}
+.fx151-hero:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-55px;top:-55px;background:#ffffff18}
+.fx151-hero h2{margin:0;font-size:22px;position:relative;z-index:1}.fx151-hero p{margin:5px 0 0;opacity:.86;font-size:12px;position:relative;z-index:1}
+.fx151-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px;position:relative;z-index:1}
+.fx151-stat{background:#ffffff1b;border:1px solid #ffffff30;border-radius:15px;padding:11px}.fx151-stat small{opacity:.82}.fx151-stat b{display:block;font-size:18px;margin-top:3px}
+.fx151-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-action{border:1px solid #e0e8f3;background:#fff;border-radius:18px;padding:14px;text-align:left;box-shadow:0 8px 22px #183b6d0d;cursor:pointer}.fx151-action:active{transform:scale(.98)}.fx151-action .ico{font-size:25px;float:right}.fx151-action b{display:block;font-size:14px;margin-top:4px}.fx151-action small{display:block;color:#667085;margin-top:3px}
+.fx151-card{background:#fff;border:1px solid #e2e9f2;border-radius:20px;padding:14px;box-shadow:0 8px 24px #183b6d0b}.fx151-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.fx151-head b{font-size:16px}.fx151-badge{font-size:10px;background:#eef5ff;color:#1754a6;border-radius:20px;padding:5px 8px;font-weight:800}
+.fx151-reports{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-report{border:1px solid #e0e8f3;border-radius:16px;background:linear-gradient(145deg,#fff,#f7faff);padding:13px 10px;text-align:center;font-weight:900;color:#174f9c;box-shadow:0 5px 15px #183b6d09;cursor:pointer}.fx151-report .ico{display:block;font-size:24px;margin-bottom:5px}
+.fx151-headrow{display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:13px;background:#f7f9fc;border:1px solid #edf1f6;margin-top:7px}.fx151-headrow b:last-child{color:#174f9c}
+.fx151-member{background:linear-gradient(145deg,#f9fcff,#edf7ff);border:1px solid #d7e9fb;border-radius:20px;padding:14px}.fx151-member-intro{font-size:12px;color:#667085;line-height:1.5;margin:4px 0 10px}.fx151-member-select{margin-bottom:8px}.fx151-person{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #dfebf6}.fx151-person:last-child{border-bottom:0}.fx151-person-info{flex:1;min-width:0}.fx151-person-info b{font-size:13px}.fx151-person-info small{display:block;color:#667085;margin-top:3px}.fx151-person input{width:105px!important;padding:9px!important}.fx151-person button{white-space:nowrap;padding:9px 10px!important}
+.fx151-note{padding:10px 11px;border-radius:13px;background:#f6f8fb;color:#667085;font-size:11px;margin-top:8px}
+@media(max-width:390px){.fx151-reports,.fx151-actions{grid-template-columns:1fr}.fx151-person{flex-wrap:wrap}.fx151-person-info{flex-basis:100%}.fx151-person input{flex:1;width:auto!important}}
+</style>
+<script>
+/* ================= V15.1 FINAL FINANCE + CLEAN UI ================= */
+function renderFinanceV151(){
+  const sec=document.getElementById('finance'); if(!sec)return;
+  const all=fxAll(), inc=all.filter(x=>x.type==='income'&&!x.excluded), exp=all.filter(x=>x.type==='expense');
+  const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  const head=window.fxMemberHead&&heads.includes(window.fxMemberHead)?window.fxMemberHead:(heads[0]||''); window.fxMemberHead=head;
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  const memberRows=occupied.map(f=>{
+    const total=(d.incomes||[]).filter(x=>x.head===head&&String(x.flatNo)===String(f.no)&&incomeEntryCounts(x)).reduce((s,x)=>s+Number(x.amount||0),0);
+    return `<div class="fx151-person"><div class="fx151-person-info"><b>ઘર ${fxEsc(f.no)} • ${fxEsc(f.name||'સભ્ય')}</b><small>${total?'આ હેડમાં જમા: '+fxMoney(total):'હજુ જમા નથી'}</small></div><input id="fx151Amt_${fxEsc(f.no)}" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ"><button class="btn primary" onclick="saveMemberIncome151('${fxEsc(head)}','${fxEsc(f.no)}')">જમા કરો</button></div>`;
+  }).join('');
+  const memberBox=role==='admin'&&heads.length?`<div class="fx151-member"><div class="fx151-head"><b>👥 સભ્યવાર અન્ય આવક</b><span class="fx151-badge">સૌથી નીચે</span></div><div class="fx151-member-intro">મેન્ટેનન્સ સિવાયની આવક સભ્ય/મકાન પ્રમાણે અહીં સીધી જમા કરો. દરેક એન્ટ્રી Cloudમાં સેવ થશે.</div><select class="fx151-member-select" onchange="window.fxMemberHead=this.value;renderFinanceV151()">${heads.map(h=>`<option ${h===head?'selected':''}>${fxEsc(h)}</option>`).join('')}</select>${memberRows||'<div class="fx151-note">હાલ કોઈ ભરેલું મકાન ઉપલબ્ધ નથી.</div>'}</div>`:'';
+  const quickHeads=[...(d.incomeHeads||[]).map(h=>({k:'income',h})),...(d.expenseHeads||[]).map(h=>({k:'expense',h}))];
+  sec.innerHTML=`<div class="finance-v151">
+    <div class="fx151-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સરળ અને સુંદર હિસાબ</p><div class="fx151-stats"><div class="fx151-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx151-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx151-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx151-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div></div>
+    ${role==='admin'?`<div class="fx151-actions"><button class="fx151-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>આવકની નવી એન્ટ્રી</small></button><button class="fx151-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>ખર્ચની નવી એન્ટ્રી</small></button></div>`:''}
+    <div class="fx151-card"><div class="fx151-head"><b>📊 રિપોર્ટ</b><span class="fx151-badge">પ્રિન્ટ / ડાઉનલોડ</span></div><div class="fx151-reports"><button class="fx151-report" onclick="fxV15Open('summary')"><span class="ico">📑</span>આવક જાવક રિપોર્ટ</button><button class="fx151-report" onclick="fxV15Open('head')"><span class="ico">📊</span>હેડ વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('member')"><span class="ico">👥</span>સભ્ય વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('all')"><span class="ico">📚</span>તમામ એન્ટ્રી</button></div></div>
+    <div class="fx151-card"><div class="fx151-head"><b>⚡ હેડ પ્રમાણે સારાંશ</b><span class="fx151-badge">કુલ રકમ</span></div>${quickHeads.map(o=>{const v=o.k==='income'?incomeHeadTotal(o.h):exp.filter(x=>x.head===o.h).reduce((s,x)=>s+x.amount,0);return `<div class="fx151-headrow"><span>${o.k==='income'?'💰':'💸'} ${fxEsc(o.h)}</span><b>${fxMoney(v)}</b></div>`}).join('')}</div>
+    ${role==='admin'?`<div class="fx151-card"><div class="fx151-head"><b>⚙️ હેડ વ્યવસ્થા</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}
+    ${memberBox}
+  </div>`;
+}
+function saveMemberIncome151(head,no){
+  if(role!=='admin')return;
+  const el=document.getElementById('fx151Amt_'+no), amount=Number(el?.value||0), f=d.flats.find(x=>String(x.no)===String(no));
+  if(amount<=0){toast('જમા રકમ દાખલ કરો');el?.focus();return;}
+  if(!f||!isOccupiedHouse(f)){toast('આ મકાન ખાલી છે');return;}
+  d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:`${head} • ઘર ${no} • ${f.name||'સભ્ય'}`,date:new Date().toISOString().slice(0,10),amount});
+  save(); renderFinanceV151(); refreshExtras(); toast(`ઘર ${no} માટે ${money(amount)} જમા થયું`);
+}
+window.renderFinance2=renderFinanceV151; window.renderFinanceV14_2=renderFinanceV151; window.renderFinanceV15=renderFinanceV151;
+try{renderFinanceV151()}catch(e){}
+</script>
+
 </body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),200)}
 </script>
 <script>
@@ -1653,7 +1977,61 @@ function fxV15Print(type){
   } else if(type==='member'){
     const flats=(d.flats||[]).filter(isOccupiedHouse); body=flats.map(f=>{const rr=all.filter(x=>x.type==='income'&&String(x.house)===String(f.no));const t=rr.reduce((s,x)=>s+x.amount,0);return `<tr><td>${fxEsc(f.no)}</td><td>${fxEsc(f.name||'')}</td><td>સભ્ય આવક</td><td>${rr.length}</td><td>${fxMoney(t)}</td></tr>`}).join(''); const et=all.filter(x=>x.type==='expense').reduce((s,x)=>s+x.amount,0); body+=`<tr><th colspan="4">સોસાયટીનો કુલ ખર્ચ</th><th>${fxMoney(et)}</th></tr>`;
   } else body=all.sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(x=>`<tr><td>${fxEsc(x.date)}</td><td>${x.type==='income'?'આવક':'ખર્ચ'}</td><td>${fxEsc(x.head)}</td><td>${fxEsc(x.house||'-')}</td><td>${fxMoney(x.amount)}</td></tr>`).join('');
-  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${titles[type]}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${titles[type]}</h2>${type==='summary'?body:`<table><tr><th>તારીખ/ઘર</th><th>પ્રકાર/સભ્ય</th><th>હેડ</th><th>વિગત/એન્ટ્રી</th><th>રકમ</th></tr>${body}</table>`}</body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
+  w.document.write(`<html lang="gu"><head><meta charset="utf-8"><title>${titles[type]}</title><style>body{font-family:Arial,sans-serif;padding:22px;color:#182230}h1{color:#1769e0}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #d7dee8;padding:8px;font-size:12px;text-align:left}th{background:#edf5ff}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>${titles[type]}</h2>${type==='summary'?body:`<table><tr><th>તારીખ/ઘર</th><th>પ્રકાર/સભ્ય</th><th>હેડ</th><th>વિગત/એન્ટ્રી</th><th>રકમ</th></tr>${body}</table>`}
+<style id="v15-1-polish">
+/* v15.1 visual cleanup */
+.photo-credit,.code-like,pre,code,[data-code],[data-technical],.technical-text{display:none!important}
+.finance-v151{display:grid;gap:13px}
+.fx151-hero{background:linear-gradient(135deg,#1769e0 0%,#4d46d6 55%,#7b3fd1 100%);color:#fff;border-radius:24px;padding:18px;box-shadow:0 15px 35px #173b8a26;position:relative;overflow:hidden}
+.fx151-hero:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-55px;top:-55px;background:#ffffff18}
+.fx151-hero h2{margin:0;font-size:22px;position:relative;z-index:1}.fx151-hero p{margin:5px 0 0;opacity:.86;font-size:12px;position:relative;z-index:1}
+.fx151-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px;position:relative;z-index:1}
+.fx151-stat{background:#ffffff1b;border:1px solid #ffffff30;border-radius:15px;padding:11px}.fx151-stat small{opacity:.82}.fx151-stat b{display:block;font-size:18px;margin-top:3px}
+.fx151-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-action{border:1px solid #e0e8f3;background:#fff;border-radius:18px;padding:14px;text-align:left;box-shadow:0 8px 22px #183b6d0d;cursor:pointer}.fx151-action:active{transform:scale(.98)}.fx151-action .ico{font-size:25px;float:right}.fx151-action b{display:block;font-size:14px;margin-top:4px}.fx151-action small{display:block;color:#667085;margin-top:3px}
+.fx151-card{background:#fff;border:1px solid #e2e9f2;border-radius:20px;padding:14px;box-shadow:0 8px 24px #183b6d0b}.fx151-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.fx151-head b{font-size:16px}.fx151-badge{font-size:10px;background:#eef5ff;color:#1754a6;border-radius:20px;padding:5px 8px;font-weight:800}
+.fx151-reports{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-report{border:1px solid #e0e8f3;border-radius:16px;background:linear-gradient(145deg,#fff,#f7faff);padding:13px 10px;text-align:center;font-weight:900;color:#174f9c;box-shadow:0 5px 15px #183b6d09;cursor:pointer}.fx151-report .ico{display:block;font-size:24px;margin-bottom:5px}
+.fx151-headrow{display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:13px;background:#f7f9fc;border:1px solid #edf1f6;margin-top:7px}.fx151-headrow b:last-child{color:#174f9c}
+.fx151-member{background:linear-gradient(145deg,#f9fcff,#edf7ff);border:1px solid #d7e9fb;border-radius:20px;padding:14px}.fx151-member-intro{font-size:12px;color:#667085;line-height:1.5;margin:4px 0 10px}.fx151-member-select{margin-bottom:8px}.fx151-person{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #dfebf6}.fx151-person:last-child{border-bottom:0}.fx151-person-info{flex:1;min-width:0}.fx151-person-info b{font-size:13px}.fx151-person-info small{display:block;color:#667085;margin-top:3px}.fx151-person input{width:105px!important;padding:9px!important}.fx151-person button{white-space:nowrap;padding:9px 10px!important}
+.fx151-note{padding:10px 11px;border-radius:13px;background:#f6f8fb;color:#667085;font-size:11px;margin-top:8px}
+@media(max-width:390px){.fx151-reports,.fx151-actions{grid-template-columns:1fr}.fx151-person{flex-wrap:wrap}.fx151-person-info{flex-basis:100%}.fx151-person input{flex:1;width:auto!important}}
+</style>
+<script>
+/* ================= V15.1 FINAL FINANCE + CLEAN UI ================= */
+function renderFinanceV151(){
+  const sec=document.getElementById('finance'); if(!sec)return;
+  const all=fxAll(), inc=all.filter(x=>x.type==='income'&&!x.excluded), exp=all.filter(x=>x.type==='expense');
+  const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  const head=window.fxMemberHead&&heads.includes(window.fxMemberHead)?window.fxMemberHead:(heads[0]||''); window.fxMemberHead=head;
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  const memberRows=occupied.map(f=>{
+    const total=(d.incomes||[]).filter(x=>x.head===head&&String(x.flatNo)===String(f.no)&&incomeEntryCounts(x)).reduce((s,x)=>s+Number(x.amount||0),0);
+    return `<div class="fx151-person"><div class="fx151-person-info"><b>ઘર ${fxEsc(f.no)} • ${fxEsc(f.name||'સભ્ય')}</b><small>${total?'આ હેડમાં જમા: '+fxMoney(total):'હજુ જમા નથી'}</small></div><input id="fx151Amt_${fxEsc(f.no)}" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ"><button class="btn primary" onclick="saveMemberIncome151('${fxEsc(head)}','${fxEsc(f.no)}')">જમા કરો</button></div>`;
+  }).join('');
+  const memberBox=role==='admin'&&heads.length?`<div class="fx151-member"><div class="fx151-head"><b>👥 સભ્યવાર અન્ય આવક</b><span class="fx151-badge">સૌથી નીચે</span></div><div class="fx151-member-intro">મેન્ટેનન્સ સિવાયની આવક સભ્ય/મકાન પ્રમાણે અહીં સીધી જમા કરો. દરેક એન્ટ્રી Cloudમાં સેવ થશે.</div><select class="fx151-member-select" onchange="window.fxMemberHead=this.value;renderFinanceV151()">${heads.map(h=>`<option ${h===head?'selected':''}>${fxEsc(h)}</option>`).join('')}</select>${memberRows||'<div class="fx151-note">હાલ કોઈ ભરેલું મકાન ઉપલબ્ધ નથી.</div>'}</div>`:'';
+  const quickHeads=[...(d.incomeHeads||[]).map(h=>({k:'income',h})),...(d.expenseHeads||[]).map(h=>({k:'expense',h}))];
+  sec.innerHTML=`<div class="finance-v151">
+    <div class="fx151-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સરળ અને સુંદર હિસાબ</p><div class="fx151-stats"><div class="fx151-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx151-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx151-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx151-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div></div>
+    ${role==='admin'?`<div class="fx151-actions"><button class="fx151-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>આવકની નવી એન્ટ્રી</small></button><button class="fx151-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>ખર્ચની નવી એન્ટ્રી</small></button></div>`:''}
+    <div class="fx151-card"><div class="fx151-head"><b>📊 રિપોર્ટ</b><span class="fx151-badge">પ્રિન્ટ / ડાઉનલોડ</span></div><div class="fx151-reports"><button class="fx151-report" onclick="fxV15Open('summary')"><span class="ico">📑</span>આવક જાવક રિપોર્ટ</button><button class="fx151-report" onclick="fxV15Open('head')"><span class="ico">📊</span>હેડ વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('member')"><span class="ico">👥</span>સભ્ય વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('all')"><span class="ico">📚</span>તમામ એન્ટ્રી</button></div></div>
+    <div class="fx151-card"><div class="fx151-head"><b>⚡ હેડ પ્રમાણે સારાંશ</b><span class="fx151-badge">કુલ રકમ</span></div>${quickHeads.map(o=>{const v=o.k==='income'?incomeHeadTotal(o.h):exp.filter(x=>x.head===o.h).reduce((s,x)=>s+x.amount,0);return `<div class="fx151-headrow"><span>${o.k==='income'?'💰':'💸'} ${fxEsc(o.h)}</span><b>${fxMoney(v)}</b></div>`}).join('')}</div>
+    ${role==='admin'?`<div class="fx151-card"><div class="fx151-head"><b>⚙️ હેડ વ્યવસ્થા</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}
+    ${memberBox}
+  </div>`;
+}
+function saveMemberIncome151(head,no){
+  if(role!=='admin')return;
+  const el=document.getElementById('fx151Amt_'+no), amount=Number(el?.value||0), f=d.flats.find(x=>String(x.no)===String(no));
+  if(amount<=0){toast('જમા રકમ દાખલ કરો');el?.focus();return;}
+  if(!f||!isOccupiedHouse(f)){toast('આ મકાન ખાલી છે');return;}
+  d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:`${head} • ઘર ${no} • ${f.name||'સભ્ય'}`,date:new Date().toISOString().slice(0,10),amount});
+  save(); renderFinanceV151(); refreshExtras(); toast(`ઘર ${no} માટે ${money(amount)} જમા થયું`);
+}
+window.renderFinance2=renderFinanceV151; window.renderFinanceV14_2=renderFinanceV151; window.renderFinanceV15=renderFinanceV151;
+try{renderFinanceV151()}catch(e){}
+</script>
+
+</body></html>`); w.document.close(); setTimeout(()=>w.print(),250);
 }
 function fxV15Download(type){
   const all=fxAll().filter(x=>!x.excluded); let rows=[];
@@ -1672,4 +2050,58 @@ try{renderFinanceV15()}catch(e){}
 document.addEventListener('DOMContentLoaded',()=>{try{renderFinanceV15()}catch(e){}});
 setTimeout(()=>{try{renderFinanceV15()}catch(e){}},350);
 </script>
+
+<style id="v15-1-polish">
+/* v15.1 visual cleanup */
+.photo-credit,.code-like,pre,code,[data-code],[data-technical],.technical-text{display:none!important}
+.finance-v151{display:grid;gap:13px}
+.fx151-hero{background:linear-gradient(135deg,#1769e0 0%,#4d46d6 55%,#7b3fd1 100%);color:#fff;border-radius:24px;padding:18px;box-shadow:0 15px 35px #173b8a26;position:relative;overflow:hidden}
+.fx151-hero:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-55px;top:-55px;background:#ffffff18}
+.fx151-hero h2{margin:0;font-size:22px;position:relative;z-index:1}.fx151-hero p{margin:5px 0 0;opacity:.86;font-size:12px;position:relative;z-index:1}
+.fx151-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px;position:relative;z-index:1}
+.fx151-stat{background:#ffffff1b;border:1px solid #ffffff30;border-radius:15px;padding:11px}.fx151-stat small{opacity:.82}.fx151-stat b{display:block;font-size:18px;margin-top:3px}
+.fx151-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-action{border:1px solid #e0e8f3;background:#fff;border-radius:18px;padding:14px;text-align:left;box-shadow:0 8px 22px #183b6d0d;cursor:pointer}.fx151-action:active{transform:scale(.98)}.fx151-action .ico{font-size:25px;float:right}.fx151-action b{display:block;font-size:14px;margin-top:4px}.fx151-action small{display:block;color:#667085;margin-top:3px}
+.fx151-card{background:#fff;border:1px solid #e2e9f2;border-radius:20px;padding:14px;box-shadow:0 8px 24px #183b6d0b}.fx151-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.fx151-head b{font-size:16px}.fx151-badge{font-size:10px;background:#eef5ff;color:#1754a6;border-radius:20px;padding:5px 8px;font-weight:800}
+.fx151-reports{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fx151-report{border:1px solid #e0e8f3;border-radius:16px;background:linear-gradient(145deg,#fff,#f7faff);padding:13px 10px;text-align:center;font-weight:900;color:#174f9c;box-shadow:0 5px 15px #183b6d09;cursor:pointer}.fx151-report .ico{display:block;font-size:24px;margin-bottom:5px}
+.fx151-headrow{display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:13px;background:#f7f9fc;border:1px solid #edf1f6;margin-top:7px}.fx151-headrow b:last-child{color:#174f9c}
+.fx151-member{background:linear-gradient(145deg,#f9fcff,#edf7ff);border:1px solid #d7e9fb;border-radius:20px;padding:14px}.fx151-member-intro{font-size:12px;color:#667085;line-height:1.5;margin:4px 0 10px}.fx151-member-select{margin-bottom:8px}.fx151-person{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #dfebf6}.fx151-person:last-child{border-bottom:0}.fx151-person-info{flex:1;min-width:0}.fx151-person-info b{font-size:13px}.fx151-person-info small{display:block;color:#667085;margin-top:3px}.fx151-person input{width:105px!important;padding:9px!important}.fx151-person button{white-space:nowrap;padding:9px 10px!important}
+.fx151-note{padding:10px 11px;border-radius:13px;background:#f6f8fb;color:#667085;font-size:11px;margin-top:8px}
+@media(max-width:390px){.fx151-reports,.fx151-actions{grid-template-columns:1fr}.fx151-person{flex-wrap:wrap}.fx151-person-info{flex-basis:100%}.fx151-person input{flex:1;width:auto!important}}
+</style>
+<script>
+/* ================= V15.1 FINAL FINANCE + CLEAN UI ================= */
+function renderFinanceV151(){
+  const sec=document.getElementById('finance'); if(!sec)return;
+  const all=fxAll(), inc=all.filter(x=>x.type==='income'&&!x.excluded), exp=all.filter(x=>x.type==='expense');
+  const ti=inc.reduce((s,x)=>s+x.amount,0), te=exp.reduce((s,x)=>s+x.amount,0);
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  const head=window.fxMemberHead&&heads.includes(window.fxMemberHead)?window.fxMemberHead:(heads[0]||''); window.fxMemberHead=head;
+  const occupied=(d.flats||[]).filter(isOccupiedHouse);
+  const memberRows=occupied.map(f=>{
+    const total=(d.incomes||[]).filter(x=>x.head===head&&String(x.flatNo)===String(f.no)&&incomeEntryCounts(x)).reduce((s,x)=>s+Number(x.amount||0),0);
+    return `<div class="fx151-person"><div class="fx151-person-info"><b>ઘર ${fxEsc(f.no)} • ${fxEsc(f.name||'સભ્ય')}</b><small>${total?'આ હેડમાં જમા: '+fxMoney(total):'હજુ જમા નથી'}</small></div><input id="fx151Amt_${fxEsc(f.no)}" type="number" min="0" inputmode="numeric" placeholder="₹ રકમ"><button class="btn primary" onclick="saveMemberIncome151('${fxEsc(head)}','${fxEsc(f.no)}')">જમા કરો</button></div>`;
+  }).join('');
+  const memberBox=role==='admin'&&heads.length?`<div class="fx151-member"><div class="fx151-head"><b>👥 સભ્યવાર અન્ય આવક</b><span class="fx151-badge">સૌથી નીચે</span></div><div class="fx151-member-intro">મેન્ટેનન્સ સિવાયની આવક સભ્ય/મકાન પ્રમાણે અહીં સીધી જમા કરો. દરેક એન્ટ્રી Cloudમાં સેવ થશે.</div><select class="fx151-member-select" onchange="window.fxMemberHead=this.value;renderFinanceV151()">${heads.map(h=>`<option ${h===head?'selected':''}>${fxEsc(h)}</option>`).join('')}</select>${memberRows||'<div class="fx151-note">હાલ કોઈ ભરેલું મકાન ઉપલબ્ધ નથી.</div>'}</div>`:'';
+  const quickHeads=[...(d.incomeHeads||[]).map(h=>({k:'income',h})),...(d.expenseHeads||[]).map(h=>({k:'expense',h}))];
+  sec.innerHTML=`<div class="finance-v151">
+    <div class="fx151-hero"><h2>આવક • ખર્ચ</h2><p>સરદાર સોસાયટીનો સરળ અને સુંદર હિસાબ</p><div class="fx151-stats"><div class="fx151-stat"><small>કુલ આવક</small><b>${fxMoney(ti)}</b></div><div class="fx151-stat"><small>કુલ ખર્ચ</small><b>${fxMoney(te)}</b></div><div class="fx151-stat"><small>બાકી સિલક</small><b>${fxMoney(ti-te)}</b></div><div class="fx151-stat"><small>કુલ એન્ટ્રી</small><b>${all.length}</b></div></div></div>
+    ${role==='admin'?`<div class="fx151-actions"><button class="fx151-action" onclick="incomeForm()"><span class="ico">➕</span><b>નવી આવક</b><small>આવકની નવી એન્ટ્રી</small></button><button class="fx151-action" onclick="expenseForm()"><span class="ico">➕</span><b>નવો ખર્ચ</b><small>ખર્ચની નવી એન્ટ્રી</small></button></div>`:''}
+    <div class="fx151-card"><div class="fx151-head"><b>📊 રિપોર્ટ</b><span class="fx151-badge">પ્રિન્ટ / ડાઉનલોડ</span></div><div class="fx151-reports"><button class="fx151-report" onclick="fxV15Open('summary')"><span class="ico">📑</span>આવક જાવક રિપોર્ટ</button><button class="fx151-report" onclick="fxV15Open('head')"><span class="ico">📊</span>હેડ વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('member')"><span class="ico">👥</span>સભ્ય વાઈઝ આવક જાવક</button><button class="fx151-report" onclick="fxV15Open('all')"><span class="ico">📚</span>તમામ એન્ટ્રી</button></div></div>
+    <div class="fx151-card"><div class="fx151-head"><b>⚡ હેડ પ્રમાણે સારાંશ</b><span class="fx151-badge">કુલ રકમ</span></div>${quickHeads.map(o=>{const v=o.k==='income'?incomeHeadTotal(o.h):exp.filter(x=>x.head===o.h).reduce((s,x)=>s+x.amount,0);return `<div class="fx151-headrow"><span>${o.k==='income'?'💰':'💸'} ${fxEsc(o.h)}</span><b>${fxMoney(v)}</b></div>`}).join('')}</div>
+    ${role==='admin'?`<div class="fx151-card"><div class="fx151-head"><b>⚙️ હેડ વ્યવસ્થા</b></div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div></div>`:''}
+    ${memberBox}
+  </div>`;
+}
+function saveMemberIncome151(head,no){
+  if(role!=='admin')return;
+  const el=document.getElementById('fx151Amt_'+no), amount=Number(el?.value||0), f=d.flats.find(x=>String(x.no)===String(no));
+  if(amount<=0){toast('જમા રકમ દાખલ કરો');el?.focus();return;}
+  if(!f||!isOccupiedHouse(f)){toast('આ મકાન ખાલી છે');return;}
+  d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:`${head} • ઘર ${no} • ${f.name||'સભ્ય'}`,date:new Date().toISOString().slice(0,10),amount});
+  save(); renderFinanceV151(); refreshExtras(); toast(`ઘર ${no} માટે ${money(amount)} જમા થયું`);
+}
+window.renderFinance2=renderFinanceV151; window.renderFinanceV14_2=renderFinanceV151; window.renderFinanceV15=renderFinanceV151;
+try{renderFinanceV151()}catch(e){}
+</script>
+
 </body></html>
