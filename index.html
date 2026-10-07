@@ -453,7 +453,7 @@ function stat(label,val,cl){return `<div class="v22-card v22-stat ${cl||''}"><sp
 function graph(){let rs=rows(),map={};rs.forEach(r=>{let m=String(r.date||'').slice(0,7);if(!/^\d{4}-\d{2}$/.test(m))return;(map[m]??={i:0,e:0});map[m][r.type==='આવક'?'i':'e']+=r.amount});let a=Object.entries(map).sort().slice(-6),mx=Math.max(1,...a.map(x=>Math.max(x[1].i,x[1].e)));return `<div class="v22-barwrap">${a.map(([m,v])=>`<div class="v22-barcol"><div class="v22-bar v22-inc" style="height:${Math.max(3,v.i/mx*100)}%" title="આવક ${money(v.i)}"></div><div class="v22-bar v22-exp" style="height:${Math.max(3,v.e/mx*100)}%" title="ખર્ચ ${money(v.e)}"></div></div>`).join('')}</div><div class="v22-legend"><span>● આવક</span><span>● ખર્ચ</span></div><div style="display:flex;gap:12px">${a.map(x=>`<div class="v22-axis" style="flex:1">${E(x[0].slice(5))}</div>`).join('')}</div>`}
 function home(){let all=rows(),t=totals(all),dr=totals(dayRows()),mr=totals(monthRows()),out=d.flats.reduce((s,f)=>s+outstanding(f),0);return `<div class="v22-hero"><h2>નમસ્કાર 👋</h2><p>સરદાર સોસાયટીનું સરળ અને પારદર્શક સંચાલન</p></div><div class="v22-grid">${stat('કુલ આવક',t.i,'blue')}${stat('કુલ ખર્ચ',t.e,'red')}${stat('બાકી સિલક',t.i-t.e,'green')}${stat('બાકી મેન્ટેનન્સ',out,'orange')}</div><div class="v22-card"><div class="v22-title">📅 આજનો હિસાબ</div><div class="v22-two"><div><span class="v22-sub">આવક</span><h3>${money(dr.i)}</h3></div><div><span class="v22-sub">ખર્ચ</span><h3>${money(dr.e)}</h3></div></div></div><div class="v22-card"><div class="v22-title">📆 આ મહિનાનો હિસાબ</div><div class="v22-two"><div><span class="v22-sub">આવક</span><h3>${money(mr.i)}</h3></div><div><span class="v22-sub">ખર્ચ</span><h3>${money(mr.e)}</h3></div></div></div><div class="v22-card"><div class="v22-title">⚡ ઝડપી કામ</div><div class="v22-actions"><button class="v22-btn primary" onclick="openMaintForm()">➕ મેન્ટેનન્સ<small>પેમેન્ટ જમા</small></button><button class="v22-btn" onclick="incomeStep1Open()">💰 આવક<small>નવી આવક</small></button><button class="v22-btn green" onclick="go('finance',document.querySelector('[data-page=\"finance\"]'))">📊 રિપોર્ટ<small>હિસાબ મેનુ</small></button></div></div>`}
 function maintenance(){let list=d.flats.filter(occ).map(f=>`<div class="v22-row"><div class="grow"><b>ઘર ${E(f.no)} • ${E(f.name)}</b><div class="v22-sub">બાકી: ${money(outstanding(f))}</div></div><div class="v22-tools"><button class="v22-btn green" style="min-height:42px;padding:8px" onclick="openMaintForm('${f.no}')">જમા</button><button class="v22-btn" style="min-height:42px;padding:8px" onclick="memberStatement('${f.no}')">હિસાબ</button></div></div>`).join('');return `<div class="v22-hero"><h2>💰 મેન્ટેનન્સ</h2><p>મકાન પ્રમાણે ચુકવણી અને બાકી રકમ</p></div>${role==='admin'?`<div class="v22-card"><div class="v22-actions"><button class="v22-btn primary" onclick="openMaintForm()">➕ પેમેન્ટ જમા કરો</button><button class="v22-btn green" onclick="reminders()">💬 બાકી Reminder</button></div></div>`:''}<div class="v22-card"><div class="v22-title">મકાનવાર મેન્ટેનન્સ</div><div class="v22-list">${list||'<div class="v22-empty">કોઈ ભરેલું મકાન નથી.</div>'}</div></div>`}
-function finance(){const show=!!window._incomeStep2Visible;return `<div class="v22-hero"><h2>💰 આવક</h2><p>હિસાબ વિભાગ — સ્ટેપ 2: કુલ આવક એન્ટ્રી</p></div>${role==='admin'?`<div class="v22-card"><div class="v22-title">નવી આવક</div><div class="v22-sub">નવી આવક ઉમેરો. કુલ આવકની એન્ટ્રી જોવા માટે નીચેનું બટન દબાવો.</div><div class="v22-actions" style="margin-top:10px"><button class="v22-btn primary" style="flex:1" onclick="incomeStep1Open()">➕ નવી આવક</button><button class="v22-btn" style="flex:1" onclick="incomeStep2Open()">📋 કુલ આવક એન્ટ્રી</button></div></div>`:''}<div id="incomeStep2Card" class="v22-card" style="display:${show?'block':'none'}"><div class="v22-title">📋 કુલ આવક એન્ટ્રી</div><div class="v22-sub">કુલ આવક: <b id="step2TotalIncome">₹0</b></div><div id="incomeStep2List" style="margin-top:10px"></div></div>`}
+function finance(){const show=!!window._incomeStep2Visible;const dueShow=!!window._incomeDueVisible;return `<div class="v22-hero"><h2>💰 આવક</h2><p>હિસાબ વિભાગ — આવક એન્ટ્રી અને બાકી ઘરો</p></div>${role==='admin'?`<div class="v22-card"><div class="v22-title">આવક વ્યવસ્થાપન</div><div class="v22-sub">નવી આવક, કુલ એન્ટ્રી અને હેડ પ્રમાણે બાકી ઘરો જુઓ.</div><div class="v22-actions" style="margin-top:10px"><button class="v22-btn primary" style="flex:1" onclick="incomeStep1Open()">➕ નવી આવક</button><button class="v22-btn" style="flex:1" onclick="incomeStep2Open()">📋 કુલ આવક એન્ટ્રી</button><button class="v22-btn green" style="flex:1" onclick="incomeDueOpen()">📊 બાકી ઘરો</button></div></div>`:''}<div id="incomeStep2Card" class="v22-card" style="display:${show?'block':'none'}"><div class="v22-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px"><span>📋 કુલ આવક એન્ટ્રી</span><button class="v22-btn" aria-label="કુલ આવક એન્ટ્રી બંધ કરો" title="બંધ કરો" style="min-height:36px;min-width:36px;padding:4px 10px;font-size:20px;line-height:1" onclick="incomeStep2Close()">✕</button></div><div class="v22-sub">કુલ આવક: <b id="step2TotalIncome">₹0</b></div><div id="incomeStep2List" style="margin-top:10px"></div></div><div id="incomeDueCard" class="v22-card" style="display:${dueShow?'block':'none'}"><div class="v22-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px"><span>📊 હેડ પ્રમાણે બાકી ઘરો</span><button class="v22-btn" aria-label="બાકી ઘરો બંધ કરો" title="બંધ કરો" style="min-height:36px;min-width:36px;padding:4px 10px;font-size:20px;line-height:1" onclick="incomeDueClose()">✕</button></div><div id="incomeDueBody" style="margin-top:10px"></div></div>`}
 
 function members(){return `<div class="v22-hero"><h2>👥 સભ્યો</h2><p>મકાન, સભ્ય અને સંપૂર્ણ હિસાબ</p></div>${role==='admin'?`<div class="v22-card"><button class="v22-btn primary" style="width:100%" onclick="openMemberForm()">➕ મકાન / સભ્ય ઉમેરો અથવા સુધારો</button></div>`:''}<div class="v22-card"><input class="v22-search" placeholder="🔎 ઘર નંબર / નામ / મોબાઇલ / Receipt નંબર" oninput="searchV22(this.value)"><div id="v22search" style="margin-top:10px"></div></div><div class="v22-card"><div class="v22-title">મકાન 1 થી 60</div><div class="v22-list">${d.flats.map(f=>`<div class="v22-row member-v23-row"><div class="grow"><b class="member-v23-name">ઘર ${E(f.no)} ${f.name?'• '+E(f.name):'• ખાલી'}</b><div class="member-v23-mobile">📱 ${f.mobile?E(f.mobile):'મોબાઇલ નોંધાયેલ નથી'}</div><div class="v22-sub">બાકી ${money(outstanding(f))}</div></div><button class="v22-btn" style="min-height:40px;padding:7px" onclick="memberStatement('${E(f.no)}')">જુઓ</button></div>`).join('')}</div></div>`}
 function more(){return `<div class="v22-hero"><h2>☰ સોસાયટી વ્યવસ્થાપન</h2><p>જરૂરી તમામ વિભાગો એક જ જગ્યાએ</p></div><div class="v22-menu"><button onclick="committeePage()"><i>👔</i>કમિટી</button><button onclick="securityPage()"><i>🛡️</i>સિક્યુરિટી</button><button onclick="noticesPage()"><i>📢</i>નોટિસ</button><button onclick="complaintsPage()"><i>📝</i>ફરિયાદ</button><button onclick="visitorsPage()"><i>🚪</i>વિઝિટર</button><button onclick="parkingPage()"><i>🚗</i>પાર્કિંગ</button><button onclick="repairsPage()"><i>🔧</i>રિપેરિંગ</button><button onclick="simplePage('assets','📦 Society Assets','assets')"><i>📦</i>સામાન</button><button onclick="simplePage('calendar','📅 Calendar','calendar')"><i>📅</i>કૅલેન્ડર</button><button onclick="simplePage('meetings','🏛️ Committee Meeting','meetings')"><i>🏛️</i>મિટિંગ</button><button onclick="simplePage('documents','📄 Documents','documents')"><i>📄</i>દસ્તાવેજ</button><button onclick="simplePage('emergency','📞 Emergency Contacts','emergency')"><i>📞</i>Emergency</button><button onclick="reportsPage()"><i>📊</i>રિપોર્ટ</button><button onclick="backupPage()"><i>💾</i>Backup</button><button onclick="auditPage()"><i>🔐</i>Audit</button><button onclick="settingsPage()"><i>⚙️</i>Settings</button></div>`}
@@ -556,6 +556,7 @@ function incomeStep1Save(){
   closeV22();
   renderAll();
   toastV22('આવક સાચવાઈ');
+  setTimeout(()=>incomeReceiptActions('i'+stamp),150);
 }
 window.incomeStep1Open=incomeStep1Open;
 window.incomeStep1Save=incomeStep1Save;
@@ -571,6 +572,11 @@ function incomeStep2Open(){
   window._incomeStep2Visible=true;
   const card=document.getElementById('incomeStep2Card');
   if(card){card.style.display='block';incomeStep2Render();setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'start'}),50);}
+}
+function incomeStep2Close(){
+  window._incomeStep2Visible=false;
+  const card=document.getElementById('incomeStep2Card');
+  if(card) card.style.display='none';
 }
 function incomeStep2Render(){
   const box=document.getElementById('incomeStep2List');
@@ -631,11 +637,66 @@ function incomeStep2Delete(index){
   window._incomeStep2Visible=true; renderAll(); setTimeout(incomeStep2Render,0); toastV22('આવક Delete થઈ');
 }
 window.incomeStep2Open=incomeStep2Open;
+window.incomeStep2Close=incomeStep2Close;
 window.incomeStep2Render=incomeStep2Render;
 window.incomeStep2Edit=incomeStep2Edit;
 window.incomeStep2Update=incomeStep2Update;
 window.incomeStep2Delete=incomeStep2Delete;
 // કુલ આવક એન્ટ્રી હવે માત્ર ‘કુલ આવક એન્ટ્રી’ બટન દબાવ્યા પછી જ દેખાય છે.
+
+/* =========================================================
+   INCOME DUES + RECEIPT / WHATSAPP
+   ========================================================= */
+function incomeDueOpen(){
+  if(role!=='admin')return;
+  window._incomeDueVisible=true;
+  const card=document.getElementById('incomeDueCard');
+  if(card){card.style.display='block';incomeDueRender();setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'start'}),50);}
+}
+function incomeDueClose(){
+  window._incomeDueVisible=false;
+  const card=document.getElementById('incomeDueCard');
+  if(card)card.style.display='none';
+}
+function incomeDueRender(){
+  const box=document.getElementById('incomeDueBody'); if(!box)return;
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  if(!heads.length){box.innerHTML='<div class="v22-empty">આવક હેડ ઉપલબ્ધ નથી.</div>';return;}
+  const selected=window._incomeDueHead||heads[0]; window._incomeDueHead=heads.includes(selected)?selected:heads[0];
+  const occFlats=(d.flats||[]).filter(occ);
+  const paidSet=new Set((d.incomes||[]).filter(x=>String(x.head)===String(window._incomeDueHead)&&x.flatNo).map(x=>String(x.flatNo)));
+  const due=occFlats.filter(f=>!paidSet.has(String(f.no)));
+  const paid=occFlats.filter(f=>paidSet.has(String(f.no)));
+  box.innerHTML=`<label>આવક હેડ</label><select id="incomeDueHead" onchange="window._incomeDueHead=this.value;incomeDueRender()">${heads.map(h=>`<option value="${E(h)}" ${h===window._incomeDueHead?'selected':''}>${E(h)}</option>`).join('')}</select>
+  <div class="v22-two" style="margin-top:10px"><div class="v22-card" style="margin:0;padding:12px"><span class="v22-sub">કુલ ભરેલા મકાન</span><h3 style="margin:4px 0">${paid.length}</h3></div><div class="v22-card" style="margin:0;padding:12px"><span class="v22-sub">બાકી મકાન</span><h3 style="margin:4px 0">${due.length}</h3></div></div>
+  <div class="v22-title" style="margin-top:14px">🔴 બાકી ઘરો</div>
+  <div class="v22-list">${due.length?due.map(f=>`<div class="v22-row"><div class="grow"><b>ઘર ${E(f.no)} • ${E(f.name)}</b><div class="v22-sub">આ હેડમાં હજી જમા નથી</div></div><button class="v22-btn" style="min-height:38px;padding:6px 9px" onclick="incomeStep1OpenForHouse('${E(f.no)}')">જમા</button></div>`).join(''):'<div class="v22-empty">આ હેડમાં કોઈ બાકી ઘર નથી. 🎉</div>'}</div>`;
+}
+function incomeStep1OpenForHouse(no){
+  incomeStep1Open();
+  setTimeout(()=>{const el=document.getElementById('step1IncomeFlat');if(el)el.value=String(no)},50);
+}
+function incomeReceiptActions(id){
+  const x=(d.incomes||[]).find(v=>String(v.id)===String(id)); if(!x)return;
+  const f=x.flatNo?(d.flats||[]).find(v=>String(v.no)===String(x.flatNo)):null;
+  const name=x.payerName||f?.name||'સામાન્ય આવક';
+  modal('🧾 આવક રસીદ',`<div class="v22-card"><b>સરદાર સોસાયટી</b><p>રસીદ નંબર: <b>${E(x.receipt||'-')}</b></p><p>જમા કરનાર: <b>${E(name)}</b></p><p>ઘર નંબર: <b>${x.flatNo?E(x.flatNo):'—'}</b></p><p>હેડ: ${E(x.head||'-')}</p><p>તારીખ: ${E(x.date||'-')}</p><p>રકમ: <b>${money(x.amount)}</b></p><p>Payment Mode: ${E(x.mode||'-')}</p><p>વિગત: ${E(x.detail||'-')}</p></div><div class="v22-tools"><button class="v22-btn primary" onclick="incomeReceiptPrint('${E(x.id)}')">📄 રસીદ / PDF</button><button class="v22-btn green" onclick="incomeReceiptWhatsApp('${E(x.id)}')">📲 WhatsApp</button></div><div class="v22-sub" style="margin-top:8px">PDF માટે રસીદ ખોલ્યા પછી Print → Save as PDF કરી શકાય છે. WhatsAppમાં રસીદ સાથે શેર કરવાનો વિકલ્પ પણ ઉપલબ્ધ હોય તો Android Shareમાંથી WhatsApp પસંદ કરી શકાય છે.</div>`);
+}
+function incomeReceiptPrint(id){
+  const x=(d.incomes||[]).find(v=>String(v.id)===String(id));if(!x)return;
+  const f=x.flatNo?(d.flats||[]).find(v=>String(v.no)===String(x.flatNo)):null;
+  const name=x.payerName||f?.name||'સામાન્ય આવક';
+  const w=window.open('','_blank'); if(!w)return toastV22('Popup allow કરો');
+  w.document.write(`<!doctype html><html lang="gu"><head><meta charset="utf-8"><title>રસીદ ${E(x.receipt||'')}</title><style>body{font-family:Arial,sans-serif;padding:28px;max-width:600px;margin:auto;color:#111}h1{margin-bottom:4px}.box{border:1px solid #bbb;border-radius:12px;padding:18px}.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee}.amt{font-size:24px;font-weight:800;margin-top:14px}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><div>આવક રસીદ</div><div class="box"><div class="row"><b>રસીદ નંબર</b><span>${E(x.receipt||'-')}</span></div><div class="row"><b>જમા કરનાર</b><span>${E(name)}</span></div><div class="row"><b>ઘર નંબર</b><span>${x.flatNo?E(x.flatNo):'—'}</span></div><div class="row"><b>આવક હેડ</b><span>${E(x.head||'-')}</span></div><div class="row"><b>તારીખ</b><span>${E(x.date||'-')}</span></div><div class="row"><b>Payment Mode</b><span>${E(x.mode||'-')}</span></div><div class="row"><b>વિગત</b><span>${E(x.detail||'-')}</span></div><div class="amt">કુલ રકમ: ${money(x.amount)}</div></div><p>આભાર.</p><script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`);w.document.close();
+}
+function incomeReceiptWhatsApp(id){
+  const x=(d.incomes||[]).find(v=>String(v.id)===String(id));if(!x)return;
+  const f=x.flatNo?(d.flats||[]).find(v=>String(v.no)===String(x.flatNo)):null;
+  const name=x.payerName||f?.name||'સામાન્ય આવક';
+  const msg=`સરદાર સોસાયટી\n\nઆવક રસીદ\nરસીદ નંબર: ${x.receipt||'-'}\nજમા કરનાર: ${name}\nઘર નંબર: ${x.flatNo||'-'}\nઆવક હેડ: ${x.head||'-'}\nતારીખ: ${x.date||'-'}\nરકમ: ${money(x.amount)}\nPayment Mode: ${x.mode||'-'}\n\nઆભાર.`;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+window.incomeDueOpen=incomeDueOpen;window.incomeDueClose=incomeDueClose;window.incomeDueRender=incomeDueRender;window.incomeStep1OpenForHouse=incomeStep1OpenForHouse;window.incomeReceiptActions=incomeReceiptActions;window.incomeReceiptPrint=incomeReceiptPrint;window.incomeReceiptWhatsApp=incomeReceiptWhatsApp;
 
 // Simple pages that are intended as management lists. They remain separate from Finance.
 window.simplePage=simplePage;window.committeePage=committeePage;window.securityPage=securityPage;window.noticesPage=noticesPage;window.complaintsPage=complaintsPage;window.visitorsPage=visitorsPage;window.parkingPage=parkingPage;window.repairsPage=repairsPage;window.reportsPage=reportsPage;window.backupPage=backupPage;window.auditPage=auditPage;window.settingsPage=settingsPage;
