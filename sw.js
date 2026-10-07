@@ -1,5 +1,5 @@
-const CACHE='sardar-society-v23-4-finance-top-3';
-const VERSION='23.4';
+const CACHE='sardar-society-v23-step6-final-report';
+const VERSION='23.6-clean';
 const ASSETS=['./','./index.html','./manifest.webmanifest'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
