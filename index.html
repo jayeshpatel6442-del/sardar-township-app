@@ -437,10 +437,11 @@ const today=()=>new Date().toISOString().slice(0,10), occ=f=>!!(f&&String(f.name
 function log(a,detail){ensure();d.activityHistory.unshift({id:'a'+Date.now()+Math.random().toString(36).slice(2,6),date:nowText(),iso:new Date().toISOString(),user:role==='admin'?'એડમિન':('સભ્ય • ઘર '+currentFlat),action:a,detail:String(detail||'')});d.activityHistory=d.activityHistory.slice(0,500)}
 function persist(action,detail){if(action)log(action,detail);save()}
 function incomes(){return d.incomes||[]}
-function maintenanceRows(){let a=[];(d.flats||[]).forEach(f=>(f.payments||[]).forEach(p=>a.push({id:p.receipt||('m'+Date.now()),date:p.periodStartISO||p.date,type:'આવક',head:'મેન્ટેનન્સ આવક',house:f.no,member:f.name||'',detail:'મેન્ટેનન્સ',mode:p.mode||'',receipt:p.receipt||'',amount:Number(p.amount||0),lateFee:Number(p.lateFee||0)})));return a}
-function incomeRows(){return incomes().filter(x=>x.head!=='મેન્ટેનન્સ આવક').map(x=>{let f=x.flatNo?d.flats.find(f=>String(f.no)===String(x.flatNo)):null;return {id:x.id,date:x.date,type:'આવક',head:x.head||'અન્ય આવક',house:x.flatNo||'',member:f?.name||'',detail:x.detail||'',mode:x.mode||'',receipt:x.receipt||'',amount:Number(x.amount||0)}})}
+function maintenanceRows(){let a=[];(d.flats||[]).filter(occ).forEach(f=>(f.payments||[]).forEach(p=>a.push({id:p.receipt||('m'+Date.now()),date:p.periodStartISO||p.date,type:'આવક',head:'મેન્ટેનન્સ આવક',house:f.no,member:f.name||'',detail:'મેન્ટેનન્સ',mode:p.mode||'',receipt:p.receipt||'',amount:Number(p.amount||0),lateFee:Number(p.lateFee||0)})));return a}
+function incomeRows(){return incomes().filter(x=>x.head!=='મેન્ટેનન્સ આવક').filter(x=>{if(!x.flatNo)return true;const f=d.flats.find(f=>String(f.no)===String(x.flatNo));return !!f && occ(f)}).map(x=>{let f=x.flatNo?d.flats.find(f=>String(f.no)===String(x.flatNo)):null;return {id:x.id,date:x.date,type:'આવક',head:x.head||'અન્ય આવક',house:x.flatNo||'',member:f?.name||'',detail:x.detail||'',mode:x.mode||'',receipt:x.receipt||'',amount:Number(x.amount||0)}})}
 function expenseRows(){return (d.expenses||[]).map(x=>({id:x.id,date:x.date,type:'ખર્ચ',head:x.head||'',house:'',member:'',detail:x.detail||'',mode:x.mode||'',receipt:x.billNo||'',amount:Number(x.amount||0)}))}
 function rows(){return [...maintenanceRows(),...incomeRows(),...expenseRows()]}
+function financeTotals(){const t=totals(rows());return {income:t.i,expense:t.e,balance:t.i-t.e};}
 function totals(rs){return rs.reduce((o,r)=>(r.type==='આવક'?o.i+=r.amount:o.e+=r.amount,o),{i:0,e:0})}
 function outstanding(f){if(!occ(f))return 0;let due=Number(f.quarterly||d.settings.monthly*3||3000);let paid=(f.payments||[]).reduce((s,p)=>s+Number(p.amount||0),0);return Math.max(0,due-paid)}
 function monthRows(){let m=today().slice(0,7);return rows().filter(r=>String(r.date||'').slice(0,7)===m)}
@@ -455,10 +456,7 @@ function stat(label,val,cl){return `<div class="v22-card v22-stat ${cl||''}"><sp
 function graph(){let rs=rows(),map={};rs.forEach(r=>{let m=String(r.date||'').slice(0,7);if(!/^\d{4}-\d{2}$/.test(m))return;(map[m]??={i:0,e:0});map[m][r.type==='આવક'?'i':'e']+=r.amount});let a=Object.entries(map).sort().slice(-6),mx=Math.max(1,...a.map(x=>Math.max(x[1].i,x[1].e)));return `<div class="v22-barwrap">${a.map(([m,v])=>`<div class="v22-barcol"><div class="v22-bar v22-inc" style="height:${Math.max(3,v.i/mx*100)}%" title="આવક ${money(v.i)}"></div><div class="v22-bar v22-exp" style="height:${Math.max(3,v.e/mx*100)}%" title="ખર્ચ ${money(v.e)}"></div></div>`).join('')}</div><div class="v22-legend"><span>● આવક</span><span>● ખર્ચ</span></div><div style="display:flex;gap:12px">${a.map(x=>`<div class="v22-axis" style="flex:1">${E(x[0].slice(5))}</div>`).join('')}</div>`}
 function home(){let all=rows(),t=totals(all),dr=totals(dayRows()),mr=totals(monthRows()),out=d.flats.reduce((s,f)=>s+outstanding(f),0);return `<div class="v22-hero"><h2>નમસ્કાર 👋</h2><p>સરદાર સોસાયટીનું સરળ અને પારદર્શક સંચાલન</p></div><div class="v22-grid">${stat('કુલ આવક',t.i,'blue')}${stat('કુલ ખર્ચ',t.e,'red')}${stat('બાકી સિલક',t.i-t.e,'green')}${stat('બાકી મેન્ટેનન્સ',out,'orange')}</div><div class="v22-card"><div class="v22-title">📅 આજનો હિસાબ</div><div class="v22-two"><div><span class="v22-sub">આવક</span><h3>${money(dr.i)}</h3></div><div><span class="v22-sub">ખર્ચ</span><h3>${money(dr.e)}</h3></div></div></div><div class="v22-card"><div class="v22-title">📆 આ મહિનાનો હિસાબ</div><div class="v22-two"><div><span class="v22-sub">આવક</span><h3>${money(mr.i)}</h3></div><div><span class="v22-sub">ખર્ચ</span><h3>${money(mr.e)}</h3></div></div></div><div class="v22-card"><div class="v22-title">⚡ ઝડપી કામ</div><div class="v22-actions"><button class="v22-btn primary" onclick="openMaintForm()">➕ મેન્ટેનન્સ<small>પેમેન્ટ જમા</small></button><button class="v22-btn" onclick="incomeStep1Open()">💰 આવક<small>નવી આવક</small></button><button class="v22-btn green" onclick="go('finance',document.querySelector('[data-page=\"finance\"]'))">📊 રિપોર્ટ<small>હિસાબ મેનુ</small></button></div></div>`}
 function maintenance(){let list=d.flats.filter(occ).map(f=>`<div class="v22-row"><div class="grow"><b>ઘર ${E(f.no)} • ${E(f.name)}</b><div class="v22-sub">બાકી: ${money(outstanding(f))}</div></div><div class="v22-tools"><button class="v22-btn green" style="min-height:42px;padding:8px" onclick="openMaintForm('${f.no}')">જમા</button><button class="v22-btn" style="min-height:42px;padding:8px" onclick="memberStatement('${f.no}')">હિસાબ</button></div></div>`).join('');return `<div class="v22-hero"><h2>💰 મેન્ટેનન્સ</h2><p>મકાન પ્રમાણે ચુકવણી અને બાકી રકમ</p></div>${role==='admin'?`<div class="v22-card"><div class="v22-actions"><button class="v22-btn primary" onclick="openMaintForm()">➕ પેમેન્ટ જમા કરો</button><button class="v22-btn green" onclick="reminders()">💬 બાકી Reminder</button></div></div>`:''}<div class="v22-card"><div class="v22-title">મકાનવાર મેન્ટેનન્સ</div><div class="v22-list">${list||'<div class="v22-empty">કોઈ ભરેલું મકાન નથી.</div>'}</div></div>`}
-function finance(){const show=!!window._incomeStep2Visible;const dueShow=!!window._incomeDueVisible;const all=rows(),t=totals(all);return `<div class="v22-hero"><h2>💰 હિસાબ</h2><p>સરદાર સોસાયટીનો પારદર્શક હિસાબ</p></div><div class="v22-grid finance-top-stats"><div class="v22-card v22-stat blue"><span>કુલ આવક</span><b>${money(t.i)}</b></div><div class="v22-card v22-stat red"><span>કુલ જાવક</span><b>${money(t.e)}</b></div><div class="v22-card v22-stat green"><span>બાકી સિલક</span><b>${money(t.i-t.e)}</b></div></div>${role==='admin'?`<div class="v22-card"><div class="v22-title">આવક વ્યવસ્થાપન</div><div class="v22-sub">નવી આવક, કુલ એન્ટ્રી અને હેડ પ્રમાણે બાકી ઘરો જુઓ.</div><div class="v22-actions" style="margin-top:10px"><button class="v22-btn primary" style="flex:1" onclick="incomeStep1Open()">➕ નવી આવક</button><button class="v22-btn" style="flex:1" onclick="incomeStep2Open()">📋 કુલ આવક એન્ટ્રી</button><button class="v22-btn green" style="flex:1" onclick="incomeDueOpen()">📊 બાકી ઘરો</button></div></div><div class="v22-card"><div class="v22-title">જાવક વ્યવસ્થાપન</div><div class="v22-sub">સોસાયટીના ખર્ચની નવી જાવક નોંધાવો.</div><div class="v22-actions" style="margin-top:10px"><button class="v22-btn red" style="flex:1" onclick="expenseStep3Open()">➕ નવી જાવક</button></div></div>`:''}<div id="incomeStep2Card" class="v22-card" style="display:${show?'block':'none'}"><div class="v22-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px"><span>📋 કુલ આવક એન્ટ્રી</span><button class="v22-btn" aria-label="કુલ આવક એન્ટ્રી બંધ કરો" title="બંધ કરો" style="min-height:36px;min-width:36px;padding:4px 10px;font-size:20px;line-height:1" onclick="incomeStep2Close()">✕</button></div><div class="v22-sub">કુલ આવક: <b id="step2TotalIncome">₹0</b></div><div id="incomeStep2List" style="margin-top:10px"></div></div><div id="incomeDueCard" class="v22-card" style="display:${dueShow?'block':'none'}"><div class="v22-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px"><span>📊 હેડ પ્રમાણે બાકી ઘરો</span><button class="v22-btn" aria-label="બાકી ઘરો બંધ કરો" title="બંધ કરો" style="min-height:36px;min-width:36px;padding:4px 10px;font-size:20px;line-height:1" onclick="incomeDueClose()">✕</button></div><div id="incomeDueBody" style="margin-top:10px"></div></div>`}
-
-function members(){return `<div class="v22-hero"><h2>👥 સભ્યો</h2><p>મકાન, સભ્ય અને સંપૂર્ણ હિસાબ</p></div>${role==='admin'?`<div class="v22-card"><button class="v22-btn primary" style="width:100%" onclick="openMemberForm()">➕ મકાન / સભ્ય ઉમેરો અથવા સુધારો</button></div>`:''}<div class="v22-card"><input class="v22-search" placeholder="🔎 ઘર નંબર / નામ / મોબાઇલ / Receipt નંબર" oninput="searchV22(this.value)"><div id="v22search" style="margin-top:10px"></div></div><div class="v22-card"><div class="v22-title">મકાન 1 થી 60</div><div class="v22-list">${d.flats.map(f=>`<div class="v22-row member-v23-row"><div class="grow"><b class="member-v23-name">ઘર ${E(f.no)} ${f.name?'• '+E(f.name):'• ખાલી'}</b><div class="member-v23-mobile">📱 ${f.mobile?E(f.mobile):'મોબાઇલ નોંધાયેલ નથી'}</div><div class="v22-sub">બાકી ${money(outstanding(f))}</div></div><button class="v22-btn" style="min-height:40px;padding:7px" onclick="memberStatement('${E(f.no)}')">જુઓ</button></div>`).join('')}</div></div>`}
-function more(){return `<div class="v22-hero"><h2>☰ સોસાયટી વ્યવસ્થાપન</h2><p>જરૂરી તમામ વિભાગો એક જ જગ્યાએ</p></div><div class="v22-menu"><button onclick="committeePage()"><i>👔</i>કમિટી</button><button onclick="securityPage()"><i>🛡️</i>સિક્યુરિટી</button><button onclick="noticesPage()"><i>📢</i>નોટિસ</button><button onclick="complaintsPage()"><i>📝</i>ફરિયાદ</button><button onclick="visitorsPage()"><i>🚪</i>વિઝિટર</button><button onclick="parkingPage()"><i>🚗</i>પાર્કિંગ</button><button onclick="repairsPage()"><i>🔧</i>રિપેરિંગ</button><button onclick="simplePage('assets','📦 Society Assets','assets')"><i>📦</i>સામાન</button><button onclick="simplePage('calendar','📅 Calendar','calendar')"><i>📅</i>કૅલેન્ડર</button><button onclick="simplePage('meetings','🏛️ Committee Meeting','meetings')"><i>🏛️</i>મિટિંગ</button><button onclick="simplePage('documents','📄 Documents','documents')"><i>📄</i>દસ્તાવેજ</button><button onclick="simplePage('emergency','📞 Emergency Contacts','emergency')"><i>📞</i>Emergency</button><button onclick="reportsPage()"><i>📊</i>રિપોર્ટ</button><button onclick="backupPage()"><i>💾</i>Backup</button><button onclick="auditPage()"><i>🔐</i>Audit</button><button onclick="settingsPage()"><i>⚙️</i>Settings</button></div>`}
+function finance(){const ft=financeTotals();const show=!!window._incomeStep2Visible;const dueShow=!!window._incomeDueVisible;const expenseShow=!!window._expenseStep4Visible;const all=rows(),t=totals(all);return `<div class="v22-hero"><h2>💰 હિસાબ</h2><p>સરદાર સોસાયટીનો પારદર્શક હિસાબ</p></div><div class="v22-grid finance-top-stats"><div class="v22-card v22-stat blue"><span>કુલ આવક</span><b>${money(ft.income)}</b></div><div class="v22-card v22-stat red"><span>કુલ જાવક</span><b>${money(ft.expense)}</b></div><div class="v22-card v22-stat green"><span>બાકી સિલક</span><b>${money(ft.balance)}</b></div></div>${role==='admin'?`<div class="v22-card"><div class="v22-title">આવક વ્યવસ્થાપન</div><div class="v22-sub">નવી આવક, કુલ એન્ટ્રી અને હેડ પ્રમાણે બાકી ઘરો જુઓ.</div><div class="v22-actions" style="margin-top:10px"><button class="v22-btn primary" style="flex:1" onclick="incomeStep1Open()">➕ નવી આવક</button><button class="v22-btn" style="flex:1" onclick="incomeStep2Open()">📋 કુલ આવક એન્ટ્રી</button><button class="v22-btn green" style="flex:1" onclick="incomeDueOpen()">📊 બાકી ઘરો</button></div></div><div class="v22-card"><div class="v22-title">જાવક વ્યવસ્થાપન</div><div class="v22-sub">સોસાયટીના ખર્ચની નવી જાવક નોંધાવો અને કુલ જાવક એન્ટ્રી જુઓ.</div><div class="v22-actions" style="margin-top:10px"><button class="v22-btn red" style="flex:1" onclick="expenseStep3Open()">➕ નવી જાવક</button><button class="v22-btn" style="flex:1" onclick="expenseStep4Open()">📋 કુલ જાવક એન્ટ્રી</button></div></div>`:''}<div id="incomeStep2Card" class="v22-card" style="display:${show?'block':'none'}"><div class="v22-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px"><span>📋 કુલ આવક એન્ટ્રી</span><button class="v22-btn" aria-label="કુલ આવક એન્ટ્રી બંધ કરો" title="બંધ કરો" style="min-height:36px;min-width:36px;padding:4px 10px;font-size:20px;line-height:1" onclick="incomeStep2Close()">✕</button></div><div class="v22-sub">કુલ આવક: <b id="step2TotalIncome">₹0</b></div><div id="incomeStep2List" style="margin-top:10px"></div></div><div id="incomeDueCard" class="v22-card" style="display:${dueShow?'block':'none'}"><div class="v22-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px"><span>📊 હેડ પ્રમાણે બાકી ઘરો</span><button class="v22-btn" aria-label="બાકી ઘરો બંધ કરો" title="બંધ કરો" style="min-height:36px;min-width:36px;padding:4px 10px;font-size:20px;line-height:1" onclick="incomeDueClose()">✕</button></div><div id="incomeDueBody" style="margin-top:10px"></div></div><div id="expenseStep4Card" class="v22-card" style="display:${expenseShow?'block':'none'}"><div class="v22-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px"><span>📋 કુલ જાવક એન્ટ્રી</span><button class="v22-btn" aria-label="કુલ જાવક એન્ટ્રી બંધ કરો" title="બંધ કરો" style="min-height:36px;min-width:36px;padding:4px 10px;font-size:20px;line-height:1" onclick="expenseStep4Close()">✕</button></div><div class="v22-sub">કુલ જાવક: <b id="step4TotalExpense">₹0</b></div><div id="expenseStep4List" style="margin-top:10px"></div></div>`}
 function renderAll(){ensure();$('home').innerHTML=home();$('maintenance').innerHTML=maintenance();$('finance').innerHTML=finance();$('members').innerHTML=members();$('more').innerHTML=more();let w=$('who');if(w)w.textContent=role==='admin'?'એડમિન • 60 મકાન':`સભ્ય • ઘર ${currentFlat}`}
 window.go=function(id,btn){document.querySelectorAll('.v22-section').forEach(s=>s.classList.remove('active'));let x=$(id);if(x)x.classList.add('active');document.querySelectorAll('.v22-nav button').forEach(b=>b.classList.remove('on'));if(btn)btn.classList.add('on');window.scrollTo(0,0)};
 window.render=function(){ensure();if(!$('v22modal'))shell();else renderAll();};
@@ -742,6 +740,93 @@ function expenseStep3Save(){
 window.expenseStep3Open=expenseStep3Open;
 window.expenseStep3Save=expenseStep3Save;
 
+
+/* =========================================================
+   FINANCE STEP 4 — TOTAL EXPENSE ENTRIES + EDIT / DELETE
+   Uses the same d.expenses + persist() cloud-sync data model.
+   ========================================================= */
+function expenseStep4Open(){
+  if(role!=='admin')return;
+  window._expenseStep4Visible=true;
+  const card=document.getElementById('expenseStep4Card');
+  if(card){card.style.display='block';expenseStep4Render();setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'start'}),50);}
+}
+function expenseStep4Close(){
+  window._expenseStep4Visible=false;
+  const card=document.getElementById('expenseStep4Card');
+  if(card) card.style.display='none';
+}
+function expenseStep4Render(){
+  const box=document.getElementById('expenseStep4List');
+  const totalBox=document.getElementById('step4TotalExpense');
+  if(!box)return;
+  const arr=Array.isArray(d.expenses)?d.expenses:[];
+  const total=arr.reduce((s,x)=>s+Number(x.amount||0),0);
+  if(totalBox)totalBox.textContent=money(total);
+  if(!arr.length){box.innerHTML='<div class="v22-empty">હજુ કોઈ જાવક એન્ટ્રી નથી.</div>';return;}
+  box.innerHTML=arr.map((x,i)=>`<div class="v22-row" style="align-items:flex-start;margin-top:8px">
+    <div class="grow">
+      <b>${E(x.head||'અન્ય ખર્ચ')}</b> <span class="v22-sub">• ${E(x.date||'')}</span>
+      <div class="v22-sub"><b>ખર્ચની વિગત: ${E(x.detail||'વિગત નથી')}</b></div>
+      <div class="v22-sub">બિલ નંબર: ${E(x.billNo||'—')} • ${E(x.mode||'-')}</div>
+      ${x.note?`<div class="v22-sub">નોંધ: ${E(x.note)}</div>`:''}
+      <div style="font-size:18px;font-weight:800;margin-top:4px">${money(x.amount)}</div>
+      <div class="v22-sub">રસીદ: ${E(x.receipt||'-')}</div>
+    </div>
+    ${role==='admin'?`<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><button class="v22-btn" style="min-height:38px;padding:6px 9px" onclick="expenseStep4Edit(${i})">✏️ Edit</button><button class="v22-btn" style="min-height:38px;padding:6px 9px" onclick="expenseStep4Delete(${i})">🗑️ Delete</button></div>`:''}
+  </div>`).join('');
+}
+function expenseStep4Edit(index){
+  if(role!=='admin')return;
+  const x=(d.expenses||[])[index];
+  if(!x)return toastV22('જાવક એન્ટ્રી મળી નથી');
+  const heads=(d.expenseHeads||[]);
+  const list=heads.length?heads:['સિક્યુરિટી પગાર','લાઇટ બિલ','રીપેરીંગ કામ','અન્ય વહીવટી ખર્ચ','સફાઈ કામ'];
+  modal('✏️ જાવક Edit',`<div class="v22-form">
+    <label>જાવક હેડ</label><select id="step4EditHead">${list.map(h=>`<option value="${E(h)}" ${String(h)===String(x.head)?'selected':''}>${E(h)}</option>`).join('')}<option value="અન્ય" ${x.head==='અન્ય'?'selected':''}>અન્ય</option></select>
+    <label>ખર્ચની વિગત</label><input id="step4EditDetail" value="${E(x.detail||'')}">
+    <div class="v22-two"><div><label>રકમ</label><input id="step4EditAmount" type="number" min="1" value="${Number(x.amount||0)}"></div><div><label>તારીખ</label><input id="step4EditDate" inputmode="numeric" value="${E(x.date||'')}"></div></div>
+    <label>બિલ નંબર</label><input id="step4EditBillNo" value="${E(x.billNo||'')}">
+    <label>Payment Mode</label><select id="step4EditMode">${['કેશ','UPI','બેંક ટ્રાન્સફર','ચેક'].map(m=>`<option ${String(m)===String(x.mode||'કેશ')?'selected':''}>${m}</option>`).join('')}</select>
+    <label>નોંધ</label><input id="step4EditNote" value="${E(x.note||'')}">
+    <div class="v22-tools"><button class="v22-btn primary" onclick="expenseStep4Update(${index})">સાચવો</button><button class="v22-btn dark" onclick="closeV22();setTimeout(expenseStep4Render,0)">રદ કરો</button></div>
+  </div>`);
+}
+function expenseStep4Update(index){
+  if(role!=='admin')return;
+  const x=(d.expenses||[])[index];
+  if(!x)return toastV22('જાવક એન્ટ્રી મળી નથી');
+  const head=$('step4EditHead')?.value||'';
+  const detail=$('step4EditDetail')?.value.trim()||'';
+  const amount=Number($('step4EditAmount')?.value||0);
+  const date=step1Date($('step4EditDate')?.value||'');
+  const billNo=$('step4EditBillNo')?.value.trim()||'';
+  const mode=$('step4EditMode')?.value||'કેશ';
+  const note=$('step4EditNote')?.value.trim()||'';
+  if(!head)return toastV22('જાવક હેડ પસંદ કરો');
+  if(amount<=0)return toastV22('રકમ નાખો');
+  if(!date)return toastV22('તારીખ DD.MM.YYYY માં નાખો');
+  x.head=head;x.detail=detail;x.amount=amount;x.date=date;x.billNo=billNo;x.mode=mode;x.note=note;
+  d.expenses[index]=x;
+  persist('Edit','જાવક • '+head);
+  closeV22();window._expenseStep4Visible=true;renderAll();setTimeout(expenseStep4Render,0);toastV22('જાવક Edit થઈ અને Save થઈ');
+}
+function expenseStep4Delete(index){
+  if(role!=='admin')return;
+  const x=(d.expenses||[])[index];
+  if(!x)return toastV22('જાવક એન્ટ્રી મળી નથી');
+  if(!confirm('આ જાવક એન્ટ્રી Delete કરવી છે?'))return;
+  const label=x.head||'જાવક';
+  d.expenses.splice(index,1);
+  persist('Delete','જાવક • '+label);
+  window._expenseStep4Visible=true;renderAll();setTimeout(expenseStep4Render,0);toastV22('જાવક Delete થઈ');
+}
+window.expenseStep4Open=expenseStep4Open;
+window.expenseStep4Close=expenseStep4Close;
+window.expenseStep4Render=expenseStep4Render;
+window.expenseStep4Edit=expenseStep4Edit;
+window.expenseStep4Update=expenseStep4Update;
+window.expenseStep4Delete=expenseStep4Delete;
 
 // Simple pages that are intended as management lists. They remain separate from Finance.
 window.simplePage=simplePage;window.committeePage=committeePage;window.securityPage=securityPage;window.noticesPage=noticesPage;window.complaintsPage=complaintsPage;window.visitorsPage=visitorsPage;window.parkingPage=parkingPage;window.repairsPage=repairsPage;window.reportsPage=reportsPage;window.backupPage=backupPage;window.auditPage=auditPage;window.settingsPage=settingsPage;
