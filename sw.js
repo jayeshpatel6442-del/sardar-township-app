@@ -1,4 +1,4 @@
-const CACHE='sardar-society-v23-1-report-4-finance-top-3';
+const CACHE='sardar-society-v23-4-finance-top-3';
 const VERSION='23.4';
 const ASSETS=['./','./index.html','./manifest.webmanifest'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
