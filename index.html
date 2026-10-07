@@ -205,6 +205,74 @@ function expenseForm(id){if(role!=='admin')return;let x=d.expenses.find(a=>a.id=
 function saveExpense2(id){if(role!=='admin')return;let x={id:id||'e'+Date.now(),seq:+document.getElementById('eSeq').value||1,head:document.getElementById('eHead').value,detail:document.getElementById('eDetail').value.trim(),date:document.getElementById('eDate').value,amount:+document.getElementById('eAmount').value||0,billNo:document.getElementById('eBill').value.trim()};if(!x.detail||!x.amount)return toast('ખર્ચની વિગત અને રકમ જરૂરી છે');if(id)Object.assign(d.expenses.find(a=>a.id===id),x);else d.expenses.unshift(x);save();closeModal();refreshExtras();if(typeof renderAll==='function')renderAll();toast('ખર્ચ સાચવાયો')}
 function deleteExpense2(id){if(role!=='admin')return;if(!confirm('આ ખર્ચ ડિલીટ કરવો છે?'))return;d.expenses=d.expenses.filter(x=>x.id!==id);save();refreshExtras();toast('ખર્ચ ડિલીટ થયો')}
 function headForm(type){if(role!=='admin')return;let name=prompt(type==='income'?'નવો આવક હેડ':'નવો ખર્ચ હેડ');if(!name?.trim())return;name=name.trim();let arr=type==='income'?d.incomeHeads:d.expenseHeads;if(!arr.includes(name))arr.push(name);save();refreshExtras();toast('હેડ ઉમેરાયો')}
+function v23IncomeEntryRows(){
+  const out=[];
+  (d.flats||[]).forEach(f=>(f.payments||[]).forEach((p,i)=>out.push({
+    kind:'maintenance',no:String(f.no),receipt:String(p.receipt||('m-'+f.no+'-'+i)),
+    date:p.date||p.periodStartISO||'',head:'મેન્ટેનન્સ આવક',member:f.name||'',amount:Number(p.amount||0),
+    detail:p.periodStart||'મેન્ટેનન્સ',mode:p.mode||'',lateFee:Number(p.lateFee||0),paymentIndex:i
+  })));
+  (d.incomes||[]).forEach(x=>{let f=x.flatNo?d.flats.find(a=>String(a.no)===String(x.flatNo)):null;out.push({
+    kind:'income',id:String(x.id||''),date:x.date||'',head:x.head||'આવક',member:f?.name||'',no:f?.no||'',
+    amount:Number(x.amount||0),detail:x.detail||'',mode:x.mode||'',receipt:x.receipt||''
+  })});
+  return out.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+}
+function openAllIncomeEntriesV23(){
+  if(role!=='admin')return;
+  const arr=v23IncomeEntryRows();
+  const body=arr.length?`<div class="v22-list">${arr.map(x=>{
+    const label=x.kind==='maintenance'?'મેન્ટેનન્સ આવક':x.head;
+    const sub=`${E(x.date||'')}${x.no?` • ઘર ${E(x.no)} • ${E(x.member||'સભ્ય')}`:''}${x.detail?` • ${E(x.detail)}`:''}${x.mode?` • ${E(x.mode)}`:''}${x.receipt?` • રસીદ ${E(x.receipt)}`:''}`;
+    const edit=x.kind==='maintenance'?`openMaintenanceEntryV23('${E(x.no)}','${E(x.receipt)}')`:`incomeForm('${E(x.id)}')`;
+    const del=x.kind==='maintenance'?`deleteMaintenanceEntryV23('${E(x.no)}','${E(x.receipt)}')`:`deleteIncomeV23('${E(x.id)}')`;
+    return `<div class="v22-row"><div class="grow"><b>💰 ${E(label)} • ${money(x.amount)}</b><div class="v22-sub">${sub}</div></div><div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end"><button class="v22-btn" style="min-height:34px;padding:5px 8px" onclick="${edit}">✏️ Edit</button><button class="v22-btn red" style="min-height:34px;padding:5px 8px" onclick="${del}">🗑️ Delete</button></div></div>`;
+  }).join('')}</div>`:'<div class="v22-empty">હજુ કોઈ આવક એન્ટ્રી નથી.</div>';
+  modal('💰 કુલ આવક એન્ટ્રી',`<div class="v22-sub" style="margin-bottom:10px">મેન્ટેનન્સ સહિતની તમામ આવક એન્ટ્રી</div>${body}`);
+}
+function openMaintenanceEntryV23(no,receipt){
+  if(role!=='admin')return;
+  const f=d.flats.find(x=>String(x.no)===String(no));
+  const p=(f?.payments||[]).find(x=>String(x.receipt||'')===String(receipt));
+  if(!f||!p)return toastV22('મેન્ટેનન્સ એન્ટ્રી મળી નથી');
+  modal('✏️ મેન્ટેનન્સ એન્ટ્રી Edit',`<div class="v22-form">
+    <div class="v22-sub">ઘર ${E(f.no)} • ${E(f.name||'સભ્ય')} • રસીદ ${E(p.receipt||'-')}</div>
+    <div class="v22-two"><div><label>મેન્ટેનન્સ રકમ</label><input id="v23mAmt" type="number" min="0" value="${Number(p.baseAmount??(Number(p.amount||0)-Number(p.lateFee||0)))}"></div><div><label>લેટ ફી</label><input id="v23mLate" type="number" min="0" value="${Number(p.lateFee||0)}"></div></div>
+    <div class="v22-two"><div><label>Payment Mode</label><select id="v23mMode"><option ${p.mode==='કેશ'?'selected':''}>કેશ</option><option ${p.mode==='UPI'?'selected':''}>UPI</option><option ${p.mode==='બેંક ટ્રાન્સફર'?'selected':''}>બેંક ટ્રાન્સફર</option></select></div><div><label>તારીખ</label><input id="v23mDate" type="date" value="${E(p.date||'')}"></div></div>
+    <label>સમયગાળો</label><input id="v23mPeriod" value="${E(p.periodStart||'')}" placeholder="ઉદા. જાન્યુઆરી 2026 થી માર્ચ 2026">
+    <div class="v22-tools"><button class="v22-btn primary" onclick="saveMaintenanceEntryV23('${E(no)}','${E(receipt)}')">સાચવો</button><button class="v22-btn dark" onclick="closeV22();openAllIncomeEntriesV23()">પાછા</button></div>
+  </div>`);
+}
+function saveMaintenanceEntryV23(no,receipt){
+  if(role!=='admin')return;
+  const f=d.flats.find(x=>String(x.no)===String(no));
+  const p=(f?.payments||[]).find(x=>String(x.receipt||'')===String(receipt));
+  if(!f||!p)return toastV22('મેન્ટેનન્સ એન્ટ્રી મળી નથી');
+  const base=Number($('v23mAmt')?.value||0),late=Number($('v23mLate')?.value||0);
+  if(base<=0)return toastV22('મેન્ટેનન્સ રકમ નાખો');
+  p.baseAmount=base;p.lateFee=late;p.amount=base+late;p.mode=$('v23mMode').value;p.date=$('v23mDate').value||p.date;p.periodStart=$('v23mPeriod').value.trim();
+  p.periodStartISO=p.date||p.periodStartISO||'';f.paid=true;
+  persist('Edit','મેન્ટેનન્સ • ઘર '+no+' • '+receipt);closeV22();renderAll();toastV22('મેન્ટેનન્સ એન્ટ્રી અપડેટ થઈ');setTimeout(()=>openAllIncomeEntriesV23(),80);
+}
+function deleteMaintenanceEntryV23(no,receipt){
+  if(role!=='admin')return;
+  const f=d.flats.find(x=>String(x.no)===String(no));
+  if(!f)return;
+  const p=(f.payments||[]).find(x=>String(x.receipt||'')===String(receipt));
+  if(!p)return toastV22('મેન્ટેનન્સ એન્ટ્રી મળી નથી');
+  if(!confirm('આ મેન્ટેનન્સ આવક એન્ટ્રી કાયમી રીતે Delete કરવી છે?'))return;
+  f.payments=(f.payments||[]).filter(x=>String(x.receipt||'')!==String(receipt));
+  f.paid=f.payments.length>0;
+  persist('Delete','મેન્ટેનન્સ • ઘર '+no+' • '+receipt);closeV22();renderAll();toastV22('મેન્ટેનન્સ એન્ટ્રી Delete થઈ');setTimeout(()=>openAllIncomeEntriesV23(),80);
+}
+function deleteIncomeV23(id){if(role!=='admin')return;deleteIncome2(id);if(document.getElementById('v22modal')?.classList.contains('show'))openAllIncomeEntriesV23()}
+function openAllExpenseEntriesV23(){
+  if(role!=='admin')return;
+  const arr=d.expenses||[];
+  const body=arr.length?`<div class="v22-list">${arr.map(x=>`<div class="v22-row"><div class="grow"><b>💸 ${E(x.head||'ખર્ચ')} • ${money(x.amount)}</b><div class="v22-sub">ક્રમ ${E(x.seq||'')} • ${E(x.date||'')}${x.detail?` • ${E(x.detail)}`:''}${x.billNo?` • બિલ નં. ${E(x.billNo)}`:''}</div></div><div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end"><button class="v22-btn" style="min-height:34px;padding:5px 8px" onclick="expenseForm('${E(x.id)}')">✏️ Edit</button><button class="v22-btn red" style="min-height:34px;padding:5px 8px" onclick="deleteExpenseV23('${E(x.id)}')">🗑️ Delete</button></div></div>`).join('')}</div>`:'<div class="v22-empty">હજુ કોઈ જાવક એન્ટ્રી નથી.</div>';
+  modal('💸 કુલ જાવક એન્ટ્રી',body);
+}
+function deleteExpenseV23(id){if(role!=='admin')return;deleteExpense2(id);if(document.getElementById('v22modal')?.classList.contains('show'))openAllExpenseEntriesV23()}
 function renderFinance2(){
   let il=document.getElementById('incomeList'),el=document.getElementById('expenseList');if(!il)return;
   renderMemberIncomeBox_();
@@ -681,9 +749,9 @@ function shell(){
 }
 function stat(label,val,cl){return `<div class="v22-card v22-stat ${cl||''}"><span>${label}</span><b>${money(val)}</b></div>`}
 function graph(){let rs=rows(),map={};rs.forEach(r=>{let m=String(r.date||'').slice(0,7);if(!/^\d{4}-\d{2}$/.test(m))return;(map[m]??={i:0,e:0});map[m][r.type==='આવક'?'i':'e']+=r.amount});let a=Object.entries(map).sort().slice(-6),mx=Math.max(1,...a.map(x=>Math.max(x[1].i,x[1].e)));return `<div class="v22-barwrap">${a.map(([m,v])=>`<div class="v22-barcol"><div class="v22-bar v22-inc" style="height:${Math.max(3,v.i/mx*100)}%" title="આવક ${money(v.i)}"></div><div class="v22-bar v22-exp" style="height:${Math.max(3,v.e/mx*100)}%" title="ખર્ચ ${money(v.e)}"></div></div>`).join('')}</div><div class="v22-legend"><span>● આવક</span><span>● ખર્ચ</span></div><div style="display:flex;gap:12px">${a.map(x=>`<div class="v22-axis" style="flex:1">${E(x[0].slice(5))}</div>`).join('')}</div>`}
-function home(){let all=rows(),t=totals(all),dr=totals(dayRows()),mr=totals(monthRows()),out=d.flats.reduce((s,f)=>s+outstanding(f),0);return `<div class="v22-hero"><h2>નમસ્કાર 👋</h2><p>સરદાર સોસાયટીનું સરળ અને પારદર્શક સંચાલન</p></div><div class="v22-grid">${stat('કુલ આવક',t.i,'blue')}${stat('કુલ ખર્ચ',t.e,'red')}${stat('બાકી સિલક',t.i-t.e,'green')}${stat('બાકી મેન્ટેનન્સ',out,'orange')}</div><div class="v22-card"><div class="v22-title">📅 આજનો હિસાબ</div><div class="v22-two"><div><span class="v22-sub">આવક</span><h3>${money(dr.i)}</h3></div><div><span class="v22-sub">ખર્ચ</span><h3>${money(dr.e)}</h3></div></div></div><div class="v22-card"><div class="v22-title">📆 આ મહિનાનો હિસાબ</div><div class="v22-two"><div><span class="v22-sub">આવક</span><h3>${money(mr.i)}</h3></div><div><span class="v22-sub">ખર્ચ</span><h3>${money(mr.e)}</h3></div></div></div><div class="v22-card"><div class="v22-title">⚡ ઝડપી કામ</div><div class="v22-actions"><button class="v22-btn primary" onclick="openMaintForm()">➕ મેન્ટેનન્સ<small>પેમેન્ટ જમા</small></button><button class="v22-btn" onclick="openIncomeForm()">💰 આવક<small>નવી આવક</small></button><button class="v22-btn red" onclick="openExpenseForm()">💸 ખર્ચ<small>નવો ખર્ચ</small></button><button class="v22-btn green" onclick="go('finance',document.querySelector('[data-page=\"finance\"]'))">📊 રિપોર્ટ<small>હિસાબ મેનુ</small></button></div></div>`}
+function home(){let all=rows(),t=totals(all),dr=totals(dayRows()),mr=totals(monthRows()),out=d.flats.reduce((s,f)=>s+outstanding(f),0);return `<div class="v22-hero"><h2>નમસ્કાર 👋</h2><p>સરદાર સોસાયટીનું સરળ અને પારદર્શક સંચાલન</p></div><div class="v22-grid">${stat('કુલ આવક',t.i,'blue')}${stat('કુલ ખર્ચ',t.e,'red')}${stat('બાકી સિલક',t.i-t.e,'green')}${stat('બાકી મેન્ટેનન્સ',out,'orange')}</div><div class="v22-card"><div class="v22-title">📅 આજનો હિસાબ</div><div class="v22-two"><div><span class="v22-sub">આવક</span><h3>${money(dr.i)}</h3></div><div><span class="v22-sub">ખર્ચ</span><h3>${money(dr.e)}</h3></div></div></div><div class="v22-card"><div class="v22-title">📆 આ મહિનાનો હિસાબ</div><div class="v22-two"><div><span class="v22-sub">આવક</span><h3>${money(mr.i)}</h3></div><div><span class="v22-sub">ખર્ચ</span><h3>${money(mr.e)}</h3></div></div></div><div class="v22-card"><div class="v22-title">⚡ ઝડપી કામ</div><div class="v22-actions"><button class="v22-btn primary" onclick="openMaintForm()">➕ મેન્ટેનન્સ<small>પેમેન્ટ જમા</small></button><button class="v22-btn" onclick="v23OpenNewIncome()">💰 આવક<small>નવી આવક</small></button><button class="v22-btn red" onclick="openExpenseForm()">💸 ખર્ચ<small>નવો ખર્ચ</small></button><button class="v22-btn green" onclick="go('finance',document.querySelector('[data-page=\"finance\"]'))">📊 રિપોર્ટ<small>હિસાબ મેનુ</small></button></div></div>`}
 function maintenance(){let list=d.flats.filter(occ).map(f=>`<div class="v22-row"><div class="grow"><b>ઘર ${E(f.no)} • ${E(f.name)}</b><div class="v22-sub">બાકી: ${money(outstanding(f))}</div></div><div class="v22-tools"><button class="v22-btn green" style="min-height:42px;padding:8px" onclick="openMaintForm('${f.no}')">જમા</button><button class="v22-btn" style="min-height:42px;padding:8px" onclick="memberStatement('${f.no}')">હિસાબ</button></div></div>`).join('');return `<div class="v22-hero"><h2>💰 મેન્ટેનન્સ</h2><p>મકાન પ્રમાણે ચુકવણી અને બાકી રકમ</p></div>${role==='admin'?`<div class="v22-card"><div class="v22-actions"><button class="v22-btn primary" onclick="openMaintForm()">➕ પેમેન્ટ જમા કરો</button><button class="v22-btn green" onclick="reminders()">💬 બાકી Reminder</button></div></div>`:''}<div class="v22-card"><div class="v22-title">મકાનવાર મેન્ટેનન્સ</div><div class="v22-list">${list||'<div class="v22-empty">કોઈ ભરેલું મકાન નથી.</div>'}</div></div>`}
-function finance(){let t=totals(rows()),head={};rows().forEach(r=>{let k=(r.type==='આવક'?'આવક':'ખર્ચ')+' • '+r.head;head[k]=(head[k]||0)+r.amount});let h=Object.entries(head).map(([k,v])=>`<div class="v22-row"><span>${E(k)}</span><b>${money(v)}</b></div>`).join('');return `<div class="v22-hero"><h2>📒 આવક / ખર્ચ</h2><p>હિસાબ સરળ રીતે નોંધો અને જુઓ</p></div><div class="v22-grid">${stat('કુલ આવક',t.i,'blue')}${stat('કુલ ખર્ચ',t.e,'red')}${stat('બાકી સિલક',t.i-t.e,'green')}${stat('કુલ એન્ટ્રી',rows().length,'orange')}</div><div class="v22-card"><div class="v22-actions">${role==='admin'?`<button class="v22-btn primary" onclick="openIncomeForm()">➕ નવી આવક</button><button class="v22-btn red" onclick="openExpenseForm()">➖ નવો ખર્ચ</button>`:''}<button class="v22-btn" onclick="openDayReportV23()">📅 આજનો હિસાબ</button><button class="v22-btn" onclick="openYearReportV23()">🗓️ વર્ષ વાઈઝ હિસાબ</button><button class="v22-btn" onclick="openAllIncomeEntriesV23()">💰 કુલ આવક એન્ટ્રી</button><button class="v22-btn red" onclick="openAllExpenseEntriesV23()">💸 કુલ જાવક એન્ટ્રી</button></div></div><div class="v22-card"><div class="v22-title">📊 Reports</div><div class="v22-menu"><button onclick="openMonthReportV23()"><i>📆</i>માસિક હિસાબ</button><button onclick="openHeadReport()"><i>📂</i>Head-wise</button><button onclick="openMemberReport()"><i>👥</i>Member-wise</button><button onclick="openModeReport()"><i>💳</i>Cash/UPI/Bank</button><button onclick="openOutstandingReport()"><i>⚠️</i>બાકી</button></div></div><div class="v22-card"><div class="v22-title">⚡ હેડ પ્રમાણે સારાંશ</div>${h||'<div class="v22-empty">હજુ કોઈ એન્ટ્રી નથી.</div>'}</div><div class="v22-card"><div class="v22-title">👥 સભ્યવાર અન્ય આવક</div><div class="v22-sub">મેન્ટેનન્સ સિવાયની આવક અહીં સૌથી નીચે સભ્ય પ્રમાણે જમા કરો.</div>${role==='admin'?memberIncomeBox():'<div class="v22-empty">સભ્યો માટે View Only</div>'}</div>`}
+function finance(){let t=totals(rows()),head={};rows().forEach(r=>{let k=(r.type==='આવક'?'આવક':'ખર્ચ')+' • '+r.head;head[k]=(head[k]||0)+r.amount});let h=Object.entries(head).map(([k,v])=>`<div class="v22-row"><span>${E(k)}</span><b>${money(v)}</b></div>`).join('');return `<div class="v22-hero"><h2>📒 આવક / ખર્ચ</h2><p>હિસાબ સરળ રીતે નોંધો અને જુઓ</p></div><div class="v22-grid">${stat('કુલ આવક',t.i,'blue')}${stat('કુલ ખર્ચ',t.e,'red')}${stat('બાકી સિલક',t.i-t.e,'green')}${stat('કુલ એન્ટ્રી',rows().length,'orange')}</div><div class="v22-card"><div class="v22-actions">${role==='admin'?`<button class="v22-btn primary" onclick="v23OpenNewIncome()">➕ નવી આવક</button><button class="v22-btn red" onclick="openExpenseForm()">➖ નવો ખર્ચ</button>`:''}<button class="v22-btn" onclick="openDayReportV23()">📅 આજનો હિસાબ</button><button class="v22-btn" onclick="openYearReportV23()">🗓️ વર્ષ વાઈઝ હિસાબ</button><button class="v22-btn" onclick="openAllIncomeEntriesV23()">💰 કુલ આવક એન્ટ્રી</button><button class="v22-btn red" onclick="openAllExpenseEntriesV23()">💸 કુલ જાવક એન્ટ્રી</button></div></div><div class="v22-card"><div class="v22-title">📊 Reports</div><div class="v22-menu"><button onclick="openMonthReportV23()"><i>📆</i>માસિક હિસાબ</button><button onclick="openHeadReport()"><i>📂</i>Head-wise</button><button onclick="openMemberReport()"><i>👥</i>Member-wise</button><button onclick="openModeReport()"><i>💳</i>Cash/UPI/Bank</button><button onclick="openOutstandingReport()"><i>⚠️</i>બાકી</button></div></div><div class="v22-card"><div class="v22-title">⚡ હેડ પ્રમાણે સારાંશ</div>${h||'<div class="v22-empty">હજુ કોઈ એન્ટ્રી નથી.</div>'}</div><div class="v22-card"><div class="v22-title">👥 સભ્યવાર અન્ય આવક</div><div class="v22-sub">મેન્ટેનન્સ સિવાયની આવક અહીં સૌથી નીચે સભ્ય પ્રમાણે જમા કરો.</div>${role==='admin'?memberIncomeBox():'<div class="v22-empty">સભ્યો માટે View Only</div>'}</div>`}
 function memberIncomeBox(){let heads=d.incomeHeads.filter(h=>h!=='મેન્ટેનન્સ આવક'),head=window.v22ih||heads[0];if(!head)return '';return `<div class="v22-form" style="margin-top:10px"><label>આવક હેડ</label><select onchange="window.v22ih=this.value;renderAll()">${heads.map(h=>`<option ${h===head?'selected':''}>${E(h)}</option>`).join('')}</select></div><div class="v22-list" style="margin-top:8px">${d.flats.filter(occ).map(f=>`<div class="v22-row"><div class="grow"><b>ઘર ${E(f.no)} • ${E(f.name)}</b><div class="v22-sub">${money((d.incomes||[]).filter(x=>x.head===head&&String(x.flatNo)===String(f.no)).reduce((s,x)=>s+Number(x.amount||0),0))}</div></div><input id="v22mi_${E(f.no)}" type="number" placeholder="₹ રકમ" style="width:105px;padding:9px;border:1px solid #d8dee8;border-radius:10px"><button class="v22-btn primary" style="min-height:40px;padding:7px" onclick="saveMemberIncomeV22('${E(head)}','${E(f.no)}')">જમા</button></div>`).join('')}</div>`}
 function members(){return `<div class="v22-hero"><h2>👥 સભ્યો</h2><p>મકાન, સભ્ય અને સંપૂર્ણ હિસાબ</p></div>${role==='admin'?`<div class="v22-card"><button class="v22-btn primary" style="width:100%" onclick="openMemberForm()">➕ મકાન / સભ્ય ઉમેરો અથવા સુધારો</button></div>`:''}<div class="v22-card"><input class="v22-search" placeholder="🔎 ઘર નંબર / નામ / મોબાઇલ / Receipt નંબર" oninput="searchV22(this.value)"><div id="v22search" style="margin-top:10px"></div></div><div class="v22-card"><div class="v22-title">મકાન 1 થી 60</div><div class="v22-list">${d.flats.map(f=>`<div class="v22-row member-v23-row"><div class="grow"><b class="member-v23-name">ઘર ${E(f.no)} ${f.name?'• '+E(f.name):'• ખાલી'}</b><div class="member-v23-mobile">📱 ${f.mobile?E(f.mobile):'મોબાઇલ નોંધાયેલ નથી'}</div><div class="v22-sub">બાકી ${money(outstanding(f))}</div></div><button class="v22-btn" style="min-height:40px;padding:7px" onclick="memberStatement('${E(f.no)}')">જુઓ</button></div>`).join('')}</div></div>`}
 function more(){return `<div class="v22-hero"><h2>☰ સોસાયટી વ્યવસ્થાપન</h2><p>જરૂરી તમામ વિભાગો એક જ જગ્યાએ</p></div><div class="v22-menu"><button onclick="committeePage()"><i>👔</i>કમિટી</button><button onclick="securityPage()"><i>🛡️</i>સિક્યુરિટી</button><button onclick="noticesPage()"><i>📢</i>નોટિસ</button><button onclick="complaintsPage()"><i>📝</i>ફરિયાદ</button><button onclick="visitorsPage()"><i>🚪</i>વિઝિટર</button><button onclick="parkingPage()"><i>🚗</i>પાર્કિંગ</button><button onclick="repairsPage()"><i>🔧</i>રિપેરિંગ</button><button onclick="simplePage('assets','📦 Society Assets','assets')"><i>📦</i>સામાન</button><button onclick="simplePage('calendar','📅 Calendar','calendar')"><i>📅</i>કૅલેન્ડર</button><button onclick="simplePage('meetings','🏛️ Committee Meeting','meetings')"><i>🏛️</i>મિટિંગ</button><button onclick="simplePage('documents','📄 Documents','documents')"><i>📄</i>દસ્તાવેજ</button><button onclick="simplePage('emergency','📞 Emergency Contacts','emergency')"><i>📞</i>Emergency</button><button onclick="reportsPage()"><i>📊</i>રિપોર્ટ</button><button onclick="backupPage()"><i>💾</i>Backup</button><button onclick="auditPage()"><i>🔐</i>Audit</button><button onclick="settingsPage()"><i>⚙️</i>Settings</button></div>`}
@@ -697,8 +765,46 @@ window.openMaintForm=function(no=''){if(role!=='admin')return;let f=d.flats.find
 window.saveMaintV22=function(){let no=$('v22mno').value,f=d.flats.find(x=>String(x.no)===String(no)),amt=Number($('v22ma').value||0),late=Number($('v22late').value||0);if(!f||amt<=0)return toastV22('રકમ સાચી નાખો');let rec='ST-'+Date.now().toString().slice(-8);f.payments=f.payments||[];f.payments.push({amount:amt+late,baseAmount:amt,lateFee:late,mode:$('v22mode').value,date:$('v22md').value,receipt:rec,periodStart:$('v22period').value,periodEnd:'',periodStartISO:$('v22md').value});f.paid=true;persist('Add','મેન્ટેનન્સ • ઘર '+no+' • '+rec);closeV22();renderAll();toastV22('પેમેન્ટ જમા થયું • '+rec);setTimeout(()=>receiptV22(no,rec),100)};
 function receiptV22(no,rec){let f=d.flats.find(x=>String(x.no)===String(no)),p=(f?.payments||[]).find(x=>x.receipt===rec);if(!p)return;modal('🧾 Payment Receipt',`<div class="v22-card"><b>સરદાર સોસાયટી</b><p>રસીદ નંબર: <b>${E(p.receipt)}</b></p><p>ઘર: ${E(f.no)} • ${E(f.name)}</p><p>રકમ: <b>${money(p.amount)}</b></p><p>Mode: ${E(p.mode)}</p><p>તારીખ: ${E(p.date)}</p><p>સમયગાળો: ${E(p.periodStart||'-')}</p></div><div class="v22-tools"><button class="v22-btn primary" onclick="window.print()">🖨️ Print / PDF</button><button class="v22-btn green" onclick="waPaymentV22('${E(no)}','${E(rec)}')">💬 WhatsApp</button></div>`)}
 window.waPaymentV22=function(no,rec){let f=d.flats.find(x=>String(x.no)===String(no)),p=(f?.payments||[]).find(x=>x.receipt===rec);if(!f?.mobile)return toastV22('મોબાઇલ નંબર ઉપલબ્ધ નથી');let msg=`સરદાર સોસાયટી\n\nઘર નંબર: ${f.no}\nસભ્ય: ${f.name||'સભ્ય'}\n\nમેન્ટેનન્સ પેમેન્ટ જમા થયું.\nરકમ: ${money(p?.amount)}\nરસીદ: ${p?.receipt}\nતારીખ: ${p?.date}\nમોડ: ${p?.mode}\n\nઆભાર.`;window.open('https://wa.me/91'+String(f.mobile).replace(/\D/g,'')+'?text='+encodeURIComponent(msg),'_blank')};
-window.openIncomeForm=function(){if(role!=='admin')return;modal('💰 નવી આવક',`<div class="v22-form"><label>આવક હેડ</label><select id="v22ihd">${d.incomeHeads.filter(h=>h!=='મેન્ટેનન્સ આવક').map(h=>`<option>${E(h)}</option>`).join('')}</select><label>મકાન (વૈકલ્પિક)</label><select id="v22if"><option value="">સામાન્ય આવક</option>${d.flats.filter(occ).map(f=>`<option value="${f.no}">ઘર ${E(f.no)} • ${E(f.name)}</option>`).join('')}</select><label>વિગત</label><input id="v22idet"><div class="v22-two"><div><label>રકમ</label><input id="v22iam" type="number"></div><div><label>તારીખ</label><input id="v22id" type="date" value="${today()}"></div></div><label>Payment Mode</label><select id="v22imo"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option></select>${formButtons('saveIncomeV22()')}</div>`)};
-window.saveIncomeV22=function(){let amount=Number($('v22iam').value||0);if(amount<=0)return toastV22('રકમ નાખો');let flat=$('v22if').value;d.incomes.unshift({id:'i'+Date.now(),head:$('v22ihd').value,flatNo:flat,detail:$('v22idet').value.trim(),date:$('v22id').value,amount,mode:$('v22imo').value,receipt:'IN-'+Date.now().toString().slice(-8)});persist('Add','આવક • '+$('v22ihd').value);closeV22();renderAll();toastV22('આવક સાચવાઈ')};
+window.v23FormatDate=function(value){
+  const s=String(value||'').trim();
+  let m=s.match(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})$/);
+  if(m)return `${String(m[1]).padStart(2,'0')}.${String(m[2]).padStart(2,'0')}.${m[3]}`;
+  m=s.match(/^(\d{4})[.\/-](\d{1,2})[.\/-](\d{1,2})$/);
+  if(m)return `${String(m[3]).padStart(2,'0')}.${String(m[2]).padStart(2,'0')}.${m[1]}`;
+  return '';
+};
+window.v23TodayDot=function(){const d0=new Date();return `${String(d0.getDate()).padStart(2,'0')}.${String(d0.getMonth()+1).padStart(2,'0')}.${d0.getFullYear()}`};
+window.v23OpenNewIncome=function(){
+  if(role!=='admin')return;
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  modal('💰 નવી આવક',`<div class="v22-form">
+    <label>આવક હેડ</label>
+    <select id="v23IncomeHead">${heads.map(h=>`<option>${E(h)}</option>`).join('')}</select>
+    <label>મકાન (વૈકલ્પિક)</label>
+    <select id="v23IncomeFlat"><option value="">સામાન્ય આવક</option>${d.flats.filter(occ).map(f=>`<option value="${E(f.no)}">ઘર ${E(f.no)} • ${E(f.name)}</option>`).join('')}</select>
+    <label>વિગત</label><input id="v23IncomeDetail">
+    <div class="v22-two"><div><label>રકમ</label><input id="v23IncomeAmount" type="number" min="1"></div><div><label>તારીખ</label><input id="v23IncomeDate" inputmode="numeric" placeholder="DD.MM.YYYY" value="${v23TodayDot()}"></div></div>
+    <label>Payment Mode</label><select id="v23IncomeMode"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option></select>
+    ${formButtons('v23SaveNewIncome()')}
+  </div>`);
+};
+window.v23SaveNewIncome=function(){
+  if(role!=='admin')return;
+  const amount=Number($('v23IncomeAmount')?.value||0);
+  const date=v23FormatDate($('v23IncomeDate')?.value||'');
+  const detail=$('v23IncomeDetail')?.value.trim()||'';
+  if(amount<=0)return toastV22('રકમ નાખો');
+  if(!date)return toastV22('તારીખ DD.MM.YYYY માં નાખો');
+  const head=$('v23IncomeHead')?.value||'';
+  const flat=$('v23IncomeFlat')?.value||'';
+  const stamp=Date.now();
+  d.incomes.unshift({id:'i'+stamp,head,flatNo:flat,detail,date,amount,mode:$('v23IncomeMode')?.value||'કેશ',receipt:'IN-'+String(stamp).slice(-8)});
+  persist('Add','આવક • '+head);
+  closeV22();
+  renderAll();
+  toastV22('આવક સાચવાઈ');
+};
+window.openIncomeForm=window.v23OpenNewIncome;
 window.openExpenseForm=function(){if(role!=='admin')return;modal('💸 નવો ખર્ચ',`<div class="v22-form"><label>ખર્ચ હેડ</label><select id="v22eh">${d.expenseHeads.map(h=>`<option>${E(h)}</option>`).join('')}</select><label>વિગત</label><input id="v22ed"><div class="v22-two"><div><label>રકમ</label><input id="v22ea" type="number"></div><div><label>તારીખ</label><input id="v22edate" type="date" value="${today()}"></div></div><div class="v22-two"><div><label>બિલ નંબર</label><input id="v22eb"></div><div><label>Payment Mode</label><select id="v22emo"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option></select></div></div>${formButtons('saveExpenseV22()')}</div>`)};
 window.saveExpenseV22=function(){let amount=Number($('v22ea').value||0),detail=$('v22ed').value.trim();if(amount<=0||!detail)return toastV22('વિગત અને રકમ જરૂરી છે');d.expenses.unshift({id:'e'+Date.now(),seq:d.expenses.length+1,head:$('v22eh').value,detail,date:$('v22edate').value,amount,billNo:$('v22eb').value.trim(),mode:$('v22emo').value});persist('Add','ખર્ચ • '+detail);closeV22();renderAll();toastV22('ખર્ચ સાચવાયો')};
 window.saveMemberIncomeV22=function(head,no){if(role!=='admin')return;let a=Number($('v22mi_'+no)?.value||0),f=d.flats.find(x=>String(x.no)===String(no));if(!f||!occ(f)||a<=0)return toastV22('રકમ દાખલ કરો');d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:head+' • ઘર '+no+' • '+f.name,date:today(),amount:a,mode:'કેશ',receipt:'IN-'+Date.now().toString().slice(-8)});persist('Add','સભ્યવાર અન્ય આવક • ઘર '+no);renderAll();toastV22('સભ્યવાર આવક જમા થઈ')};
@@ -775,111 +881,79 @@ setTimeout(()=>{if(!$('login')?.classList.contains('hide'))return;render()},600)
   };
 })();
 </script>
-<script id="v23-locked-income-expense-clean-fix">
-
-/* V23 LOCKED MASTER — functional-only fix for Total Income / Total Expense entry lists. */
+<script id="v23-locked-income-expense-fix">
 (function(){
-  function escV23(x){return String(x==null?'':x).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]})}
-  function showV23(title,body){
-    var sheet=document.getElementById('v22sheet'), overlay=document.getElementById('v22modal');
-    if(!sheet||!overlay)return;
-    sheet.innerHTML='<button class="v22-close" onclick="closeV23EntryModal()">×</button><h3>'+title+'</h3>'+body;
-    overlay.classList.add('show');
+  function v23DateParts(value){
+    const s=String(value||'').trim();
+    let m=s.match(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})$/);
+    if(m){const dt=new Date(Number(m[3]),Number(m[2])-1,Number(m[1]));if(dt.getFullYear()===Number(m[3])&&dt.getMonth()===Number(m[2])-1&&dt.getDate()===Number(m[1]))return {time:dt.getTime()};}
+    m=s.match(/^(\d{4})[.\/-](\d{1,2})[.\/-](\d{1,2})$/);
+    if(m){const dt=new Date(Number(m[1]),Number(m[2])-1,Number(m[3]));if(dt.getFullYear()===Number(m[1])&&dt.getMonth()===Number(m[2])-1&&dt.getDate()===Number(m[3]))return {time:dt.getTime()};}
+    const dt=new Date(s); return {time:Number.isNaN(dt.getTime())?0:dt.getTime()};
   }
-  window.closeV23EntryModal=function(){var el=document.getElementById('v22modal');if(el)el.classList.remove('show')};
-  function msgV23(t){if(typeof window.toastV22==='function')window.toastV22(t);else if(typeof window.toast==='function')window.toast(t);}
-  function incomeRowsV23(){
-    var out=[];
+  function incomeRows(){
+    const rows=[];
     (d.flats||[]).forEach(function(f){
       (f.payments||[]).forEach(function(p,i){
-        out.push({kind:'maintenance',flat:String(f.no),index:i,receipt:String(p.receipt||''),date:p.date||p.periodStartISO||'',head:'મેન્ટેનન્સ આવક',member:f.name||'',detail:p.periodStart||'મેન્ટેનન્સ',mode:p.mode||'',amount:Number(p.amount||0)});
+        rows.push({kind:'maintenance',flat:String(f.no),member:f.name||'',date:p.date||p.periodStartISO||'',head:'મેન્ટેનન્સ આવક',detail:p.periodStart||'મેન્ટેનન્સ',amount:Number(p.amount||0),mode:p.mode||'',receipt:String(p.receipt||('m-'+f.no+'-'+i)),index:i});
       });
     });
     (d.incomes||[]).forEach(function(x){
-      var f=x.flatNo?d.flats.find(function(a){return String(a.no)===String(x.flatNo)}):null;
-      out.push({kind:'income',id:String(x.id||''),flat:f?String(f.no):String(x.flatNo||''),member:f?(f.name||''):'',date:x.date||'',head:x.head||'આવક',detail:x.detail||'',mode:x.mode||'',receipt:x.receipt||'',amount:Number(x.amount||0)});
+      const f=x.flatNo?d.flats.find(function(a){return String(a.no)===String(x.flatNo)}):null;
+      rows.push({kind:'income',id:String(x.id||''),flat:f?String(f.no):String(x.flatNo||''),member:f?f.name||'':'',date:x.date||'',head:x.head||'આવક',detail:x.detail||'',amount:Number(x.amount||0),mode:x.mode||'',receipt:x.receipt||''});
     });
-    return out.sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''));});
+    return rows.sort(function(a,b){const pa=v23DateParts(b.date),pb=v23DateParts(a.date);return (pa.time-pb.time)||String(b.date).localeCompare(String(a.date));});
   }
-  function incomeListV23(){
-    var arr=incomeRowsV23();
-    if(!arr.length)return '<div class="v22-empty">હજુ કોઈ આવક એન્ટ્રી નથી.</div>';
-    return '<div class="v22-list">'+arr.map(function(x){
-      var sub=escV23(x.date||'')+(x.flat?' • ઘર '+escV23(x.flat)+' • '+escV23(x.member||'સભ્ય'):'')+(x.detail?' • '+escV23(x.detail):'')+(x.mode?' • '+escV23(x.mode):'')+(x.receipt?' • રસીદ '+escV23(x.receipt):'');
-      var edit=x.kind==='maintenance'?"editMaintenanceV23('"+escV23(x.flat)+"',"+x.index+")":"editOtherIncomeV23('"+escV23(x.id)+"')";
-      var del=x.kind==='maintenance'?"deleteMaintenanceV23('"+escV23(x.flat)+"',"+x.index+")":"deleteOtherIncomeV23('"+escV23(x.id)+"')";
-      return '<div class="v22-row"><div class="grow"><b>💰 '+escV23(x.head)+' • '+money(x.amount)+'</b><div class="v22-sub">'+sub+'</div></div><div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end"><button class="v22-btn" style="min-height:34px;padding:5px 8px" onclick="'+edit+'">✏️ Edit</button><button class="v22-btn red" style="min-height:34px;padding:5px 8px" onclick="'+del+'">🗑️ Delete</button></div></div>';
-    }).join('')+'</div>';
+  function incomeEdit(id){
+    const x=(d.incomes||[]).find(function(a){return String(a.id)===String(id)});
+    if(!x)return toastV22('આવક એન્ટ્રી મળી નથી');
+    const flatOpts='<option value="">સામાન્ય આવક (સભ્ય વગર)</option>'+(d.flats||[]).map(function(f){return '<option value="'+E(f.no)+'" '+(String(x.flatNo||'')===String(f.no)?'selected':'')+'>ઘર '+E(f.no)+' • '+E(f.name||'મકાન ખાલી')+'</option>'}).join('');
+    modal('✏️ આવક Edit','<div class="v22-form"><label>આવક હેડ</label><select id="v23eiHead">'+(d.incomeHeads||[]).map(function(h){return '<option '+(h===x.head?'selected':'')+'>'+E(h)+'</option>'}).join('')+'</select><label>સભ્ય / મકાન</label><select id="v23eiFlat">'+flatOpts+'</select><label>આવકની વિગત</label><input id="v23eiDetail" value="'+E(x.detail||'')+'"><label>તારીખ</label><input id="v23eiDate" inputmode="numeric" placeholder="DD.MM.YYYY" value="'+E(v23FormatDate(x.date||''))+'"><label>રકમ</label><input id="v23eiAmount" type="number" min="0" value="'+Number(x.amount||0)+'"><div class="v22-tools"><button class="v22-btn primary" onclick="v23SaveIncomeEdit(\''+E(id)+'\')">સાચવો</button><button class="v22-btn dark" onclick="closeV22();openAllIncomeEntriesV23()">પાછા</button></div></div>');
   }
+  window.v23SaveIncomeEdit=function(id){
+    if(role!=='admin')return;
+    const x=(d.incomes||[]).find(function(a){return String(a.id)===String(id)}); if(!x)return toastV22('આવક એન્ટ્રી મળી નથી');
+    x.head=$('v23eiHead').value; x.flatNo=$('v23eiFlat').value||''; x.detail=$('v23eiDetail').value.trim(); x.date=v23FormatDate($('v23eiDate').value||''); x.amount=Number($('v23eiAmount').value||0);
+    if(x.amount<=0)return toastV22('રકમ જરૂરી છે'); if(!x.date)return toastV22('તારીખ DD.MM.YYYY માં નાખો');
+    persist('Edit','આવક • '+x.head); closeV22(); renderAll(); toastV22('આવક એન્ટ્રી અપડેટ થઈ'); setTimeout(openAllIncomeEntriesV23,80);
+  };
   window.openAllIncomeEntriesV23=function(){
     if(role!=='admin')return;
-    showV23('💰 કુલ આવક એન્ટ્રી','<div class="v22-sub" style="margin-bottom:10px">મેન્ટેનન્સ સહિતની તમામ આવક એન્ટ્રી</div>'+incomeListV23());
+    const arr=incomeRows();
+    const body=arr.length?'<div class="v22-list">'+arr.map(function(x){
+      const sub=(x.date||'')+(x.flat?' • ઘર '+E(x.flat)+' • '+E(x.member||'સભ્ય'):'')+(x.detail?' • '+E(x.detail):'')+(x.mode?' • '+E(x.mode):'')+(x.receipt?' • રસીદ '+E(x.receipt):'');
+      const edit=x.kind==='maintenance'?"openMaintenanceEntryV23('"+E(x.flat)+"','"+E(x.receipt)+"')":"v23EditIncomeEntry('"+E(x.id)+"')";
+      const del=x.kind==='maintenance'?"deleteMaintenanceEntryV23('"+E(x.flat)+"','"+E(x.receipt)+"')":"v23DeleteIncomeEntry('"+E(x.id)+"')";
+      return '<div class="v22-row"><div class="grow"><b>💰 '+E(x.head)+' • '+money(x.amount)+'</b><div class="v22-sub">'+sub+'</div></div><div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end"><button class="v22-btn" style="min-height:34px;padding:5px 8px" onclick="'+edit+'">✏️ Edit</button><button class="v22-btn red" style="min-height:34px;padding:5px 8px" onclick="'+del+'">🗑️ Delete</button></div></div>';
+    }).join('')+'</div>':'<div class="v22-empty">હજુ કોઈ આવક એન્ટ્રી નથી.</div>';
+    modal('💰 કુલ આવક એન્ટ્રી','<div class="v22-sub" style="margin-bottom:10px">મેન્ટેનન્સ સહિતની તમામ આવક એન્ટ્રી</div>'+body);
   };
-  window.editMaintenanceV23=function(no,index){
-    if(role!=='admin')return;
-    var f=d.flats.find(function(x){return String(x.no)===String(no)}),i=Number(index),p=f&&f.payments?f.payments[i]:null;
-    if(!f||!p)return msgV23('મેન્ટેનન્સ એન્ટ્રી મળી નથી');
-    showV23('✏️ મેન્ટેનન્સ એન્ટ્રી Edit','<div class="v22-form"><div class="v22-sub">ઘર '+escV23(f.no)+' • '+escV23(f.name||'સભ્ય')+' • રસીદ '+escV23(p.receipt||'-')+'</div><div class="v22-two"><div><label>મેન્ટેનન્સ રકમ</label><input id="v23mAmt" type="number" min="0" value="'+Number(p.baseAmount!=null?p.baseAmount:Number(p.amount||0)-Number(p.lateFee||0))+'"></div><div><label>લેટ ફી</label><input id="v23mLate" type="number" min="0" value="'+Number(p.lateFee||0)+'"></div></div><div class="v22-two"><div><label>Payment Mode</label><select id="v23mMode"><option '+(p.mode==='કેશ'?'selected':'')+'>કેશ</option><option '+(p.mode==='UPI'?'selected':'')+'>UPI</option><option '+(p.mode==='બેંક ટ્રાન્સફર'?'selected':'')+'>બેંક ટ્રાન્સફર</option></select></div><div><label>તારીખ</label><input id="v23mDate" type="date" value="'+escV23(p.date||'')+'"></div></div><label>સમયગાળો</label><input id="v23mPeriod" value="'+escV23(p.periodStart||'')+'"><div class="v22-tools"><button class="v22-btn primary" onclick="saveMaintenanceV23(\''+escV23(no)+'\','+i+')">સાચવો</button><button class="v22-btn dark" onclick="openAllIncomeEntriesV23()">પાછા</button></div></div>');
-  };
-  window.saveMaintenanceV23=function(no,index){
-    if(role!=='admin')return;
-    var f=d.flats.find(function(x){return String(x.no)===String(no)}),i=Number(index),p=f&&f.payments?f.payments[i]:null;
-    if(!f||!p)return msgV23('મેન્ટેનન્સ એન્ટ્રી મળી નથી');
-    var base=Number(document.getElementById('v23mAmt')?.value||0),late=Number(document.getElementById('v23mLate')?.value||0);
-    if(base<=0)return msgV23('મેન્ટેનન્સ રકમ નાખો');
-    p.baseAmount=base;p.lateFee=late;p.amount=base+late;
-    p.mode=document.getElementById('v23mMode')?.value||p.mode;p.date=document.getElementById('v23mDate')?.value||p.date;p.periodStart=document.getElementById('v23mPeriod')?.value.trim()||p.periodStart;
-    p.periodStartISO=p.date||p.periodStartISO||'';f.paid=true;
-    persist('Edit','મેન્ટેનન્સ • ઘર '+no+' • payment '+i);renderAll();msgV23('મેન્ટેનન્સ એન્ટ્રી અપડેટ થઈ');setTimeout(window.openAllIncomeEntriesV23,80);
-  };
-  window.deleteMaintenanceV23=function(no,index){
-    if(role!=='admin')return;
-    var f=d.flats.find(function(x){return String(x.no)===String(no)}),i=Number(index);
-    if(!f||!f.payments||!f.payments[i])return msgV23('મેન્ટેનન્સ એન્ટ્રી મળી નથી');
-    if(!confirm('આ મેન્ટેનન્સ આવક એન્ટ્રી કાયમી રીતે Delete કરવી છે?'))return;
-    f.payments.splice(i,1);f.paid=f.payments.length>0;
-    persist('Delete','મેન્ટેનન્સ • ઘર '+no+' • payment '+i);renderAll();msgV23('મેન્ટેનન્સ એન્ટ્રી Delete થઈ');setTimeout(window.openAllIncomeEntriesV23,80);
-  };
-  window.editOtherIncomeV23=function(id){
-    if(role!=='admin')return;
-    var x=(d.incomes||[]).find(function(a){return String(a.id)===String(id)});
-    if(!x)return msgV23('આવક એન્ટ્રી મળી નથી');
-    var opts='<option value="">સામાન્ય આવક (સભ્ય વગર)</option>'+(d.flats||[]).map(function(f){return '<option value="'+escV23(f.no)+'" '+(String(x.flatNo||'')===String(f.no)?'selected':'')+'>ઘર '+escV23(f.no)+' • '+escV23(f.name||'મકાન ખાલી')+'</option>'}).join('');
-    showV23('✏️ આવક Edit','<div class="v22-form"><label>આવક હેડ</label><select id="v23iHead">'+(d.incomeHeads||[]).map(function(h){return '<option '+(h===x.head?'selected':'')+'>'+escV23(h)+'</option>'}).join('')+'</select><label>સભ્ય / મકાન</label><select id="v23iFlat">'+opts+'</select><label>આવકની વિગત</label><input id="v23iDetail" value="'+escV23(x.detail||'')+'"><label>તારીખ</label><input id="v23iDate" type="date" value="'+escV23(x.date||'')+'"><label>રકમ</label><input id="v23iAmount" type="number" min="0" value="'+Number(x.amount||0)+'"><div class="v22-tools"><button class="v22-btn primary" onclick="saveOtherIncomeV23(\''+escV23(id)+'\')">સાચવો</button><button class="v22-btn dark" onclick="openAllIncomeEntriesV23()">પાછા</button></div></div>');
-  };
-  window.saveOtherIncomeV23=function(id){
-    if(role!=='admin')return;
-    var x=(d.incomes||[]).find(function(a){return String(a.id)===String(id)});if(!x)return msgV23('આવક એન્ટ્રી મળી નથી');
-    var amount=Number(document.getElementById('v23iAmount')?.value||0);if(amount<=0)return msgV23('રકમ જરૂરી છે');
-    x.head=document.getElementById('v23iHead')?.value||x.head;x.flatNo=document.getElementById('v23iFlat')?.value||'';x.detail=document.getElementById('v23iDetail')?.value.trim()||'';x.date=document.getElementById('v23iDate')?.value||x.date;x.amount=amount;
-    persist('Edit','આવક • '+x.head);renderAll();msgV23('આવક એન્ટ્રી અપડેટ થઈ');setTimeout(window.openAllIncomeEntriesV23,80);
-  };
-  window.deleteOtherIncomeV23=function(id){
-    if(role!=='admin')return;
-    var x=(d.incomes||[]).find(function(a){return String(a.id)===String(id)});if(!x)return msgV23('આવક એન્ટ્રી મળી નથી');
+  window.v23EditIncomeEntry=function(id){incomeEdit(id)};
+  window.v23DeleteIncomeEntry=function(id){
+    if(role!=='admin')return; const x=(d.incomes||[]).find(function(a){return String(a.id)===String(id)}); if(!x)return toastV22('આવક એન્ટ્રી મળી નથી');
     if(!confirm('આ આવક એન્ટ્રી કાયમી રીતે Delete કરવી છે?'))return;
-    d.incomes=d.incomes.filter(function(a){return String(a.id)!==String(id)});persist('Delete','આવક • '+(x.head||''));renderAll();msgV23('આવક એન્ટ્રી Delete થઈ');setTimeout(window.openAllIncomeEntriesV23,80);
+    d.incomes=d.incomes.filter(function(a){return String(a.id)!==String(id)}); persist('Delete','આવક • '+(x.head||'')); renderAll(); toastV22('આવક એન્ટ્રી Delete થઈ'); setTimeout(openAllIncomeEntriesV23,80);
   };
-  function expenseListV23(){
-    var arr=Array.isArray(d.expenses)?d.expenses:[];
-    if(!arr.length)return '<div class="v22-empty">હજુ કોઈ જાવક એન્ટ્રી નથી.</div>';
-    return '<div class="v22-list">'+arr.map(function(x){return '<div class="v22-row"><div class="grow"><b>💸 '+escV23(x.head||'ખર્ચ')+' • '+money(x.amount)+'</b><div class="v22-sub">ક્રમ '+escV23(x.seq||'')+' • '+escV23(x.date||'')+(x.detail?' • '+escV23(x.detail):'')+(x.billNo?' • બિલ નં. '+escV23(x.billNo):'')+'</div></div><div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end"><button class="v22-btn" style="min-height:34px;padding:5px 8px" onclick="editExpenseV23(\''+escV23(x.id)+'\')">✏️ Edit</button><button class="v22-btn red" style="min-height:34px;padding:5px 8px" onclick="deleteExpenseV23Clean(\''+escV23(x.id)+'\')">🗑️ Delete</button></div></div>'}).join('')+'</div>';
+  function expenseEdit(id){
+    const x=(d.expenses||[]).find(function(a){return String(a.id)===String(id)}); if(!x)return toastV22('જાવક એન્ટ્રી મળી નથી');
+    modal('✏️ જાવક Edit','<div class="v22-form"><label>ક્રમ</label><input id="v23eeSeq" type="number" value="'+Number(x.seq||1)+'"><label>ખર્ચ હેડ</label><select id="v23eeHead">'+(d.expenseHeads||[]).map(function(h){return '<option '+(h===x.head?'selected':'')+'>'+E(h)+'</option>'}).join('')+'</select><label>ખર્ચની વિગત</label><input id="v23eeDetail" value="'+E(x.detail||'')+'"><label>તારીખ</label><input id="v23eeDate" type="date" value="'+E(x.date||'')+'"><label>બિલની રકમ</label><input id="v23eeAmount" type="number" min="0" value="'+Number(x.amount||0)+'"><label>બિલ નંબર / નોંધ</label><input id="v23eeBill" value="'+E(x.billNo||'')+'"><div class="v22-tools"><button class="v22-btn primary" onclick="v23SaveExpenseEdit(\''+E(id)+'\')">સાચવો</button><button class="v22-btn dark" onclick="closeV22();openAllExpenseEntriesV23()">પાછા</button></div></div>');
   }
-  window.openAllExpenseEntriesV23=function(){if(role!=='admin')return;showV23('💸 કુલ જાવક એન્ટ્રી',expenseListV23())};
-  window.editExpenseV23=function(id){
-    if(role!=='admin')return;var x=(d.expenses||[]).find(function(a){return String(a.id)===String(id)});if(!x)return msgV23('જાવક એન્ટ્રી મળી નથી');
-    showV23('✏️ જાવક Edit','<div class="v22-form"><label>ક્રમ</label><input id="v23eSeq" type="number" value="'+Number(x.seq||1)+'"><label>ખર્ચ હેડ</label><select id="v23eHead">'+(d.expenseHeads||[]).map(function(h){return '<option '+(h===x.head?'selected':'')+'>'+escV23(h)+'</option>'}).join('')+'</select><label>ખર્ચની વિગત</label><input id="v23eDetail" value="'+escV23(x.detail||'')+'"><label>તારીખ</label><input id="v23eDate" type="date" value="'+escV23(x.date||'')+'"><label>બિલની રકમ</label><input id="v23eAmount" type="number" min="0" value="'+Number(x.amount||0)+'"><label>બિલ નંબર / નોંધ</label><input id="v23eBill" value="'+escV23(x.billNo||'')+'"><div class="v22-tools"><button class="v22-btn primary" onclick="saveExpenseV23Clean(\''+escV23(id)+'\')">સાચવો</button><button class="v22-btn dark" onclick="openAllExpenseEntriesV23()">પાછા</button></div></div>');
+  window.v23SaveExpenseEdit=function(id){
+    if(role!=='admin')return; const x=(d.expenses||[]).find(function(a){return String(a.id)===String(id)}); if(!x)return toastV22('જાવક એન્ટ્રી મળી નથી');
+    x.seq=Number($('v23eeSeq').value||1); x.head=$('v23eeHead').value; x.detail=$('v23eeDetail').value.trim(); x.date=$('v23eeDate').value; x.amount=Number($('v23eeAmount').value||0); x.billNo=$('v23eeBill').value.trim();
+    if(!x.detail||x.amount<=0)return toastV22('જાવકની વિગત અને રકમ જરૂરી છે');
+    persist('Edit','જાવક • '+x.head); closeV22(); renderAll(); toastV22('જાવક એન્ટ્રી અપડેટ થઈ'); setTimeout(openAllExpenseEntriesV23,80);
   };
-  window.saveExpenseV23Clean=function(id){
-    if(role!=='admin')return;var x=(d.expenses||[]).find(function(a){return String(a.id)===String(id)});if(!x)return msgV23('જાવક એન્ટ્રી મળી નથી');
-    var amount=Number(document.getElementById('v23eAmount')?.value||0),detail=document.getElementById('v23eDetail')?.value.trim()||'';if(amount<=0||!detail)return msgV23('જાવકની વિગત અને રકમ જરૂરી છે');
-    x.seq=Number(document.getElementById('v23eSeq')?.value||1);x.head=document.getElementById('v23eHead')?.value||x.head;x.detail=detail;x.date=document.getElementById('v23eDate')?.value||x.date;x.amount=amount;x.billNo=document.getElementById('v23eBill')?.value.trim()||'';
-    persist('Edit','જાવક • '+x.head);renderAll();msgV23('જાવક એન્ટ્રી અપડેટ થઈ');setTimeout(window.openAllExpenseEntriesV23,80);
+  window.openAllExpenseEntriesV23=function(){
+    if(role!=='admin')return; const arr=d.expenses||[];
+    const body=arr.length?'<div class="v22-list">'+arr.map(function(x){return '<div class="v22-row"><div class="grow"><b>💸 '+E(x.head||'ખર્ચ')+' • '+money(x.amount)+'</b><div class="v22-sub">ક્રમ '+E(x.seq||'')+' • '+E(x.date||'')+(x.detail?' • '+E(x.detail):'')+(x.billNo?' • બિલ નં. '+E(x.billNo):'')+'</div></div><div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end"><button class="v22-btn" style="min-height:34px;padding:5px 8px" onclick="v23EditExpenseEntry(\''+E(x.id)+'\')">✏️ Edit</button><button class="v22-btn red" style="min-height:34px;padding:5px 8px" onclick="v23DeleteExpenseEntry(\''+E(x.id)+'\')">🗑️ Delete</button></div></div>'}).join('')+'</div>':'<div class="v22-empty">હજુ કોઈ જાવક એન્ટ્રી નથી.</div>';
+    modal('💸 કુલ જાવક એન્ટ્રી',body);
   };
-  window.deleteExpenseV23Clean=function(id){
-    if(role!=='admin')return;var x=(d.expenses||[]).find(function(a){return String(a.id)===String(id)});if(!x)return msgV23('જાવક એન્ટ્રી મળી નથી');
+  window.v23EditExpenseEntry=function(id){expenseEdit(id)};
+  window.v23DeleteExpenseEntry=function(id){
+    if(role!=='admin')return; const x=(d.expenses||[]).find(function(a){return String(a.id)===String(id)}); if(!x)return toastV22('જાવક એન્ટ્રી મળી નથી');
     if(!confirm('આ જાવક એન્ટ્રી કાયમી રીતે Delete કરવી છે?'))return;
-    d.expenses=d.expenses.filter(function(a){return String(a.id)!==String(id)});persist('Delete','જાવક • '+(x.head||''));renderAll();msgV23('જાવક એન્ટ્રી Delete થઈ');setTimeout(window.openAllExpenseEntriesV23,80);
+    d.expenses=d.expenses.filter(function(a){return String(a.id)!==String(id)}); persist('Delete','જાવક • '+(x.head||'')); renderAll(); toastV22('જાવક એન્ટ્રી Delete થઈ'); setTimeout(openAllExpenseEntriesV23,80);
   };
 })();
 
