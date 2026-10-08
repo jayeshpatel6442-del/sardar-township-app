@@ -648,18 +648,39 @@ async function incomeReceiptWhatsApp(id){
   const {x,f,name,upi}=r;
   const phone=f?.mobile?String(f.mobile).replace(/\D/g,''):'';
   const msg=`સરદાર સોસાયટી\n\nઆવક રસીદ\nરસીદ નંબર: ${x.receipt||'-'}\nતારીખ: ${x.date||'-'}\nજમા કરનારનું નામ: ${name}\nઘર નંબર: ${x.flatNo||'-'}\nઆવકનો હેડ: ${x.head||'-'}\nવિગત: ${x.detail||'-'}\nરકમ: ${money(x.amount)}\nPayment Mode: ${x.mode||'-'}\n${x.mode==='UPI'?'UPI ID':'ચુકવણી માહિતી'}: ${upi}\nકુલ રકમ: ${money(x.amount)}\n\nઆભાર.`;
+  let blob=null,file=null;
   try{
-    const blob=incomeReceiptPdfBlob_(r);
-    const file=new File([blob],`Income-Receipt-${x.receipt||x.id}.pdf`,{type:'application/pdf'});
-    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
-      await navigator.share({title:'સરદાર સોસાયટી — આવક રસીદ',text:msg,files:[file]});
-      toastV22('PDF રસીદ સાથે WhatsApp Share ખૂલ્યું');
-      return;
+    blob=incomeReceiptPdfBlob_(r);
+    file=new File([blob],`Income-Receipt-${x.receipt||x.id}.pdf`,{type:'application/pdf'});
+    if(navigator.share){
+      const canFile=!navigator.canShare || navigator.canShare({files:[file]});
+      if(canFile){
+        await navigator.share({title:'સરદાર સોસાયટી — આવક રસીદ',text:msg,files:[file]});
+        toastV22('PDF રસીદ Share થઈ — WhatsApp પસંદ કરો');
+        return;
+      }
     }
   }catch(e){console.warn('PDF file share unavailable',e)}
-  const url=phone.length===10?`https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`:`https://wa.me/?text=${encodeURIComponent(msg)}`;
+
+  // Desktop / unsupported browsers: save the actual PDF first, then open the member's WhatsApp chat.
+  // Browsers do not allow a web page to silently attach a local PDF to wa.me/WhatsApp Web.
+  try{
+    if(blob){
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob);
+      a.download=`Income-Receipt-${x.receipt||x.id}.pdf`;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+    }
+  }catch(e){console.warn('PDF download failed',e)}
+
+  const url=phone.length===10
+    ? `https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`
+    : `https://wa.me/?text=${encodeURIComponent(msg)}`;
   window.open(url,'_blank');
-  toastV22('આ browser માં PDF auto-attach support નથી. WhatsApp માં PDF Attach કરો.');
+  toastV22(phone.length===10
+    ? 'PDF રસીદ સેવ થઈ. WhatsApp chat ખૂલી છે — PDF Attach કરો.'
+    : 'PDF રસીદ સેવ થઈ. WhatsApp ખૂલી છે — PDF Attach કરો.');
 }
 window.incomeDueOpen=incomeDueOpen;window.incomeDueClose=incomeDueClose;window.incomeDueRender=incomeDueRender;window.incomeStep1OpenForHouse=incomeStep1OpenForHouse;window.incomeReceiptActions=incomeReceiptActions;window.incomeReceiptPrint=incomeReceiptPrint;window.incomeReceiptWhatsApp=incomeReceiptWhatsApp;
 
