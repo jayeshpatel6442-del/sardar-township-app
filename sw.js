@@ -1,5 +1,5 @@
-const CACHE='sardar-society-v24-7-report-center';
-const VERSION='24.7';
+const CACHE='sardar-society-v24-9-report-fix';
+const VERSION='24.9';
 const ASSETS=['./','./index.html','./manifest.webmanifest'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
