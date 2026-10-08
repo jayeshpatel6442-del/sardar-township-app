@@ -1,5 +1,5 @@
-const CACHE='sardar-society-v24-3-finance-receipt-share';
-const VERSION='24.3';
+const CACHE='sardar-society-v24-4-income-whatsapp-pdf';
+const VERSION='24.4';
 const ASSETS=['./','./index.html','./manifest.webmanifest'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
