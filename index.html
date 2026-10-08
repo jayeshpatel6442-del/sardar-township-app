@@ -15,7 +15,7 @@
 
 .finance-top-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:12px 0 16px}.finance-top-stats .v22-stat{min-height:118px;justify-content:center}.finance-top-stats .v22-stat span{font-size:16px}.finance-top-stats .v22-stat b{font-size:30px;margin-top:8px}@media(max-width:640px){.finance-top-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.finance-top-stats .v22-stat{min-height:96px;padding:12px 8px;border-radius:18px}.finance-top-stats .v22-stat span{font-size:13px;white-space:nowrap}.finance-top-stats .v22-stat b{font-size:20px;margin-top:6px}}
 </style>
-<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js?v=24.0")}</script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js?v=24.2")}</script>
 
 <style id="v22-style">
 :root{--v22-blue:#1457d9;--v22-blue2:#0b2f80;--v22-bg:#f5f7fb;--v22-card:#fff;--v22-text:#172033;--v22-muted:#667085;--v22-line:#e6eaf0;--v22-green:#087a4b;--v22-red:#c52b2b;--v22-orange:#b66a00;--v22-shadow:0 10px 30px rgba(20,45,90,.08)}
@@ -570,29 +570,96 @@ function incomeReceiptActions(id){
   const f=x.flatNo?(d.flats||[]).find(v=>String(v.no)===String(x.flatNo)):null;
   const name=x.payerName||f?.name||'સામાન્ય આવક';
   const upi=x.mode==='UPI'?(d.settings?.upi||'UPI'):'—';
-  modal('🧾 આવક રસીદ',`<div class="v22-card"><b>સરદાર સોસાયટી</b><p>રસીદ નંબર: <b>${E(x.receipt||'-')}</b></p><p>તારીખ: <b>${E(x.date||'-')}</b></p><p>જમા કરનાર: <b>${E(name)}</b></p><p>ઘર નંબર: <b>${x.flatNo?E(x.flatNo):'—'}</b></p><p>આવક હેડ: ${E(x.head||'-')}</p><p>વિગત: ${E(x.detail||'-')}</p><p>Payment Mode: ${E(x.mode||'-')}</p><p>${x.mode==='UPI'?'UPI ID':'ચુકવણી માહિતી'}: ${E(upi)}</p><p><b>કુલ રકમ: ${money(x.amount)}</b></p></div><div class="v22-tools"><button class="v22-btn primary" onclick="incomeReceiptPrint('${E(x.id)}')">📄 રસીદ / PDF</button><button class="v22-btn green" onclick="incomeReceiptWhatsApp('${E(x.id)}')">📲 WhatsApp</button></div><div class="v22-sub" style="margin-top:8px">📄 રસીદ / PDF દબાવીને Print → Save as PDF કરી શકાય છે. 📲 WhatsApp દબાવવાથી સભ્યની રસીદની વિગતો WhatsAppમાં ખુલશે; સાચવેલી PDF ત્યાં Attach કરીને મોકલી શકાય છે.</div>`);
+  modal('🧾 આવક રસીદ',`<div class="v22-card"><b>સરદાર સોસાયટી</b><p>રસીદ નંબર: <b>${E(x.receipt||'-')}</b></p><p>તારીખ: <b>${E(x.date||'-')}</b></p><p>જમા કરનાર: <b>${E(name)}</b></p><p>ઘર નંબર: <b>${x.flatNo?E(x.flatNo):'—'}</b></p><p>આવક હેડ: ${E(x.head||'-')}</p><p>વિગત: ${E(x.detail||'-')}</p><p>Payment Mode: ${E(x.mode||'-')}</p><p>${x.mode==='UPI'?'UPI ID':'ચુકવણી માહિતી'}: ${E(upi)}</p><p><b>કુલ રકમ: ${money(x.amount)}</b></p></div><div class="v22-tools"><button class="v22-btn primary" onclick="incomeReceiptPrint('${E(x.id)}')">📄 રસીદ / PDF</button><button class="v22-btn green" onclick="incomeReceiptWhatsApp('${E(x.id)}')">📲 PDF સાથે WhatsApp</button></div><div class="v22-sub" style="margin-top:8px">📄 PDF બટનથી રસીદ બનાવી/પ્રિન્ટ કરી શકાય છે. 📲 PDF સાથે WhatsApp બટન supported mobile/PWA browserમાં રસીદની PDF ફાઇલ સાથે WhatsApp share કરશે. જો browser file-share support ન કરતું હોય તો WhatsApp ખોલીને PDF Attach કરવાની સૂચના મળશે.</div>`);
 }
-function incomeReceiptPrint(id){
-  const x=(d.incomes||[]).find(v=>String(v.id)===String(id));if(!x)return;
+function incomeReceiptData_(id){
+  const x=(d.incomes||[]).find(v=>String(v.id)===String(id)); if(!x)return null;
   const f=x.flatNo?(d.flats||[]).find(v=>String(v.no)===String(x.flatNo)):null;
   const name=x.payerName||f?.name||'સામાન્ય આવક';
   const upi=x.mode==='UPI'?(d.settings?.upi||'UPI'):'—';
+  return {x,f,name,upi};
+}
+function incomeReceiptPrint(id){
+  const r=incomeReceiptData_(id); if(!r)return;
+  const {x,name,upi}=r;
   const w=window.open('','_blank'); if(!w)return toastV22('Popup allow કરો');
   w.document.write(`<!doctype html><html lang="gu"><head><meta charset="utf-8"><title>રસીદ ${E(x.receipt||'')}</title><style>body{font-family:Arial,"Noto Sans Gujarati",sans-serif;padding:28px;max-width:650px;margin:auto;color:#111}h1{margin-bottom:4px}.sub{color:#667085;margin-bottom:18px}.box{border:1px solid #bbb;border-radius:12px;padding:18px}.row{display:flex;justify-content:space-between;gap:20px;padding:9px 0;border-bottom:1px solid #eee}.row span{text-align:right}.amt{font-size:24px;font-weight:800;margin-top:16px;text-align:right}.footer{margin-top:20px;color:#667085;text-align:center}@media print{button{display:none!important}}</style></head><body><h1>સરદાર સોસાયટી</h1><div class="sub">આવક રસીદ</div><div class="box"><div class="row"><b>રસીદ નંબર</b><span>${E(x.receipt||'-')}</span></div><div class="row"><b>તારીખ</b><span>${E(x.date||'-')}</span></div><div class="row"><b>જમા કરનારનું નામ</b><span>${E(name)}</span></div><div class="row"><b>ઘર નંબર</b><span>${x.flatNo?E(x.flatNo):'—'}</span></div><div class="row"><b>આવકનો હેડ</b><span>${E(x.head||'-')}</span></div><div class="row"><b>વિગત</b><span>${E(x.detail||'-')}</span></div><div class="row"><b>Payment Mode</b><span>${E(x.mode||'-')}</span></div><div class="row"><b>${x.mode==='UPI'?'UPI ID':'ચુકવણી માહિતી'}</b><span>${E(upi)}</span></div><div class="amt">કુલ રકમ: ${money(x.amount)}</div></div><div class="footer">આભાર.<br>સરદાર સોસાયટી</div><script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`);w.document.close();
 }
-function incomeReceiptWhatsApp(id){
-  const x=(d.incomes||[]).find(v=>String(v.id)===String(id));if(!x)return;
-  const f=x.flatNo?(d.flats||[]).find(v=>String(v.no)===String(x.flatNo)):null;
-  const name=x.payerName||f?.name||'સામાન્ય આવક';
+function incomeReceiptCanvas_(r){
+  const canvas=document.createElement('canvas');
+  canvas.width=1400; canvas.height=1900;
+  const ctx=canvas.getContext('2d');
+  ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#111'; ctx.textAlign='left';
+  ctx.font='bold 46px Arial, "Noto Sans Gujarati", sans-serif'; ctx.fillText('સરદાર સોસાયટી',90,105);
+  ctx.font='32px Arial, "Noto Sans Gujarati", sans-serif'; ctx.fillStyle='#667085'; ctx.fillText('આવક રસીદ',90,155);
+  ctx.strokeStyle='#c7c7c7'; ctx.lineWidth=3; ctx.strokeRect(70,205,1260,1370);
+  const rows=[
+    ['રસીદ નંબર',r.x.receipt||'-'],['તારીખ',r.x.date||'-'],['જમા કરનારનું નામ',r.name||'-'],['ઘર નંબર',r.x.flatNo||'—'],
+    ['આવકનો હેડ',r.x.head||'-'],['વિગત',r.x.detail||'-'],['Payment Mode',r.x.mode||'-'],[r.x.mode==='UPI'?'UPI ID':'ચુકવણી માહિતી',r.upi||'—']
+  ];
+  let y=275;
+  ctx.font='bold 28px Arial, "Noto Sans Gujarati", sans-serif';
+  rows.forEach(([k,v])=>{
+    ctx.fillStyle='#111'; ctx.fillText(String(k),105,y);
+    ctx.font='28px Arial, "Noto Sans Gujarati", sans-serif';
+    const val=String(v); const max=650; let line=val;
+    if(ctx.measureText(line).width>max){let cut=line;while(cut.length>1&&ctx.measureText(cut+'…').width>max)cut=cut.slice(0,-1);line=cut+'…';}
+    ctx.textAlign='right';ctx.fillText(line,1290,y);ctx.textAlign='left';
+    ctx.strokeStyle='#e8e8e8';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(105,y+24);ctx.lineTo(1290,y+24);ctx.stroke();
+    y+=145;ctx.font='bold 28px Arial, "Noto Sans Gujarati", sans-serif';
+  });
+  ctx.fillStyle='#111';ctx.font='bold 42px Arial, "Noto Sans Gujarati", sans-serif';ctx.textAlign='right';ctx.fillText('કુલ રકમ: '+money(r.x.amount),1290,1510);
+  ctx.textAlign='center';ctx.fillStyle='#667085';ctx.font='26px Arial, "Noto Sans Gujarati", sans-serif';ctx.fillText('આભાર.  સરદાર સોસાયટી',700,1660);
+  return canvas;
+}
+function incomeReceiptPdfBlob_(r){
+  const canvas=incomeReceiptCanvas_(r);
+  const dataUrl=canvas.toDataURL('image/jpeg',0.92);
+  const b64=dataUrl.split(',')[1];
+  const bin=atob(b64), img=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)img[i]=bin.charCodeAt(i);
+  const enc=new TextEncoder();
+  const objects=[]; const add=o=>{objects.push(o);return objects.length;};
+  const header='%PDF-1.4\n%\\xFF\\xFF\\xFF\\xFF\n';
+  const page=add('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 504 684] /Resources << /XObject << /Im1 5 0 R >> >> /Contents 4 0 R >>');
+  add('<< /Type /Pages /Kids [1 0 R] /Count 1 >>');
+  add('<< /Type /Catalog /Pages 2 0 R >>');
+  const stream='q\n504 0 0 684 0 0 cm\n/Im1 Do\nQ\n';
+  const contentObj=add(`<< /Length ${enc.encode(stream).length} >>\nstream\n${stream}endstream`);
+  const imageObj=add(null);
+  let pdf=header; const offsets=[0];
+  const put=(n,obj)=>{offsets[n]=enc.encode(pdf).length;pdf+=`${n} 0 obj\n${obj}\nendobj\n`;};
+  put(1,objects[0]);put(2,objects[1]);put(3,objects[2]);put(4,objects[3]);
+  offsets[5]=enc.encode(pdf).length;pdf+='5 0 obj\n';pdf+=`<< /Type /XObject /Subtype /Image /Width ${canvas.width} /Height ${canvas.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${img.length} >>\nstream\n`;
+  const parts=[enc.encode(pdf),img,enc.encode('\nendstream\nendobj\n')];
+  const currentLen=parts.reduce((n,a)=>n+a.length,0); pdf='';
+  const headerBytes=enc.encode(header); const objBytes=[];
+  const make=(n,obj)=>enc.encode(`${n} 0 obj\n${obj}\nendobj\n`);
+  objBytes.push(make(1,objects[0]),make(2,objects[1]),make(3,objects[2]),make(4,objects[3]));
+  const imageHead=enc.encode(`5 0 obj\n<< /Type /XObject /Subtype /Image /Width ${canvas.width} /Height ${canvas.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${img.length} >>\nstream\n`);
+  let total=headerBytes.length, offs=[0]; for(const b of objBytes){offs.push(total);total+=b.length;} offs.push(total); total+=imageHead.length+img.length+enc.encode('\nendstream\nendobj\n').length;
+  const xref=total; let x='xref\n0 6\n0000000000 65535 f \n'; for(let i=1;i<=5;i++)x+=String(offs[i]).padStart(10,'0')+' 00000 n \n';
+  x+=`trailer\n<< /Size 6 /Root 3 0 R >>\nstartxref\n${xref}\n%%EOF\n`;
+  return new Blob([headerBytes,...objBytes,imageHead,img,enc.encode('\nendstream\nendobj\n'),enc.encode(x)],{type:'application/pdf'});
+}
+async function incomeReceiptWhatsApp(id){
+  const r=incomeReceiptData_(id); if(!r)return;
+  const {x,f,name,upi}=r;
   const phone=f?.mobile?String(f.mobile).replace(/\D/g,''):'';
-  const upi=x.mode==='UPI'?(d.settings?.upi||'UPI'):'—';
-  const msg=`સરદાર સોસાયટી\n\nઆવક રસીદ\nરસીદ નંબર: ${x.receipt||'-'}\nતારીખ: ${x.date||'-'}\nજમા કરનારનું નામ: ${name}\nઘર નંબર: ${x.flatNo||'-'}\nઆવકનો હેડ: ${x.head||'-'}\nવિગત: ${x.detail||'-'}\nરકમ: ${money(x.amount)}\nPayment Mode: ${x.mode||'-'}\n${x.mode==='UPI'?'UPI ID':'ચુકવણી માહિતી'}: ${upi}\nકુલ રકમ: ${money(x.amount)}\n\nPDF રસીદ અલગથી Attach કરીને મોકલી શકાય છે.\n\nઆભાર.`;
+  const msg=`સરદાર સોસાયટી\n\nઆવક રસીદ\nરસીદ નંબર: ${x.receipt||'-'}\nતારીખ: ${x.date||'-'}\nજમા કરનારનું નામ: ${name}\nઘર નંબર: ${x.flatNo||'-'}\nઆવકનો હેડ: ${x.head||'-'}\nવિગત: ${x.detail||'-'}\nરકમ: ${money(x.amount)}\nPayment Mode: ${x.mode||'-'}\n${x.mode==='UPI'?'UPI ID':'ચુકવણી માહિતી'}: ${upi}\nકુલ રકમ: ${money(x.amount)}\n\nઆભાર.`;
+  try{
+    const blob=incomeReceiptPdfBlob_(r);
+    const file=new File([blob],`Income-Receipt-${x.receipt||x.id}.pdf`,{type:'application/pdf'});
+    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+      await navigator.share({title:'સરદાર સોસાયટી — આવક રસીદ',text:msg,files:[file]});
+      toastV22('PDF રસીદ સાથે WhatsApp Share ખૂલ્યું');
+      return;
+    }
+  }catch(e){console.warn('PDF file share unavailable',e)}
   const url=phone.length===10?`https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`:`https://wa.me/?text=${encodeURIComponent(msg)}`;
-  if(navigator.share){
-    navigator.share({title:'સરદાર સોસાયટી — આવક રસીદ',text:msg}).catch(()=>{});
-  }else{
-    window.open(url,'_blank');
-  }
+  window.open(url,'_blank');
+  toastV22('આ browser માં PDF auto-attach support નથી. WhatsApp માં PDF Attach કરો.');
 }
 window.incomeDueOpen=incomeDueOpen;window.incomeDueClose=incomeDueClose;window.incomeDueRender=incomeDueRender;window.incomeStep1OpenForHouse=incomeStep1OpenForHouse;window.incomeReceiptActions=incomeReceiptActions;window.incomeReceiptPrint=incomeReceiptPrint;window.incomeReceiptWhatsApp=incomeReceiptWhatsApp;
 
