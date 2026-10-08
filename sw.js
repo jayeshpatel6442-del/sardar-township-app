@@ -1,5 +1,5 @@
-const CACHE='sardar-society-v23-step6-recovery-clean';
-const VERSION='23.6-clean';
+const CACHE='sardar-society-v24-0-finance-rebuild';
+const VERSION='24.0';
 const ASSETS=['./','./index.html','./manifest.webmanifest'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
