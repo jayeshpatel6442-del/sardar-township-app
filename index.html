@@ -12,8 +12,6 @@
 /* v8 final visual polish */
 .page-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.tool-btn{border:0;border-radius:16px;padding:13px 8px;background:#fff;box-shadow:0 5px 16px #17365d10;border:1px solid #e7edf5;color:#172033;font-weight:800;cursor:pointer}.tool-btn .ico{display:block;font-size:25px;margin-bottom:5px}.tool-btn small{display:block;color:#667085;font-weight:600;font-size:10px;margin-top:3px}.section-card{background:linear-gradient(145deg,#fff,#f8fbff);border:1px solid #e5edf7;border-radius:20px;padding:15px;margin-bottom:12px;box-shadow:0 8px 24px #17365d0b}.primary-wide{width:100%;min-height:48px;border-radius:14px}.member-preview{margin-top:12px;background:#f8fbff;border:1px solid #dce8f5;border-radius:16px;padding:14px}.member-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.top-actions{margin-top:10px;display:flex;justify-content:flex-end;gap:8px}.top-actions button{background:#ffffff1c;border:1px solid #ffffff44;color:#fff;border-radius:10px;padding:7px 10px;font-size:12px}.settings-grid{display:grid;gap:10px}.security-card{border:1px solid #dce8f5;background:linear-gradient(135deg,#f7fbff,#fff);border-radius:18px;padding:15px}.member-search{display:grid;grid-template-columns:120px 1fr;gap:8px;align-items:end}.code-like{display:none!important}
 @media(max-width:380px){.page-tools{grid-template-columns:repeat(2,1fr)}.member-fields{grid-template-columns:1fr}.member-search{grid-template-columns:1fr}}
-
-.finance-top-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:12px 0 16px}.finance-top-stats .v22-stat{min-height:118px;justify-content:center}.finance-top-stats .v22-stat span{font-size:16px}.finance-top-stats .v22-stat b{font-size:30px;margin-top:8px}@media(max-width:640px){.finance-top-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.finance-top-stats .v22-stat{min-height:96px;padding:12px 8px;border-radius:18px}.finance-top-stats .v22-stat span{font-size:13px;white-space:nowrap}.finance-top-stats .v22-stat b{font-size:20px;margin-top:6px}}
 </style>
 <script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js?v=23.0")}</script>
 
@@ -61,9 +59,12 @@ body{background:var(--v22-bg)!important;color:var(--v22-text)!important}.v22-hid
 
 <section id="maintenance" class="hide"><div class="card"><div class="title">મેન્ટેનન્સ</div><div id="memberMaintenance"></div><div id="adminMaintenance"></div></div><div class="card"><div class="title">મકાનવાર સ્થિતિ</div><div id="flatList"></div></div></section>
 
-<section id="reports" class="hide"><div class="card"><div class="title">જમા-ઉધાર રિપોર્ટ</div><div class="grid"><div class="stat"><span class="muted">કુલ જમા</span><b id="rPaid">₹0</b></div><div class="stat"><span class="muted">કુલ બાકી</span><b id="rDue">₹0</b></div><div class="stat"><span class="muted">લેટ ફી</span><b id="rLate">₹0</b></div><div class="stat"><span class="muted">બાકી મકાન</span><b id="rPending">0</b></div></div></div><div class="card"><div class="title">મકાનવાર રિપોર્ટ</div><div style="overflow:auto"><table><thead><tr><th>મકાન</th><th>સભ્ય</th><th>ક્વાર્ટર</th><th>બાકી</th><th>સ્થિતિ</th></tr></thead><tbody id="table"></tbody></table></div></div><button id="csvBtn" class="btn primary" onclick="csv()">📥 CSV ડાઉનલોડ</button></section>
 
-<section id="finance" class="hide"><div class="card"><div class="section-head"><div><div class="title">આવક નોંધણી</div><div class="sub">આવકના હેડ પ્રમાણે એન્ટ્રી</div></div><button id="adminAddIncomeBtnV12" class="btn primary small-btn" onclick="incomeForm()">+ આવક</button></div><div id="memberIncomeBox" style="margin-top:12px"></div><div id="incomeList"></div></div><div class="card"><div class="section-head"><div><div class="title">ખર્ચ નોંધણી</div><div class="sub">ક્રમ, ખર્ચની વિગત, તારીખ, બિલની રકમ અને હેડ</div></div><button id="adminAddExpenseBtnV12" class="btn primary small-btn" onclick="expenseForm()">+ ખર્ચ</button></div><div id="expenseList"></div></div><div class="card"><div class="title">હેડ વાઈઝ રિપોર્ટ</div><div id="headReport"></div><div class="grid" style="margin-top:10px"><button class="btn primary" onclick="printHeadReport()">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="downloadHeadReport()">📥 ડાઉનલોડ</button></div></div><div class="card"><div class="title">આવક / ખર્ચના હેડ</div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div><div id="headsList" style="margin-top:10px"></div></div></section>
+
+<section id="finance" class="hide"><div class="card"><div class="section-head"><div><div class="title">આવક નોંધણી</div><div class="sub">આવકના હેડ પ્રમાણે એન્ટ્રી</div></div><button id="adminAddIncomeBtnV12" class="btn primary small-btn" onclick="incomeForm()">+ આવક</button></div><div id="memberIncomeBox" style="margin-top:12px"></div><div id="incomeList"></div></div><div class="card"><div class="section-head"><div><div class="title">ખર્ચ નોંધણી</div><div class="sub">ક્રમ, ખર્ચની વિગત, તારીખ, બિલની રકમ અને હેડ</div></div><button id="adminAddExpenseBtnV12" class="btn primary small-btn" onclick="expenseForm()">+ ખર્ચ</button></div><div id="expenseList"></div></div><div class="card"><div class="title">આવક / ખર્ચના હેડ</div><div class="grid"><button class="btn light" onclick="headForm('income')">+ આવક હેડ</button><button class="btn light" onclick="headForm('expense')">+ ખર્ચ હેડ</button></div><div id="headsList" style="margin-top:10px"></div></div></section>
+
+
+
 
 <section id="members" class="hide"><div id="memberAdminBox" class="card"></div><div class="section-card"><div class="title">સભ્ય / મકાનની માહિતી</div><div class="sub">ઘર નંબર લખો. નીચે માત્ર તે જ મકાનની માહિતી આવશે. ફેરફાર કર્યા સિવાય બીજી માહિતી બદલાશે નહીં.</div><div class="member-search"><div><label>ઘર નંબર</label><input id="memberHouseNo" type="number" min="1" max="60" placeholder="1 થી 60" oninput="loadMemberHouseV8()"></div><button class="btn primary primary-wide" onclick="loadMemberHouseV8(true)">માહિતી જુઓ</button></div><div id="memberEditArea" class="member-preview"><span class="muted">ઘર નંબર દાખલ કરો.</span></div></div><div class="card"><div class="title">સભ્યોની યાદી</div><div id="membersList"></div></div></section>
 
@@ -77,35 +78,46 @@ body{background:var(--v22-bg)!important;color:var(--v22-text)!important}.v22-hid
 
 <section id="settings" class="hide"><div class="section-card"><div class="title">⚙️ એડમિન સેટિંગ</div><div id="adminSettings"></div></div><div class="security-card"><div class="title">🔐 એડમિન પાસવર્ડ બદલો</div><div class="sub">હાલનો પાસવર્ડ સ્ક્રીન પર ક્યારેય બતાવવામાં આવતો નથી.</div><div class="settings-grid"><div><label>એડમિન મોબાઇલ નંબર</label><input id="adminMobile" inputmode="numeric" maxlength="10" placeholder="10 અંકનો મોબાઇલ નંબર"></div><div><label>નવો પાસવર્ડ</label><input id="adminPassword" type="password" placeholder="નવો પાસવર્ડ"></div><div><label>નવો પાસવર્ડ ફરી લખો</label><input id="adminPassword2" type="password" placeholder="પાસવર્ડ ફરી લખો"></div><button class="btn primary primary-wide" onclick="saveAdminV8()">🔐 પાસવર્ડ / માહિતી સાચવો</button></div></div><div class="card"><div class="title">મેન્ટેનન્સ ડિફૉલ્ટ</div><div class="grid"><div><label>માસિક</label><input id="monthly" type="number"></div><div><label>મેન્યુઅલ લેટ ફી (માત્ર સૂચન)</label><input id="late" type="number"></div></div><label>ચુકવણીની છેલ્લી તારીખ</label><input id="deadline" type="date"><button class="btn primary primary-wide" style="margin-top:10px" onclick="saveSettingsV8()">સેટિંગ સાચવો</button></div><div class="card"><div class="title">UPI / સ્કેનર</div><label>સોસાયટી UPI ID</label><input id="upi" placeholder="example@upi"><button class="btn primary primary-wide" style="margin-top:10px" onclick="saveUPI()">UPI ID સાચવો</button><label style="margin-top:12px">UPI QR / સ્કેનર ફોટો</label><input id="upiQrFile" type="file" accept="image/*" onchange="saveUPIQR(event)"><div id="upiQrPreview" style="margin-top:10px"></div><button class="btn light primary-wide" style="margin-top:8px" onclick="removeUPIQR()">QR ફોટો દૂર કરો</button></div><div class="card"><div class="title">દૈનિક બેકઅપ</div><p class="muted">દિવસની તમામ એન્ટ્રીઓની બેકઅપ ફાઇલ તૈયાર કરી શકાય છે.</p><div class="action-grid"><button class="btn primary" onclick="downloadBackup()">📦 બેકઅપ ફાઇલ</button><button class="btn light" onclick="emailBackup()">✉️ Email draft</button></div><div id="backupStatus" class="muted" style="margin-top:8px"></div></div></section>
 </main>
-<nav class="nav"><button class="on" onclick="go('home',this)">⌂<span>હોમ</span></button><button onclick="go('maintenance',this)">₹<span>મેન્ટેનન્સ</span></button><button onclick="go('finance',this)">₹<span>આવક/ખર્ચ</span></button><button onclick="go('reports',this)">▥<span>રિપોર્ટ</span></button><button onclick="go('notices',this)">♢<span>નોટિસ</span></button></nav>
+<nav class="nav"><button class="on" onclick="go('home',this)">⌂<span>હોમ</span></button><button onclick="go('maintenance',this)">₹<span>મેન્ટેનન્સ</span></button><button onclick="go('finance',this)">₹<span>આવક/ખર્ચ</span></button><button onclick="go('notices',this)">♢<span>નોટિસ</span></button></nav>
 </div>
 <div id="modal" class="modal hide" onclick="if(event.target.id==='modal')closeModal()"><div class="sheet"><div id="sheet"></div></div></div>
 <script>
 const KEY='ST_SOCIETY_V2';
 const defaultData={settings:{monthly:1000,late:100,deadline:new Date().toISOString().slice(0,10),upi:'',upiQr:''},admin:{username:'',password:'Jayesh@09638'},flats:Array.from({length:60},(_,i)=>({no:String(i+1),name:'',mobile:'',type:'ઘરમાલિક',quarterly:3000,paid:false,payments:[]})),complaints:[],visitors:[],parking:Array.from({length:10},(_,i)=>({p:'P-'+String(i+1).padStart(2,'0'),car:'',name:''}))};
-let d=JSON.parse(localStorage.getItem(KEY)||'null')||defaultData;let role='admin',currentFlat='';
+let d=JSON.parse(localStorage.getItem(KEY)||'null')||defaultData;let role='',currentFlat='';
 function save(){localStorage.setItem(KEY,JSON.stringify(d))} function money(n){return '₹'+Math.round(n||0).toLocaleString('en-IN')}
 function bill(f){return Number(f?.quarterly||d.settings.monthly*3)} function late(f){if(f.paid)return 0;let x=Math.ceil((Date.now()-new Date(d.settings.deadline+'T23:59:59'))/86400000);return x>0?x*Number(d.settings.late):0}
 function stats(){let paid=d.flats.filter(x=>x.paid),col=paid.reduce((s,x)=>s+(x.payments.at(-1)?.amount||bill(x)),0),due=d.flats.filter(x=>!x.paid).reduce((s,x)=>s+bill(x),0);return{paid,col,due,late:d.flats.reduce((s,x)=>s+late(x),0)}}
 function populate(){let opts=d.flats.map(f=>`<option value="${f.no}">${f.no}${f.name?' • '+esc(f.name):''}</option>`).join('');['loginFlat','search','cf','vf'].forEach(id=>{let el=document.getElementById(id);if(el)el.innerHTML=(id==='loginFlat'?'<option value="">મકાન પસંદ કરો</option>':id==='search'?'<option value="">મકાન નંબર પસંદ કરો</option>':'')+opts});}
 function esc(s){return String(s||'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
-function login(){let m=document.getElementById('mobile').value.replace(/\D/g,''),r=document.getElementById('role').value,f=document.getElementById('loginFlat').value,p=document.getElementById('password').value.trim();if(m.length!==10)return err('મોબાઇલ નંબર 10 અંકનો હોવો જોઈએ');if(r==='admin'){if(!d.admin.username){d.admin.username=m;save()}if(m!==d.admin.username)return err('એડમિન મોબાઇલ નંબર સાચો નથી');if(p!==d.admin.password)return err('એડમિન પાસવર્ડ ખોટો છે')}else{let x=d.flats.find(v=>v.no===f);if(!x)return err('મકાન નંબર પસંદ કરો');if(!x.mobile)return err('આ મકાન માટે સભ્યનો મોબાઇલ નંબર ઉમેરાયેલ નથી');if(m!==x.mobile)return err('સભ્યનો મોબાઇલ નંબર ખોટો છે');let def='user@'+m.slice(-4);if(p!==def)return err('સભ્યનો પાસવર્ડ user@મોબાઇલના છેલ્લા 4 અંક છે')}role=r;currentFlat=f;document.getElementById('login').classList.add('hide');document.getElementById('app').classList.remove('hide');document.getElementById('who').textContent=r==='admin'?'એડમિન / કમિટી • 60 મકાન':f+' • '+(d.flats.find(x=>x.no===f)?.name||'સભ્ય');render();}
-function err(t){document.getElementById('loginErr').textContent=t}
-function go(id,btn){document.querySelectorAll('main section').forEach(x=>x.classList.add('hide'));document.getElementById(id).classList.remove('hide');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('on'));if(btn)btn.classList.add('on');render();if(id==='finance'&&typeof renderFinanceV19==='function')renderFinanceV19();scrollTo(0,0)}
-function render(){populate();let s=stats();document.getElementById('sPaid').textContent=money(s.col);document.getElementById('sDue').textContent=money(s.due);document.getElementById('sLate').textContent=money(s.late);document.getElementById('sCount').textContent=s.paid.length+' / 60';document.getElementById('rPaid').textContent=money(s.col);document.getElementById('rDue').textContent=money(s.due);document.getElementById('rLate').textContent=money(s.late);document.getElementById('rPending').textContent=60-s.paid.length;document.getElementById('monthly').value=d.settings.monthly;document.getElementById('late').value=d.settings.late;document.getElementById('deadline').value=d.settings.deadline;document.getElementById('upi').value=d.settings.upi;
-let me=role==='member'?d.flats.find(x=>x.no===currentFlat):null;document.getElementById('homeMsg').textContent=role==='member'?`${currentFlat} • ${me?.name||'સભ્ય'} • ${me?.type||''}`:'એડમિન • સભ્યો અને મેન્ટેનન્સનું સંચાલન';
-document.getElementById('flatList').innerHTML=d.flats.map(f=>`<div class="list"><div><span class="house">ઘર ${f.no}</span><br><span class="muted">${esc(f.name||'સભ્ય ઉમેરાયેલ નથી')} • ${esc(f.type)}</span><br><span class="muted">ક્વાર્ટર: ${money(bill(f))}</span></div><div><span class="badge ${f.paid?'paid':'due'}">${f.paid?'જમા':'બાકી'}</span>${role==='admin'?`<br><button class="btn ${f.paid?'green':'primary'} small-btn" style="margin-top:4px" onclick="payment('${f.no}')">${f.paid?'રસીદ':'પેમેન્ટ'}</button>`:''}</div></div>`).join('');
-document.getElementById('table').innerHTML=d.flats.map(f=>{let l=late(f),b=bill(f),v=f.paid?0:b+l;return `<tr><td>${f.no}</td><td>${esc(f.name||'-')}</td><td>${money(b)}</td><td>${money(v)}</td><td><span class="badge ${f.paid?'paid':'due'}">${f.paid?'જમા':'ઉધાર'}</span></td></tr>`}).join('');
-document.getElementById('membersList').innerHTML=d.flats.map(f=>`<div class="list"><div><b>ઘર ${f.no}</b><br><span class="muted">${esc(f.name||'સભ્ય ઉમેરાયેલ નથી')} • ${esc(f.type)}</span>${role==='admin'&&f.mobile?`<br><span class="muted">📱 ${esc(f.mobile)}</span>`:''}</div><span class="badge info">${f.paid?'મેન્ટેનન્સ જમા':'મેન્ટેનન્સ બાકી'}</span></div>`).join('');
-document.getElementById('cl').innerHTML=d.complaints.length?d.complaints.map((c,i)=>`<div class="list"><div><b>ઘર ${esc(c.flat)}</b> • ${esc(c.text)}<br><span class="muted">${esc(c.date)}</span></div><div style="text-align:right"><span class="badge ${c.status==='પૂર્ણ'?'paid':'due'}">${esc(c.status||'બાકી')}</span>${(role==='member'&&String(c.flat)===String(currentFlat))||role==='admin'?`<br><button class="btn light small-btn" style="margin-top:5px" onclick="editComplaintV19(${i})">✏️ ફેરફાર</button>`:''}</div></div>`).join(''):'<span class="muted">કોઈ ફરિયાદ નથી.</span>';
-document.getElementById('vl').innerHTML=d.visitors.length?d.visitors.map(v=>`<div class="list"><div><b>${esc(v.name)}</b> • ઘર ${esc(v.flat)}<br><span class="muted">${esc(v.purpose)} • ${esc(v.date)}</span></div></div>`).join(''):'<span class="muted">કોઈ એન્ટ્રી નથી.</span>';
-document.getElementById('pl').innerHTML=d.parking.map(p=>`<div class="list"><div><b>${p.p}</b><br><span class="muted">${esc(p.car||'વાહન નથી')} ${p.name?'• '+esc(p.name):''}</span></div></div>`).join('');
-document.getElementById('memberMaintenance').innerHTML=role==='member'?`<div class="member-only card"><div class="row"><div><b>ઘર ${me.no}</b><br><span class="muted">${esc(me.name||'સભ્ય')}</span></div><span class="badge ${me.paid?'paid':'due'}">${me.paid?'જમા':'બાકી'}</span></div><hr style="border:0;border-top:1px solid #eee"><div class="row"><span>ક્વાર્ટર મેન્ટેનન્સ</span><b>${money(bill(me))}</b></div><div class="row"><span>લેટ ફી</span><b>${money(late(me))}</b></div><div class="row"><span>કુલ બાકી</span><b>${money(me.paid?0:bill(me)+late(me))}</b></div></div>`:'';
-document.getElementById('adminMaintenance').innerHTML=role==='admin'?`<p class="muted">દરેક મકાન માટે ક્વાર્ટર પ્રમાણે અલગ મેન્ટેનન્સ રકમ સેટ કરી શકાય છે.</p>`:'';
-document.getElementById('memberAdminBox').innerHTML=role==='admin'?`<button class="btn primary" style="width:100%" onclick="memberForm()">➕ સભ્ય / મકાનની માહિતી ઉમેરો અથવા બદલો</button>`:`<div class="member-only"><b>સભ્ય માહિતી</b><p class="muted">સભ્યો માટે માહિતી જોવા માટે છે. ફેરફાર ફક્ત એડમિન કરી શકે છે.</p></div>`;
-document.getElementById('adminSettings').innerHTML=role==='admin'?`<label>એડમિન મોબાઇલ / Username</label><input id="adminMobile" inputmode="numeric" maxlength="10" value="${esc(d.admin.username)}"><label>એડમિન નવો પાસવર્ડ</label><input id="adminPassword" type="password" placeholder="નવો પાસવર્ડ લખો"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveAdmin()">એડમિન સેટિંગ સાચવો</button><p class="muted">એડમિન પાસવર્ડ અહીં બતાવવામાં આવતો નથી. એડમિન સેટિંગમાંથી પાસવર્ડ બદલી શકાય છે.</p>`:'<p class="muted">એડમિન સેટિંગ સભ્યો માટે ઉપલબ્ધ નથી.</p>';
-if(role==='admin'){const q=document.getElementById('upiQrPreview');if(q)q.innerHTML=d.settings.upiQr?`<img src="${d.settings.upiQr}" alt="UPI QR" style="max-width:220px;max-height:220px;border:1px solid #ddd;border-radius:12px">`:'<span class="muted">હજુ QR અપલોડ નથી.</span>'; }
-if(role==='member'){document.getElementById('csvBtn').classList.add('hide');document.getElementById('adminMaintenance').classList.add('hide');document.getElementById('memberAdminBox').classList.add('hide')}else{document.getElementById('csvBtn').classList.remove('hide');document.getElementById('adminMaintenance').classList.remove('hide');document.getElementById('memberAdminBox').classList.remove('hide')}
+function login(){
+  try{
+    normalizeSocietyData_();
+    let m=document.getElementById('mobile').value.replace(/\D/g,''),r=document.getElementById('role').value,f=document.getElementById('loginFlat').value,p=document.getElementById('password').value.trim();
+    if(m.length!==10)return err('મોબાઇલ નંબર 10 અંકનો હોવો જોઈએ');
+    if(r==='admin'){
+      if(!d.admin.username){d.admin.username=m;save();}
+      if(m!==d.admin.username)return err('એડમિન મોબાઇલ નંબર સાચો નથી');
+      if(p!==d.admin.password)return err('એડમિન પાસવર્ડ ખોટો છે');
+    }else{
+      let x=d.flats.find(v=>String(v.no)===String(f));
+      if(!x)return err('મકાન નંબર પસંદ કરો');
+      if(!x.mobile)return err('આ મકાન માટે સભ્યનો મોબાઇલ નંબર ઉમેરાયેલ નથી');
+      if(m!==x.mobile)return err('સભ્યનો મોબાઇલ નંબર ખોટો છે');
+      let def='user@'+m.slice(-4);
+      if(p!==def)return err('સભ્યનો પાસવર્ડ user@મોબાઇલના છેલ્લા 4 અંક છે');
+    }
+    role=r;currentFlat=f;
+    document.getElementById('login').classList.add('hide');
+    document.getElementById('app').classList.remove('hide');
+    let me=d.flats.find(x=>String(x.no)===String(f));
+    let who=document.getElementById('who');
+    if(who)who.textContent=r==='admin'?'એડમિન / કમિટી • 60 મકાન':f+' • '+(me?.name||'સભ્ય');
+    if(typeof render==='function')render();
+  }catch(e){
+    console.error('Login error',e);
+    err('લૉગિન દરમિયાન ટેકનિકલ ભૂલ આવી. ફરી પ્રયાસ કરો.');
+  }
 }
 function findFlat(){let q=document.getElementById('search').value,f=d.flats.find(x=>x.no===q),b=document.getElementById('found');if(!f){b.innerHTML='<span class="muted">મકાન નંબર પસંદ કરો.</span>';return}if(role==='member'&&f.no!==currentFlat){b.innerHTML='<span class="muted">સભ્ય માત્ર પોતાના મકાનની માહિતી જોઈ શકે.</span>';return}let l=late(f),t=f.paid?0:bill(f)+l;b.innerHTML=`<div class="card" style="margin:0"><div class="row"><div><b>ઘર ${f.no}</b><br><span class="muted">${esc(f.name||'સભ્ય ઉમેરાયેલ નથી')} • ${esc(f.type)}</span></div><span class="badge ${f.paid?'paid':'due'}">${f.paid?'જમા':'બાકી'}</span></div><hr style="border:0;border-top:1px solid #eee"><div class="row"><span>ક્વાર્ટર મેન્ટેનન્સ</span><b>${money(bill(f))}</b></div><div class="row"><span>લેટ ફી</span><b>${money(l)}</b></div><div class="row"><span>કુલ</span><b>${money(t)}</b></div>${f.paid?`<button class="btn green" style="width:100%;margin-top:10px" onclick="receipt('${f.no}')">રસીદ જુઓ</button>`:role==='admin'?`<button class="btn primary" style="width:100%;margin-top:10px" onclick="payment('${f.no}')">પેમેન્ટ જમા કરો</button>`:''}</div>`}
 function memberForm(no=currentFlat||'1'){if(role!=='admin')return;let f=d.flats.find(x=>x.no===no)||d.flats[0];document.getElementById('sheet').innerHTML=`<div class="title">સભ્ય / મકાન માહિતી</div><label>ઘર નંબર</label><select id="mfno">${d.flats.map(x=>`<option value="${x.no}" ${x.no===f.no?'selected':''}>${x.no}</option>`).join('')}</select><label>સભ્યનું નામ</label><input id="mfn" value="${esc(f.name)}" placeholder="સભ્યનું નામ"><label>મોબાઇલ નંબર</label><input id="mfm" inputmode="numeric" maxlength="10" value="${esc(f.mobile)}" placeholder="10 અંકનો મોબાઇલ નંબર"><label>મકાનનો પ્રકાર</label><select id="mft"><option ${f.type==='ઘરમાલિક'?'selected':''}>ઘરમાલિક</option><option ${f.type==='ભાડુઆત'?'selected':''}>ભાડુઆત</option></select><label>ક્વાર્ટર મેન્ટેનન્સ</label><input id="mfq" type="number" value="${f.quarterly}"><p class="muted">સભ્યનો ડિફૉલ્ટ પાસવર્ડ આપમેળે <b>user@મોબાઇલના છેલ્લા 4 અંક</b> રહેશે અને સભ્ય તેને બદલી શકશે નહીં.</p><button class="btn primary" style="width:100%" onclick="saveMember()">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
@@ -125,27 +137,143 @@ function saveUPI(){if(role!=='admin')return;d.settings.upi=document.getElementBy
 function saveAdmin(){if(role!=='admin')return;let m=document.getElementById('adminMobile').value.replace(/\D/g,''),p=document.getElementById('adminPassword').value.trim();if(m.length!==10)return toast('એડમિન મોબાઇલ 10 અંકનો હોવો જોઈએ');d.admin.username=m;if(p)d.admin.password=p;save();render();toast('એડમિન એકાઉન્ટ સાચવાયું')}
 function complaint(){let f=document.getElementById('cf').value,t=document.getElementById('ct').value.trim();if(role==='member'&&f!==currentFlat)return toast('સભ્ય માત્ર પોતાના મકાનની ફરિયાદ કરી શકે');if(!f||!t)return toast('મકાન નંબર અને ફરિયાદ ભરો');d.complaints.unshift({flat:f,text:t,date:new Date().toLocaleDateString('gu-IN'),status:'બાકી'});save();document.getElementById('ct').value='';render();toast('ફરિયાદ જમા થઈ')}
 function visitor(){if(role!=='admin')return;let n=document.getElementById('vn').value.trim(),m=document.getElementById('vm').value.trim(),f=document.getElementById('vf').value,p=document.getElementById('vp').value.trim();if(!n||!f)return toast('નામ અને મકાન નંબર ભરો');d.visitors.unshift({name:n,mobile:m,flat:f,purpose:p,date:new Date().toLocaleString('gu-IN')});save();render();toast('વિઝિટર એન્ટ્રી થઈ')}
-function csv(){if(role!=='admin')return;let rows=[['ઘર નંબર','સભ્ય','મોબાઇલ','પ્રકાર','ક્વાર્ટર મેન્ટેનન્સ','લેટ ફી','કુલ બાકી','સ્થિતિ']];d.flats.forEach(f=>rows.push([f.no,f.name,f.mobile,f.type,bill(f),late(f),f.paid?0:bill(f)+late(f),f.paid?'જમા':'ઉધાર']));let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+rows.map(r=>r.join(',')).join('\n')],{type:'text/csv'}));a.download='Sardar_Township_Jama_Udhar.csv';a.click()}
-function closeModal(){document.getElementById('modal').classList.add('hide')}function toast(t){let x=document.createElement('div');x.className='toast';x.textContent=t;document.body.appendChild(x);setTimeout(()=>x.remove(),2500)}
-document.getElementById('role').addEventListener('change',()=>{let r=document.getElementById('role').value;document.getElementById('flatLabel').style.display=r==='member'?'block':'none';document.getElementById('loginFlat').style.display=r==='member'?'block':'none';if(r==='admin'){document.getElementById('loginFlat').value=''}});
-populate();document.getElementById('role').dispatchEvent(new Event('change'));save();render();
-</script>
-<script>
-const _oldDataKey=KEY;
-// Upgrade existing v3 data without losing records
-if(!d.incomes)d.incomes=[]; if(!d.expenses)d.expenses=[]; if(!d.notices)d.notices=[]; if(!d.incomeHeads)d.incomeHeads=['મેન્ટેનન્સ આવક','હોલ બુકીંગ આવક','ઉત્સવ ઉજવણી ફંડ','રીપેરીંગ ફંડ','અન્ય આવક']; if(!d.expenseHeads)d.expenseHeads=['સિક્યુરિટી પગાર','લાઇટ બિલ','રીપેરીંગ કામ','અન્ય વહીવટી ખર્ચ','સફાઈ કામ']; if(!d.backupDates)d.backupDates={}; d.flats.forEach(f=>{f.payments=f.payments||[];f.paid=f.payments.length>0||!!f.paid});
-function save2(){save()}
-function totalMaintenance(){return d.flats.reduce((s,f)=>s+(f.payments||[]).reduce((a,p)=>a+Number(p.amount||0),0),0)}
-function totalIncome(){return totalMaintenance()+d.incomes.reduce((s,x)=>s+Number(x.amount||0),0)}
-function totalExpense(){return d.expenses.reduce((s,x)=>s+Number(x.amount||0),0)}
-function refreshExtras(){
- let inc=document.getElementById('sIncome'),exp=document.getElementById('sExpense'),bal=document.getElementById('sBalance'),due=document.getElementById('sDue2');if(inc)inc.textContent=money(totalIncome());if(exp)exp.textContent=money(totalExpense());if(bal)bal.textContent=money(totalIncome()-totalExpense());if(due){due.textContent=money(d.flats.filter(f=>!f.paid).reduce((s,f)=>s+bill(f),0));}
- renderNotices2();renderFinance2();let bs=document.getElementById('backupStatus');if(bs){let day=new Date().toISOString().slice(0,10);bs.textContent=d.backupDates[day]?'આજનો બેકઅપ તૈયાર છે.':'દિવસના અંતે આજનો બેકઅપ ડાઉનલોડ કરો.'}
-}
 function renderNotices2(){let el=document.getElementById('noticeList');if(!el)return;el.innerHTML=d.notices.length?d.notices.map(n=>`<div class="notice"><div class="section-head"><b>${esc(n.title)}</b>${role==='admin'?`<span><button class="btn light small-btn" onclick="noticeForm2('${n.id}')">Edit</button> <button class="btn red small-btn" onclick="deleteNotice2('${n.id}')">Delete</button></span>`:''}</div><div class="muted" style="margin-top:6px">${esc(n.text)}</div><div class="muted">${esc(n.date||'')}</div></div>`).join(''):'<span class="muted">કોઈ નોટિસ નથી.</span>'}
 function noticeForm2(id){if(role!=='admin')return;let n=d.notices.find(x=>x.id===id)||{title:'',text:''};document.getElementById('sheet').innerHTML=`<div class="title">${id?'નોટિસ Edit':'Add Notice'}</div><label>શીર્ષક</label><input id="nTitle" value="${esc(n.title)}"><label>વિગત</label><input id="nText" value="${esc(n.text)}"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveNotice2('${id||''}')">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
 function saveNotice2(id){if(role!=='admin')return;let title=document.getElementById('nTitle').value.trim(),text=document.getElementById('nText').value.trim();if(!title||!text)return toast('શીર્ષક અને વિગત જરૂરી છે');if(id){let n=d.notices.find(x=>x.id===id);n.title=title;n.text=text;n.date=new Date().toLocaleDateString('gu-IN')}else d.notices.unshift({id:'n'+Date.now(),title,text,date:new Date().toLocaleDateString('gu-IN')});save();closeModal();refreshExtras();toast('નોટિસ સાચવાઈ')}
 function deleteNotice2(id){if(role!=='admin')return;if(!confirm('નોટિસ ડિલીટ કરવી છે?'))return;d.notices=d.notices.filter(x=>x.id!==id);save();refreshExtras();toast('નોટિસ ડિલીટ થઈ')}
+function incomeForm(id){if(role!=='admin')return;let x=d.incomes.find(a=>a.id===id)||{head:d.incomeHeads[0],detail:'',date:new Date().toISOString().slice(0,10),amount:''};document.getElementById('sheet').innerHTML=`<div class="title">${id?'આવક Edit':'આવક નોંધણી'}</div><label>આવક હેડ</label><select id="iHead">${d.incomeHeads.map(h=>`<option ${h===x.head?'selected':''}>${esc(h)}</option>`).join('')}</select><label>આવકની વિગત</label><input id="iDetail" value="${esc(x.detail)}"><label>તારીખ</label><input id="iDate" type="date" value="${esc(x.date)}"><label>રકમ</label><input id="iAmount" type="number" value="${x.amount}"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveIncome2('${id||''}')">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
+function saveIncome2(id){let x={id:id||'i'+Date.now(),head:document.getElementById('iHead').value,detail:document.getElementById('iDetail').value.trim(),date:document.getElementById('iDate').value,amount:+document.getElementById('iAmount').value||0};if(!x.amount)return toast('રકમ જરૂરી છે');if(id)Object.assign(d.incomes.find(a=>a.id===id),x);else d.incomes.unshift(x);save();closeModal();refreshExtras();if(typeof renderAll==='function')renderAll();toast('આવક સાચવાઈ')}
+function deleteIncome2(id){if(role!=='admin')return;if(!confirm('આવક ડિલીટ કરવી છે?'))return;d.incomes=d.incomes.filter(x=>x.id!==id);save();refreshExtras();toast('આવક ડિલીટ થઈ')}
+function expenseForm(id){if(role!=='admin')return;let x=d.expenses.find(a=>a.id===id)||{seq:d.expenses.length+1,head:d.expenseHeads[0],detail:'',date:new Date().toISOString().slice(0,10),amount:'',billNo:''};document.getElementById('sheet').innerHTML=`<div class="title">${id?'ખર્ચ Edit':'ખર્ચ નોંધણી'}</div><label>ક્રમ</label><input id="eSeq" type="number" value="${x.seq}"><label>ખર્ચ હેડ</label><select id="eHead">${d.expenseHeads.map(h=>`<option ${h===x.head?'selected':''}>${esc(h)}</option>`).join('')}</select><label>ખર્ચની વિગત</label><input id="eDetail" value="${esc(x.detail)}"><label>તારીખ</label><input id="eDate" type="date" value="${esc(x.date)}"><label>બિલની રકમ</label><input id="eAmount" type="number" value="${x.amount}"><label>બિલ નંબર / નોંધ</label><input id="eBill" value="${esc(x.billNo||'')}"><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveExpense2('${id||''}')">સાચવો</button><button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;document.getElementById('modal').classList.remove('hide')}
+function saveExpense2(id){if(role!=='admin')return;let x={id:id||'e'+Date.now(),seq:+document.getElementById('eSeq').value||1,head:document.getElementById('eHead').value,detail:document.getElementById('eDetail').value.trim(),date:document.getElementById('eDate').value,amount:+document.getElementById('eAmount').value||0,billNo:document.getElementById('eBill').value.trim()};if(!x.detail||!x.amount)return toast('ખર્ચની વિગત અને રકમ જરૂરી છે');if(id)Object.assign(d.expenses.find(a=>a.id===id),x);else d.expenses.unshift(x);save();closeModal();refreshExtras();if(typeof renderAll==='function')renderAll();toast('ખર્ચ સાચવાયો')}
+function deleteExpense2(id){if(role!=='admin')return;if(!confirm('આ ખર્ચ ડિલીટ કરવો છે?'))return;d.expenses=d.expenses.filter(x=>x.id!==id);save();refreshExtras();toast('ખર્ચ ડિલીટ થયો')}
+function headForm(type){if(role!=='admin')return;let name=prompt(type==='income'?'નવો આવક હેડ':'નવો ખર્ચ હેડ');if(!name?.trim())return;name=name.trim();let arr=type==='income'?d.incomeHeads:d.expenseHeads;if(!arr.includes(name))arr.push(name);save();refreshExtras();toast('હેડ ઉમેરાયો')}
+function renderFinance2(){
+  let il=document.getElementById('incomeList'),el=document.getElementById('expenseList');if(!il)return;
+  renderMemberIncomeBox_();
+  const canEdit=role==='admin';
+  il.innerHTML=d.incomes.length?d.incomes.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">${esc(x.date)} • ${esc(x.detail)}</span></div>${canEdit?`<div><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div>`:''}</div>`).join(''):'<span class="muted">હજુ કોઈ આવક એન્ટ્રી નથી.</span>';
+  el.innerHTML=d.expenses.length?d.expenses.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">ક્રમ ${x.seq} • ${esc(x.date)} • ${esc(x.detail)}</span><br><span class="muted">બિલ નં: ${esc(x.billNo||'-')}</span></div>${canEdit?`<div><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div>`:''}</div>`).join(''):'<span class="muted">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</span>';
+ }
+</script>
+<script>
+function goV8(id){const b=[...document.querySelectorAll('.nav button')].find(x=>x.getAttribute('onclick')?.includes("go('"+id+"'"));go(id,b)}
+function logoutV8(){role='';currentFlat='';document.getElementById('app').classList.add('hide');document.getElementById('login').classList.remove('hide');document.getElementById('password').value='';document.getElementById('loginErr').textContent='';document.getElementById('role').value='admin';document.getElementById('role').dispatchEvent(new Event('change'))}
+function loadMemberHouseV8(open){if(role!=='admin')return;const area=document.getElementById('memberEditArea');let no=String(document.getElementById('memberHouseNo')?.value||'').trim();if(!/^([1-9]|[1-5][0-9]|60)$/.test(no)){area.innerHTML='<span class="muted">1 થી 60 વચ્ચેનો ઘર નંબર દાખલ કરો.</span>';return}let f=d.flats.find(x=>x.no===no);if(!f)return;area.innerHTML=`<div class="section-head"><div><div class="house">ઘર ${esc(f.no)}</div><span class="muted">આ મકાનની માહિતી</span></div><span class="badge ${f.name?'info':'due'}">${f.name?'સભ્ય નોંધાયેલ':'મકાન ખાલી'}</span></div><div class="member-fields"><div><label>સભ્યનું નામ</label><input id="v8Name" value="${esc(f.name)}" placeholder="ખાલી મકાન હોય તો ખાલી રાખો"></div><div><label>મોબાઇલ નંબર</label><input id="v8Mobile" inputmode="numeric" maxlength="10" value="${esc(f.mobile)}" placeholder="ખાલી મકાન હોય તો ખાલી રાખો"></div><div><label>મકાનનો પ્રકાર</label><select id="v8Type"><option ${f.type==='ઘરમાલિક'?'selected':''}>ઘરમાલિક</option><option ${f.type==='ભાડુઆત'?'selected':''}>ભાડુઆત</option></select></div><div><label>ક્વાર્ટર મેન્ટેનન્સ / હપ્તો</label><input id="v8Quarterly" type="number" min="0" value="${Number(f.quarterly||0)}"></div></div><div class="action-grid" style="margin-top:12px"><button class="btn primary" onclick="saveMemberHouseV8('${no}')">💾 ફેરફાર સાચવો</button><button class="btn light" onclick="clearMemberEditV8()">↩ રદ કરો</button></div>`;if(open)area.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function clearMemberEditV8(){document.getElementById('memberEditArea').innerHTML='<span class="muted">ઘર નંબર દાખલ કરો.</span>'}
+function saveMemberHouseV8(no){if(role!=='admin')return;let f=d.flats.find(x=>x.no===String(no));if(!f)return;let n=document.getElementById('v8Name').value.trim(),m=document.getElementById('v8Mobile').value.replace(/\D/g,''),t=document.getElementById('v8Type').value,q=document.getElementById('v8Quarterly').value.trim();if(n&&m.length!==10)return toast('સભ્યનું નામ આપ્યું હોય તો 10 અંકનો મોબાઇલ નંબર નાખો');if(m&&!n)return toast('મોબાઇલ નંબર સાથે સભ્યનું નામ પણ નાખો');f.name=n;f.mobile=m;f.type=t;f.quarterly=q===''?0:Number(q);save();render();loadMemberHouseV8();toast('ઘર '+no+' ની માહિતી સાચવાઈ')}
+function saveAdminV8(){if(role!=='admin')return;let m=document.getElementById('adminMobile').value.replace(/\D/g,''),p=document.getElementById('adminPassword').value.trim(),p2=document.getElementById('adminPassword2').value.trim();if(m.length!==10)return toast('એડમિન મોબાઇલ 10 અંકનો હોવો જોઈએ');if(p&&p!==p2)return toast('બંને પાસવર્ડ સરખા નથી');if(p&&p.length<6)return toast('પાસવર્ડ ઓછામાં ઓછા 6 અક્ષરનો રાખો');d.admin.username=m;if(p)d.admin.password=p;save();document.getElementById('adminPassword').value='';document.getElementById('adminPassword2').value='';render();toast(p?'એડમિન પાસવર્ડ બદલાઈ ગયો':'એડમિન માહિતી સાચવાઈ')}
+function saveSettingsV8(){if(role!=='admin')return;d.settings.monthly=Number(document.getElementById('monthly').value||1000);d.settings.late=Number(document.getElementById('late').value||0);d.settings.deadline=document.getElementById('deadline').value;save();render();toast('સેટિંગ સાચવાયું')}
+function hideTechnicalV8(){document.querySelectorAll('.code-like,[data-code],pre,code').forEach(x=>x.classList.add('code-like'))}
+const _renderV8=render;render=function(){_renderV8();hideTechnicalV8();const ab=document.getElementById('adminSettings');if(ab)ab.innerHTML=role==='admin'?'<div class=\"muted\">એડમિનનું મોબાઇલ અને પાસવર્ડ નીચેના સુરક્ષા વિભાગમાંથી બદલી શકાય છે.</div>':'<div class=\"muted\">આ વિભાગ ફક્ત એડમિન માટે છે.</div>';const mb=document.getElementById('memberAdminBox');if(mb)mb.innerHTML=role==='admin'?'<button class=\"btn primary primary-wide\" onclick=\"goV8(\'members\');document.getElementById(\'memberHouseNo\').focus()\">➕ સભ્ય / મકાનની માહિતી ઉમેરો અથવા બદલો</button>':'<div class=\"member-only\"><b>સભ્ય માહિતી</b><p class=\"muted\">સભ્યો માટે માહિતી જોવા માટે છે. ફેરફાર ફક્ત એડમિન કરી શકે છે.</p></div>';if(role==='admin'){const am=document.getElementById('adminMobile');if(am)am.value=d.admin.username||'';const ap=document.getElementById('adminPassword');if(ap)ap.value='';const ap2=document.getElementById('adminPassword2');if(ap2)ap2.value=''}};render();
+</script>
+<script>
+// v9 fixes: payment deletion, member-wise income, and exclusion of vacant houses from totals.
+function isOccupiedHouse(f){return !!(String(f?.name||'').trim()||String(f?.mobile||'').trim())}
+function paidMaintenanceForHouse(f){return (f?.payments||[]).reduce((a,p)=>a+Number(p.amount||0),0)}
+function totalMaintenance(){return d.flats.filter(isOccupiedHouse).reduce((s,f)=>s+paidMaintenanceForHouse(f),0)}
+function incomeEntryCounts(x){if(!x||!x.flatNo)return true;let f=d.flats.find(a=>a.no===String(x.flatNo));return !!f&&isOccupiedHouse(f)}
+function incomeEntryAmount(x){return incomeEntryCounts(x)?Number(x.amount||0):0}
+function totalOtherIncome(){return d.incomes.reduce((s,x)=>s+incomeEntryAmount(x),0)}
+function totalIncome(){return totalMaintenance()+totalOtherIncome()}
+function totalExpense(){return d.expenses.reduce((s,x)=>s+Number(x.amount||0),0)}
+function refreshExtras(){
+  let inc=document.getElementById('sIncome'),exp=document.getElementById('sExpense'),bal=document.getElementById('sBalance'),due=document.getElementById('sDue2');
+  if(inc)inc.textContent=money(totalIncome()); if(exp)exp.textContent=money(totalExpense()); if(bal)bal.textContent=money(totalIncome()-totalExpense());
+  if(due)due.textContent=money(d.flats.filter(f=>isOccupiedHouse(f)&&!f.paid).reduce((s,f)=>s+bill(f),0));
+  renderNotices2();renderFinance2();
+  let bs=document.getElementById('backupStatus');if(bs){let day=new Date().toISOString().slice(0,10);bs.textContent=d.backupDates?.[day]?'આજનો બેકઅપ તૈયાર છે.':'દિવસના અંતે આજનો બેકઅપ ડાઉનલોડ કરો.'}
+}
+// Late fee is manual only; never auto-calculate it from the date.
+function late(f){if(!f)return 0;return f.paid?Number(f.payments?.at(-1)?.lateFee||f.lateFee||0):0}
+function stats(){let occupied=d.flats.filter(isOccupiedHouse),paid=occupied.filter(x=>x.paid),col=paid.reduce((s,x)=>s+paidMaintenanceForHouse(x),0),due=occupied.filter(x=>!x.paid).reduce((s,x)=>s+bill(x),0);return{paid,col,due,late:occupied.reduce((s,x)=>s+late(x),0)}}
+function deletePayment3(no,id){
+  if(role!=='admin')return;
+  let f=d.flats.find(x=>x.no===String(no));
+  if(!f)return;
+  let p=(f.payments||[]).find(x=>x.id===id);
+  if(!p)return toast('પેમેન્ટ એન્ટ્રી મળી નથી');
+  if(!confirm('આ પેમેન્ટ એન્ટ્રી કાયમી રીતે Delete કરવી છે?'))return;
+  f.payments=(f.payments||[]).filter(x=>x.id!==id);
+  f.paid=f.payments.length>0;
+  f.lateFee=f.payments.length?Number(f.payments.at(-1).lateFee||0):0;
+  save();closeModal();render();refreshExtras();toast('પેમેન્ટ એન્ટ્રી Delete થઈ');
+}
+function incomeForm(id){
+  if(role!=='admin')return;
+  let x=d.incomes.find(a=>a.id===id)||{head:d.incomeHeads.find(h=>h!=='મેન્ટેનન્સ આવક')||d.incomeHeads[0],detail:'',date:new Date().toISOString().slice(0,10),amount:'',flatNo:''};
+  let flatOpts='<option value="">સામાન્ય આવક (સભ્ય વગર)</option>'+d.flats.map(f=>`<option value="${f.no}" ${String(x.flatNo||'')===f.no?'selected':''}>ઘર ${f.no} • ${esc(f.name||'મકાન ખાલી')}</option>`).join('');
+  document.getElementById('sheet').innerHTML=`<div class="title">${id?'આવક Edit':'આવક નોંધણી'}</div>
+  <label>આવક હેડ</label><select id="iHead">${d.incomeHeads.map(h=>`<option ${h===x.head?'selected':''}>${esc(h)}</option>`).join('')}</select>
+  <label>સભ્ય / મકાન પ્રમાણે (વૈકલ્પિક)</label><select id="iFlat">${flatOpts}</select>
+  <p class="muted">મકાન પસંદ કરશો તો આ આવક તે સભ્ય/મકાન સાથે જોડાશે. મકાન ખાલી હશે તો આ આવક નોંધાશે, પરંતુ સોસાયટીના કુલ આવક ટોટલમાં ગણાશે નહીં.</p>
+  <label>આવકની વિગત</label><input id="iDetail" value="${esc(x.detail)}">
+  <label>તારીખ</label><input id="iDate" type="date" value="${esc(x.date)}">
+  <label>રકમ</label><input id="iAmount" type="number" min="0" value="${x.amount}">
+  <button class="btn primary" style="width:100%;margin-top:10px" onclick="saveIncome2('${id||''}')">સાચવો</button>
+  <button class="btn light" style="width:100%;margin-top:8px" onclick="closeModal()">બંધ કરો</button>`;
+  document.getElementById('modal').classList.remove('hide');
+}
+function saveIncome2(id){
+  let x={id:id||'i'+Date.now(),head:document.getElementById('iHead').value,flatNo:document.getElementById('iFlat').value||'',detail:document.getElementById('iDetail').value.trim(),date:document.getElementById('iDate').value,amount:+document.getElementById('iAmount').value||0};
+  if(!x.amount)return toast('રકમ જરૂરી છે');
+  if(id)Object.assign(d.incomes.find(a=>a.id===id),x);else d.incomes.unshift(x);
+  save();closeModal();refreshExtras();toast('આવક સાચવાઈ');
+}
+function incomeHeadTotal(h){return d.incomes.filter(x=>x.head===h).reduce((s,x)=>s+incomeEntryAmount(x),0)+(h==='મેન્ટેનન્સ આવક'?totalMaintenance():0)}
+function memberIncomeAmount_(head,no){
+  return d.incomes.filter(x=>x.head===head && String(x.flatNo||'')===String(no) && incomeEntryCounts(x)).reduce((s,x)=>s+Number(x.amount||0),0);
+}
+function renderMemberIncomeBox_(){
+  const box=document.getElementById('memberIncomeBox');
+  if(!box || role!=='admin') { if(box) box.innerHTML=''; return; }
+  const heads=d.incomeHeads.filter(h=>h!=='મેન્ટેનન્સ આવક');
+  if(!heads.length){ box.innerHTML=''; return; }
+  const occupied=d.flats.filter(isOccupiedHouse);
+  if(!occupied.length){
+    box.innerHTML='<div class="section-card"><b>સભ્યવાર અન્ય આવક</b><div class="muted" style="margin-top:6px">હાલ કોઈ ભરેલું મકાન નથી.</div></div>';
+    return;
+  }
+  const current=heads.includes(window.memberIncomeHead_) ? window.memberIncomeHead_ : heads[0];
+  window.memberIncomeHead_=current;
+  const rows=occupied.map(f=>{
+    const total=memberIncomeAmount_(current,f.no);
+    return `<div class="list" style="align-items:center;gap:8px;flex-wrap:wrap">
+      <div style="min-width:150px;flex:1"><b>ઘર ${esc(f.no)}</b><br><span class="muted">${esc(f.name||'સભ્ય')}</span>${total?`<br><span class="muted">આ હેડમાં જમા: <b>${money(total)}</b></span>`:''}</div>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+        <input id="miAmt_${esc(f.no)}" type="number" min="0" inputmode="numeric" placeholder="જમા રકમ" style="width:125px;padding:9px;border:1px solid #ddd;border-radius:10px">
+        <button class="btn primary small-btn" onclick="saveMemberIncome_('${esc(current)}','${esc(f.no)}')">જમા કરો</button>
+      </div>
+    </div>`;
+  }).join('');
+  box.innerHTML=`<div class="section-card" style="margin-bottom:12px">
+    <div class="section-head"><div><div class="title">સભ્યવાર આવક જમા</div><div class="sub">મેન્ટેનન્સ સિવાયના હેડ માટે સીધી સભ્યવાર રકમ જમા કરો</div></div></div>
+    <label>આવક હેડ</label>
+    <select id="memberIncomeHead" onchange="window.memberIncomeHead_=this.value;renderMemberIncomeBox_()">${heads.map(h=>`<option value="${esc(h)}" ${h===current?'selected':''}>${esc(h)}</option>`).join('')}</select>
+    <div style="margin-top:8px">${rows}</div>
+  </div>`;
+}
+function saveMemberIncome_(head,no){
+  if(role!=='admin')return;
+  const el=document.getElementById('miAmt_'+no);
+  const amount=Number(el?.value||0);
+  if(amount<=0){toast('જમા રકમ દાખલ કરો');el?.focus();return;}
+  const f=d.flats.find(x=>String(x.no)===String(no));
+  if(!f || !isOccupiedHouse(f)){toast('આ મકાન ખાલી છે');return;}
+  const today=new Date().toISOString().slice(0,10);
+  d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:`${head} • ઘર ${no} • ${f.name||'સભ્ય'}`,date:today,amount});
+  save();
+  renderFinance2();
+  refreshExtras();
+  toast(`ઘર ${no} માટે ${money(amount)} જમા થયું`);
+}
+function renderFinance2(){
+  let il=document.getElementById('incomeList'),el=document.getElementById('expenseList');if(!il)return;
+  renderMemberIncomeBox_();
+  il.innerHTML=d.incomes.length?d.incomes.map(x=>{let f=x.flatNo?d.flats.find(a=>a.no===String(x.flatNo)):null;return `<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">${f?`ઘર ${esc(f.no)} • ${esc(f.name||'મકાન ખાલી')} • `:''}${esc(x.date)} • ${esc(x.detail)}</span>${x.flatNo&&!isOccupiedHouse(f)?'<br><span class="muted">⚠️ ખાલી મકાન — કુલ આવકમાં ગણાશે નહીં</span>':''}</div><div><button class="btn light small-btn" onclick="incomeForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteIncome2('${x.id}')">Delete</button></div></div>`}).join(''):'<span class="muted">હજુ કોઈ આવક એન્ટ્રી નથી.</span>';
+  el.innerHTML=d.expenses.length?d.expenses.map(x=>`<div class="list"><div><b>${money(x.amount)} • ${esc(x.head)}</b><br><span class="muted">ક્રમ ${x.seq} • ${esc(x.date)} • ${esc(x.detail)}</span><br><span class="muted">બિલ નં: ${esc(x.billNo||'-')}</span></div><div><button class="btn light small-btn" onclick="expenseForm('${x.id}')">Edit</button><button class="btn red small-btn" onclick="deleteExpense2('${x.id}')">Delete</button></div></div>`).join(''):'<span class="muted">હજુ કોઈ ખર્ચ એન્ટ્રી નથી.</span>';
+ }
+function reportData(){let a=[['હેડ','પ્રકાર','રકમ']];d.incomeHeads.forEach(h=>a.push([h,'આવક',incomeHeadTotal(h)]));d.expenseHeads.forEach(h=>a.push([h,'ખર્ચ',d.expenses.filter(x=>x.head===h).reduce((s,x)=>s+Number(x.amount||0),0)]));return a}
 const _renderV9Base=render;
 render=function(){_renderV9Base();refreshExtras();};
 </script>
@@ -192,6 +320,57 @@ function localSnapshot_(){
   try{return JSON.parse(JSON.stringify(d));}catch(e){return d;}
 }
 
+
+function normalizeSocietyData_(){
+  d=d||{};
+  d.settings=d.settings||{};
+  d.admin=d.admin||{username:'',password:'Jayesh@09638'};
+  d.admin.password=d.admin.password||'Jayesh@09638';
+  d.settings.monthly=Number(d.settings.monthly||1000);
+  d.settings.late=Number(d.settings.late||100);
+  d.settings.deadline=d.settings.deadline||new Date().toISOString().slice(0,10);
+  d.flats=Array.isArray(d.flats)?d.flats:[];
+  const byNo={}; d.flats.forEach(f=>{if(f&&f.no)byNo[String(f.no)]=f;});
+  d.flats=Array.from({length:60},(_,i)=>{
+    const no=String(i+1),f=byNo[no]||{};
+    return {no,name:String(f.name||''),mobile:String(f.mobile||''),type:f.type||'ઘરમાલિક',quarterly:Number(f.quarterly||3000),paid:!!f.paid,payments:Array.isArray(f.payments)?f.payments:[]};
+  });
+  d.incomes=Array.isArray(d.incomes)?d.incomes:[];
+  d.expenses=Array.isArray(d.expenses)?d.expenses:[];
+  d.notices=Array.isArray(d.notices)?d.notices:[];
+  d.complaints=Array.isArray(d.complaints)?d.complaints:[];
+  d.visitors=Array.isArray(d.visitors)?d.visitors:[];
+  d.parking=Array.isArray(d.parking)?d.parking:[];
+  d.incomeHeads=Array.isArray(d.incomeHeads)?d.incomeHeads:['મેન્ટેનન્સ આવક','હોલ બુકીંગ આવક','ઉત્સવ ઉજવણી ફંડ','રીપેરીંગ ફંડ','અન્ય આવક'];
+  d.expenseHeads=Array.isArray(d.expenseHeads)?d.expenseHeads:['સિક્યુરિટી પગાર','લાઇટ બિલ','રીપેરીંગ કામ','અન્ય વહીવટી ખર્ચ','સફાઈ કામ'];
+  return d;
+}
+function mergeMemberData_(local,cloud){
+  const l=Array.isArray(local?.flats)?local.flats:[];
+  const c=Array.isArray(cloud?.flats)?cloud.flats:[];
+  const lm={};l.forEach(f=>{if(f?.no)lm[String(f.no)]=f});
+  const cm={};c.forEach(f=>{if(f?.no)cm[String(f.no)]=f});
+  const flats=Array.from({length:60},(_,i)=>{
+    const no=String(i+1),lf=lm[no]||{},cf=cm[no]||{};
+    const name=String(cf.name||'').trim()?cf.name:lf.name||'';
+    const mobile=String(cf.mobile||'').trim()?cf.mobile:lf.mobile||'';
+    const type=String(cf.type||'').trim()?cf.type:(lf.type||'ઘરમાલિક');
+    const quarterly=Number(cf.quarterly||0)||Number(lf.quarterly||3000);
+    const payments=Array.isArray(cf.payments)?cf.payments:(Array.isArray(lf.payments)?lf.payments:[]);
+    return {no,name,mobile,type,quarterly,paid:!!cf.paid||!!lf.paid,payments};
+  });
+  cloud.flats=flats;
+  return cloud;
+}
+function clearFinanceEntriesForStep6_(){
+  if(d.settings && d.settings._step6FinanceEntriesCleared) return false;
+  d.incomes=[];
+  d.expenses=[];
+  d.settings=d.settings||{};
+  d.settings._step6FinanceEntriesCleared=true;
+  return true;
+}
+normalizeSocietyData_();clearFinanceEntriesForStep6_();save();
 async function cloudLoad_(silent=false){
   try{
     if(!silent) cloudStatus_('☁️ Cloud data લોડ થઈ રહ્યું છે…');
@@ -200,22 +379,14 @@ async function cloudLoad_(silent=false){
     if(!j.ok) throw new Error(j.error||'Cloud load failed');
 
     if(j.exists && j.data){
-      d=j.data;
-      // Keep compatibility with older versions / newly added fields.
-      d.settings=d.settings||{};
-      d.admin=d.admin||{username:'',password:''};
-      d.flats=Array.isArray(d.flats)?d.flats:[];
-      d.incomes=Array.isArray(d.incomes)?d.incomes:[];
-      d.expenses=Array.isArray(d.expenses)?d.expenses:[];
-      d.notices=Array.isArray(d.notices)?d.notices:[];
-      d.complaints=Array.isArray(d.complaints)?d.complaints:[];
-      d.visitors=Array.isArray(d.visitors)?d.visitors:[];
-      d.parking=Array.isArray(d.parking)?d.parking:[];
-      d.incomeHeads=Array.isArray(d.incomeHeads)?d.incomeHeads:['મેન્ટેનન્સ આવક','હોલ બુકીંગ આવક','ઉત્સવ ઉજવણી ફંડ','રીપેરીંગ ફંડ','અન્ય આવક'];
-      d.expenseHeads=Array.isArray(d.expenseHeads)?d.expenseHeads:['સિક્યુરિટી પગાર','લાઇટ બિલ','રીપેરીંગ કામ','અન્ય વહીવટી ખર્ચ','સફાઈ કામ'];
+      const localBefore=localSnapshot_();
+      d=mergeMemberData_(localBefore,j.data);
+      normalizeSocietyData_();
+      const cleared=clearFinanceEntriesForStep6_();
       localStorage.setItem(KEY,JSON.stringify(d));
       cloudVersion=String(j.version||'');
       cloudLoaded=true;
+      if(cleared) await cloudSaveNow_();
       if(typeof render==='function')render();
       if(typeof refreshExtras==='function')refreshExtras();
       if(!silent) cloudStatus_('☁️ Cloud data જોડાયું છે',true);
@@ -297,122 +468,7 @@ setTimeout(async()=>{ await cloudLoad_(); cloudPollTimer=setInterval(cloudPoll_,
 <script>
 document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('pre,code,.code-like,[data-code],.debug,.developer-note,.technical-note,.photo-credit').forEach(e=>e.remove());});
 </script>
-<style id="sardar-v20-phase-ui">
-.p20-tools{display:grid;grid-template-columns:1fr 1fr;gap:9px}.p20-card{background:#fff;border:1px solid #e1e8f2;border-radius:20px;padding:14px;box-shadow:0 7px 22px rgba(24,59,109,.07);margin-top:12px}.p20-tabs{display:flex;gap:7px;overflow:auto;padding-bottom:3px}.p20-tabs button{white-space:nowrap;border:1px solid #d7e2ef;background:#f7faff;border-radius:14px;padding:9px 12px;font-weight:800}.p20-tabs button.on{background:#0b5cab;color:#fff;border-color:#0b5cab}.p20-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.p20-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:10px 0;border-bottom:1px solid #edf1f5}.p20-row:last-child{border-bottom:0}.p20-muted{font-size:11px;color:#667085}.p20-pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#edf5ff;color:#1754a6;font-size:10px;font-weight:800}.p20-search{width:100%;box-sizing:border-box;padding:12px;border:1px solid #d8e2ee;border-radius:14px}.p20-empty{padding:14px;text-align:center;color:#667085}.p20-table{width:100%;border-collapse:collapse;font-size:12px}.p20-table th,.p20-table td{border-bottom:1px solid #e8edf3;padding:8px;text-align:left;vertical-align:top}.p20-table th{background:#f4f8fc}.p20-stat{border:1px solid #e1e8f2;border-radius:15px;padding:11px;background:#fbfdff}.p20-stat b{display:block;font-size:16px;margin-top:3px}@media(max-width:390px){.p20-tools,.p20-grid{grid-template-columns:1fr}}
-</style>
-<script id="sardar-v20-phases">
-(function(){
-  function p20Ensure(){
-    d.activityHistory=Array.isArray(d.activityHistory)?d.activityHistory:[];
-    d.backupHistory=Array.isArray(d.backupHistory)?d.backupHistory:[];
-    d.incomes=Array.isArray(d.incomes)?d.incomes:[]; d.expenses=Array.isArray(d.expenses)?d.expenses:[];
-    d.flats=Array.isArray(d.flats)?d.flats:[];
-    d.flats.forEach(f=>{f.payments=Array.isArray(f.payments)?f.payments:[]});
-  }
-  p20Ensure();
-  window.p20Esc=window.esc||function(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))};
-  function p20Today(){return new Date().toISOString().slice(0,10)}
-  function p20Log(action,detail){p20Ensure();d.activityHistory.unshift({id:'a'+Date.now()+Math.random().toString(36).slice(2,7),date:new Date().toLocaleString('gu-IN'),iso:new Date().toISOString(),user:role==='admin'?'એડમિન':('સભ્ય • ઘર '+currentFlat),action,detail:String(detail||'')});if(d.activityHistory.length>500)d.activityHistory=d.activityHistory.slice(0,500)}
-  window.p20Log=p20Log;
-  // Phase 3 Activity History: classify the existing save actions without changing their data logic.
-  function wrapSave(name,label,detailFn){const fn=window[name];if(typeof fn!=='function'||fn.__p20)return;const w=function(...args){const out=fn.apply(this,args);try{p20Log(label,typeof detailFn==='function'?detailFn(args):'');save()}catch(e){}return out};w.__p20=true;window[name]=w}
-  wrapSave('saveMemberHouseV8','સભ્ય/મકાન Edit',a=>'ઘર '+(a[0]||''));
-  wrapSave('saveMember','સભ્ય માહિતી Edit');
-  wrapSave('saveIncome2','આવક Add/Edit'); wrapSave('saveExpense2','ખર્ચ Add/Edit');
-  wrapSave('deleteIncome2','આવક Delete'); wrapSave('deleteExpense2','ખર્ચ Delete');
-  wrapSave('saveNotice2','નોટિસ Add/Edit'); wrapSave('deleteNotice2','નોટિસ Delete');
-  wrapSave('saveMemberIncome_','સભ્યવાર અન્ય આવક Add');
-  wrapSave('markPaid','મેન્ટેનન્સ ચુકવણી Add',a=>'ઘર '+(a[0]||''));
-  wrapSave('deletePayment3','મેન્ટેનન્સ ચુકવણી Delete');
-  wrapSave('saveSettingsV8','સેટિંગ Edit'); wrapSave('saveUPI','UPI Edit');
 
-  function p20Date(x){let s=String(x||''); if(/^\d{2}\/\d{2}\/\d{4}$/.test(s)){let [d,m,y]=s.split('/');return y+'-'+m+'-'+d} return s.slice(0,10)}
-  function p20Rows(){
-    const rows=[];
-    (d.flats||[]).forEach(f=>(f.payments||[]).forEach(p=>rows.push({date:p20Date(p.date),type:'આવક',head:'મેન્ટેનન્સ આવક',house:f.no,member:f.name||'',detail:'મેન્ટેનન્સ',amount:Number(p.amount||0),mode:p.mode||''})));
-    (d.incomes||[]).forEach(x=>{const f=x.flatNo?d.flats.find(a=>String(a.no)===String(x.flatNo)):null;if(x.flatNo&&f&&!isOccupiedHouse(f))return;rows.push({date:p20Date(x.date),type:'આવક',head:x.head||'',house:x.flatNo||'',member:f?.name||'',detail:x.detail||'',amount:Number(x.amount||0),mode:x.mode||''})});
-    (d.expenses||[]).forEach(x=>rows.push({date:p20Date(x.date),type:'ખર્ચ',head:x.head||'',house:'',member:'',detail:x.detail||'',amount:Number(x.amount||0),mode:x.mode||''}));
-    return rows.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-  }
-  function p20PeriodRows(kind){const rows=p20Rows(), now=new Date(), y=now.getFullYear(),m=String(now.getMonth()+1).padStart(2,'0'),q=Math.floor(now.getMonth()/3)+1;return rows.filter(r=>{if(!r.date)return false; if(kind==='daily')return r.date===p20Today(); if(kind==='monthly')return r.date.slice(0,7)===y+'-'+m; if(kind==='quarterly')return r.date.slice(0,4)===String(y)&&Math.floor((Number(r.date.slice(5,7))-1)/3)+1===q; return r.date.slice(0,4)===String(y)})}
-  function p20Totals(rows){return rows.reduce((z,r)=>{if(r.type==='આવક')z.i+=r.amount;else z.e+=r.amount;return z},{i:0,e:0})}
-  function p20Csv(rows,title){const out=[['સરદાર સોસાયટી',title],['તારીખ','પ્રકાર','હેડ','ઘર','સભ્ય','વિગત','મોડ','રકમ'],...rows.map(r=>[r.date,r.type,r.head,r.house,r.member,r.detail,r.mode,r.amount])];return '\ufeff'+out.map(a=>a.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\n')}
-  window.p20Print=function p20Print(title,html){const w=window.open('','_blank');if(!w)return;w.document.write('<!doctype html><html lang="gu"><head><meta charset="utf-8"><title>'+p20Esc(title)+'</title><style>body{font-family:Arial,"Noto Sans Gujarati",sans-serif;padding:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ccd5e1;padding:7px;text-align:left}th{background:#edf5ff}.sum{display:flex;gap:20px;margin:10px 0;font-weight:bold}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>'+p20Esc(title)+'</h2>'+html+'</body></html>');w.document.close();setTimeout(()=>w.print(),250)}
-  function p20ReportHtml(rows){const t=p20Totals(rows);return '<div class="sum"><span>આવક: '+money(t.i)+'</span><span>ખર્ચ: '+money(t.e)+'</span><span>સિલક: '+money(t.i-t.e)+'</span></div><table><tr><th>તારીખ</th><th>પ્રકાર</th><th>હેડ</th><th>ઘર</th><th>વિગત</th><th>મોડ</th><th>રકમ</th></tr>'+rows.map(r=>'<tr><td>'+p20Esc(r.date)+'</td><td>'+p20Esc(r.type)+'</td><td>'+p20Esc(r.head)+'</td><td>'+p20Esc(r.house)+'</td><td>'+p20Esc(r.detail)+'</td><td>'+p20Esc(r.mode)+'</td><td>'+money(r.amount)+'</td></tr>').join('')+'</table>'}
-  window.p20OpenPeriod=function(kind){const rows=p20PeriodRows(kind),names={daily:'આજનો હિસાબ',monthly:'આ મહિનાનો હિસાબ',quarterly:'આ ક્વાર્ટરનો હિસાબ',yearly:'આ વર્ષનો હિસાબ'},title=names[kind]||names.yearly;document.getElementById('sheet').innerHTML='<div class="title">'+title+'</div><div class="p20-tools"><button class="btn primary" onclick="p20Print('+JSON.stringify(title)+','+JSON.stringify(p20ReportHtml(rows))+')">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="p20DownloadPeriod('+JSON.stringify(kind)+')">📥 ડાઉનલોડ</button></div><div class="p20-card">'+p20ReportHtml(rows)+'</div><button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal()">બંધ કરો</button>';document.getElementById('modal').classList.remove('hide')};
-  window.p20DownloadPeriod=function(kind){const names={daily:'Daily',monthly:'Monthly',quarterly:'Quarterly',yearly:'Yearly'},a=document.createElement('a');a.href=URL.createObjectURL(new Blob([p20Csv(p20PeriodRows(kind),names[kind])],{type:'text/csv;charset=utf-8'}));a.download='Sardar_Society_'+names[kind]+'_Report.csv';a.click()};
-  window.p20MemberStatement=function(no){const f=d.flats.find(x=>String(x.no)===String(no));if(!f)return;const rows=p20Rows().filter(r=>String(r.house)===String(no));const title='સભ્ય હિસાબ • ઘર '+f.no+' • '+(f.name||'સભ્ય');document.getElementById('sheet').innerHTML='<div class="title">'+p20Esc(title)+'</div><div class="p20-tools"><button class="btn primary" onclick="p20Print('+JSON.stringify(title)+','+JSON.stringify(p20ReportHtml(rows))+')">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="p20DownloadMember('+JSON.stringify(no)+')">📥 ડાઉનલોડ</button></div><div class="p20-card">'+p20ReportHtml(rows)+'</div><button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal()">બંધ કરો</button>';document.getElementById('modal').classList.remove('hide')};
-  window.p20DownloadMember=function(no){const f=d.flats.find(x=>String(x.no)===String(no));const rows=p20Rows().filter(r=>String(r.house)===String(no));const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([p20Csv(rows,'સભ્ય હિસાબ ઘર '+no)],{type:'text/csv;charset=utf-8'}));a.download='Sardar_Society_House_'+no+'_Statement.csv';a.click()};
-  window.p20GlobalSearch=function(q){q=String(q||'').trim().toLowerCase();const box=document.getElementById('p20SearchResults');if(!box)return;if(!q){box.innerHTML='';return}const out=[];(d.flats||[]).forEach(f=>{if((f.no+' '+(f.name||'')+' '+(f.mobile||'')).toLowerCase().includes(q))out.push('<div class=\"p20-row\"><span><b>ઘર '+p20Esc(f.no)+'</b><br>'+p20Esc(f.name||'મકાન ખાલી')+'<div class=\"p20-muted\">'+p20Esc(f.mobile||'')+'</div></span></div>')});p20Rows().filter(r=>(r.head+' '+r.detail+' '+r.member+' '+r.house).toLowerCase().includes(q)).slice(0,30).forEach(r=>out.push('<div class=\"p20-row\"><span><b>'+p20Esc(r.type)+' • '+p20Esc(r.head)+'</b><br>ઘર '+p20Esc(r.house)+' • '+p20Esc(r.member)+'<div class=\"p20-muted\">'+p20Esc(r.date)+' • '+p20Esc(r.detail)+'</div></span><b>'+money(r.amount)+'</b></div>'));box.innerHTML=out.join('')||'<div class=\"p20-empty\">કોઈ પરિણામ મળ્યું નથી.</div>'};
-  window.p20Backup=function(){p20Ensure();p20Log('Backup','ડેટાનો મેન્યુઅલ બેકઅપ તૈયાર કર્યો');const payload=JSON.stringify({version:'21.0',createdAt:new Date().toISOString(),data:d},null,2);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([payload],{type:'application/json'}));a.download='Sardar_Society_Backup_'+p20Today()+'.json';a.click();d.backupHistory.unshift({date:new Date().toLocaleString('gu-IN'),type:'download'});if(d.backupHistory.length>100)d.backupHistory=d.backupHistory.slice(0,100);save();toast('બેકઅપ ફાઇલ તૈયાર થઈ')};
-  window.p20Restore=function(e){if(role!=='admin')return;const file=e.target.files?.[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);const incoming=x.data||x;if(!incoming.flats||!incoming.incomes||!incoming.expenses)throw new Error('invalid');if(!confirm('બેકઅપ Restore કરવાથી હાલનો Cloud data બદલાશે. આગળ વધવું છે?'))return;d=incoming;p20Ensure();p20Log('Restore','બેકઅપમાંથી ડેટા Restore કર્યો');save();render();toast('બેકઅપ Restore થયું')}catch(err){toast('બેકઅપ ફાઇલ માન્ય નથી')}};r.readAsText(file)};
-  window.p20EmailBackup=function(){p20Log('Backup','Email draft તૈયાર કર્યો');save();const body=encodeURIComponent('સરદાર સોસાયટીનો બેકઅપ '+p20Today()+' માટે તૈયાર છે. કૃપા કરીને એપમાંથી Backup JSON ફાઇલ જોડો.');window.location.href='mailto:jayeshpatel6442@gmail.com?subject='+encodeURIComponent('સરદાર સોસાયટી Backup '+p20Today())+'&body='+body};
-  function p20PhaseBox(){return '<div class="p20-card"><div class="title">📊 Phase 1–3 હિસાબ સાધનો</div><div class="p20-muted" style="margin:5px 0 10px">Cloud data સુરક્ષિત રાખીને દૈનિક, માસિક, ક્વાર્ટર અને વાર્ષિક હિસાબ.</div><div class="p20-tabs"><button onclick="p20OpenPeriod(\'daily\')">દૈનિક</button><button onclick="p20OpenPeriod(\'monthly\')">માસિક</button><button onclick="p20OpenPeriod(\'quarterly\')">ક્વાર્ટર</button><button onclick="p20OpenPeriod(\'yearly\')">વાર્ષિક</button></div><div class="p20-grid" style="margin-top:10px"><div class="p20-stat"><span class="p20-muted">આજની આવક</span><b>'+money(p20Totals(p20PeriodRows('daily')).i)+'</b></div><div class="p20-stat"><span class="p20-muted">આજનો ખર્ચ</span><b>'+money(p20Totals(p20PeriodRows('daily')).e)+'</b></div></div></div>'}
-  function p20MemberTools(){if(role!=='admin')return '';return '<div class="p20-card"><div class="title">👤 સભ્ય હિસાબ / Global Search</div><input class="p20-search" placeholder="ઘર નંબર, સભ્યનું નામ, મોબાઇલ, હેડ અથવા વિગત શોધો" oninput="p20GlobalSearch(this.value)"><div id="p20SearchResults"></div><div style="margin-top:10px"><label>સભ્ય હિસાબ સીધો ખોલો</label><select onchange="if(this.value)p20MemberStatement(this.value)"><option value="">ઘર પસંદ કરો</option>'+(d.flats||[]).filter(isOccupiedHouse).map(f=>'<option value="'+f.no+'">ઘર '+p20Esc(f.no)+' • '+p20Esc(f.name)+'</option>').join('')+'</select></div></div>'}
-  function p20BackupBox(){if(role!=='admin')return '';return '<div class="p20-card"><div class="title">💾 Backup / Restore</div><div class="p20-tools"><button class="btn primary" onclick="p20Backup()">📦 Backup Download</button><button class="btn light" onclick="document.getElementById(\'p20RestoreFile\').click()">♻️ Restore</button></div><input id="p20RestoreFile" type="file" accept="application/json" style="display:none" onchange="p20Restore(event)"><button class="btn light" style="width:100%;margin-top:8px" onclick="p20EmailBackup()">✉️ Email Draft</button></div>'}
-  function p20Activity(){if(role!=='admin')return '';const h=d.activityHistory||[];return '<div class="p20-card"><div class="section-head"><div class="title">🧾 Activity History</div><span class="p20-pill">છેલ્લી 500</span></div>'+(h.length?h.slice(0,80).map(x=>'<div class="p20-row"><span><b>'+p20Esc(x.action)+'</b><br><span class="p20-muted">'+p20Esc(x.detail)+' • '+p20Esc(x.user)+'</span></span><span class="p20-muted">'+p20Esc(x.date)+'</span></div>').join(''):'<div class="p20-empty">હજુ Activity History નથી.</div>')+'</div>'}
-  function p20RenderExtras(){p20Ensure();const rep=document.getElementById('reports');if(rep){let box=document.getElementById('p20PhaseBox');if(!box){box=document.createElement('div');box.id='p20PhaseBox';rep.appendChild(box)}box.innerHTML=p20PhaseBox()+p20MemberTools()+p20BackupBox()+p20Activity()}const fin=document.getElementById('finance');if(fin&&!document.getElementById('p20FinanceTools')){const b=document.createElement('div');b.id='p20FinanceTools';b.innerHTML='<div class="p20-card"><div class="title">💳 ચુકવણી મોડ</div><div class="p20-muted">મેન્ટેનન્સમાં કેશ, UPI અને બેંક ટ્રાન્સફર પહેલેથી ઉપલબ્ધ છે. દરેક પેમેન્ટનો મોડ રિપોર્ટમાં પણ દેખાશે.</div></div>';fin.appendChild(b)}}
-  const oldRender=window.render;window.render=function(){oldRender.apply(this,arguments);try{p20RenderExtras()}catch(e){console.error(e)}};
-  // Backup/restore actions should be visible in Settings too.
-  setTimeout(()=>{try{p20RenderExtras()}catch(e){}},300);
-})();
-</script><script>
-/* =========================================================
-   v21 COMPLETE ACCOUNTING + DASHBOARD + AUDIT
-   Built on the working Cloud-Sync data model.
-   ========================================================= */
-(function(){
-  function E(x){return window.esc?esc(x):String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-  function today(){return new Date().toISOString().slice(0,10)}
-  function dateOf(x){return window.p20Date?p20Date(x):String(x||'').slice(0,10)}
-  function rows(){return window.p20Rows?p20Rows():[]}
-  function totals(rs){return rs.reduce((z,r)=>{if(r.type==='આવક')z.i+=Number(r.amount||0);else z.e+=Number(r.amount||0);return z},{i:0,e:0})}
-  function occupied(){return (d.flats||[]).filter(f=>typeof isOccupiedHouse==='function'?isOccupiedHouse(f):!!f.name)}
-  function currentOutstanding(f){
-    if(!f||!f.name)return 0;
-    const now=new Date(), y=now.getFullYear(), q=Math.floor(now.getMonth()/3);
-    const paid=(f.payments||[]).filter(p=>{const s=String(p.periodStartISO||''); if(s)return s.slice(0,4)===String(y)&&Math.floor((Number(s.slice(5,7))-1)/3)===q; const dt=dateOf(p.date); return dt.slice(0,4)===String(y)&&Math.floor((Number(dt.slice(5,7))-1)/3)===q});
-    return Math.max(0,Number(f.quarterly||3000)-paid.reduce((s,p)=>s+Number(p.amount||0),0));
-  }
-  function modeTotals(rs){const z={કેશ:0,UPI:0,'બેંક ટ્રાન્સફર':0};rs.forEach(r=>{if(r.type==='આવક')z[r.mode]=(z[r.mode]||0)+Number(r.amount||0)});return z}
-  function periodRows(kind,year,month){
-    const y=String(year||new Date().getFullYear()), m=String(month||new Date().getMonth()+1).padStart(2,'0');
-    return rows().filter(r=>{const dt=dateOf(r.date); if(!dt)return false; if(kind==='daily')return dt===today(); if(kind==='monthly')return dt.slice(0,7)===y+'-'+m; if(kind==='yearly')return dt.slice(0,4)===y; return true;});
-  }
-  function download(name,csv){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-  function reportHtml(rs){const t=totals(rs);return '<div class="p21-summary"><b>આવક '+money(t.i)+'</b><b>ખર્ચ '+money(t.e)+'</b><b>સિલક '+money(t.i-t.e)+'</b></div><div class="p21-scroll"><table class="p21-table"><tr><th>તારીખ</th><th>પ્રકાર</th><th>હેડ</th><th>ઘર</th><th>સભ્ય</th><th>મોડ</th><th>રકમ</th></tr>'+rs.map(r=>'<tr><td>'+E(r.date)+'</td><td>'+E(r.type)+'</td><td>'+E(r.head)+'</td><td>'+E(r.house)+'</td><td>'+E(r.member)+'</td><td>'+E(r.mode||'-')+'</td><td>'+money(r.amount)+'</td></tr>').join('')+'</table></div>'}
-  function openReport(title,rs,filename){const csv=[['સરદાર સોસાયટી',title],['તારીખ','પ્રકાર','હેડ','ઘર','સભ્ય','વિગત','મોડ','રકમ'],...rs.map(r=>[r.date,r.type,r.head,r.house,r.member,r.detail,r.mode,r.amount])].map(a=>a.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\n');document.getElementById('sheet').innerHTML='<div class="title">'+E(title)+'</div><div class="p21-tools"><button class="btn primary" onclick="p21Print('+JSON.stringify(title)+','+JSON.stringify(reportHtml(rs))+')">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="p21Download('+JSON.stringify(filename)+','+JSON.stringify(csv)+')">📥 ડાઉનલોડ</button></div><div class="p21-card">'+reportHtml(rs)+'</div><button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal()">બંધ કરો</button>';document.getElementById('modal').classList.remove('hide')}
-  window.p21Print=function(title,html){const w=window.open('','_blank');if(!w)return;w.document.write('<!doctype html><html lang="gu"><head><meta charset="utf-8"><title>'+E(title)+'</title><style>body{font-family:Arial,"Noto Sans Gujarati",sans-serif;padding:20px;color:#182230}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ccd5e1;padding:7px;text-align:left}th{background:#edf5ff}.p21-summary{display:flex;gap:24px;margin:12px 0;font-size:16px}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>'+E(title)+'</h2>'+html+'</body></html>');w.document.close();setTimeout(()=>w.print(),250)};
-  window.p21Download=function(name,csv){download(name,csv)};
-  window.p21OpenDaily=()=>openReport('આજનો હિસાબ',periodRows('daily'),'Sardar_Society_Daily.csv');
-  window.p21OpenMonthly=()=>openReport('આ મહિનાનો હિસાબ',periodRows('monthly'),'Sardar_Society_Monthly.csv');
-  window.p21OpenYearly=()=>openReport('આ વર્ષનો હિસાબ',periodRows('yearly'),'Sardar_Society_Yearly.csv');
-  window.p21OpenModeReport=function(){const rs=rows(),m={};rs.forEach(r=>{const k=r.mode||'મોડ નોંધાયેલ નથી';m[k]=(m[k]||0)+Number(r.type==='આવક'?r.amount:0)});const rr=Object.entries(m).map(([mode,amount])=>({date:'',type:'આવક',head:'પેમેન્ટ મોડ',house:'',member:'',detail:'',mode,amount}));openReport('Cash / UPI / Bank Report',rr,'Sardar_Society_Payment_Mode.csv')};
-  window.p21OpenOutstanding=function(){const rr=occupied().map(f=>({date:'',type:'બાકી',head:'મેન્ટેનન્સ',house:f.no,member:f.name,detail:'હાલના ક્વાર્ટરની બાકી રકમ',mode:'',amount:currentOutstanding(f)})).filter(r=>r.amount>0);openReport('Outstanding Maintenance',rr,'Sardar_Society_Outstanding_Maintenance.csv')};
-  window.p21OpenHead=function(){const map={};rows().forEach(r=>{const k=(r.type==='આવક'?'આવક • ':'ખર્ચ • ')+(r.head||'અન્ય');map[k]=(map[k]||0)+Number(r.amount||0)});const rr=Object.entries(map).map(([k,a])=>{const z=k.split(' • ');return {date:'',type:z[0],head:z.slice(1).join(' • '),house:'',member:'',detail:'Head total',mode:'',amount:a}});openReport('Head-wise Report',rr,'Sardar_Society_Head_Wise.csv')};
-  window.p21OpenMember=function(no){const f=d.flats.find(x=>String(x.no)===String(no));if(!f)return;const rs=rows().filter(r=>String(r.house)===String(no));const maint=(f.payments||[]).map(p=>({date:dateOf(p.date),type:'આવક',head:'મેન્ટેનન્સ આવક',house:f.no,member:f.name||'',detail:'મેન્ટેનન્સ • '+(p.receipt||'રસીદ'),mode:p.mode||'',amount:Number(p.amount||0)}));const other=rs.filter(r=>r.head!=='મેન્ટેનન્સ આવક');const receipts=(f.payments||[]).map(p=>'<div class="p21-line"><span><b>'+E(p.receipt||'-')+'</b><br>'+E(p.date||'')+' • '+E(p.mode||'-')+'</span><b>'+money(p.amount)+'</b></div>').join('')||'<div class="p21-empty">રસીદ નથી.</div>';const all=[...maint,...other];const t=totals(all);const title='સભ્ય Financial Statement • ઘર '+f.no+' • '+(f.name||'સભ્ય');document.getElementById('sheet').innerHTML='<div class="title">'+E(title)+'</div><div class="p21-summary"><b>કુલ જમા '+money(t.i)+'</b><b>બાકી '+money(currentOutstanding(f))+'</b></div><div class="p21-card"><b>મેન્ટેનન્સ History</b>'+reportHtml(maint)+'</div><div class="p21-card"><b>અન્ય આવક History</b>'+reportHtml(other)+'</div><div class="p21-card"><b>Receipt History</b>'+receipts+'</div><div class="p21-tools"><button class="btn primary" onclick="p21Print('+JSON.stringify(title)+','+JSON.stringify('<h3>Financial Statement</h3>'+reportHtml(all))+')">🖨️ પ્રિન્ટ</button><button class="btn light" onclick="p21DownloadMember('+JSON.stringify(no)+')">📥 ડાઉનલોડ</button></div><button class="btn light" style="width:100%" onclick="closeModal()">બંધ કરો</button>';document.getElementById('modal').classList.remove('hide')};
-  window.p21DownloadMember=function(no){const f=d.flats.find(x=>String(x.no)===String(no));const rs=rows().filter(r=>String(r.house)===String(no));download('Sardar_Society_House_'+no+'_Financial_Statement.csv',[['ઘર','સભ્ય','તારીખ','પ્રકાર','હેડ','મોડ','રકમ'],...rs.map(r=>[f.no,f.name,r.date,r.type,r.head,r.mode,r.amount])].map(a=>a.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\n'))};
-  window.p21Search=function(q){const box=document.getElementById('p21SearchResults');if(!box)return;q=String(q||'').trim().toLowerCase();if(!q){box.innerHTML='';return}const out=[];occupied().forEach(f=>{const hit=(f.no+' '+(f.name||'')+' '+(f.mobile||'')).toLowerCase().includes(q);const rec=(f.payments||[]).find(p=>String(p.receipt||'').toLowerCase().includes(q));if(hit||rec){out.push('<div class="p21-result"><div><b>ઘર '+E(f.no)+' • '+E(f.name||'મકાન ખાલી')+'</b><br><span>'+E(f.mobile||'')+'</span>'+(rec?'<br><span>રસીદ: '+E(rec.receipt)+'</span>':'')+'</div><div><b>'+money(currentOutstanding(f))+'</b><br><button class="btn light small-btn" onclick="p21OpenMember('+JSON.stringify(f.no)+')">હિસાબ</button></div></div>')}});rows().filter(r=>String(r.head+' '+r.detail+' '+r.member+' '+r.house+' '+(r.receipt||'')).toLowerCase().includes(q)).slice(0,40).forEach(r=>out.push('<div class="p21-result"><div><b>'+E(r.type)+' • '+E(r.head)+'</b><br>ઘર '+E(r.house)+' • '+E(r.member)+'<br><span>'+E(r.date)+' • '+E(r.detail)+'</span></div><b>'+money(r.amount)+'</b></div>'));box.innerHTML=out.join('')||'<div class="p21-empty">કોઈ પરિણામ મળ્યું નથી.</div>'};
-  window.p21Reminder=function(no){const f=d.flats.find(x=>String(x.no)===String(no));if(!f||!f.mobile)return toast('આ મકાનનો મોબાઇલ નંબર ઉપલબ્ધ નથી');const due=currentOutstanding(f);if(due<=0)return toast('આ મકાનનું મેન્ટેનન્સ બાકી નથી');const msg='સરદાર સોસાયટી\n\nઘર નંબર: '+f.no+'\nસભ્ય: '+(f.name||'સભ્ય')+'\n\nતમારું મેન્ટેનન્સ બાકી છે.\nબાકી રકમ: '+money(due)+'\n\nકૃપા કરીને મેન્ટેનન્સ જમા કરશો.\n\nઆભાર.\nસરદાર સોસાયટી';window.open('https://wa.me/91'+String(f.mobile).replace(/\D/g,'')+'?text='+encodeURIComponent(msg),'_blank')};
-  window.p21AllReminders=function(){const list=occupied().filter(f=>currentOutstanding(f)>0);if(!list.length)return toast('કોઈ મેન્ટેનન્સ બાકી નથી');document.getElementById('sheet').innerHTML='<div class="title">બાકી મેન્ટેનન્સ Reminder</div>'+list.map(f=>'<div class="p21-result"><div><b>ઘર '+E(f.no)+' • '+E(f.name)+'</b><br><span>બાકી: '+money(currentOutstanding(f))+'</span></div><button class="btn primary small-btn" onclick="p21Reminder('+JSON.stringify(f.no)+')">WhatsApp</button></div>').join('')+'<button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal()">બંધ કરો</button>';document.getElementById('modal').classList.remove('hide')};
-  function graphHtml(){const rs=rows(),map={};rs.forEach(r=>{const m=dateOf(r.date).slice(0,7);if(!m)return;(map[m] ||= {i:0,e:0});map[m][r.type==='આવક'?'i':'e']+=Number(r.amount||0)});const arr=Object.entries(map).sort().slice(-12),mx=Math.max(1,...arr.map(x=>Math.max(x[1].i,x[1].e)));return '<div class="p21-graph">'+arr.map(([m,v])=>'<div class="p21-bar"><div class="p21-bars"><span class="p21-income" style="height:'+Math.max(3,v.i/mx*100)+'%" title="આવક '+money(v.i)+'"></span><span class="p21-expense" style="height:'+Math.max(3,v.e/mx*100)+'%" title="ખર્ચ '+money(v.e)+'"></span></div><small>'+E(m.slice(5))+'</small></div>').join('')+'</div><div class="p21-legend"><span>● આવક</span><span>● ખર્ચ</span></div>'}
-  function dashboard(){const all=rows(),t=totals(all),dr=periodRows('daily'),mr=periodRows('monthly'),dt=totals(dr),mt=totals(mr),out=occupied().reduce((s,f)=>s+currentOutstanding(f),0);return '<div id="p21Dashboard" class="p21-card"><div class="section-head"><div><div class="title">📊 Dashboard</div><div class="p21-muted">હિસાબનો ઝડપી સારાંશ</div></div><button class="btn light small-btn" onclick="p21AllReminders()">💬 Reminder</button></div><div class="p21-dashgrid"><div><span>કુલ આવક</span><b>'+money(t.i)+'</b></div><div><span>કુલ ખર્ચ</span><b>'+money(t.e)+'</b></div><div><span>બાકી સિલક</span><b>'+money(t.i-t.e)+'</b></div><div><span>બાકી મેન્ટેનન્સ</span><b>'+money(out)+'</b></div><div><span>આજની આવક / ખર્ચ</span><b>'+money(dt.i)+' / '+money(dt.e)+'</b></div><div><span>આ મહિનાની આવક / ખર્ચ</span><b>'+money(mt.i)+' / '+money(mt.e)+'</b></div></div><div class="p21-card-inner"><b>આવક vs ખર્ચ Graph</b>'+graphHtml()+'</div></div>'}
-  function financeTools(){return '<div id="p21Finance" class="p21-card"><div class="title">📈 Accounting Reports</div><div class="p21-grid"><button class="btn light" onclick="p21OpenDaily()">આજનો હિસાબ</button><button class="btn light" onclick="p21OpenMonthly()">માસિક હિસાબ</button><button class="btn light" onclick="p21OpenYearly()">Year-wise હિસાબ</button><button class="btn light" onclick="p21OpenModeReport()">Cash / UPI / Bank</button><button class="btn light" onclick="p21OpenHead()">Head-wise Report</button><button class="btn light" onclick="p21OpenOutstanding()">Outstanding Maintenance</button></div><div class="p21-card-inner"><b>👥 Member Financial Statement</b><select onchange="if(this.value)p21OpenMember(this.value)"><option value="">સભ્ય પસંદ કરો</option>'+occupied().map(f=>'<option value="'+E(f.no)+'">ઘર '+E(f.no)+' • '+E(f.name)+'</option>').join('')+'</select></div></div>'}
-  function searchBox(){return '<div class="p21-card"><div class="title">🔎 Search</div><input class="p21-search" placeholder="ઘર નંબર / સભ્યનું નામ / મોબાઇલ / Receipt નંબર" oninput="p21Search(this.value)"><div id="p21SearchResults"></div></div>'}
-  function backupBox(){if(role!=='admin')return '';return '<div class="p21-card"><div class="title">💾 Complete Backup</div><div class="p21-grid"><button class="btn primary" onclick="p21CompleteBackup()">📦 One-click Backup</button><button class="btn light" onclick="document.getElementById(\'p21Restore\').click()">♻️ Restore Backup</button></div><input id="p21Restore" type="file" accept="application/json" style="display:none" onchange="p21RestoreBackup(event)"><div class="p21-muted" style="margin-top:8px">Cloud data યથાવત રાખીને સંપૂર્ણ JSON backup તૈયાર થશે.</div></div>'}
-  window.p21CompleteBackup=function(){if(typeof p20Ensure==='function')p20Ensure();const payload={version:'21.0',createdAt:new Date().toISOString(),type:'complete-cloud-compatible-backup',data:d};d.backupHistory=d.backupHistory||[];d.backupHistory.unshift({date:new Date().toLocaleString('gu-IN'),type:'complete-download'});d.backupHistory=d.backupHistory.slice(0,100);if(typeof p20Log==='function')p20Log('Backup','Complete backup તૈયાર કર્યો');save();download('Sardar_Society_Complete_Backup_'+today()+'.json',JSON.stringify(payload,null,2));toast('Complete backup તૈયાર થયું')};
-  window.p21RestoreBackup=function(e){if(role!=='admin')return;const file=e.target.files?.[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result),incoming=x.data||x;if(!incoming.flats||!Array.isArray(incoming.flats)||!Array.isArray(incoming.incomes)||!Array.isArray(incoming.expenses))throw 0;if(!confirm('Backup Restore કરવાથી હાલનો data બદલાશે અને Cloudમાં પણ save થશે. ચાલુ રાખવું છે?'))return;d=incoming;if(typeof p20Ensure==='function')p20Ensure();if(typeof p20Log==='function')p20Log('Restore','Complete backup Restore કર્યો');save();if(typeof cloudSaveNow_==='function')cloudSaveNow_();render();toast('Backup Restore થયું અને Cloud Sync માટે મોકલાયું')}catch(err){toast('Backup ફાઇલ માન્ય નથી')}};r.readAsText(file)};
-  function auditBox(){if(role!=='admin')return '';const h=d.activityHistory||[];return '<div class="p21-card"><div class="section-head"><div class="title">🔐 Security / Audit</div><span class="p21-badge">'+h.length+' entries</span></div>'+(h.length?h.slice(0,100).map(x=>'<div class="p21-line"><span><b>'+E(x.action)+'</b><br><span class="p21-muted">'+E(x.detail)+' • '+E(x.user)+'</span></span><span class="p21-muted">'+E(x.date)+'</span></div>').join(''):'<div class="p21-empty">હજુ History નથી.</div>')+'</div>'}
-  function renderV21(){
-    if(typeof p20Ensure==='function')p20Ensure();
-    const home=document.getElementById('home'); if(home&&!document.getElementById('p21HomeDashboard')){const b=document.createElement('div');b.id='p21HomeDashboard';home.appendChild(b)} const hb=document.getElementById('p21HomeDashboard');if(hb)hb.innerHTML=dashboard();
-    const fin=document.getElementById('finance');if(fin){let b=document.getElementById('p21FinanceBox');if(!b){b=document.createElement('div');b.id='p21FinanceBox';fin.appendChild(b)}b.innerHTML=financeTools()}
-    const rep=document.getElementById('reports');if(rep){let b=document.getElementById('p21ReportsBox');if(!b){b=document.createElement('div');b.id='p21ReportsBox';rep.appendChild(b)}b.innerHTML=searchBox()+backupBox()+auditBox()}
-  }
-  const baseRender=window.render;window.render=function(){baseRender.apply(this,arguments);try{renderV21()}catch(e){console.error(e)}};
-  setTimeout(()=>{try{renderV21()}catch(e){}},500);
-})();
-</script>
 
 <style id="v23-fixes">
 /* v23 requested UI fixes */
@@ -437,11 +493,10 @@ const today=()=>new Date().toISOString().slice(0,10), occ=f=>!!(f&&String(f.name
 function log(a,detail){ensure();d.activityHistory.unshift({id:'a'+Date.now()+Math.random().toString(36).slice(2,6),date:nowText(),iso:new Date().toISOString(),user:role==='admin'?'એડમિન':('સભ્ય • ઘર '+currentFlat),action:a,detail:String(detail||'')});d.activityHistory=d.activityHistory.slice(0,500)}
 function persist(action,detail){if(action)log(action,detail);save()}
 function incomes(){return d.incomes||[]}
-function maintenanceRows(){let a=[];(d.flats||[]).filter(occ).forEach(f=>(f.payments||[]).forEach(p=>a.push({id:p.receipt||('m'+Date.now()),date:p.periodStartISO||p.date,type:'આવક',head:'મેન્ટેનન્સ આવક',house:f.no,member:f.name||'',detail:'મેન્ટેનન્સ',mode:p.mode||'',receipt:p.receipt||'',amount:Number(p.amount||0),lateFee:Number(p.lateFee||0)})));return a}
-function incomeRows(){return incomes().filter(x=>x.head!=='મેન્ટેનન્સ આવક').filter(x=>{if(!x.flatNo)return true;const f=d.flats.find(f=>String(f.no)===String(x.flatNo));return !!f && occ(f)}).map(x=>{let f=x.flatNo?d.flats.find(f=>String(f.no)===String(x.flatNo)):null;return {id:x.id,date:x.date,type:'આવક',head:x.head||'અન્ય આવક',house:x.flatNo||'',member:f?.name||'',detail:x.detail||'',mode:x.mode||'',receipt:x.receipt||'',amount:Number(x.amount||0)}})}
+function maintenanceRows(){let a=[];(d.flats||[]).forEach(f=>(f.payments||[]).forEach(p=>a.push({id:p.receipt||('m'+Date.now()),date:p.periodStartISO||p.date,type:'આવક',head:'મેન્ટેનન્સ આવક',house:f.no,member:f.name||'',detail:'મેન્ટેનન્સ',mode:p.mode||'',receipt:p.receipt||'',amount:Number(p.amount||0),lateFee:Number(p.lateFee||0)})));return a}
+function incomeRows(){return incomes().filter(x=>x.head!=='મેન્ટેનન્સ આવક').map(x=>{let f=x.flatNo?d.flats.find(f=>String(f.no)===String(x.flatNo)):null;return {id:x.id,date:x.date,type:'આવક',head:x.head||'અન્ય આવક',house:x.flatNo||'',member:f?.name||'',detail:x.detail||'',mode:x.mode||'',receipt:x.receipt||'',amount:Number(x.amount||0)}})}
 function expenseRows(){return (d.expenses||[]).map(x=>({id:x.id,date:x.date,type:'ખર્ચ',head:x.head||'',house:'',member:'',detail:x.detail||'',mode:x.mode||'',receipt:x.billNo||'',amount:Number(x.amount||0)}))}
 function rows(){return [...maintenanceRows(),...incomeRows(),...expenseRows()]}
-function financeTotals(){const t=totals(rows());return {income:t.i,expense:t.e,balance:t.i-t.e};}
 function totals(rs){return rs.reduce((o,r)=>(r.type==='આવક'?o.i+=r.amount:o.e+=r.amount,o),{i:0,e:0})}
 function outstanding(f){if(!occ(f))return 0;let due=Number(f.quarterly||d.settings.monthly*3||3000);let paid=(f.payments||[]).reduce((s,p)=>s+Number(p.amount||0),0);return Math.max(0,due-paid)}
 function monthRows(){let m=today().slice(0,7);return rows().filter(r=>String(r.date||'').slice(0,7)===m)}
@@ -449,17 +504,20 @@ function dayRows(){let t=today();return rows().filter(r=>String(r.date||'').slic
 function yearRows(){let y=today().slice(0,4);return rows().filter(r=>String(r.date||'').slice(0,4)===y)}
 function nav(){return `<nav class="v22-nav"><button data-page="home" onclick="go('home',this)"><b>⌂</b>હોમ</button><button data-page="maintenance" onclick="go('maintenance',this)"><b>₹</b>મેન્ટેનન્સ</button><button data-page="finance" onclick="go('finance',this)"><b>📒</b>હિસાબ</button><button data-page="members" onclick="go('members',this)"><b>👥</b>સભ્યો</button><button data-page="more" onclick="go('more',this)"><b>☰</b>વધુ</button></nav>`}
 function shell(){
- $('app').innerHTML=`<div class="v22-app"><header class="v22-top"><div class="v22-topin"><div class="v22-brand"><div class="v22-logo">🏠</div><div><h1>સરદાર સોસાયટી</h1><small id="who">સોસાયટી વ્યવસ્થાપન</small></div></div><button class="v23-home-top" onclick="homeV23()">⌂ હોમ</button></div></header><main class="v22-wrap"><section id="home" class="v22-section"></section><section id="maintenance" class="v22-section"></section><section id="finance" class="v22-section"></section><section id="members" class="v22-section"></section><section id="more" class="v22-section"></section></main>${nav()}<div id="v22modal" class="v22-overlay" onclick="if(event.target.id==='v22modal')closeV22()"><div class="v22-sheet" id="v22sheet"></div></div></div>`;
+ $('app').innerHTML=`<div class="v22-app"><header class="v22-top"><div class="v22-topin"><div class="v22-brand"><div class="v22-logo">🏠</div><div><h1>સરદાર સોસાયટી</h1><small id="who">સોસાયટી વ્યવસ્થાપન</small></div></div><button class="v23-home-top" onclick="go('home',document.querySelector('[data-page="home"]'))">⌂ હોમ</button></div></header><main class="v22-wrap"><section id="home" class="v22-section"></section><section id="maintenance" class="v22-section"></section><section id="finance" class="v22-section"></section><section id="members" class="v22-section"></section><section id="more" class="v22-section"></section></main>${nav()}<div id="v22modal" class="v22-overlay" onclick="if(event.target.id==='v22modal')closeV22()"><div class="v22-sheet" id="v22sheet"></div></div></div>`;
  renderAll(); go('home',document.querySelector('[data-page="home"]'));
 }
 function stat(label,val,cl){return `<div class="v22-card v22-stat ${cl||''}"><span>${label}</span><b>${money(val)}</b></div>`}
 function graph(){let rs=rows(),map={};rs.forEach(r=>{let m=String(r.date||'').slice(0,7);if(!/^\d{4}-\d{2}$/.test(m))return;(map[m]??={i:0,e:0});map[m][r.type==='આવક'?'i':'e']+=r.amount});let a=Object.entries(map).sort().slice(-6),mx=Math.max(1,...a.map(x=>Math.max(x[1].i,x[1].e)));return `<div class="v22-barwrap">${a.map(([m,v])=>`<div class="v22-barcol"><div class="v22-bar v22-inc" style="height:${Math.max(3,v.i/mx*100)}%" title="આવક ${money(v.i)}"></div><div class="v22-bar v22-exp" style="height:${Math.max(3,v.e/mx*100)}%" title="ખર્ચ ${money(v.e)}"></div></div>`).join('')}</div><div class="v22-legend"><span>● આવક</span><span>● ખર્ચ</span></div><div style="display:flex;gap:12px">${a.map(x=>`<div class="v22-axis" style="flex:1">${E(x[0].slice(5))}</div>`).join('')}</div>`}
-function home(){let all=rows(),t=totals(all),dr=totals(dayRows()),mr=totals(monthRows()),out=d.flats.reduce((s,f)=>s+outstanding(f),0);return `<div class="v22-hero"><h2>નમસ્કાર 👋</h2><p>સરદાર સોસાયટીનું સરળ અને પારદર્શક સંચાલન</p></div><div class="v22-grid">${stat('કુલ આવક',t.i,'blue')}${stat('કુલ ખર્ચ',t.e,'red')}${stat('બાકી સિલક',t.i-t.e,'green')}${stat('બાકી મેન્ટેનન્સ',out,'orange')}</div><div class="v22-card"><div class="v22-title">📅 આજનો હિસાબ</div><div class="v22-two"><div><span class="v22-sub">આવક</span><h3>${money(dr.i)}</h3></div><div><span class="v22-sub">ખર્ચ</span><h3>${money(dr.e)}</h3></div></div></div><div class="v22-card"><div class="v22-title">📆 આ મહિનાનો હિસાબ</div><div class="v22-two"><div><span class="v22-sub">આવક</span><h3>${money(mr.i)}</h3></div><div><span class="v22-sub">ખર્ચ</span><h3>${money(mr.e)}</h3></div></div></div><div class="v22-card"><div class="v22-title">⚡ ઝડપી કામ</div><div class="v22-actions"><button class="v22-btn primary" onclick="openMaintForm()">➕ મેન્ટેનન્સ<small>પેમેન્ટ જમા</small></button><button class="v22-btn" onclick="incomeStep1Open()">💰 આવક<small>નવી આવક</small></button><button class="v22-btn green" onclick="go('finance',document.querySelector('[data-page=\"finance\"]'))">📊 રિપોર્ટ<small>હિસાબ મેનુ</small></button></div></div>`}
+function home(){let all=rows(),t=totals(all),dr=totals(dayRows()),mr=totals(monthRows()),out=d.flats.reduce((s,f)=>s+outstanding(f),0);return `<div class="v22-hero"><h2>નમસ્કાર 👋</h2><p>સરદાર સોસાયટીનું સરળ અને પારદર્શક સંચાલન</p></div><div class="v22-grid">${stat('કુલ આવક',t.i,'blue')}${stat('કુલ ખર્ચ',t.e,'red')}${stat('બાકી સિલક',t.i-t.e,'green')}${stat('બાકી મેન્ટેનન્સ',out,'orange')}</div><div class="v22-card"><div class="v22-title">📅 આજનો હિસાબ</div><div class="v22-two"><div><span class="v22-sub">આવક</span><h3>${money(dr.i)}</h3></div><div><span class="v22-sub">ખર્ચ</span><h3>${money(dr.e)}</h3></div></div></div><div class="v22-card"><div class="v22-title">📆 આ મહિનાનો હિસાબ</div><div class="v22-two"><div><span class="v22-sub">આવક</span><h3>${money(mr.i)}</h3></div><div><span class="v22-sub">ખર્ચ</span><h3>${money(mr.e)}</h3></div></div></div><div class="v22-card"><div class="v22-title">⚡ ઝડપી કામ</div><div class="v22-actions"><button class="v22-btn primary" onclick="openMaintForm()">➕ મેન્ટેનન્સ<small>પેમેન્ટ જમા</small></button><button class="v22-btn" onclick="v23OpenNewIncome()">💰 આવક<small>નવી આવક</small></button><button class="v22-btn red" onclick="openExpenseForm()">💸 ખર્ચ<small>નવો ખર્ચ</small></button><button class="v22-btn green" onclick="go('finance',document.querySelector('[data-page=\"finance\"]'))">📊 રિપોર્ટ<small>હિસાબ મેનુ</small></button></div></div>`}
 function maintenance(){let list=d.flats.filter(occ).map(f=>`<div class="v22-row"><div class="grow"><b>ઘર ${E(f.no)} • ${E(f.name)}</b><div class="v22-sub">બાકી: ${money(outstanding(f))}</div></div><div class="v22-tools"><button class="v22-btn green" style="min-height:42px;padding:8px" onclick="openMaintForm('${f.no}')">જમા</button><button class="v22-btn" style="min-height:42px;padding:8px" onclick="memberStatement('${f.no}')">હિસાબ</button></div></div>`).join('');return `<div class="v22-hero"><h2>💰 મેન્ટેનન્સ</h2><p>મકાન પ્રમાણે ચુકવણી અને બાકી રકમ</p></div>${role==='admin'?`<div class="v22-card"><div class="v22-actions"><button class="v22-btn primary" onclick="openMaintForm()">➕ પેમેન્ટ જમા કરો</button><button class="v22-btn green" onclick="reminders()">💬 બાકી Reminder</button></div></div>`:''}<div class="v22-card"><div class="v22-title">મકાનવાર મેન્ટેનન્સ</div><div class="v22-list">${list||'<div class="v22-empty">કોઈ ભરેલું મકાન નથી.</div>'}</div></div>`}
-function finance(){const ft=financeTotals();const show=!!window._incomeStep2Visible;const dueShow=!!window._incomeDueVisible;const expenseShow=!!window._expenseStep4Visible;const all=rows(),t=totals(all);return `<div class="v22-hero"><h2>💰 હિસાબ</h2><p>સરદાર સોસાયટીનો પારદર્શક હિસાબ</p></div><div class="v22-grid finance-top-stats"><div class="v22-card v22-stat blue"><span>કુલ આવક</span><b>${money(ft.income)}</b></div><div class="v22-card v22-stat red"><span>કુલ જાવક</span><b>${money(ft.expense)}</b></div><div class="v22-card v22-stat green"><span>બાકી સિલક</span><b>${money(ft.balance)}</b></div></div>${role==='admin'?`<div class="v22-card"><div class="v22-title">આવક વ્યવસ્થાપન</div><div class="v22-sub">નવી આવક, કુલ એન્ટ્રી અને હેડ પ્રમાણે બાકી ઘરો જુઓ.</div><div class="v22-actions" style="margin-top:10px"><button class="v22-btn primary" style="flex:1" onclick="incomeStep1Open()">➕ નવી આવક</button><button class="v22-btn" style="flex:1" onclick="incomeStep2Open()">📋 કુલ આવક એન્ટ્રી</button><button class="v22-btn green" style="flex:1" onclick="incomeDueOpen()">📊 બાકી ઘરો</button></div></div><div class="v22-card"><div class="v22-title">જાવક વ્યવસ્થાપન</div><div class="v22-sub">સોસાયટીના ખર્ચની નવી જાવક નોંધાવો અને કુલ જાવક એન્ટ્રી જુઓ.</div><div class="v22-actions" style="margin-top:10px"><button class="v22-btn red" style="flex:1" onclick="expenseStep3Open()">➕ નવી જાવક</button><button class="v22-btn" style="flex:1" onclick="expenseStep4Open()">📋 કુલ જાવક એન્ટ્રી</button></div></div>`:''}<div id="incomeStep2Card" class="v22-card" style="display:${show?'block':'none'}"><div class="v22-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px"><span>📋 કુલ આવક એન્ટ્રી</span><button class="v22-btn" aria-label="કુલ આવક એન્ટ્રી બંધ કરો" title="બંધ કરો" style="min-height:36px;min-width:36px;padding:4px 10px;font-size:20px;line-height:1" onclick="incomeStep2Close()">✕</button></div><div class="v22-sub">કુલ આવક: <b id="step2TotalIncome">₹0</b></div><div id="incomeStep2List" style="margin-top:10px"></div></div><div id="incomeDueCard" class="v22-card" style="display:${dueShow?'block':'none'}"><div class="v22-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px"><span>📊 હેડ પ્રમાણે બાકી ઘરો</span><button class="v22-btn" aria-label="બાકી ઘરો બંધ કરો" title="બંધ કરો" style="min-height:36px;min-width:36px;padding:4px 10px;font-size:20px;line-height:1" onclick="incomeDueClose()">✕</button></div><div id="incomeDueBody" style="margin-top:10px"></div></div><div id="expenseStep4Card" class="v22-card" style="display:${expenseShow?'block':'none'}"><div class="v22-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px"><span>📋 કુલ જાવક એન્ટ્રી</span><button class="v22-btn" aria-label="કુલ જાવક એન્ટ્રી બંધ કરો" title="બંધ કરો" style="min-height:36px;min-width:36px;padding:4px 10px;font-size:20px;line-height:1" onclick="expenseStep4Close()">✕</button></div><div class="v22-sub">કુલ જાવક: <b id="step4TotalExpense">₹0</b></div><div id="expenseStep4List" style="margin-top:10px"></div></div>`}
+function finance(){return `<div class="v22-hero"><h2>📒 આવક / ખર્ચ</h2><p>હિસાબ વિભાગ નવા સ્વચ્છ codingથી ફરીથી ગોઠવવામાં આવી રહ્યો છે.</p></div><div class="v22-card"><div class="v22-title">હિસાબ વિભાગ તૈયાર</div><div class="v22-empty">જૂનું હિસાબ coding દૂર કરવામાં આવ્યું છે. હવે નવી આવકથી એક-એક button step-by-step બનાવવામાં આવશે.</div></div>`}
+
+function members(){return `<div class="v22-hero"><h2>👥 સભ્યો</h2><p>મકાન, સભ્ય અને સંપૂર્ણ હિસાબ</p></div>${role==='admin'?`<div class="v22-card"><button class="v22-btn primary" style="width:100%" onclick="openMemberForm()">➕ મકાન / સભ્ય ઉમેરો અથવા સુધારો</button></div>`:''}<div class="v22-card"><input class="v22-search" placeholder="🔎 ઘર નંબર / નામ / મોબાઇલ / Receipt નંબર" oninput="searchV22(this.value)"><div id="v22search" style="margin-top:10px"></div></div><div class="v22-card"><div class="v22-title">મકાન 1 થી 60</div><div class="v22-list">${d.flats.map(f=>`<div class="v22-row member-v23-row"><div class="grow"><b class="member-v23-name">ઘર ${E(f.no)} ${f.name?'• '+E(f.name):'• ખાલી'}</b><div class="member-v23-mobile">📱 ${f.mobile?E(f.mobile):'મોબાઇલ નોંધાયેલ નથી'}</div><div class="v22-sub">બાકી ${money(outstanding(f))}</div></div><button class="v22-btn" style="min-height:40px;padding:7px" onclick="memberStatement('${E(f.no)}')">જુઓ</button></div>`).join('')}</div></div>`}
+function more(){return `<div class="v22-hero"><h2>☰ સોસાયટી વ્યવસ્થાપન</h2><p>જરૂરી તમામ વિભાગો એક જ જગ્યાએ</p></div><div class="v22-menu"><button onclick="committeePage()"><i>👔</i>કમિટી</button><button onclick="securityPage()"><i>🛡️</i>સિક્યુરિટી</button><button onclick="noticesPage()"><i>📢</i>નોટિસ</button><button onclick="complaintsPage()"><i>📝</i>ફરિયાદ</button><button onclick="visitorsPage()"><i>🚪</i>વિઝિટર</button><button onclick="parkingPage()"><i>🚗</i>પાર્કિંગ</button><button onclick="repairsPage()"><i>🔧</i>રિપેરિંગ</button><button onclick="simplePage('assets','📦 Society Assets','assets')"><i>📦</i>સામાન</button><button onclick="simplePage('calendar','📅 Calendar','calendar')"><i>📅</i>કૅલેન્ડર</button><button onclick="simplePage('meetings','🏛️ Committee Meeting','meetings')"><i>🏛️</i>મિટિંગ</button><button onclick="simplePage('documents','📄 Documents','documents')"><i>📄</i>દસ્તાવેજ</button><button onclick="simplePage('emergency','📞 Emergency Contacts','emergency')"><i>📞</i>Emergency</button><button onclick="backupPage()"><i>💾</i>Backup</button><button onclick="auditPage()"><i>🔐</i>Audit</button><button onclick="settingsPage()"><i>⚙️</i>Settings</button></div>`}
 function renderAll(){ensure();$('home').innerHTML=home();$('maintenance').innerHTML=maintenance();$('finance').innerHTML=finance();$('members').innerHTML=members();$('more').innerHTML=more();let w=$('who');if(w)w.textContent=role==='admin'?'એડમિન • 60 મકાન':`સભ્ય • ઘર ${currentFlat}`}
 window.go=function(id,btn){document.querySelectorAll('.v22-section').forEach(s=>s.classList.remove('active'));let x=$(id);if(x)x.classList.add('active');document.querySelectorAll('.v22-nav button').forEach(b=>b.classList.remove('on'));if(btn)btn.classList.add('on');window.scrollTo(0,0)};
-window.render=function(){ensure();if(!$('v22modal'))shell();else renderAll();};
+window.render=function(){try{ensure();if(!$('v22modal'))shell();else renderAll();}catch(e){console.error('Render error',e);}};
 window.logoutV22=function(){role='';currentFlat='';$('app').classList.add('hide');$('login').classList.remove('hide');$('password').value='';$('loginErr').textContent='';};
 function modal(title,body){$('v22sheet').innerHTML=`<button class="v22-close" onclick="closeV22()">×</button><h3>${title}</h3>${body}`;$('v22modal').classList.add('show')};window.closeV22=()=>{$('v22modal').classList.remove('show')};
 function formButtons(savefn){return `<div class="v22-tools"><button class="v22-btn primary" onclick="${savefn}">સાચવો</button><button class="v22-btn dark" onclick="closeV22()">રદ કરો</button></div>`}
@@ -476,20 +534,42 @@ window.v23FormatDate=function(value){
   return '';
 };
 window.v23TodayDot=function(){const d0=new Date();return `${String(d0.getDate()).padStart(2,'0')}.${String(d0.getMonth()+1).padStart(2,'0')}.${d0.getFullYear()}`};
+window.v23OpenNewIncome=function(){
+  if(role!=='admin')return;
+  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
+  modal('💰 નવી આવક',`<div class="v22-form">
+    <label>આવક હેડ</label>
+    <select id="v23IncomeHead">${heads.map(h=>`<option>${E(h)}</option>`).join('')}</select>
+    <label>મકાન (વૈકલ્પિક)</label>
+    <select id="v23IncomeFlat"><option value="">સામાન્ય આવક</option>${d.flats.filter(occ).map(f=>`<option value="${E(f.no)}">ઘર ${E(f.no)} • ${E(f.name)}</option>`).join('')}</select>
+    <label>વિગત</label><input id="v23IncomeDetail">
+    <div class="v22-two"><div><label>રકમ</label><input id="v23IncomeAmount" type="number" min="1"></div><div><label>તારીખ</label><input id="v23IncomeDate" inputmode="numeric" placeholder="DD.MM.YYYY" value="${v23TodayDot()}"></div></div>
+    <label>Payment Mode</label><select id="v23IncomeMode"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option></select>
+    ${formButtons('v23SaveNewIncome()')}
+  </div>`);
+};
+window.v23SaveNewIncome=function(){
+  if(role!=='admin')return;
+  const amount=Number($('v23IncomeAmount')?.value||0);
+  const date=v23FormatDate($('v23IncomeDate')?.value||'');
+  const detail=$('v23IncomeDetail')?.value.trim()||'';
+  if(amount<=0)return toastV22('રકમ નાખો');
+  if(!date)return toastV22('તારીખ DD.MM.YYYY માં નાખો');
+  const head=$('v23IncomeHead')?.value||'';
+  const flat=$('v23IncomeFlat')?.value||'';
+  const stamp=Date.now();
+  d.incomes.unshift({id:'i'+stamp,head,flatNo:flat,detail,date,amount,mode:$('v23IncomeMode')?.value||'કેશ',receipt:'IN-'+String(stamp).slice(-8)});
+  persist('Add','આવક • '+head);
+  closeV22();
+  renderAll();
+  toastV22('આવક સાચવાઈ');
+};
+window.openIncomeForm=window.v23OpenNewIncome;
+window.openExpenseForm=function(){if(role!=='admin')return;modal('💸 નવો ખર્ચ',`<div class="v22-form"><label>ખર્ચ હેડ</label><select id="v22eh">${d.expenseHeads.map(h=>`<option>${E(h)}</option>`).join('')}</select><label>વિગત</label><input id="v22ed"><div class="v22-two"><div><label>રકમ</label><input id="v22ea" type="number"></div><div><label>તારીખ</label><input id="v22edate" type="date" value="${today()}"></div></div><div class="v22-two"><div><label>બિલ નંબર</label><input id="v22eb"></div><div><label>Payment Mode</label><select id="v22emo"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option></select></div></div>${formButtons('saveExpenseV22()')}</div>`)};
+window.saveExpenseV22=function(){let amount=Number($('v22ea').value||0),detail=$('v22ed').value.trim();if(amount<=0||!detail)return toastV22('વિગત અને રકમ જરૂરી છે');d.expenses.unshift({id:'e'+Date.now(),seq:d.expenses.length+1,head:$('v22eh').value,detail,date:$('v22edate').value,amount,billNo:$('v22eb').value.trim(),mode:$('v22emo').value});persist('Add','ખર્ચ • '+detail);closeV22();renderAll();toastV22('ખર્ચ સાચવાયો')};
+window.saveMemberIncomeV22=function(head,no){if(role!=='admin')return;let a=Number($('v22mi_'+no)?.value||0),f=d.flats.find(x=>String(x.no)===String(no));if(!f||!occ(f)||a<=0)return toastV22('રકમ દાખલ કરો');d.incomes.unshift({id:'i'+Date.now()+'_'+no,head,flatNo:String(no),detail:head+' • ઘર '+no+' • '+f.name,date:today(),amount:a,mode:'કેશ',receipt:'IN-'+Date.now().toString().slice(-8)});persist('Add','સભ્યવાર અન્ય આવક • ઘર '+no);renderAll();toastV22('સભ્યવાર આવક જમા થઈ')};
 window.openMemberForm=function(no=''){if(role!=='admin')return;let f=d.flats.find(x=>String(x.no)===String(no))||d.flats[0];modal('👥 મકાન / સભ્ય માહિતી',`<div class="v22-form"><label>મકાન નંબર</label><select id="v22fno">${d.flats.map(x=>`<option value="${x.no}" ${x.no===f.no?'selected':''}>ઘર ${x.no}</option>`).join('')}</select><label>સભ્યનું નામ</label><input id="v22fn" value="${E(f.name||'')}"><label>મોબાઇલ નંબર</label><input id="v22fm" inputmode="numeric" maxlength="10" value="${E(f.mobile||'')}"><label>પ્રકાર</label><select id="v22ft"><option ${f.type==='ઘરમાલિક'?'selected':''}>ઘરમાલિક</option><option ${f.type==='ભાડૂત'?'selected':''}>ભાડૂત</option></select><label>ક્વાર્ટર મેન્ટેનન્સ</label><input id="v22fq" type="number" value="${Number(f.quarterly||3000)}"><div class="v22-sub">ખાલી મકાન માટે નામ અને મોબાઇલ ખાલી રાખી શકાય.</div>${formButtons('saveMemberV22()')}</div>`)};
 window.saveMemberV22=function(){let f=d.flats.find(x=>String(x.no)===$('v22fno').value),n=$('v22fn').value.trim(),m=$('v22fm').value.replace(/\D/g,'');if(n&&m.length!==10)return toastV22('મોબાઇલ 10 અંકનો હોવો જોઈએ');f.name=n;f.mobile=m;f.type=$('v22ft').value;f.quarterly=Number($('v22fq').value||3000);persist('Edit','સભ્ય માહિતી • ઘર '+f.no);closeV22();renderAll();toastV22('સભ્ય માહિતી સાચવાઈ')};
-window.memberStatement=function(no){let f=d.flats.find(x=>String(x.no)===String(no));if(!f)return;let rs=rows().filter(r=>String(r.house)===String(no)),t=totals(rs);modal('📒 Financial Statement • ઘર '+no,`<div class="v22-grid4">${stat('કુલ જમા',t.i,'green')}${stat('બાકી',outstanding(f),'orange')}</div><div class="v22-card"><b>મેન્ટેનન્સ History</b>${reportRows((f.payments||[]).map(p=>({date:p.date,type:'આવક',head:'મેન્ટેનન્સ',house:f.no,member:f.name,detail:p.periodStart||'',mode:p.mode,receipt:p.receipt,amount:Number(p.amount||0)})))}</div><div class="v22-card"><b>અન્ય આવક History</b>${reportRows(rs.filter(r=>r.head!=='મેન્ટેનન્સ આવક'))}</div><div class="v22-card"><b>Receipt History</b>${reportRows((f.payments||[]).map(p=>({date:p.date,type:'આવક',head:'રસીદ',detail:p.receipt,mode:p.mode,amount:Number(p.amount||0)})))}</div><div class="v22-tools"><button class="v22-btn primary" onclick="printStatementV22('${E(no)}')">🖨️ Print</button><button class="v22-btn" onclick="downloadStatementV22('${E(no)}')">📥 Download</button></div>`)};
-function reportRows(rs){return rs.length?`<div class="v22-list" style="margin-top:8px">${rs.slice(0,50).map(r=>`<div class="v22-row"><div class="grow"><b>${E(r.head||r.type)}</b><div class="v22-sub">${E(r.date||'')} • ${E(r.detail||'')} ${r.mode?'• '+E(r.mode):''}</div></div><b>${money(r.amount)}</b></div>`).join('')}</div>`:'<div class="v22-empty">કોઈ નોંધ નથી.</div>'}
-window.printStatementV22=function(no){let f=d.flats.find(x=>String(x.no)===String(no));let rs=rows().filter(r=>String(r.house)===String(no));let w=window.open('','_blank');if(!w)return;w.document.write('<html lang="gu"><head><meta charset="utf-8"><title>Financial Statement</title><style>body{font-family:Arial,sans-serif;padding:20px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #ccc;padding:7px}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>Financial Statement • ઘર '+E(no)+' • '+E(f?.name)+'</h2><table><tr><th>તારીખ</th><th>પ્રકાર</th><th>હેડ</th><th>મોડ</th><th>રકમ</th></tr>'+rs.map(r=>'<tr><td>'+E(r.date)+'</td><td>'+E(r.type)+'</td><td>'+E(r.head)+'</td><td>'+E(r.mode)+'</td><td>'+money(r.amount)+'</td></tr>').join('')+'</table></body></html>');w.document.close();setTimeout(()=>w.print(),200)};
-window.downloadStatementV22=function(no){let rs=rows().filter(r=>String(r.house)===String(no));downloadV22('Sardar_Society_House_'+no+'_Statement.csv',[['તારીખ','પ્રકાર','હેડ','ઘર','સભ્ય','મોડ','રકમ'],...rs.map(r=>[r.date,r.type,r.head,r.house,r.member,r.mode,r.amount])])};
-function downloadV22(name,data){let csv='\ufeff'+data.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=name;a.click()}
-window.searchV22=function(q){q=String(q||'').trim().toLowerCase();let out=[];d.flats.forEach(f=>{let hit=(f.no+' '+(f.name||'')+' '+(f.mobile||'')).toLowerCase().includes(q);(f.payments||[]).forEach(p=>{if(String(p.receipt||'').toLowerCase().includes(q))hit=true});if(q&&hit)out.push(`<div class="v22-row"><div class="grow"><b>ઘર ${E(f.no)} • ${E(f.name||'ખાલી')}</b><div class="member-v23-mobile">📱 ${E(f.mobile||'મોબાઇલ નોંધાયેલ નથી')}</div><div class="v22-sub">બાકી ${money(outstanding(f))}</div></div><button class="v22-btn" style="min-height:40px;padding:7px" onclick="memberStatement('${f.no}')">હિસાબ</button></div>`)});$('v22search').innerHTML=q?(out.join('')||'<div class="v22-empty">કોઈ પરિણામ નથી.</div>'):''};
-function openReport(title,rs){let t=totals(rs);modal('📊 '+title,`<div class="v22-grid4">${stat('આવક',t.i,'green')}${stat('ખર્ચ',t.e,'red')}${stat('સિલક',t.i-t.e,'blue')}</div>${reportRows(rs)}<div class="v22-tools"><button class="v22-btn primary" onclick="printRowsV22(${JSON.stringify(title)},${JSON.stringify(rs)})">🖨️ Print</button><button class="v22-btn" onclick="downloadV22('Sardar_Society_Report.csv',${JSON.stringify([['તારીખ','પ્રકાર','હેડ','ઘર','સભ્ય','મોડ','રકમ'],...rs.map(r=>[r.date,r.type,r.head,r.house,r.member,r.mode,r.amount])])})">📥 Download</button></div>`)}
-window.openDayReportV23=function(){openReport('આજનો હિસાબ',dayRows())};
-window.openMonthReportV23=function(){openReport('માસિક હિસાબ',monthRows())};
-window.openYearReportV23=function(){openReport('વર્ષ વાઈઝ હિસાબ',yearRows())};
-window.openHeadReport=function(){let m={};rows().forEach(r=>{let k=r.type+' • '+r.head;m[k]=(m[k]||0)+r.amount});openReport('Head-wise Report',Object.entries(m).map(([k,a])=>{let z=k.split(' • ');return{date:'',type:z[0],head:z[1],amount:a}}))};window.openMemberReport=function(){let rs=d.flats.filter(occ).map(f=>({date:'',type:'આવક',head:'ઘર '+f.no+' • '+f.name,amount:rows().filter(r=>String(r.house)===String(f.no)).reduce((s,r)=>s+(r.type==='આવક'?r.amount:0),0)}));openReport('Member-wise Report',rs)};window.openModeReport=function(){let m={};rows().forEach(r=>{let k=r.mode||'મોડ નોંધાયેલ નથી';m[k]=(m[k]||0)+r.amount});openReport('Cash / UPI / Bank Report',Object.entries(m).map(([k,a])=>({type:'આવક/ખર્ચ',head:k,amount:a})))};window.openOutstandingReport=function(){openReport('Outstanding Maintenance',d.flats.filter(occ).map(f=>({type:'બાકી',head:'મેન્ટેનન્સ',house:f.no,member:f.name,amount:outstanding(f)})).filter(x=>x.amount>0))};
-window.printRowsV22=function(title,rs){let w=window.open('','_blank');if(!w)return;w.document.write('<html lang="gu"><head><meta charset="utf-8"><title>'+E(title)+'</title><style>body{font-family:Arial,sans-serif;padding:20px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #ccc;padding:7px}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>'+E(title)+'</h2><table><tr><th>તારીખ</th><th>પ્રકાર</th><th>હેડ</th><th>ઘર</th><th>મોડ</th><th>રકમ</th></tr>'+rs.map(r=>'<tr><td>'+E(r.date)+'</td><td>'+E(r.type)+'</td><td>'+E(r.head)+'</td><td>'+E(r.house)+'</td><td>'+E(r.mode)+'</td><td>'+money(r.amount)+'</td></tr>').join('')+'</table></body></html>');w.document.close();setTimeout(()=>w.print(),200)};
 function committeePage(){simplePage('committee','👔 કમિટી મેમ્બર','committee','નામ|હોદ્દો|મોબાઇલ',true)}
 function securityPage(){simplePage('securityGuards','🛡️ સિક્યુરિટી ગાર્ડ','securityGuards','નામ|મોબાઇલ|શિફ્ટ|નોંધ',true)}
 function simplePage(key,title,field,fields,adminEdit=true){let arr=d[key]||[];let names=String(fields||'નામ').split('|');modal(title,`<div class="v22-sub">${key==='committee'?'કમિટી મેમ્બર માટે બધા માટે View Only. માહિતીમાં ફેરફાર માત્ર Admin કરશે.':''}</div>${role==='admin'&&adminEdit?`<button class="v22-btn primary" style="width:100%;margin:10px 0" onclick="simpleFormV22('${key}','${E(title)}','${E(fields)}')">➕ ઉમેરો</button>`:''}<div class="v22-list">${arr.map((x,i)=>`<div class="v22-row"><div class="grow"><b class="committee-v23-name">${E(x.name||x.નામ||'')}</b><div class="committee-v23-meta">${key==='committee'&&x['હોદ્દો']?`<span>👔 ${E(x['હોદ્દો'])}</span>`:''}${(x['મોબાઇલ']||x.mobile)?`<span>📱 ${E(x['મોબાઇલ']||x.mobile)}</span>`:''}${key!=='committee'?names.slice(1).filter(n=>n!=='મોબાઇલ').map(n=>x[n]||x[n.replace('મોબાઇલ','mobile')]?`<span>${E(n)}: ${E(x[n]||x[n.replace('મોબાઇલ','mobile')])}</span>`:'').join(''):''}</div></div>${role==='admin'&&adminEdit?`<button class="v22-btn" style="min-height:38px;padding:6px" onclick="simpleFormV22('${key}','${E(title)}','${E(fields)}',${i})">✏️</button><button class="v22-btn red" style="min-height:38px;padding:6px" onclick="simpleDeleteV22('${key}',${i})">🗑️</button>`:''}</div>`).join('')||'<div class="v22-empty">હજુ માહિતી ઉમેરાઈ નથી.</div>'}</div>`)}
@@ -502,7 +582,6 @@ window.complaintFormV22=function(i=-1){let c=i>=0?d.complaints[i]:{};if(i>=0&&ro
 function visitorsPage(){simplePage('visitors','🚪 Visitor Entry','visitors','નામ|મોબાઇલ|મકાન|આવવાનો સમય|જવાનો સમય',true)}
 function parkingPage(){simplePage('parking','🚗 Parking','parking','નામ|મોબાઇલ|મકાન|વાહન નંબર',true)}
 function repairsPage(){simplePage('repairs','🔧 Repair / Maintenance','repairs','કામ|મકાન|સ્થિતિ|ખર્ચ|નોંધ',true)}
-function reportsPage(){modal('📊 બધા રિપોર્ટ',`<div class="v22-menu"><button onclick="openDayReportV23()"><i>📅</i>આજ</button><button onclick="openMonthReportV23()"><i>📆</i>મહિનો</button><button onclick="openYearReportV23()"><i>🗓️</i>વર્ષ</button><button onclick="openHeadReport()"><i>📂</i>Head-wise</button><button onclick="openMemberReport()"><i>👥</i>Member-wise</button><button onclick="openModeReport()"><i>💳</i>Mode-wise</button><button onclick="openOutstandingReport()"><i>⚠️</i>Outstanding</button></div>`)}
 function backupPage(){if(role!=='admin')return toastV22('માત્ર Admin માટે');modal('💾 Backup / Restore',`<div class="v22-actions"><button class="v22-btn primary" onclick="backupV22()">📦 Complete Backup</button><button class="v22-btn" onclick="document.getElementById('v22restore').click()">♻️ Restore</button></div><input id="v22restore" type="file" accept="application/json" style="display:none" onchange="restoreV22(event)"><div class="v22-sub" style="margin-top:10px">Cloud data સાથે compatible complete backup.</div>`)}
 window.backupV22=function(){let payload={version:V,createdAt:new Date().toISOString(),data:d};d.backupHistory.unshift({date:nowText(),type:'download'});d.backupHistory=d.backupHistory.slice(0,100);persist('Backup','Complete backup');downloadV22('Sardar_Society_Complete_Backup_'+today()+'.json',JSON.stringify(payload,null,2).split('\n').map(x=>[x]));toastV22('Backup તૈયાર થયું')};
 window.restoreV22=function(e){let file=e.target.files?.[0];if(!file)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result),z=x.data||x;if(!Array.isArray(z.flats)||!Array.isArray(z.incomes)||!Array.isArray(z.expenses))throw 0;if(!confirm('Restore કરવાથી હાલનો data બદલાશે. ચાલુ રાખવું છે?'))return;d=z;ensure();persist('Restore','Complete backup restore');renderAll();toastV22('Backup restore થયું')}catch(_){toastV22('Backup ફાઇલ માન્ય નથી')}};r.readAsText(file)};
@@ -510,331 +589,70 @@ function auditPage(){if(role!=='admin')return toastV22('માત્ર Admin �
 function settingsPage(){if(role!=='admin')return toastV22('માત્ર Admin માટે');modal('⚙️ Settings',`<div class="v22-form"><label>માસિક મેન્ટેનન્સ</label><input id="v22setm" type="number" value="${Number(d.settings.monthly||1000)}"><label>Society UPI ID</label><input id="v22upi" value="${E(d.settings.upi||'')}">${formButtons('saveSettingsV22()')}</div>`)};window.saveSettingsV22=function(){d.settings.monthly=Number($('v22setm').value||1000);d.settings.upi=$('v22upi').value.trim();persist('Edit','Settings');closeV22();renderAll();toastV22('Settings સાચવાઈ')};
 function reminders(){let a=d.flats.filter(f=>occ(f)&&outstanding(f)>0);modal('💬 બાકી મેન્ટેનન્સ Reminder',a.map(f=>`<div class="v22-row"><div class="grow"><b>ઘર ${E(f.no)} • ${E(f.name)}</b><div class="member-v23-mobile">📱 ${E(f.mobile||'મોબાઇલ ઉપલબ્ધ નથી')}</div><div class="v22-sub">બાકી ${money(outstanding(f))}</div></div><button class="v22-btn green" style="min-height:40px;padding:7px" onclick="reminderV22('${f.no}')">💬 WhatsApp</button></div>`).join('')||'<div class="v22-empty">કોઈ બાકી નથી.</div>')};window.reminderV22=function(no){let f=d.flats.find(x=>String(x.no)===String(no));if(!f?.mobile)return toastV22('મોબાઇલ ઉપલબ્ધ નથી');let msg=`સરદાર સોસાયટી\n\nઘર નંબર: ${f.no}\nસભ્ય: ${f.name}\n\nમેન્ટેનન્સ બાકી છે: ${money(outstanding(f))}\n\nકૃપા કરીને જમા કરશો.\nઆભાર.`;window.open('https://wa.me/91'+f.mobile.replace(/\D/g,'')+'?text='+encodeURIComponent(msg),'_blank')};
 function toastV22(t){let x=document.createElement('div');x.className='v22-toast';x.textContent=t;document.body.appendChild(x);setTimeout(()=>x.remove(),2200)}
-/* =========================================================
-   FINANCE STEP 1 — NEW INCOME ONLY
-   Single source of truth. No expense/edit/delete yet.
-   ========================================================= */
-function incomeStep1Open(){
-  if(role!=='admin')return;
-  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
-  const list=heads.length?heads:d.incomeHeads||[];
-  modal('💰 નવી આવક',`<div class="v22-form">
-    <label>આવક હેડ</label>
-    <select id="step1IncomeHead">${list.map(h=>`<option value="${E(h)}">${E(h)}</option>`).join('')}</select>
-    <label>મકાન (વૈકલ્પિક)</label>
-    <select id="step1IncomeFlat"><option value="">સામાન્ય આવક</option>${(d.flats||[]).filter(occ).map(f=>`<option value="${E(f.no)}">ઘર ${E(f.no)} • ${E(f.name)}</option>`).join('')}</select>
-    <label>આવકની વિગત</label><input id="step1IncomeDetail" placeholder="આવકની વિગત">
-    <div class="v22-two"><div><label>રકમ</label><input id="step1IncomeAmount" type="number" min="1" inputmode="numeric" placeholder="₹ રકમ"></div><div><label>તારીખ</label><input id="step1IncomeDate" inputmode="numeric" placeholder="DD.MM.YYYY" value="${step1TodayDot()}"></div></div>
-    <label>Payment Mode</label><select id="step1IncomeMode"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option></select>
-    <div class="v22-tools"><button class="v22-btn primary" onclick="incomeStep1Save()">સાચવો</button><button class="v22-btn dark" onclick="closeV22()">રદ કરો</button></div>
-  </div>`);
-}
-function step1TodayDot(){const x=new Date();return `${String(x.getDate()).padStart(2,'0')}.${String(x.getMonth()+1).padStart(2,'0')}.${x.getFullYear()}`}
-function step1Date(value){
-  const s=String(value||'').trim();
-  let m=s.match(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})$/);
-  if(m){const day=Number(m[1]),mon=Number(m[2]),yr=Number(m[3]);const dt=new Date(yr,mon-1,day);if(dt.getFullYear()!==yr||dt.getMonth()!==mon-1||dt.getDate()!==day)return '';return `${String(day).padStart(2,'0')}.${String(mon).padStart(2,'0')}.${yr}`}
-  return '';
-}
-function incomeStep1Save(){
-  if(role!=='admin')return;
-  const amount=Number($('step1IncomeAmount')?.value||0);
-  const date=step1Date($('step1IncomeDate')?.value||'');
-  const head=$('step1IncomeHead')?.value||'';
-  const detail=$('step1IncomeDetail')?.value.trim()||'';
-  const flatNo=$('step1IncomeFlat')?.value||'';
-  const mode=$('step1IncomeMode')?.value||'કેશ';
-  if(!head)return toastV22('આવક હેડ પસંદ કરો');
-  if(amount<=0)return toastV22('રકમ નાખો');
-  if(!date)return toastV22('તારીખ DD.MM.YYYY માં નાખો');
-  const stamp=Date.now();
-  d.incomes=d.incomes||[];
-  const payerFlat=flatNo?(d.flats||[]).find(f=>String(f.no)===String(flatNo)):null;
-  const payerName=payerFlat?.name||'સામાન્ય આવક';
-  d.incomes.unshift({id:'i'+stamp,head,flatNo,payerName,detail,date,amount,mode,receipt:'IN-'+String(stamp).slice(-8)});
-  persist('Add','આવક • '+head);
-  closeV22();
-  renderAll();
-  toastV22('આવક સાચવાઈ');
-  setTimeout(()=>incomeReceiptActions('i'+stamp),150);
-}
-window.incomeStep1Open=incomeStep1Open;
-window.incomeStep1Save=incomeStep1Save;
-window.v23OpenNewIncome=incomeStep1Open;
-window.openIncomeForm=incomeStep1Open;
-
-/* =========================================================
-   FINANCE STEP 2 — TOTAL INCOME ENTRIES + EDIT / DELETE
-   Uses the same d.incomes + persist() cloud-sync data model.
-   ========================================================= */
-function incomeStep2Open(){
-  if(role!=='admin')return;
-  window._incomeStep2Visible=true;
-  const card=document.getElementById('incomeStep2Card');
-  if(card){card.style.display='block';incomeStep2Render();setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'start'}),50);}
-}
-function incomeStep2Close(){
-  window._incomeStep2Visible=false;
-  const card=document.getElementById('incomeStep2Card');
-  if(card) card.style.display='none';
-}
-function incomeStep2Render(){
-  const box=document.getElementById('incomeStep2List');
-  const totalBox=document.getElementById('step2TotalIncome');
-  if(!box)return;
-  const arr=Array.isArray(d.incomes)?d.incomes:[];
-  const total=arr.reduce((s,x)=>s+Number(x.amount||0),0);
-  if(totalBox)totalBox.textContent=money(total);
-  if(!arr.length){box.innerHTML='<div class="v22-empty">હજુ કોઈ આવક એન્ટ્રી નથી.</div>';return;}
-  box.innerHTML=arr.map((x,i)=>`<div class="v22-row" style="align-items:flex-start;margin-top:8px">
-    <div class="grow">
-      <b>${E(x.head||'અન્ય આવક')}</b> <span class="v22-sub">• ${E(x.date||'')}</span>
-      ${(()=>{const f=x.flatNo?(d.flats||[]).find(f=>String(f.no)===String(x.flatNo)):null;const payer=x.payerName||f?.name||'સામાન્ય આવક';return `<div class="v22-sub"><b>જમા કરનાર: ${E(payer)}</b></div><div class="v22-sub"><b>ઘર નંબર: ${x.flatNo?E(x.flatNo):'—'}</b> • ${E(x.detail||'વિગત નથી')} • ${E(x.mode||'-')}</div>`})()}
-      <div style="font-size:18px;font-weight:800;margin-top:4px">${money(x.amount)}</div>
-      <div class="v22-sub">રસીદ: ${E(x.receipt||'-')}</div>
-    </div>
-    ${role==='admin'?`<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><button class="v22-btn" style="min-height:38px;padding:6px 9px" onclick="incomeStep2Edit(${i})">✏️ Edit</button><button class="v22-btn" style="min-height:38px;padding:6px 9px" onclick="incomeStep2Delete(${i})">🗑️ Delete</button></div>`:''}
-  </div>`).join('');
-}
-function incomeStep2Edit(index){
-  if(role!=='admin')return;
-  const x=(d.incomes||[])[index];
-  if(!x)return toastV22('આવક એન્ટ્રી મળી નથી');
-  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
-  const list=heads.length?heads:d.incomeHeads||[];
-  modal('✏️ આવક Edit',`<div class="v22-form">
-    <label>આવક હેડ</label><select id="step2EditHead">${list.map(h=>`<option value="${E(h)}" ${String(h)===String(x.head)?'selected':''}>${E(h)}</option>`).join('')}</select>
-    <label>મકાન (વૈકલ્પિક)</label><select id="step2EditFlat"><option value="">સામાન્ય આવક</option>${(d.flats||[]).filter(occ).map(f=>`<option value="${E(f.no)}" ${String(f.no)===String(x.flatNo||'')?'selected':''}>ઘર ${E(f.no)} • ${E(f.name)}</option>`).join('')}</select>
-    <label>આવકની વિગત</label><input id="step2EditDetail" value="${E(x.detail||'')}">
-    <div class="v22-two"><div><label>રકમ</label><input id="step2EditAmount" type="number" min="1" value="${Number(x.amount||0)}"></div><div><label>તારીખ</label><input id="step2EditDate" inputmode="numeric" value="${E(x.date||'')}"></div></div>
-    <label>Payment Mode</label><select id="step2EditMode">${['કેશ','UPI','બેંક ટ્રાન્સફર'].map(m=>`<option ${String(m)===String(x.mode||'કેશ')?'selected':''}>${m}</option>`).join('')}</select>
-    <div class="v22-tools"><button class="v22-btn primary" onclick="incomeStep2Update(${index})">સાચવો</button><button class="v22-btn dark" onclick="closeV22();setTimeout(incomeStep2Render,0)">રદ કરો</button></div>
-  </div>`);
-}
-function incomeStep2Update(index){
-  if(role!=='admin')return;
-  const x=(d.incomes||[])[index];
-  if(!x)return toastV22('આવક એન્ટ્રી મળી નથી');
-  const amount=Number($('step2EditAmount')?.value||0);
-  const date=step1Date($('step2EditDate')?.value||'');
-  const head=$('step2EditHead')?.value||'';
-  if(!head)return toastV22('આવક હેડ પસંદ કરો');
-  if(amount<=0)return toastV22('રકમ નાખો');
-  if(!date)return toastV22('તારીખ DD.MM.YYYY માં નાખો');
-  x.head=head; x.flatNo=$('step2EditFlat')?.value||''; const editFlat=x.flatNo?(d.flats||[]).find(f=>String(f.no)===String(x.flatNo)):null; x.payerName=editFlat?.name||'સામાન્ય આવક'; x.detail=$('step2EditDetail')?.value.trim()||''; x.amount=amount; x.date=date; x.mode=$('step2EditMode')?.value||'કેશ';
-  d.incomes[index]=x;
-  persist('Edit','આવક • '+head);
-  closeV22(); window._incomeStep2Visible=true; renderAll(); setTimeout(incomeStep2Render,0); toastV22('આવક Edit થઈ અને Save થઈ');
-}
-function incomeStep2Delete(index){
-  if(role!=='admin')return;
-  const x=(d.incomes||[])[index];
-  if(!x)return toastV22('આવક એન્ટ્રી મળી નથી');
-  if(!confirm('આ આવક એન્ટ્રી Delete કરવી છે?'))return;
-  const label=x.head||'આવક';
-  d.incomes.splice(index,1);
-  persist('Delete','આવક • '+label);
-  window._incomeStep2Visible=true; renderAll(); setTimeout(incomeStep2Render,0); toastV22('આવક Delete થઈ');
-}
-window.incomeStep2Open=incomeStep2Open;
-window.incomeStep2Close=incomeStep2Close;
-window.incomeStep2Render=incomeStep2Render;
-window.incomeStep2Edit=incomeStep2Edit;
-window.incomeStep2Update=incomeStep2Update;
-window.incomeStep2Delete=incomeStep2Delete;
-// કુલ આવક એન્ટ્રી હવે માત્ર ‘કુલ આવક એન્ટ્રી’ બટન દબાવ્યા પછી જ દેખાય છે.
-
-/* =========================================================
-   INCOME DUES + RECEIPT / WHATSAPP
-   ========================================================= */
-function incomeDueOpen(){
-  if(role!=='admin')return;
-  window._incomeDueVisible=true;
-  const card=document.getElementById('incomeDueCard');
-  if(card){card.style.display='block';incomeDueRender();setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'start'}),50);}
-}
-function incomeDueClose(){
-  window._incomeDueVisible=false;
-  const card=document.getElementById('incomeDueCard');
-  if(card)card.style.display='none';
-}
-function incomeDueRender(){
-  const box=document.getElementById('incomeDueBody'); if(!box)return;
-  const heads=(d.incomeHeads||[]).filter(h=>h!=='મેન્ટેનન્સ આવક');
-  if(!heads.length){box.innerHTML='<div class="v22-empty">આવક હેડ ઉપલબ્ધ નથી.</div>';return;}
-  const selected=window._incomeDueHead||heads[0]; window._incomeDueHead=heads.includes(selected)?selected:heads[0];
-  const occFlats=(d.flats||[]).filter(occ);
-  const paidSet=new Set((d.incomes||[]).filter(x=>String(x.head)===String(window._incomeDueHead)&&x.flatNo).map(x=>String(x.flatNo)));
-  const due=occFlats.filter(f=>!paidSet.has(String(f.no)));
-  const paid=occFlats.filter(f=>paidSet.has(String(f.no)));
-  box.innerHTML=`<label>આવક હેડ</label><select id="incomeDueHead" onchange="window._incomeDueHead=this.value;incomeDueRender()">${heads.map(h=>`<option value="${E(h)}" ${h===window._incomeDueHead?'selected':''}>${E(h)}</option>`).join('')}</select>
-  <div class="v22-two" style="margin-top:10px"><div class="v22-card" style="margin:0;padding:12px"><span class="v22-sub">કુલ ભરેલા મકાન</span><h3 style="margin:4px 0">${paid.length}</h3></div><div class="v22-card" style="margin:0;padding:12px"><span class="v22-sub">બાકી મકાન</span><h3 style="margin:4px 0">${due.length}</h3></div></div>
-  <div class="v22-title" style="margin-top:14px">🔴 બાકી ઘરો</div>
-  <div class="v22-list">${due.length?due.map(f=>`<div class="v22-row"><div class="grow"><b>ઘર ${E(f.no)} • ${E(f.name)}</b><div class="v22-sub">આ હેડમાં હજી જમા નથી</div></div><button class="v22-btn" style="min-height:38px;padding:6px 9px" onclick="incomeStep1OpenForHouse('${E(f.no)}')">જમા</button></div>`).join(''):'<div class="v22-empty">આ હેડમાં કોઈ બાકી ઘર નથી. 🎉</div>'}</div>`;
-}
-function incomeStep1OpenForHouse(no){
-  incomeStep1Open();
-  setTimeout(()=>{const el=document.getElementById('step1IncomeFlat');if(el)el.value=String(no)},50);
-}
-function incomeReceiptActions(id){
-  const x=(d.incomes||[]).find(v=>String(v.id)===String(id)); if(!x)return;
-  const f=x.flatNo?(d.flats||[]).find(v=>String(v.no)===String(x.flatNo)):null;
-  const name=x.payerName||f?.name||'સામાન્ય આવક';
-  modal('🧾 આવક રસીદ',`<div class="v22-card"><b>સરદાર સોસાયટી</b><p>રસીદ નંબર: <b>${E(x.receipt||'-')}</b></p><p>જમા કરનાર: <b>${E(name)}</b></p><p>ઘર નંબર: <b>${x.flatNo?E(x.flatNo):'—'}</b></p><p>હેડ: ${E(x.head||'-')}</p><p>તારીખ: ${E(x.date||'-')}</p><p>રકમ: <b>${money(x.amount)}</b></p><p>Payment Mode: ${E(x.mode||'-')}</p><p>વિગત: ${E(x.detail||'-')}</p></div><div class="v22-tools"><button class="v22-btn primary" onclick="incomeReceiptPrint('${E(x.id)}')">📄 રસીદ / PDF</button><button class="v22-btn green" onclick="incomeReceiptWhatsApp('${E(x.id)}')">📲 WhatsApp</button></div><div class="v22-sub" style="margin-top:8px">PDF માટે રસીદ ખોલ્યા પછી Print → Save as PDF કરી શકાય છે. WhatsAppમાં રસીદ સાથે શેર કરવાનો વિકલ્પ પણ ઉપલબ્ધ હોય તો Android Shareમાંથી WhatsApp પસંદ કરી શકાય છે.</div>`);
-}
-function incomeReceiptPrint(id){
-  const x=(d.incomes||[]).find(v=>String(v.id)===String(id));if(!x)return;
-  const f=x.flatNo?(d.flats||[]).find(v=>String(v.no)===String(x.flatNo)):null;
-  const name=x.payerName||f?.name||'સામાન્ય આવક';
-  const w=window.open('','_blank'); if(!w)return toastV22('Popup allow કરો');
-  w.document.write(`<!doctype html><html lang="gu"><head><meta charset="utf-8"><title>રસીદ ${E(x.receipt||'')}</title><style>body{font-family:Arial,sans-serif;padding:28px;max-width:600px;margin:auto;color:#111}h1{margin-bottom:4px}.box{border:1px solid #bbb;border-radius:12px;padding:18px}.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee}.amt{font-size:24px;font-weight:800;margin-top:14px}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><div>આવક રસીદ</div><div class="box"><div class="row"><b>રસીદ નંબર</b><span>${E(x.receipt||'-')}</span></div><div class="row"><b>જમા કરનાર</b><span>${E(name)}</span></div><div class="row"><b>ઘર નંબર</b><span>${x.flatNo?E(x.flatNo):'—'}</span></div><div class="row"><b>આવક હેડ</b><span>${E(x.head||'-')}</span></div><div class="row"><b>તારીખ</b><span>${E(x.date||'-')}</span></div><div class="row"><b>Payment Mode</b><span>${E(x.mode||'-')}</span></div><div class="row"><b>વિગત</b><span>${E(x.detail||'-')}</span></div><div class="amt">કુલ રકમ: ${money(x.amount)}</div></div><p>આભાર.</p><script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`);w.document.close();
-}
-function incomeReceiptWhatsApp(id){
-  const x=(d.incomes||[]).find(v=>String(v.id)===String(id));if(!x)return;
-  const f=x.flatNo?(d.flats||[]).find(v=>String(v.no)===String(x.flatNo)):null;
-  const name=x.payerName||f?.name||'સામાન્ય આવક';
-  const msg=`સરદાર સોસાયટી\n\nઆવક રસીદ\nરસીદ નંબર: ${x.receipt||'-'}\nજમા કરનાર: ${name}\nઘર નંબર: ${x.flatNo||'-'}\nઆવક હેડ: ${x.head||'-'}\nતારીખ: ${x.date||'-'}\nરકમ: ${money(x.amount)}\nPayment Mode: ${x.mode||'-'}\n\nઆભાર.`;
-  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
-}
-window.incomeDueOpen=incomeDueOpen;window.incomeDueClose=incomeDueClose;window.incomeDueRender=incomeDueRender;window.incomeStep1OpenForHouse=incomeStep1OpenForHouse;window.incomeReceiptActions=incomeReceiptActions;window.incomeReceiptPrint=incomeReceiptPrint;window.incomeReceiptWhatsApp=incomeReceiptWhatsApp;
-
-/* =========================================================
-   FINANCE STEP 3 — NEW EXPENSE ONLY
-   Uses the same d.expenses + persist() cloud-sync data model.
-   No total-expense/edit/delete/report changes in this step.
-   ========================================================= */
-function expenseStep3Open(){
-  if(role!=='admin')return;
-  const heads=(d.expenseHeads||[]);
-  modal('💸 નવી જાવક',`<div class="v22-form">
-    <label>જાવક હેડ</label>
-    <select id="step3ExpenseHead">${heads.map(h=>`<option value="${E(h)}">${E(h)}</option>`).join('')}<option value="અન્ય">અન્ય</option></select>
-    <label>ખર્ચની વિગત</label><input id="step3ExpenseDetail" placeholder="ખર્ચની વિગત">
-    <div class="v22-two"><div><label>રકમ</label><input id="step3ExpenseAmount" type="number" min="1" inputmode="numeric" placeholder="₹ રકમ"></div><div><label>તારીખ</label><input id="step3ExpenseDate" inputmode="numeric" placeholder="DD.MM.YYYY" value="${step1TodayDot()}"></div></div>
-    <label>બિલ નંબર</label><input id="step3ExpenseBillNo" placeholder="બિલ નંબર (વૈકલ્પિક)">
-    <label>Payment Mode</label><select id="step3ExpenseMode"><option>કેશ</option><option>UPI</option><option>બેંક ટ્રાન્સફર</option><option>ચેક</option></select>
-    <label>નોંધ</label><input id="step3ExpenseNote" placeholder="નોંધ (વૈકલ્પિક)">
-    <div class="v22-tools"><button class="v22-btn primary" onclick="expenseStep3Save()">સાચવો</button><button class="v22-btn dark" onclick="closeV22()">રદ કરો</button></div>
-  </div>`);
-}
-function expenseStep3Save(){
-  if(role!=='admin')return;
-  const head=$('step3ExpenseHead')?.value||'';
-  const detail=$('step3ExpenseDetail')?.value.trim()||'';
-  const amount=Number($('step3ExpenseAmount')?.value||0);
-  const date=step1Date($('step3ExpenseDate')?.value||'');
-  const billNo=$('step3ExpenseBillNo')?.value.trim()||'';
-  const mode=$('step3ExpenseMode')?.value||'કેશ';
-  const note=$('step3ExpenseNote')?.value.trim()||'';
-  if(!head)return toastV22('જાવક હેડ પસંદ કરો');
-  if(amount<=0)return toastV22('રકમ નાખો');
-  if(!date)return toastV22('તારીખ DD.MM.YYYY માં નાખો');
-  const stamp=Date.now();
-  d.expenses=Array.isArray(d.expenses)?d.expenses:[];
-  d.expenses.unshift({id:'e'+stamp,head,detail,date,amount,billNo,mode,note,receipt:'EX-'+String(stamp).slice(-8)});
-  persist('Add','જાવક • '+head);
-  closeV22();
-  renderAll();
-  toastV22('જાવક સાચવાઈ');
-}
-window.expenseStep3Open=expenseStep3Open;
-window.expenseStep3Save=expenseStep3Save;
-
-
-/* =========================================================
-   FINANCE STEP 4 — TOTAL EXPENSE ENTRIES + EDIT / DELETE
-   Uses the same d.expenses + persist() cloud-sync data model.
-   ========================================================= */
-function expenseStep4Open(){
-  if(role!=='admin')return;
-  window._expenseStep4Visible=true;
-  const card=document.getElementById('expenseStep4Card');
-  if(card){card.style.display='block';expenseStep4Render();setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'start'}),50);}
-}
-function expenseStep4Close(){
-  window._expenseStep4Visible=false;
-  const card=document.getElementById('expenseStep4Card');
-  if(card) card.style.display='none';
-}
-function expenseStep4Render(){
-  const box=document.getElementById('expenseStep4List');
-  const totalBox=document.getElementById('step4TotalExpense');
-  if(!box)return;
-  const arr=Array.isArray(d.expenses)?d.expenses:[];
-  const total=arr.reduce((s,x)=>s+Number(x.amount||0),0);
-  if(totalBox)totalBox.textContent=money(total);
-  if(!arr.length){box.innerHTML='<div class="v22-empty">હજુ કોઈ જાવક એન્ટ્રી નથી.</div>';return;}
-  box.innerHTML=arr.map((x,i)=>`<div class="v22-row" style="align-items:flex-start;margin-top:8px">
-    <div class="grow">
-      <b>${E(x.head||'અન્ય ખર્ચ')}</b> <span class="v22-sub">• ${E(x.date||'')}</span>
-      <div class="v22-sub"><b>ખર્ચની વિગત: ${E(x.detail||'વિગત નથી')}</b></div>
-      <div class="v22-sub">બિલ નંબર: ${E(x.billNo||'—')} • ${E(x.mode||'-')}</div>
-      ${x.note?`<div class="v22-sub">નોંધ: ${E(x.note)}</div>`:''}
-      <div style="font-size:18px;font-weight:800;margin-top:4px">${money(x.amount)}</div>
-      <div class="v22-sub">રસીદ: ${E(x.receipt||'-')}</div>
-    </div>
-    ${role==='admin'?`<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><button class="v22-btn" style="min-height:38px;padding:6px 9px" onclick="expenseStep4Edit(${i})">✏️ Edit</button><button class="v22-btn" style="min-height:38px;padding:6px 9px" onclick="expenseStep4Delete(${i})">🗑️ Delete</button></div>`:''}
-  </div>`).join('');
-}
-function expenseStep4Edit(index){
-  if(role!=='admin')return;
-  const x=(d.expenses||[])[index];
-  if(!x)return toastV22('જાવક એન્ટ્રી મળી નથી');
-  const heads=(d.expenseHeads||[]);
-  const list=heads.length?heads:['સિક્યુરિટી પગાર','લાઇટ બિલ','રીપેરીંગ કામ','અન્ય વહીવટી ખર્ચ','સફાઈ કામ'];
-  modal('✏️ જાવક Edit',`<div class="v22-form">
-    <label>જાવક હેડ</label><select id="step4EditHead">${list.map(h=>`<option value="${E(h)}" ${String(h)===String(x.head)?'selected':''}>${E(h)}</option>`).join('')}<option value="અન્ય" ${x.head==='અન્ય'?'selected':''}>અન્ય</option></select>
-    <label>ખર્ચની વિગત</label><input id="step4EditDetail" value="${E(x.detail||'')}">
-    <div class="v22-two"><div><label>રકમ</label><input id="step4EditAmount" type="number" min="1" value="${Number(x.amount||0)}"></div><div><label>તારીખ</label><input id="step4EditDate" inputmode="numeric" value="${E(x.date||'')}"></div></div>
-    <label>બિલ નંબર</label><input id="step4EditBillNo" value="${E(x.billNo||'')}">
-    <label>Payment Mode</label><select id="step4EditMode">${['કેશ','UPI','બેંક ટ્રાન્સફર','ચેક'].map(m=>`<option ${String(m)===String(x.mode||'કેશ')?'selected':''}>${m}</option>`).join('')}</select>
-    <label>નોંધ</label><input id="step4EditNote" value="${E(x.note||'')}">
-    <div class="v22-tools"><button class="v22-btn primary" onclick="expenseStep4Update(${index})">સાચવો</button><button class="v22-btn dark" onclick="closeV22();setTimeout(expenseStep4Render,0)">રદ કરો</button></div>
-  </div>`);
-}
-function expenseStep4Update(index){
-  if(role!=='admin')return;
-  const x=(d.expenses||[])[index];
-  if(!x)return toastV22('જાવક એન્ટ્રી મળી નથી');
-  const head=$('step4EditHead')?.value||'';
-  const detail=$('step4EditDetail')?.value.trim()||'';
-  const amount=Number($('step4EditAmount')?.value||0);
-  const date=step1Date($('step4EditDate')?.value||'');
-  const billNo=$('step4EditBillNo')?.value.trim()||'';
-  const mode=$('step4EditMode')?.value||'કેશ';
-  const note=$('step4EditNote')?.value.trim()||'';
-  if(!head)return toastV22('જાવક હેડ પસંદ કરો');
-  if(amount<=0)return toastV22('રકમ નાખો');
-  if(!date)return toastV22('તારીખ DD.MM.YYYY માં નાખો');
-  x.head=head;x.detail=detail;x.amount=amount;x.date=date;x.billNo=billNo;x.mode=mode;x.note=note;
-  d.expenses[index]=x;
-  persist('Edit','જાવક • '+head);
-  closeV22();window._expenseStep4Visible=true;renderAll();setTimeout(expenseStep4Render,0);toastV22('જાવક Edit થઈ અને Save થઈ');
-}
-function expenseStep4Delete(index){
-  if(role!=='admin')return;
-  const x=(d.expenses||[])[index];
-  if(!x)return toastV22('જાવક એન્ટ્રી મળી નથી');
-  if(!confirm('આ જાવક એન્ટ્રી Delete કરવી છે?'))return;
-  const label=x.head||'જાવક';
-  d.expenses.splice(index,1);
-  persist('Delete','જાવક • '+label);
-  window._expenseStep4Visible=true;renderAll();setTimeout(expenseStep4Render,0);toastV22('જાવક Delete થઈ');
-}
-window.expenseStep4Open=expenseStep4Open;
-window.expenseStep4Close=expenseStep4Close;
-window.expenseStep4Render=expenseStep4Render;
-window.expenseStep4Edit=expenseStep4Edit;
-window.expenseStep4Update=expenseStep4Update;
-window.expenseStep4Delete=expenseStep4Delete;
-
 // Simple pages that are intended as management lists. They remain separate from Finance.
-window.simplePage=simplePage;window.committeePage=committeePage;window.securityPage=securityPage;window.noticesPage=noticesPage;window.complaintsPage=complaintsPage;window.visitorsPage=visitorsPage;window.parkingPage=parkingPage;window.repairsPage=repairsPage;window.reportsPage=reportsPage;window.backupPage=backupPage;window.auditPage=auditPage;window.settingsPage=settingsPage;
+window.simplePage=simplePage;window.committeePage=committeePage;window.securityPage=securityPage;window.noticesPage=noticesPage;window.complaintsPage=complaintsPage;window.visitorsPage=visitorsPage;window.parkingPage=parkingPage;window.repairsPage=repairsPage;window.backupPage=backupPage;window.auditPage=auditPage;window.settingsPage=settingsPage;
 // Make sure our shell is used after login and after cloud refresh.
 const oldLogin=window.login; window.login=function(){oldLogin(); if(role){setTimeout(()=>render(),0)}};
 setTimeout(()=>{if(!$('login')?.classList.contains('hide'))return;render()},600);
 })();
 </script>
+
+<style id="sardar-report-v23-final">
+.sr-report-card{max-width:760px;margin:0 auto}
+.sr-report-select{width:100%;min-height:48px;border:1px solid #d8e1ed;border-radius:14px;padding:10px 12px;background:#fff;font-size:15px;font-weight:700}
+.sr-report-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-top:12px}
+@media(max-width:520px){.sr-report-actions{grid-template-columns:1fr}}
+</style>
+<script id="sardar-report-v23-final-js">
+(function(){
+function occupied(f){return !!(String(f?.name||'').trim()||String(f?.mobile||'').trim())}
+function A(v){return Number(v||0)}
+function S(v){return typeof esc==='function'?esc(String(v??'')):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function M(v){return typeof money==='function'?money(A(v)):'₹'+Math.round(A(v)).toLocaleString('en-IN')}
+function inc(){return (Array.isArray(d.incomes)?d.incomes:[]).filter(x=>x.head!=='મેન્ટેનન્સ આવક').map(x=>({date:x.date||'',head:x.head||'',house:x.flatNo||x.house||'',member:x.member||'',detail:x.detail||'',amount:A(x.amount),mode:x.mode||'',receipt:x.receipt||''}))}
+function exp(){return (Array.isArray(d.expenses)?d.expenses:[]).map(x=>({date:x.date||'',head:x.head||'',detail:x.detail||x.details||'',receipt:x.billNo||x.billNumber||'',amount:A(x.amount),mode:x.mode||''}))}
+function TI(){return A(typeof totalMaintenance==='function'?totalMaintenance():0)+inc().reduce((s,x)=>s+x.amount,0)}
+function TE(){return exp().reduce((s,x)=>s+x.amount,0)}
+function data(type){
+let title,headers,data;
+if(type==='income'){title='આવક રિપોર્ટ';headers=['તારીખ','હેડ','ઘર','સભ્ય','વિગત','રકમ','મોડ'];data=inc()}
+else if(type==='expense'){title='જાવક રિપોર્ટ';headers=['તારીખ','હેડ','વિગત','બિલ/રેફ.','રકમ','મોડ'];data=exp()}
+else if(type==='summary'||type==='balance'){title=type==='summary'?'આવક–જાવક સંક્ષિપ્ત રિપોર્ટ':'બાકી સિલક રિપોર્ટ';headers=['વિગત','રકમ'];data=[['કુલ આવક',TI()],['કુલ જાવક',TE()],['બાકી સિલક',TI()-TE()]]}
+else if(type==='incomeHead'){title='હેડ વાઈઝ આવક રિપોર્ટ';headers=['આવક હેડ','રકમ'];data=(d.incomeHeads||[]).map(h=>[h,h==='મેન્ટેનન્સ આવક'?A(typeof totalMaintenance==='function'?totalMaintenance():0):inc().filter(x=>x.head===h).reduce((s,x)=>s+x.amount,0)])}
+else if(type==='expenseHead'){title='હેડ વાઈઝ જાવક રિપોર્ટ';headers=['જાવક હેડ','રકમ'];data=(d.expenseHeads||[]).map(h=>[h,exp().filter(x=>x.head===h).reduce((s,x)=>s+x.amount,0)])}
+else if(type==='memberIncome'){title='ઘર/સભ્ય વાઈઝ આવક રિપોર્ટ';headers=['ઘર','સભ્ય','કુલ આવક'];data=(d.flats||[]).filter(occupied).map(f=>[f.no,f.name||'',inc().filter(x=>String(x.house)===String(f.no)).reduce((s,x)=>s+x.amount,0)])}
+else if(type==='allIncome'){title='તમામ આવક એન્ટ્રી';headers=['તારીખ','હેડ','ઘર','સભ્ય','વિગત','રકમ','મોડ','રિસીપ્ટ'];data=inc().map(x=>[x.date,x.head,x.house,x.member,x.detail,x.amount,x.mode,x.receipt])}
+else if(type==='allExpense'){title='તમામ જાવક એન્ટ્રી';headers=['તારીખ','હેડ','વિગત','બિલ/રેફ.','રકમ','મોડ'];data=exp().map(x=>[x.date,x.head,x.detail,x.receipt,x.amount,x.mode])}
+else return null;
+return {title,headers,data}
+}
+function selected(){return String(document.getElementById('srReportType')?.value||'')}
+function table(r){
+return '<div style="overflow:auto;margin-top:12px"><table style="width:100%;border-collapse:collapse"><thead><tr>'+r.headers.map(x=>'<th style="border:1px solid #d8e1ed;padding:8px;text-align:left;background:#f3f7fc">'+S(x)+'</th>').join('')+'</tr></thead><tbody>'+
+(r.data.length?r.data.map(row=>'<tr>'+row.map(v=>'<td style="border:1px solid #d8e1ed;padding:8px">'+S(typeof v==='number'?M(v):v)+'</td>').join('')+'</tr>').join(''):'<tr><td colspan="'+r.headers.length+'" style="padding:14px;text-align:center">આ રિપોર્ટ માટે કોઈ એન્ટ્રી નથી.</td></tr>')+
+'</tbody></table></div>'
+}
+window.srOpenReport=function(){
+const r=data(selected()),st=document.getElementById('srReportStatus');
+if(!r){st.textContent='પહેલા રિપોર્ટ પસંદ કરો.';return}
+document.getElementById('sheet').innerHTML='<div class="title">'+S(r.title)+'</div>'+table(r)+'<button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal()">બંધ કરો</button>';
+document.getElementById('modal').classList.remove('hide');st.textContent='રિપોર્ટ તૈયાર છે.'
+}
+window.srDownloadReport=function(){
+const r=data(selected()),st=document.getElementById('srReportStatus');
+if(!r){st.textContent='પહેલા રિપોર્ટ પસંદ કરો.';return}
+const csv='\ufeff'+[r.headers,...r.data].map(row=>row.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\n');
+const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='Sardar_Society_'+selected()+'_Report.csv';a.click();st.textContent='રિપોર્ટ ડાઉનલોડ થયો.'
+}
+window.srPrintReport=function(){
+const r=data(selected()),st=document.getElementById('srReportStatus');
+if(!r){st.textContent='પહેલા રિપોર્ટ પસંદ કરો.';return}
+const w=window.open('','_blank');if(!w){st.textContent='Print window ખોલી શકાય નથી.';return}
+w.document.write('<!doctype html><html lang="gu"><head><meta charset="utf-8"><title>'+S(r.title)+'</title><style>body{font-family:Arial,"Noto Sans Gujarati",sans-serif;padding:20px}h1{text-align:center}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ccd5e1;padding:8px;text-align:left}th{background:#edf5ff}</style></head><body><h1>સરદાર સોસાયટી</h1><h2>'+S(r.title)+'</h2>'+table(r)+'</body></html>');w.document.close();setTimeout(()=>w.print(),250)
+}
+})();
+</script>
+
 </body></html>
 
 
