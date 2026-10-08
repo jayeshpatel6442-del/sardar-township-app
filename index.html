@@ -569,21 +569,30 @@ function incomeReceiptActions(id){
   const x=(d.incomes||[]).find(v=>String(v.id)===String(id)); if(!x)return;
   const f=x.flatNo?(d.flats||[]).find(v=>String(v.no)===String(x.flatNo)):null;
   const name=x.payerName||f?.name||'સામાન્ય આવક';
-  modal('🧾 આવક રસીદ',`<div class="v22-card"><b>સરદાર સોસાયટી</b><p>રસીદ નંબર: <b>${E(x.receipt||'-')}</b></p><p>જમા કરનાર: <b>${E(name)}</b></p><p>ઘર નંબર: <b>${x.flatNo?E(x.flatNo):'—'}</b></p><p>હેડ: ${E(x.head||'-')}</p><p>તારીખ: ${E(x.date||'-')}</p><p>રકમ: <b>${money(x.amount)}</b></p><p>Payment Mode: ${E(x.mode||'-')}</p><p>વિગત: ${E(x.detail||'-')}</p></div><div class="v22-tools"><button class="v22-btn primary" onclick="incomeReceiptPrint('${E(x.id)}')">📄 રસીદ / PDF</button><button class="v22-btn green" onclick="incomeReceiptWhatsApp('${E(x.id)}')">📲 WhatsApp</button></div><div class="v22-sub" style="margin-top:8px">PDF માટે રસીદ ખોલ્યા પછી Print → Save as PDF કરી શકાય છે. WhatsAppમાં રસીદ સાથે શેર કરવાનો વિકલ્પ પણ ઉપલબ્ધ હોય તો Android Shareમાંથી WhatsApp પસંદ કરી શકાય છે.</div>`);
+  const upi=x.mode==='UPI'?(d.settings?.upi||'UPI'):'—';
+  modal('🧾 આવક રસીદ',`<div class="v22-card"><b>સરદાર સોસાયટી</b><p>રસીદ નંબર: <b>${E(x.receipt||'-')}</b></p><p>તારીખ: <b>${E(x.date||'-')}</b></p><p>જમા કરનાર: <b>${E(name)}</b></p><p>ઘર નંબર: <b>${x.flatNo?E(x.flatNo):'—'}</b></p><p>આવક હેડ: ${E(x.head||'-')}</p><p>વિગત: ${E(x.detail||'-')}</p><p>Payment Mode: ${E(x.mode||'-')}</p><p>${x.mode==='UPI'?'UPI ID':'ચુકવણી માહિતી'}: ${E(upi)}</p><p><b>કુલ રકમ: ${money(x.amount)}</b></p></div><div class="v22-tools"><button class="v22-btn primary" onclick="incomeReceiptPrint('${E(x.id)}')">📄 રસીદ / PDF</button><button class="v22-btn green" onclick="incomeReceiptWhatsApp('${E(x.id)}')">📲 WhatsApp</button></div><div class="v22-sub" style="margin-top:8px">📄 રસીદ / PDF દબાવીને Print → Save as PDF કરી શકાય છે. 📲 WhatsApp દબાવવાથી સભ્યની રસીદની વિગતો WhatsAppમાં ખુલશે; સાચવેલી PDF ત્યાં Attach કરીને મોકલી શકાય છે.</div>`);
 }
 function incomeReceiptPrint(id){
   const x=(d.incomes||[]).find(v=>String(v.id)===String(id));if(!x)return;
   const f=x.flatNo?(d.flats||[]).find(v=>String(v.no)===String(x.flatNo)):null;
   const name=x.payerName||f?.name||'સામાન્ય આવક';
+  const upi=x.mode==='UPI'?(d.settings?.upi||'UPI'):'—';
   const w=window.open('','_blank'); if(!w)return toastV22('Popup allow કરો');
-  w.document.write(`<!doctype html><html lang="gu"><head><meta charset="utf-8"><title>રસીદ ${E(x.receipt||'')}</title><style>body{font-family:Arial,sans-serif;padding:28px;max-width:600px;margin:auto;color:#111}h1{margin-bottom:4px}.box{border:1px solid #bbb;border-radius:12px;padding:18px}.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee}.amt{font-size:24px;font-weight:800;margin-top:14px}@media print{button{display:none}}</style></head><body><h1>સરદાર સોસાયટી</h1><div>આવક રસીદ</div><div class="box"><div class="row"><b>રસીદ નંબર</b><span>${E(x.receipt||'-')}</span></div><div class="row"><b>જમા કરનાર</b><span>${E(name)}</span></div><div class="row"><b>ઘર નંબર</b><span>${x.flatNo?E(x.flatNo):'—'}</span></div><div class="row"><b>આવક હેડ</b><span>${E(x.head||'-')}</span></div><div class="row"><b>તારીખ</b><span>${E(x.date||'-')}</span></div><div class="row"><b>Payment Mode</b><span>${E(x.mode||'-')}</span></div><div class="row"><b>વિગત</b><span>${E(x.detail||'-')}</span></div><div class="amt">કુલ રકમ: ${money(x.amount)}</div></div><p>આભાર.</p><script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`);w.document.close();
+  w.document.write(`<!doctype html><html lang="gu"><head><meta charset="utf-8"><title>રસીદ ${E(x.receipt||'')}</title><style>body{font-family:Arial,"Noto Sans Gujarati",sans-serif;padding:28px;max-width:650px;margin:auto;color:#111}h1{margin-bottom:4px}.sub{color:#667085;margin-bottom:18px}.box{border:1px solid #bbb;border-radius:12px;padding:18px}.row{display:flex;justify-content:space-between;gap:20px;padding:9px 0;border-bottom:1px solid #eee}.row span{text-align:right}.amt{font-size:24px;font-weight:800;margin-top:16px;text-align:right}.footer{margin-top:20px;color:#667085;text-align:center}@media print{button{display:none!important}}</style></head><body><h1>સરદાર સોસાયટી</h1><div class="sub">આવક રસીદ</div><div class="box"><div class="row"><b>રસીદ નંબર</b><span>${E(x.receipt||'-')}</span></div><div class="row"><b>તારીખ</b><span>${E(x.date||'-')}</span></div><div class="row"><b>જમા કરનારનું નામ</b><span>${E(name)}</span></div><div class="row"><b>ઘર નંબર</b><span>${x.flatNo?E(x.flatNo):'—'}</span></div><div class="row"><b>આવકનો હેડ</b><span>${E(x.head||'-')}</span></div><div class="row"><b>વિગત</b><span>${E(x.detail||'-')}</span></div><div class="row"><b>Payment Mode</b><span>${E(x.mode||'-')}</span></div><div class="row"><b>${x.mode==='UPI'?'UPI ID':'ચુકવણી માહિતી'}</b><span>${E(upi)}</span></div><div class="amt">કુલ રકમ: ${money(x.amount)}</div></div><div class="footer">આભાર.<br>સરદાર સોસાયટી</div><script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`);w.document.close();
 }
 function incomeReceiptWhatsApp(id){
   const x=(d.incomes||[]).find(v=>String(v.id)===String(id));if(!x)return;
   const f=x.flatNo?(d.flats||[]).find(v=>String(v.no)===String(x.flatNo)):null;
   const name=x.payerName||f?.name||'સામાન્ય આવક';
-  const msg=`સરદાર સોસાયટી\n\nઆવક રસીદ\nરસીદ નંબર: ${x.receipt||'-'}\nજમા કરનાર: ${name}\nઘર નંબર: ${x.flatNo||'-'}\nઆવક હેડ: ${x.head||'-'}\nતારીખ: ${x.date||'-'}\nરકમ: ${money(x.amount)}\nPayment Mode: ${x.mode||'-'}\n\nઆભાર.`;
-  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+  const phone=f?.mobile?String(f.mobile).replace(/\D/g,''):'';
+  const upi=x.mode==='UPI'?(d.settings?.upi||'UPI'):'—';
+  const msg=`સરદાર સોસાયટી\n\nઆવક રસીદ\nરસીદ નંબર: ${x.receipt||'-'}\nતારીખ: ${x.date||'-'}\nજમા કરનારનું નામ: ${name}\nઘર નંબર: ${x.flatNo||'-'}\nઆવકનો હેડ: ${x.head||'-'}\nવિગત: ${x.detail||'-'}\nરકમ: ${money(x.amount)}\nPayment Mode: ${x.mode||'-'}\n${x.mode==='UPI'?'UPI ID':'ચુકવણી માહિતી'}: ${upi}\nકુલ રકમ: ${money(x.amount)}\n\nPDF રસીદ અલગથી Attach કરીને મોકલી શકાય છે.\n\nઆભાર.`;
+  const url=phone.length===10?`https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`:`https://wa.me/?text=${encodeURIComponent(msg)}`;
+  if(navigator.share){
+    navigator.share({title:'સરદાર સોસાયટી — આવક રસીદ',text:msg}).catch(()=>{});
+  }else{
+    window.open(url,'_blank');
+  }
 }
 window.incomeDueOpen=incomeDueOpen;window.incomeDueClose=incomeDueClose;window.incomeDueRender=incomeDueRender;window.incomeStep1OpenForHouse=incomeStep1OpenForHouse;window.incomeReceiptActions=incomeReceiptActions;window.incomeReceiptPrint=incomeReceiptPrint;window.incomeReceiptWhatsApp=incomeReceiptWhatsApp;
 
